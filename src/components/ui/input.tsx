@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import type { ReactNode, InputHTMLAttributes } from "react";
+import { useFieldContext } from "@/utils/useAppForm";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -85,6 +86,8 @@ export default function Input({
   disabled,
   ...props
 }: InputProps) {
+  const field = useFieldContext<any>();
+
   return (
     <InputWrapper $hasLeftIcon={!!leftIcon} $hasRightIcon={!!rightIcon}>
       {leftIcon && <Icon $position="left">{leftIcon}</Icon>}
@@ -95,6 +98,8 @@ export default function Input({
         $hasLeftIcon={!!leftIcon}
         $hasRightIcon={!!rightIcon}
         {...props}
+        value={field.state.value}
+        onChange={(e) => field.handleChange(e.target.value)}
       />
 
       {rightIcon && <Icon $position="right">{rightIcon}</Icon>}
