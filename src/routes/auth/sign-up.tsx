@@ -39,7 +39,7 @@ function RouteComponent() {
     },
     onSuccess: (data) => {
       if (data.success) toast.success(data.success);
-      navigate({ to: "/auth/sign-in", search: { redirect: location.href } });
+      navigate({ to: "/auth/sign-in", search: { redirect: "/" } });
     },
     onError: (error) => {
       toast.error(error.message);

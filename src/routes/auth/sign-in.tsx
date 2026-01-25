@@ -110,7 +110,7 @@ function RouteComponent() {
       </form>
 
       <p id="auth-change">
-        <span className="text-secondary">Nouveau sur Silverlog ? </span>
+        <span className="text-secondary">Nouveau sur Silverlog ?</span>
         <Link className="link" to="/auth/sign-up">
           Créer un compte
         </Link>
