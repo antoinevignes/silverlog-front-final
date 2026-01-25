@@ -171,11 +171,7 @@ function RouteComponent() {
 
       <p id="auth-change">
         <span className="text-secondary">Vous avez déjà un compte ? </span>
-        <Link
-          className="link"
-          to="/auth/sign-in"
-          search={{ redirect: location.href }}
-        >
+        <Link className="link" to="/auth/sign-in" search={{ redirect: "/" }}>
           Connectez vous
         </Link>
       </p>
