@@ -13,7 +13,7 @@ export const Route = createFileRoute("/auth/verify-email")({
 
     try {
       const res = await fetch(
-        `http://localhost:8000/user/verify-email?token=${token}`,
+        `${import.meta.env.VITE_API_URL}/user/verify-email?token=${token}`,
       );
 
       const data = await res.json();
