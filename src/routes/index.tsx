@@ -15,7 +15,9 @@ function App() {
       <h1>Home</h1>
       <p>{user?.username}</p>
       <button onClick={logout}>Logout</button>
-      <Link to="/auth/sign-in">Login</Link>
+      <Link search={{ redirect: "/" }} to="/auth/sign-in">
+        Login
+      </Link>
     </div>
   );
 }
