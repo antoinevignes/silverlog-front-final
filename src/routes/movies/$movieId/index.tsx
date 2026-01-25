@@ -11,6 +11,7 @@ import type { MovieType } from "@/utils/types/movie";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import MovieHeader from "./-components/movie-header/movie-header";
+import Skeleton from "@/components/ui/skeleton/skeleton";
 
 export const Route = createFileRoute("/movies/$movieId/")({
   loader: ({ context: { queryClient }, params: { movieId } }) => {
@@ -41,13 +42,17 @@ function RouteComponent() {
         <ArticleTitle title="Films similaires" />
 
         <HorizontalScroller className="movie-scroller">
-          {!similar && isLoading && "Chargement..."}
-          {!isLoading &&
-            similar.results.map((movie: MovieType) => (
-              <li key={movie.id}>
-                <MovieCard movie={movie} size="sm" />
-              </li>
-            ))}
+          {isLoading
+            ? Array.from({ length: 9 }).map((_, index) => (
+                <li key={`skeleton-${index}`}>
+                  <Skeleton width="6.5rem" height="9.75rem" />
+                </li>
+              ))
+            : similar.results.map((movie: MovieType) => (
+                <li key={movie.id}>
+                  <MovieCard movie={movie} size="sm" />
+                </li>
+              ))}
         </HorizontalScroller>
       </section>
 
