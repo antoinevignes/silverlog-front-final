@@ -10,8 +10,7 @@
     "test": "vitest run",
     "lint": "eslint",
     "format": "prettier",
-    "check": "prettier --write . && eslint --fix",
-    "render-postbuild": "npm install --prefix frontend --production=false && cd /opt/render/project/src/frontend && npm run build"
+    "check": "prettier --write . && eslint --fix"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
