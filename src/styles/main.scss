@@ -1,0 +1,85 @@
+@use "reset";
+@use "./abstracts/variables" as v;
+@use "./abstracts/mixins" as m;
+
+/* ========================= */
+/* SATOSHI — variable font  */
+/* ========================= */
+@font-face {
+  font-family: "Satoshi";
+  src: url("/Satoshi-Variable.woff2") format("woff2");
+  font-weight: 300 900;
+  font-display: swap;
+  font-style: normal;
+}
+
+/* ========================= */
+/* SENTIENT — variable font */
+/* ========================= */
+@font-face {
+  font-family: "Sentient";
+  src: url("/Sentient-Variable.woff2") format("woff2");
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family:
+    "Satoshi",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  background: v.$neutral-50;
+}
+
+:focus-visible {
+  outline: 1px solid v.$neutral-600;
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+h1 {
+  font-family: "Sentient", Georgia, serif;
+  font-weight: 700;
+}
+
+a {
+  text-decoration: none;
+}
+
+.font-sentient {
+  font-family: "Sentient", Georgia, serif;
+}
+
+.text-secondary {
+  color: v.$neutral-600;
+}
+
+.error-text {
+  color: v.$destructive;
+}
+
+.container {
+  padding: 0 1rem;
+  max-width: 1000px;
+  margin: auto;
+}
+
+// BOUTONS
+.like-button {
+  @include m.like-button;
+}
+
+// LINKS
+.link {
+  @include m.link;
+}
+
+.underline-link {
+  @include m.underline-link;
+}
+
+.animated-link {
+  @include m.animated-link;
+}

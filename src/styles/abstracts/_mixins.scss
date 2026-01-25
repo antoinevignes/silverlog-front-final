@@ -1,0 +1,67 @@
+@use "./variables" as v;
+
+@mixin link {
+  color: v.$neutral-600;
+
+  &:hover {
+    color: v.$neutral-900;
+  }
+}
+
+@mixin underline-link {
+  @include link;
+
+  text-decoration: underline;
+}
+
+@mixin animated-link {
+  @include link;
+
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1px;
+    width: 0;
+    background-color: v.$neutral-800;
+    transition: width 0.2s ease;
+  }
+
+  &:hover {
+    &::after {
+      width: 100%;
+    }
+  }
+}
+
+@mixin like-button {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  gap: 0.5rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
+
+  &:hover {
+    color: v.$neutral-600;
+  }
+}
+// A VOIR POUR UTILISATION
+// @mixin responsive($breakpoint) {
+//   @media screen and (min-width: $breakpoint) {
+//     @content;
+//   }
+// }
