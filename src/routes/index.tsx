@@ -1,9 +1,21 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { useAuth } from "@/auth";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
   component: App,
 });
 
 function App() {
-  return <div>HOMEPAGE</div>;
+  const { logout, user } = useAuth();
+
+  console.log(user);
+
+  return (
+    <div>
+      <h1>Home</h1>
+      <p>{user?.username}</p>
+      <button onClick={logout}>Logout</button>
+      <Link to="/auth/sign-in">Login</Link>
+    </div>
+  );
 }
