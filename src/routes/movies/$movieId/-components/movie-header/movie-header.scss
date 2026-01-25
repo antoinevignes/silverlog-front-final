@@ -26,20 +26,30 @@
     gap: 1rem;
 
     img,
-    .poster-fallback {
+    .header-poster-fallback {
       margin-top: -3rem;
-      max-width: 140px;
       border-radius: 0.5rem;
+    }
 
-      @media (min-width: 768px) {
-        max-width: 280px;
-      }
+    img {
+      max-width: 140px;
+    }
+
+    .header-poster-fallback {
+      border: 1px solid v.$neutral-200;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      min-width: 140px;
+      aspect-ratio: 2/3;
     }
 
     .movie-details {
       width: 100%;
 
-      h1 {
+      .movie-title {
         font-size: 1.5rem;
         margin-bottom: 0.5rem;
       }
@@ -85,10 +95,11 @@
 
   .synopsis {
     position: relative;
+    margin-top: 0.5rem;
 
     .tagline {
       font-style: italic;
-      margin: 0.5rem 0;
+      margin-bottom: 0.5rem;
     }
 
     .overview-preview {
@@ -173,7 +184,7 @@
 
     .movie-header {
       display: grid;
-      grid-template-columns: auto 1fr;
+      grid-template-columns: 1fr 2fr;
       gap: 1rem;
       grid-template-areas:
         "poster details"
@@ -181,6 +192,15 @@
 
       > div:first-child {
         grid-area: poster;
+        width: 100%;
+      }
+
+      img,
+      .header-poster-fallback {
+        width: 100%;
+        aspect-ratio: 2/3;
+        object-fit: cover;
+        max-width: none;
       }
 
       .movie-details {

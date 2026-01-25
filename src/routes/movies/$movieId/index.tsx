@@ -11,29 +11,13 @@ import type { MovieType } from "@/utils/types/movie";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import MovieHeader from "./-components/movie-header/movie-header";
-// import Critics from "./-components/reviews/reviews";
-// import { Separator } from "@/components/ui/separator";
-// import ArticleTitle from "@/components/layout/section-title/article-title";
-// import HorizontalScroller from "@/components/layout/horizontal-scroller/horizontal-scroller";
-// import MovieCard from "@/components/layout/movie-card/movie-card";
-// import type { MovieType } from "@/utils/types/movie";
-// import { useQuery } from "@tanstack/react-query";
-// import {
-//   movieCreditsQuery,
-//   movieDetailsQuery,
-//   movieStateQuery,
-//   similarMoviesQuery,
-// } from "@/queries/movie.queries";
-// import MovieHeader from "./-components/movie-header/movie-header";
 
 export const Route = createFileRoute("/movies/$movieId/")({
-  loader: async ({ context: { queryClient }, params: { movieId } }) => {
-    await Promise.all([
-      queryClient.ensureQueryData(movieDetailsQuery(movieId)),
-      queryClient.ensureQueryData(movieCreditsQuery(movieId)),
-      // queryClient.ensureQueryData(movieStateQuery(movieId)),
-      queryClient.prefetchQuery(similarMoviesQuery(movieId)),
-    ]);
+  loader: ({ context: { queryClient }, params: { movieId } }) => {
+    queryClient.prefetchQuery(movieDetailsQuery(movieId));
+    queryClient.prefetchQuery(movieCreditsQuery(movieId));
+    // queryClient.ensureQueryData(movieStateQuery(movieId)),
+    queryClient.prefetchQuery(similarMoviesQuery(movieId));
   },
   component: RouteComponent,
 });

@@ -4,7 +4,7 @@ import { getRouteApi, Link } from "@tanstack/react-router";
 import { Dot, Film, Star } from "lucide-react";
 import { useMemo, useState } from "react";
 import Badge from "@/components/ui/badge";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import {
   movieCreditsQuery,
   movieDataQuery,
@@ -14,6 +14,7 @@ import type { MovieType } from "@/utils/types/movie";
 import MovieDetails from "@/components/layout/movie-tabs/movie-details";
 import MovieCast from "@/components/layout/movie-tabs/movie-cast";
 import MovieCrew from "@/components/layout/movie-tabs/movie-crew";
+import Skeleton from "@/components/ui/skeleton/skeleton";
 
 const tabs = [
   { id: "details", label: "Détails" },
@@ -25,20 +26,32 @@ export default function MovieHeader() {
   const routeApi = getRouteApi("/movies/$movieId/");
   const { movieId } = routeApi.useParams();
 
-  const { data: movie } = useSuspenseQuery(movieDetailsQuery(movieId));
-  const { data: movieData } = useSuspenseQuery(movieDataQuery(movieId));
-  const { data: credits } = useSuspenseQuery(movieCreditsQuery(movieId));
-
-  const director = useMemo(
-    () => credits.crew.find((item: { job: string }) => item.job === "Director"),
-    [credits.crew],
-  );
-  const movieYear = useMemo(() => {
-    const date = new Date(movie.release_date);
-    return date.getFullYear();
-  }, [movie.release_date]);
-
   const [selected, setSelected] = useState<string>("details");
+
+  const { data: movie, isLoading: isLoadingDetails } = useQuery(
+    movieDetailsQuery(movieId),
+  );
+  const { data: movieData, isLoading: isLoadingData } = useQuery(
+    movieDataQuery(movieId),
+  );
+  const { data: credits, isLoading: isLoadingCredits } = useQuery(
+    movieCreditsQuery(movieId),
+  );
+
+  const director = useMemo(() => {
+    return credits?.crew?.find(
+      (item: { job: string }) => item.job === "Director",
+    );
+  }, [credits]);
+
+  const movieYear = useMemo(() => {
+    if (!movie?.release_date) return NaN;
+    return new Date(movie.release_date).getFullYear();
+  }, [movie?.release_date]);
+
+  if (isLoadingDetails || isLoadingData || isLoadingCredits) {
+    return <MovieHeaderSkeleton />;
+  }
 
   return (
     <>
@@ -60,7 +73,7 @@ export default function MovieHeader() {
         <header className="movie-header">
           <div>
             {!movie.poster_path ? (
-              <div className="poster-fallback">
+              <div className="header-poster-fallback">
                 <Film size={64} aria-hidden color="#262626" />
               </div>
             ) : (
@@ -79,7 +92,7 @@ export default function MovieHeader() {
           </div>
 
           <div className="movie-details">
-            <h1>{movie.title}</h1>
+            <h1 className="movie-title">{movie.title}</h1>
 
             <p className="director-wrapper">
               Réal. par{" "}
@@ -203,5 +216,53 @@ function SynopsisContainer({
 
       {/* <MovieActions /> */}
     </section>
+  );
+}
+
+function MovieHeaderSkeleton() {
+  return (
+    <>
+      <div className="image-container">
+        <Skeleton width="100%" height="100%" />
+      </div>
+
+      <article className="movie container">
+        <header className="movie-header">
+          <div>
+            <Skeleton className="header-poster-fallback" />
+          </div>
+
+          <div className="movie-details">
+            <Skeleton width="10rem" height={32} className="movie-title" />
+
+            <div className="director-wrapper">
+              <Skeleton width={100} height={16} />
+            </div>
+
+            <div className="movie-meta">
+              <Skeleton width={50} height={16} />
+            </div>
+
+            <div className="grade">
+              <Skeleton width={100} height={30} />
+            </div>
+
+            <Skeleton
+              width="100%"
+              height="100%"
+              className="synopsis synopsis-desktop"
+            />
+
+            <Skeleton width={100} height={16} className="genre-badges" />
+          </div>
+        </header>
+
+        <Skeleton
+          width="100%"
+          height="10rem"
+          className="synopsis synopsis-mobile"
+        />
+      </article>
+    </>
   );
 }
