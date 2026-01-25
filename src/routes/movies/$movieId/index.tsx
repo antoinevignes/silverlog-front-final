@@ -10,6 +10,7 @@ import {
 import type { MovieType } from "@/utils/types/movie";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import MovieHeader from "./-components/movie-header/movie-header";
 // import Critics from "./-components/reviews/reviews";
 // import { Separator } from "@/components/ui/separator";
 // import ArticleTitle from "@/components/layout/section-title/article-title";
@@ -30,7 +31,7 @@ export const Route = createFileRoute("/movies/$movieId/")({
     await Promise.all([
       queryClient.ensureQueryData(movieDetailsQuery(movieId)),
       queryClient.ensureQueryData(movieCreditsQuery(movieId)),
-      //       queryClient.ensureQueryData(movieStateQuery(movieId)),
+      // queryClient.ensureQueryData(movieStateQuery(movieId)),
       queryClient.prefetchQuery(similarMoviesQuery(movieId)),
     ]);
   },
@@ -44,13 +45,13 @@ function RouteComponent() {
 
   return (
     <main>
-      {/* <MovieHeader />
+      <MovieHeader />
 
       <Separator />
+      {/* 
+      <Critics /> */}
 
-      <Critics />
-
-      <Separator /> */}
+      <Separator />
 
       <section className="container suggestions">
         <ArticleTitle title="Films similaires" />

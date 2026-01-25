@@ -1,5 +1,32 @@
 import { queryOptions } from "@tanstack/react-query";
 
+export const movieStateQuery = (movieId: string) =>
+  queryOptions({
+    queryKey: ["movie", movieId, "state"],
+    queryFn: async () => {
+      const data = await fetch(
+        `${import.meta.env.VITE_API_URL}/user_movies/${movieId}`,
+        {
+          credentials: "include",
+        },
+      );
+
+      return await data.json();
+    },
+  });
+
+export const movieDataQuery = (movieId: string) =>
+  queryOptions({
+    queryKey: ["movie", movieId, "data"],
+    queryFn: async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/movies/${movieId}`,
+      );
+
+      return await res.json();
+    },
+  });
+
 export const movieDetailsQuery = (movieId: string) =>
   queryOptions({
     queryKey: ["movie", movieId],
