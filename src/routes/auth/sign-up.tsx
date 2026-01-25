@@ -175,6 +175,14 @@ function RouteComponent() {
           Connectez vous
         </Link>
       </p>
+
+      <p className="text-secondary">
+        Pour en savoir plus sur notre politique de confidentialité,{" "}
+        <Link to="/about/mentions-legales" className="underline-link">
+          cliquez ici
+        </Link>
+        .
+      </p>
     </main>
   );
 }
