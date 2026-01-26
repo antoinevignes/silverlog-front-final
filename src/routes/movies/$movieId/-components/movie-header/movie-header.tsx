@@ -262,6 +262,10 @@ function MovieHeaderSkeleton() {
           height="10rem"
           className="synopsis synopsis-mobile"
         />
+
+        <section className="details-section">
+          <Skeleton width="100%" height="10rem" className="tabs" />
+        </section>
       </article>
     </>
   );

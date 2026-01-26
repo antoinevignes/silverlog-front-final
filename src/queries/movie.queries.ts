@@ -55,7 +55,6 @@ export const similarMoviesQuery = (movieId: string) =>
   queryOptions({
     queryKey: ["movie", movieId, "similar"],
     queryFn: async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
       const res = await fetch(
         `${import.meta.env.VITE_API_URL}/tmdb/movie/${movieId}/similar?language=fr-FR`,
       );

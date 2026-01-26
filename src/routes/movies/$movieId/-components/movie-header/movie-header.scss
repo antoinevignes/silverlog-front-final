@@ -125,10 +125,12 @@
   .genre-badges {
     display: flex;
     gap: 0.25rem;
-    margin: 1rem 0;
+    margin-top: 1rem;
   }
 
   .details-section {
+    margin-top: 1rem;
+
     .movie-details-tab {
       display: flex;
       flex-direction: column;
