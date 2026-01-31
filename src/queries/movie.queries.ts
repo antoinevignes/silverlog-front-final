@@ -62,3 +62,16 @@ export const similarMoviesQuery = (movieId: string) =>
       return await res.json();
     },
   });
+
+export const movieSearchQuery = (query: string) =>
+  queryOptions({
+    queryKey: ["movie", "search", query],
+    queryFn: async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/tmdb/search/movie?query=${query}&include_adult=false&language=fr-FR&page=1`,
+      );
+
+      return await res.json();
+    },
+    enabled: !!query,
+  });
