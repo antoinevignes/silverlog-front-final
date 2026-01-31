@@ -15,6 +15,7 @@ import MovieDetails from "@/components/layout/movie-tabs/movie-details";
 import MovieCast from "@/components/layout/movie-tabs/movie-cast";
 import MovieCrew from "@/components/layout/movie-tabs/movie-crew";
 import Skeleton from "@/components/ui/skeleton/skeleton";
+import SynopsisContainer from "@/components/layout/synopsis-container/synopsis-container";
 
 const tabs = [
   { id: "details", label: "Détails" },
@@ -102,13 +103,7 @@ export default function MovieHeader() {
             </p>
 
             <p className="movie-meta">
-              <Link
-                to="/"
-                className="underline-link"
-                disabled={Number.isNaN(movieYear)}
-              >
-                {!Number.isNaN(movieYear) ? movieYear : "NC"}
-              </Link>
+              {!Number.isNaN(movieYear) ? movieYear : "NC"}
 
               <Dot aria-hidden />
 
@@ -156,66 +151,6 @@ export default function MovieHeader() {
         </section>
       </article>
     </>
-  );
-}
-
-function SynopsisContainer({
-  movie,
-  className,
-}: {
-  movie: MovieType;
-  className: string;
-}) {
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  const overviewPreviewLength = 180;
-  const shouldShowReadMore =
-    movie.overview.length > overviewPreviewLength && !isExpanded;
-
-  return (
-    <section className={`synopsis ${className}`}>
-      {movie.tagline && (
-        <p className="tagline text-secondary">"{movie.tagline}"</p>
-      )}
-
-      <p className={isExpanded ? "overview-expanded" : "overview-preview"}>
-        {isExpanded || className === "synopsis-desktop"
-          ? movie.overview
-          : shouldShowReadMore
-            ? `${movie.overview.substring(0, overviewPreviewLength)}...`
-            : movie.overview}
-      </p>
-
-      {shouldShowReadMore && className !== "synopsis-desktop" && (
-        <button
-          className="read-more-btn underline-link"
-          onClick={() => setIsExpanded(true)}
-          aria-expanded={isExpanded}
-        >
-          Voir plus
-        </button>
-      )}
-
-      {isExpanded && movie.overview.length > overviewPreviewLength && (
-        <button
-          className="read-more-btn underline-link"
-          onClick={() => setIsExpanded(false)}
-          aria-expanded={isExpanded}
-        >
-          Voir moins
-        </button>
-      )}
-
-      <ul className="genre-badges">
-        {movie.genres.map((genre: { name: string }) => (
-          <li key={genre.name}>
-            <Badge variant="outline">{genre.name}</Badge>
-          </li>
-        ))}
-      </ul>
-
-      {/* <MovieActions /> */}
-    </section>
   );
 }
 
