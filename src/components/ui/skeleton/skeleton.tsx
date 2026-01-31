@@ -1,4 +1,4 @@
-import "./Skeleton.scss";
+import "./skeleton.scss";
 
 interface SkeletonProps {
   variant?: "rect" | "circle" | "text";

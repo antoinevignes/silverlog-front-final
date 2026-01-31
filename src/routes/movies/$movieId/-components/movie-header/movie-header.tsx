@@ -3,14 +3,12 @@ import Tabs from "@/components/ui/tabs/tabs";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { Dot, Film, Star } from "lucide-react";
 import { useMemo, useState } from "react";
-import Badge from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
 import {
   movieCreditsQuery,
   movieDataQuery,
   movieDetailsQuery,
 } from "@/queries/movie.queries";
-import type { MovieType } from "@/utils/types/movie";
 import MovieDetails from "@/components/layout/movie-tabs/movie-details";
 import MovieCast from "@/components/layout/movie-tabs/movie-cast";
 import MovieCrew from "@/components/layout/movie-tabs/movie-crew";
