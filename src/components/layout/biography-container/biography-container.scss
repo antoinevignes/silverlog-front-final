@@ -1,16 +1,13 @@
-.biography-desktop {
-  display: none;
-}
-
-.biography-mobile {
-  display: block;
-}
-
 .biography {
   position: relative;
   margin: 0.5rem 0;
 
   .overview-preview {
+    display: -webkit-box;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     text-overflow: ellipsis;
     line-height: 1.2;
     margin-bottom: 0.25rem;
@@ -28,15 +25,11 @@
     cursor: pointer;
     padding: 0.25rem 0;
   }
-}
 
-@media (min-width: 768px) {
-  .biography-mobile {
-    display: none;
-  }
-
-  .biography-desktop {
-    display: block;
-    grid-area: synopsis-area;
+  @media (min-width: 768px) {
+    .overview-preview {
+      line-clamp: 6;
+      -webkit-line-clamp: 6;
+    }
   }
 }
