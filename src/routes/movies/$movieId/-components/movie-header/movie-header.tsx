@@ -95,7 +95,11 @@ export default function MovieHeader() {
 
             <p className="director-wrapper">
               Réal. par{" "}
-              <Link to="/" className="underline-link">
+              <Link
+                to="/person/$personId"
+                params={{ personId: String(director.id) }}
+                className="underline-link"
+              >
                 {director.name}
               </Link>
             </p>
