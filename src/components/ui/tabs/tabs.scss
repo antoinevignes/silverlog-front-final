@@ -1,22 +1,28 @@
 @use "@/styles/abstracts/variables" as v;
 
 .tabs {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 0.3rem;
-  margin-bottom: 1rem;
+  display: flex;
+  width: 100%;
 
   button {
     border: none;
-    background-color: transparent;
 
     cursor: pointer;
 
+    flex: 1 1 0;
+    min-width: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
     white-space: nowrap;
+    font-size: clamp(0.8rem, 2vw, 1rem);
 
     transition:
       background-color 0.2s ease,
       color 0.2s ease;
+
+    &.active {
+      font-weight: 600;
+    }
   }
 
   // VARIANTES
@@ -24,6 +30,7 @@
     background-color: v.$neutral-200;
     padding: 0.3rem;
     border-radius: 0.5rem;
+    gap: 0.5rem;
 
     button {
       border-radius: 0.5rem;
@@ -31,26 +38,17 @@
       &.active {
         background-color: v.$neutral-50;
         box-shadow: 0px 2px 5px 0px rgba(115, 115, 115, 0.3);
-        font-weight: 450;
       }
     }
   }
 
   &.transparent {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    font-weight: 600;
     border-bottom: 1px solid v.$neutral-200;
 
     button {
-      padding: 0;
-      font-family: "Sentient";
-      color: v.$neutral-500;
-      font-size: 1.1rem;
+      background-color: transparent;
 
       &.active {
-        font-weight: 600;
         color: v.$neutral-900;
         border-bottom: 2px solid black;
       }
