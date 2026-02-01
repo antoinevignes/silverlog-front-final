@@ -54,7 +54,7 @@ export default function MovieHeader() {
 
   return (
     <>
-      <div className="image-container">
+      <div className="image-container" aria-hidden>
         <picture>
           <source
             srcSet={`https://image.tmdb.org/t/p/w1280/${movie.backdrop_path}`}
@@ -70,7 +70,7 @@ export default function MovieHeader() {
 
       <article className="movie container">
         <header className="movie-header">
-          <div>
+          <figure>
             {!movie.poster_path ? (
               <div className="header-poster-fallback">
                 <Film size={64} aria-hidden color="#262626" />
@@ -84,11 +84,11 @@ export default function MovieHeader() {
 
                 <img
                   src={`https://image.tmdb.org/t/p/w200/${movie.poster_path}`}
-                  alt={`Poster du film ${movie.title}`}
+                  alt={`Affiche du film ${movie.title}`}
                 />
               </picture>
             )}
-          </div>
+          </figure>
 
           <div className="movie-details">
             <h1 className="movie-title">{movie.title}</h1>
@@ -104,7 +104,11 @@ export default function MovieHeader() {
               </Link>
             </p>
 
-            <p className="movie-meta">
+            <p
+              className="movie-meta"
+              role="group"
+              aria-label="Informations sur le film"
+            >
               {!Number.isNaN(movieYear) ? movieYear : "NC"}
 
               <Dot aria-hidden />
@@ -112,15 +116,18 @@ export default function MovieHeader() {
               <time dateTime={`PT${movie.runtime}M`}>{movie.runtime} mins</time>
             </p>
 
-            <p className="grade">
+            <p
+              className="grade"
+              aria-label={`Note de ${movie.vote_average} sur 10`}
+            >
               <Star size={20} aria-hidden color="#F1DA51" fill="#F1DA51" />
 
-              <span className="rating">
+              <strong className="rating">
                 {movieData.movie_avg
                   ? movieData.movie_avg
                   : Math.round(movie.vote_average * 10) / 10}
                 /10
-              </span>
+              </strong>
 
               <span className="text-secondary rating-count">
                 (

@@ -5,6 +5,7 @@ import { getRouteApi, Link } from "@tanstack/react-router";
 import HorizontalScroller from "../horizontal-scroller/horizontal-scroller";
 import { useMemo } from "react";
 import translateJob from "@/utils/translate-job";
+import { CircleUser } from "lucide-react";
 
 const MAJOR_JOBS = [
   "Director",
@@ -66,22 +67,29 @@ export default function MovieCrew() {
     <>
       <HorizontalScroller className="cast-scroller">
         {filteredCrew.map((member) => (
-          <li key={`${member.id}-${member.job}`} className="actor-crew-card">
+            <li key={`${member.id}-${member.job}`} className="actor-crew-card">
             <Link
               to="/person/$personId"
               params={{ personId: String(member.id) }}
             >
-              <div className="actor-crew-image">
+            <figure className="actor-crew-image">
+              {!member.profile_path ? (
+                <div className="actor-poster-fallback">
+                  <CircleUser size={32} aria-hidden color="#262626" />
+                </div>
+              ) : (
                 <img
                   src={`https://image.tmdb.org/t/p/w200/${member.profile_path}`}
                   alt={`Image de ${member.name}`}
                 />
-              </div>
-
+                 )}
+                
               <p className="actor-crew-details link">
                 {member.name} ({translateJob(member.job)})
               </p>
             </Link>
+             
+            </figure>
           </li>
         ))}
       </HorizontalScroller>

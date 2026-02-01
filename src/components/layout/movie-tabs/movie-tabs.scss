@@ -1,3 +1,5 @@
+@use "@/styles/abstracts/variables" as v;
+
 .movie-details-tab {
   display: flex;
   flex-direction: column;
@@ -21,6 +23,17 @@
 
   .actor-crew-card {
     width: 6.5rem;
+
+    .actor-poster-fallback {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.5rem;
+      height: 100%;
+      border: 1px solid v.$neutral-200;
+      box-sizing: border-box;
+    }
 
     .actor-crew-image {
       aspect-ratio: 2 / 3;
