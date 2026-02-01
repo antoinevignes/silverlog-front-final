@@ -83,11 +83,11 @@ export default function MovieCrew() {
                     alt={`Image de ${member.name}`}
                   />
                 )}
-
-                <p className="actor-crew-details link">
-                  {member.name} ({translateJob(member.job)})
-                </p>
               </figure>
+
+              <p className="actor-crew-details link">
+                {member.name} ({translateJob(member.job)})
+              </p>
             </Link>
           </li>
         ))}
