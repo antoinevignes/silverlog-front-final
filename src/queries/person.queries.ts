@@ -12,6 +12,18 @@ export const personDetailsQuery = (personId: string) =>
     },
   });
 
+export const personDetailsQueryUS = (personId: string) =>
+  queryOptions({
+    queryKey: ["person", "detailsUS", personId],
+    queryFn: async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/tmdb/person/${personId}?language=en-US`,
+      );
+
+      return await res.json();
+    },
+  });
+
 export const personCreditsQuery = (personId: string) =>
   queryOptions({
     queryKey: ["person", "credits", personId],

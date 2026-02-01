@@ -4,16 +4,23 @@ import { useState } from "react";
 
 export default function BiographyContainer({
   personDetails,
+  personDetailsUS,
 }: {
   personDetails: PersonType;
+  personDetailsUS: PersonType;
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
+  const biography =
+    personDetails.biography !== ""
+      ? personDetails.biography
+      : personDetailsUS.biography;
+
   const overviewPreviewLength = 180;
   const shouldShowReadMore =
-    personDetails.biography.length > overviewPreviewLength && !isExpanded;
+    biography.length > overviewPreviewLength && !isExpanded;
 
-  if (!personDetails.biography)
+  if (biography.length === 0)
     return (
       <section className="biography">
         <p className="overview-preview">Aucune biographie disponible.</p>
@@ -23,7 +30,7 @@ export default function BiographyContainer({
   return (
     <section className="biography">
       <p className={isExpanded ? "overview-expanded" : "overview-preview"}>
-        {personDetails.biography}
+        {biography}
       </p>
 
       {shouldShowReadMore && (
@@ -36,7 +43,7 @@ export default function BiographyContainer({
         </button>
       )}
 
-      {isExpanded && personDetails.biography.length > overviewPreviewLength && (
+      {isExpanded && biography.length > overviewPreviewLength && (
         <button
           className="read-more-btn underline-link"
           onClick={() => setIsExpanded(false)}

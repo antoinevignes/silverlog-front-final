@@ -6,10 +6,10 @@ import Tabs from "@/components/ui/tabs/tabs";
 import {
   personCreditsQuery,
   personDetailsQuery,
+  personDetailsQueryUS,
 } from "@/queries/person.queries";
 import { dateFormatter } from "@/utils/date-formatter";
 import { getDynamicTabs } from "@/utils/dynamic-tabs";
-import translateJob from "@/utils/translate-job";
 import type { MovieType } from "@/utils/types/movie";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
@@ -19,6 +19,7 @@ import { useMemo, useState } from "react";
 export const Route = createFileRoute("/person/$personId/")({
   loader: ({ context: { queryClient }, params: { personId } }) => {
     queryClient.prefetchQuery(personDetailsQuery(personId));
+    queryClient.prefetchQuery(personDetailsQueryUS(personId));
     queryClient.prefetchQuery(personCreditsQuery(personId));
   },
   component: RouteComponent,
@@ -31,6 +32,9 @@ function RouteComponent() {
 
   const { data: personDetails, isLoading: isLoadingPerson } = useQuery(
     personDetailsQuery(personId),
+  );
+  const { data: personDetailsUS, isLoading: isLoadingPersonUS } = useQuery(
+    personDetailsQueryUS(personId),
   );
   const { data: personCredits, isLoading: isLoadingCredits } = useQuery(
     personCreditsQuery(personId),
@@ -47,11 +51,11 @@ function RouteComponent() {
     return dateFormatter.format(new Date(personDetails.birthday));
   }, [personDetails?.birthday]);
 
-  if (isLoadingPerson || isLoadingCredits) {
+  if (isLoadingPerson || isLoadingPersonUS || isLoadingCredits) {
     return <div>Chargement...</div>;
   }
 
-  if (!personDetails || !personCredits) return null;
+  if (!personDetails || !personDetailsUS || !personCredits) return null;
 
   console.log(personDetails);
 
@@ -102,14 +106,6 @@ function RouteComponent() {
           <section className="person-details">
             <h1>{personDetails.name}</h1>
 
-            <ul className="job-list text-secondary">
-              {personDetails.known_for_department && (
-                <li>
-                  <p>{translateJob(personDetails.known_for_department)}</p>
-                </li>
-              )}
-            </ul>
-
             <div className="birth">
               <p className="text-secondary">
                 <Cake size={20} aria-hidden />
@@ -134,7 +130,10 @@ function RouteComponent() {
 
           {selected === "details" && (
             <>
-              <BiographyContainer personDetails={personDetails} />
+              <BiographyContainer
+                personDetails={personDetails}
+                personDetailsUS={personDetailsUS}
+              />
 
               <Separator />
 
