@@ -13,6 +13,13 @@ export default function BiographyContainer({
   const shouldShowReadMore =
     personDetails.biography.length > overviewPreviewLength && !isExpanded;
 
+  if (!personDetails.biography)
+    return (
+      <section className="biography">
+        <p className="overview-preview">Aucune biographie disponible.</p>
+      </section>
+    );
+
   return (
     <section className="biography">
       <p className={isExpanded ? "overview-expanded" : "overview-preview"}>

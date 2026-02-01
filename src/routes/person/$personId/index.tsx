@@ -8,19 +8,13 @@ import {
   personDetailsQuery,
 } from "@/queries/person.queries";
 import { dateFormatter } from "@/utils/date-formatter";
+import { getDynamicTabs } from "@/utils/dynamic-tabs";
 import translateJob from "@/utils/translate-job";
 import type { MovieType } from "@/utils/types/movie";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { Cake, Dot, Film, MapPin } from "lucide-react";
+import { Cake, CircleUser, Film, MapPin } from "lucide-react";
 import { useMemo, useState } from "react";
-
-const tabs = [
-  { id: "details", label: "À propos" },
-  { id: "actor", label: "Acteur" },
-  { id: "producer", label: "Producteur" },
-  { id: "story", label: "Scénariste" },
-];
 
 export const Route = createFileRoute("/person/$personId/")({
   loader: ({ context: { queryClient }, params: { personId } }) => {
@@ -42,6 +36,11 @@ function RouteComponent() {
     personCreditsQuery(personId),
   );
 
+  const dynamicTabs = useMemo(
+    () => getDynamicTabs(personDetails, personCredits),
+    [personDetails, personCredits],
+  );
+
   const dateFr = useMemo(() => {
     if (!personDetails?.birthday) return "NC";
 
@@ -54,41 +53,28 @@ function RouteComponent() {
 
   if (!personDetails || !personCredits) return null;
 
-  const uniqueJobs = [
-    ...new Set(personCredits.crew.map((member: { job: string }) => member.job)),
-  ].filter((job) => job !== "Thanks") as string[];
-
-  const popularWorks = useMemo(() => {
-    if (!personCredits) return [];
-
-    const combined = [
-      ...(personCredits.cast || []),
-      ...(personCredits.crew || []),
-    ];
-
-    const uniqueMovies = Array.from(
-      new Map(combined.map((movie) => [movie.id, movie])).values(),
-    );
-
-    return uniqueMovies
-      .sort((a, b) => b.popularity - a.popularity)
-      .slice(0, 12);
-  }, [personCredits]);
+  console.log(personDetails);
 
   return (
     <main>
       <div className="image-container" aria-hidden>
-        <picture>
-          <source
-            srcSet={`https://image.tmdb.org/t/p/w1280/${personCredits.cast[0].backdrop_path}`}
-            media="(min-width: 768px)"
-          />
-          <img
-            src={`https://image.tmdb.org/t/p/w500/${personCredits.cast[0].backdrop_path}`}
-            alt={`Affiche du film ${personCredits.cast[0].title}`}
-            className="image-backdrop"
-          />
-        </picture>
+        {!personCredits.cast[0]?.backdrop_path ? (
+          <div className="image-backdrop-fallback">
+            <Film size={64} color="#737373" />
+          </div>
+        ) : (
+          <picture>
+            <source
+              srcSet={`https://image.tmdb.org/t/p/w1280/${personCredits.cast[0]?.backdrop_path}`}
+              media="(min-width: 768px)"
+            />
+            <img
+              src={`https://image.tmdb.org/t/p/w500/${personCredits.cast[0]?.backdrop_path}`}
+              alt={`Affiche du film ${personCredits.cast[0]?.title}`}
+              className="image-backdrop"
+            />
+          </picture>
+        )}
       </div>
 
       <article className="person container">
@@ -96,7 +82,7 @@ function RouteComponent() {
           <figure className="person-avatar">
             {!personDetails.profile_path ? (
               <div className="header-poster-fallback">
-                <Film size={64} aria-hidden color="#262626" />
+                <CircleUser size={64} aria-hidden color="#737373" />
               </div>
             ) : (
               <picture>
@@ -117,25 +103,22 @@ function RouteComponent() {
             <h1>{personDetails.name}</h1>
 
             <ul className="job-list text-secondary">
-              {uniqueJobs.map((job) => (
-                <>
-                  <li key={job}>{translateJob(job)}</li>
-                  <Dot />
-                </>
-              ))}
-
-              <li>{personCredits.cast.length > 0 && "Acteur"}</li>
+              {personDetails.known_for_department && (
+                <li>
+                  <p>{translateJob(personDetails.known_for_department)}</p>
+                </li>
+              )}
             </ul>
 
             <div className="birth">
               <p className="text-secondary">
-                <Cake size={20} aria-hidden color="#F1DA51" />
+                <Cake size={20} aria-hidden />
                 <small>{dateFr}</small>
               </p>
 
               <p className="text-secondary">
-                <MapPin size={20} aria-hidden color="#f73905" />
-                {personDetails.place_of_birth}
+                <MapPin size={20} aria-hidden />
+                {personDetails.place_of_birth ?? "NC"}
               </p>
             </div>
           </section>
@@ -145,7 +128,7 @@ function RouteComponent() {
           <Tabs
             selected={selected}
             setSelected={setSelected}
-            tabs={tabs}
+            tabs={dynamicTabs}
             variant="transparent"
           />
 
@@ -155,16 +138,13 @@ function RouteComponent() {
 
               <Separator />
 
-              <h3 className="font-sentient" style={{ marginTop: "1rem" }}>
-                Oeuvres les plus populaires
-              </h3>
-              <ul className="person-movie-list">
+              {/* <ul className="person-movie-list">
                 {popularWorks.map((movie: MovieType) => (
                   <li key={movie.id}>
                     <MovieCard movie={movie} size="sm" />
                   </li>
                 ))}
-              </ul>
+              </ul> */}
             </>
           )}
 
@@ -178,13 +158,26 @@ function RouteComponent() {
             </ul>
           )}
 
-          {selected === "producer" && (
+          {selected === "director" && (
+            <ul className="person-movie-list">
+              {personCredits.crew
+                .filter((member: { job: string }) => member.job === "Director")
+                .map((movie: MovieType) => (
+                  <li key={movie.id}>
+                    <MovieCard movie={movie} size="sm" />
+                  </li>
+                ))}
+            </ul>
+          )}
+
+          {selected === "writer" && (
             <ul className="person-movie-list">
               {personCredits.crew
                 .filter(
                   (member: { job: string }) =>
-                    member.job === "Producer" ||
-                    member.job === "Executive Producer",
+                    member.job === "Story" ||
+                    member.job === "Screenplay" ||
+                    member.job === "Writer",
                 )
                 .map((movie: MovieType) => (
                   <li key={movie.id}>
@@ -194,10 +187,56 @@ function RouteComponent() {
             </ul>
           )}
 
-          {selected === "story" && (
+          {selected === "composer" && (
             <ul className="person-movie-list">
               {personCredits.crew
-                .filter((member: { job: string }) => member.job === "Story")
+                .filter(
+                  (member: { job: string }) =>
+                    member.job === "Original Music Composer",
+                )
+                .map((movie: MovieType) => (
+                  <li key={movie.id}>
+                    <MovieCard movie={movie} size="sm" />
+                  </li>
+                ))}
+            </ul>
+          )}
+
+          {selected === "photography" && (
+            <ul className="person-movie-list">
+              {personCredits.crew
+                .filter(
+                  (member: { job: string }) =>
+                    member.job === "Director of Photography",
+                )
+                .map((movie: MovieType) => (
+                  <li key={movie.id}>
+                    <MovieCard movie={movie} size="sm" />
+                  </li>
+                ))}
+            </ul>
+          )}
+
+          {selected === "editor" && (
+            <ul className="person-movie-list">
+              {personCredits.crew
+                .filter((member: { job: string }) => member.job === "Editor")
+                .map((movie: MovieType) => (
+                  <li key={movie.id}>
+                    <MovieCard movie={movie} size="sm" />
+                  </li>
+                ))}
+            </ul>
+          )}
+
+          {selected === "producer" && (
+            <ul className="person-movie-list">
+              {personCredits.crew
+                .filter(
+                  (member: { job: string }) =>
+                    member.job === "Producer" ||
+                    member.job === "Executive Producer",
+                )
                 .map((movie: MovieType) => (
                   <li key={movie.id}>
                     <MovieCard movie={movie} size="sm" />
