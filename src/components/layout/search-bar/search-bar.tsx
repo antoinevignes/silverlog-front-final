@@ -9,11 +9,20 @@ import { Card } from "@/components/ui/card";
 import type { MovieType } from "@/utils/types/movie";
 import { Link } from "@tanstack/react-router";
 import Skeleton from "@/components/ui/skeleton/skeleton";
+import { personSearchQuery } from "@/queries/person.queries";
+import type { PersonType } from "@/utils/types/person";
 
 export default function SearchBar() {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const { data: movies, isLoading } = useQuery(movieSearchQuery(searchQuery));
+  const { data: movies, isLoading: isLoadingMovies } = useQuery(
+    movieSearchQuery(searchQuery),
+  );
+  const { data: persons, isLoading: isLoadingPersons } = useQuery(
+    personSearchQuery(searchQuery),
+  );
+
+  console.log(persons);
 
   const form = useAppForm({
     defaultValues: {
@@ -64,7 +73,7 @@ export default function SearchBar() {
 
       {searchQuery && (
         <Card className="search-card">
-          {isLoading ? (
+          {isLoadingMovies || isLoadingPersons ? (
             <SearchCardSkeleton />
           ) : (
             <ul className="movie-results">
@@ -93,6 +102,31 @@ export default function SearchBar() {
                           ? new Date(movie.release_date).getFullYear()
                           : "NC"}
                       </p>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+
+              {persons?.results.map((person: PersonType) => (
+                <li>
+                  <Link
+                    to="/person/$personId"
+                    params={{ personId: String(person.id) }}
+                    className="movie-result"
+                  >
+                    {!person.profile_path ? (
+                      <div className="search-poster-fallback">
+                        <Film aria-hidden color="#262626" />
+                      </div>
+                    ) : (
+                      <img
+                        src={`https://image.tmdb.org/t/p/w45/${person.profile_path}`}
+                        alt={`Photo de ${person.name}`}
+                      />
+                    )}
+
+                    <div className="movie-info">
+                      <h2 className="font-sentient">{person.name}</h2>
                     </div>
                   </Link>
                 </li>
