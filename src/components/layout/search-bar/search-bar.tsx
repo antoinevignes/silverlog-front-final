@@ -22,8 +22,6 @@ export default function SearchBar() {
     personSearchQuery(searchQuery),
   );
 
-  console.log(persons);
-
   const form = useAppForm({
     defaultValues: {
       query: "",
