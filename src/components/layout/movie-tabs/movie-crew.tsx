@@ -72,24 +72,23 @@ export default function MovieCrew() {
               to="/person/$personId"
               params={{ personId: String(member.id) }}
             >
-            <figure className="actor-crew-image">
-              {!member.profile_path ? (
-                <div className="actor-poster-fallback">
-                  <CircleUser size={32} aria-hidden color="#262626" />
-                </div>
-              ) : (
-                <img
-                  src={`https://image.tmdb.org/t/p/w200/${member.profile_path}`}
-                  alt={`Image de ${member.name}`}
-                />
-                 )}
-                
+              <figure className="actor-crew-image">
+                {!member.profile_path ? (
+                  <div className="actor-poster-fallback">
+                    <CircleUser size={32} aria-hidden color="#262626" />
+                  </div>
+                ) : (
+                  <img
+                    src={`https://image.tmdb.org/t/p/w200/${member.profile_path}`}
+                    alt={`Image de ${member.name}`}
+                  />
+                )}
+              </figure>
+
               <p className="actor-crew-details link">
                 {member.name} ({translateJob(member.job)})
               </p>
             </Link>
-             
-            </figure>
           </li>
         ))}
       </HorizontalScroller>

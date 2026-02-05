@@ -1,6 +1,7 @@
 @use "@/styles/abstracts/variables" as v;
 
 .movie-details-tab {
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
