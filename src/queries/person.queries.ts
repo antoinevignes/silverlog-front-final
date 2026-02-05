@@ -35,3 +35,16 @@ export const personCreditsQuery = (personId: string) =>
       return await res.json();
     },
   });
+
+export const personSearchQuery = (query: string) =>
+  queryOptions({
+    queryKey: ["person", "search", query],
+    queryFn: async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/tmdb/search/person?query=${query}&include_adult=false&language=fr-FR&page=1`,
+      );
+
+      return await res.json();
+    },
+    enabled: !!query,
+  });
