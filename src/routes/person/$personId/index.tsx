@@ -57,8 +57,6 @@ function RouteComponent() {
 
   if (!personDetails || !personDetailsUS || !personCredits) return null;
 
-  console.log(personDetails);
-
   return (
     <main>
       <div className="image-container" aria-hidden>

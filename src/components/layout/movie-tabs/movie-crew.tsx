@@ -26,8 +26,6 @@ export default function MovieCrew() {
     movieCreditsQuery(movieId),
   );
 
-  console.log(crew);
-
   const filteredCrew = useMemo(() => {
     if (!crew) return [];
 
@@ -67,7 +65,7 @@ export default function MovieCrew() {
     <>
       <HorizontalScroller className="cast-scroller">
         {filteredCrew.map((member) => (
-            <li key={`${member.id}-${member.job}`} className="actor-crew-card">
+          <li key={`${member.id}-${member.job}`} className="actor-crew-card">
             <Link
               to="/person/$personId"
               params={{ personId: String(member.id) }}

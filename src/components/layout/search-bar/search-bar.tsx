@@ -29,12 +29,16 @@ export default function SearchBar() {
     const m = movies?.results || [];
     const p = persons?.results || [];
 
-    return [
-      ...m.map((i: MovieType) => ({ ...i, type: "movie" })),
-      ...p.map((i: PersonType) => ({ ...i, type: "person" })),
-    ];
+    return (
+      [
+        ...m.map((i: MovieType) => ({ ...i, type: "movie" })),
+        ...p.map((i: PersonType) => ({ ...i, type: "person" })),
+      ]
+        // On trie TOUT par popularité, peu importe si c'est un film ou une personne
+        .sort((a, b) => (b.popularity || 0) - (a.popularity || 0))
+        .slice(0, 15)
+    ); // On garde le top 15 mondial
   }, [movies, persons]);
-
   const scrollRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
