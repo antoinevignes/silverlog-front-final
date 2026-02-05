@@ -2,18 +2,21 @@ import { useAppForm } from "@/utils/useAppForm";
 import "./search-bar.scss";
 import z from "zod";
 import { Film, Search, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { movieSearchQuery } from "@/queries/movie.queries";
 import { Card } from "@/components/ui/card";
 import type { MovieType } from "@/utils/types/movie";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 import { personSearchQuery } from "@/queries/person.queries";
 import type { PersonType } from "@/utils/types/person";
 
 export default function SearchBar() {
+  const navigate = useNavigate();
+
   const [searchQuery, setSearchQuery] = useState("");
+  const [activeIndex, setActiveIndex] = useState(-1);
 
   const { data: movies, isLoading: isLoadingMovies } = useQuery(
     movieSearchQuery(searchQuery),
@@ -21,6 +24,62 @@ export default function SearchBar() {
   const { data: persons, isLoading: isLoadingPersons } = useQuery(
     personSearchQuery(searchQuery),
   );
+
+  const allResults = useMemo(() => {
+    const m = movies?.results || [];
+    const p = persons?.results || [];
+
+    return [
+      ...m.map((i: MovieType) => ({ ...i, type: "movie" })),
+      ...p.map((i: PersonType) => ({ ...i, type: "person" })),
+    ];
+  }, [movies, persons]);
+
+  const scrollRef = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    setActiveIndex(-1);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    if (activeIndex !== -1 && scrollRef.current) {
+      const activeElement = scrollRef.current.children[
+        activeIndex
+      ] as HTMLElement;
+      if (activeElement) {
+        activeElement.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+        });
+      }
+    }
+  }, [activeIndex]);
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (!allResults.length) return;
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setActiveIndex((prev) =>
+        prev < allResults.length - 1 ? prev + 1 : prev,
+      );
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActiveIndex((prev) => (prev > 0 ? prev - 1 : 0));
+    } else if (e.key === "Enter" && activeIndex !== -1) {
+      e.preventDefault();
+      const selected = allResults[activeIndex];
+      const path =
+        selected.type === "movie" ? "/movies/$movieId" : "/person/$personId";
+      const params =
+        selected.type === "movie"
+          ? { movieId: String(selected.id) }
+          : { personId: String(selected.id) };
+
+      navigate({ to: path, params });
+      setSearchQuery("");
+    }
+  };
 
   const form = useAppForm({
     defaultValues: {
@@ -51,6 +110,7 @@ export default function SearchBar() {
           name="query"
           children={(field) => (
             <field.Input
+              onKeyDown={handleKeyDown}
               placeholder="Rechercher un film..."
               leftIcon={<Search />}
               rightIcon={
@@ -74,57 +134,45 @@ export default function SearchBar() {
           {isLoadingMovies || isLoadingPersons ? (
             <SearchCardSkeleton />
           ) : (
-            <ul className="movie-results">
-              {movies?.results.map((movie: MovieType) => (
-                <li>
+            <ul className="movie-results" ref={scrollRef}>
+              {allResults.map((item, index) => (
+                <li key={`${item.type}-${item.id}`}>
                   <Link
-                    to="/movies/$movieId"
-                    params={{ movieId: String(movie.id) }}
-                    className="movie-result"
+                    to={
+                      item.type === "movie"
+                        ? "/movies/$movieId"
+                        : "/person/$personId"
+                    }
+                    params={
+                      item.type === "movie"
+                        ? { movieId: String(item.id) }
+                        : { personId: String(item.id) }
+                    }
+                    className={`movie-result ${index === activeIndex ? "active" : ""}`}
+                    onClick={() => setSearchQuery("")}
                   >
-                    {!movie.poster_path ? (
+                    {/* Ton contenu (Image + Info) ici... */}
+                    {!item.poster_path && !item.profile_path ? (
                       <div className="search-poster-fallback">
-                        <Film aria-hidden color="#262626" />
+                        <Film />
                       </div>
                     ) : (
                       <img
-                        src={`https://image.tmdb.org/t/p/w45/${movie.poster_path}`}
-                        alt={`Poster du film ${movie.title}`}
+                        src={`https://image.tmdb.org/t/p/w45/${item.poster_path || item.profile_path}`}
+                        alt={item.title || item.name}
                       />
                     )}
-
                     <div className="movie-info">
-                      <h2 className="font-sentient">{movie.title}</h2>
-                      <p className="text-secondary">
-                        {movie.release_date
-                          ? new Date(movie.release_date).getFullYear()
-                          : "NC"}
-                      </p>
-                    </div>
-                  </Link>
-                </li>
-              ))}
-
-              {persons?.results.map((person: PersonType) => (
-                <li>
-                  <Link
-                    to="/person/$personId"
-                    params={{ personId: String(person.id) }}
-                    className="movie-result"
-                  >
-                    {!person.profile_path ? (
-                      <div className="search-poster-fallback">
-                        <Film aria-hidden color="#262626" />
-                      </div>
-                    ) : (
-                      <img
-                        src={`https://image.tmdb.org/t/p/w45/${person.profile_path}`}
-                        alt={`Photo de ${person.name}`}
-                      />
-                    )}
-
-                    <div className="movie-info">
-                      <h2 className="font-sentient">{person.name}</h2>
+                      <h2 className="font-sentient">
+                        {item.title || item.name}
+                      </h2>
+                      {item.type === "movie" && (
+                        <p className="text-secondary">
+                          {item.release_date
+                            ? new Date(item.release_date).getFullYear()
+                            : "NC"}
+                        </p>
+                      )}
                     </div>
                   </Link>
                 </li>

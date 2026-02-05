@@ -42,6 +42,12 @@
       .movie-result {
         display: flex;
         gap: 1rem;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+
+        &.active {
+          background-color: v.$neutral-200;
+        }
 
         .search-poster-fallback {
           border-radius: 0.5rem;
