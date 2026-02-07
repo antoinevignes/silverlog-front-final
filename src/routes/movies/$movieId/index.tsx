@@ -10,7 +10,7 @@ import {
 import type { MovieType } from "@/utils/types/movie";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import MovieHeader from "./-components/movie-header/movie-header";
+import MovieHeader from "../../../components/layout/movie-header/movie-header";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 import { movieStateQuery } from "@/queries/user-movie.queries";
 
