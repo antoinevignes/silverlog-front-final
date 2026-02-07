@@ -1,0 +1,92 @@
+import { useAuth } from "@/auth";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
+import { toast } from "sonner";
+
+export function useUpdateMovieRating(movieId: string) {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: async (value: number) => {
+      if (!user) {
+        throw new Error("Unauthenticated");
+      }
+
+      return await fetch(
+        `${import.meta.env.VITE_API_URL}/user_movie/${movieId}/rate`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            rating: value * 2,
+          }),
+        },
+      );
+    },
+    onSuccess: () => {
+      toast.success("Note mise à jour !");
+      queryClient.invalidateQueries({
+        queryKey: ["movie", movieId, "state"],
+      });
+      queryClient.invalidateQueries({ queryKey: ["reviews", movieId] });
+      queryClient.invalidateQueries({ queryKey: ["movie", movieId, "data"] });
+    },
+
+    onError: (error) => {
+      if (error.message === "Unauthenticated") {
+        toast.error("Vous devez vous connecter");
+
+        return navigate({
+          to: "/auth/sign-in",
+          search: { redirect: location.pathname },
+        });
+      }
+
+      toast.error("Une erreur est survenue");
+    },
+  });
+}
+
+export function useDeleteMovieRating(movieId: string) {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: async () => {
+      if (!user) {
+        throw new Error("Unauthenticated");
+      }
+
+      await fetch(`${import.meta.env.VITE_API_URL}/user_movie/${movieId}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+    },
+
+    onSuccess: () => {
+      toast.success("Note supprimée !");
+      queryClient.invalidateQueries({
+        queryKey: ["movie", movieId, "state"],
+      });
+      queryClient.invalidateQueries({ queryKey: ["movie", movieId, "data"] });
+    },
+
+    onError: (error) => {
+      if (error.message === "Unauthenticated") {
+        toast.error("Vous devez vous connecter");
+
+        return navigate({
+          to: "/auth/sign-in",
+          search: { redirect: location.pathname },
+        });
+      }
+      toast.error("Une erreur est survenue");
+    },
+  });
+}
