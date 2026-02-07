@@ -14,7 +14,7 @@ export function useUpdateMovieRating(movieId: string) {
         throw new Error("Unauthenticated");
       }
 
-      return await fetch(
+      const res = await fetch(
         `${import.meta.env.VITE_API_URL}/user_movie/${movieId}/rate`,
         {
           method: "POST",
@@ -27,6 +27,12 @@ export function useUpdateMovieRating(movieId: string) {
           }),
         },
       );
+
+      if (!res.ok) {
+        throw new Error("Une erreur est survenue");
+      }
+
+      return await res.json();
     },
     onSuccess: () => {
       toast.success("Note mise à jour !");
@@ -63,10 +69,19 @@ export function useDeleteMovieRating(movieId: string) {
         throw new Error("Unauthenticated");
       }
 
-      await fetch(`${import.meta.env.VITE_API_URL}/user_movie/${movieId}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/user_movie/${movieId}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        },
+      );
+
+      if (!res.ok) {
+        throw new Error("Une erreur est survenue");
+      }
+
+      return await res.json();
     },
 
     onSuccess: () => {
