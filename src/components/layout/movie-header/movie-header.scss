@@ -82,11 +82,30 @@
           font-size: 0.875rem;
         }
       }
+
+      .actions-desktop {
+        display: none;
+
+        @media (min-width: 768px) {
+          display: flex;
+          margin-top: 1rem;
+        }
+      }
+    }
+  }
+
+  .actions-mobile {
+    width: 100%;
+    margin-top: 0.5rem;
+
+    @media (min-width: 768px) {
+      display: none;
     }
   }
 
   .genre-badges {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.25rem;
     margin-top: 1rem;
   }

@@ -14,6 +14,7 @@ import MovieCast from "@/components/layout/movie-tabs/movie-cast";
 import MovieCrew from "@/components/layout/movie-tabs/movie-crew";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 import SynopsisContainer from "@/components/layout/synopsis-container/synopsis-container";
+import MovieActions from "../movie-actions/movie-actions";
 
 const tabs = [
   { id: "details", label: "Détails" },
@@ -123,9 +124,11 @@ export default function MovieHeader() {
               <Star size={20} aria-hidden color="#F1DA51" fill="#F1DA51" />
 
               <strong className="rating">
-                {movieData.movie_avg
-                  ? movieData.movie_avg
-                  : Math.round(movie.vote_average * 10) / 10}
+                <data value={movie.vote_average}>
+                  {movieData.movie_avg
+                    ? movieData.movie_avg
+                    : Math.round(movie.vote_average * 10) / 10}
+                </data>
                 /10
               </strong>
 
@@ -139,10 +142,22 @@ export default function MovieHeader() {
             </p>
 
             <SynopsisContainer movie={movie} className="synopsis-desktop" />
+
+            <MovieActions
+              movie={movie}
+              movieYear={movieYear}
+              className="actions-desktop"
+            />
           </div>
         </header>
 
         <SynopsisContainer movie={movie} className="synopsis-mobile" />
+
+        <MovieActions
+          movie={movie}
+          movieYear={movieYear}
+          className="actions-mobile"
+        />
 
         <section className="details-section">
           <Tabs

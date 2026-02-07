@@ -1,0 +1,26 @@
+@use "@/styles/abstracts/variables" as v;
+
+.star-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  margin-right: 4px;
+}
+
+.star-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+
+  .star-background {
+    position: absolute;
+    inset: 0;
+  }
+
+  .star-foreground {
+    position: absolute;
+    inset: 0;
+  }
+}
