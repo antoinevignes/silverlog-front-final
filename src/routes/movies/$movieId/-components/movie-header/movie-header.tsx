@@ -1,6 +1,6 @@
 import "./movie-header.scss";
 import Tabs from "@/components/ui/tabs/tabs";
-import { getRouteApi, Link } from "@tanstack/react-router";
+import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import {
   Bookmark,
   Check,
@@ -29,6 +29,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog/dialog";
 import Button from "@/components/ui/button";
+import Rating from "@/components/layout/rating/rating";
+import { useAuth } from "@/auth";
+import { toast } from "sonner";
+
 const tabs = [
   { id: "details", label: "Détails" },
   { id: "cast", label: "Distribution" },
@@ -38,9 +42,24 @@ const tabs = [
 export default function MovieHeader() {
   const routeApi = getRouteApi("/movies/$movieId/");
   const { movieId } = routeApi.useParams();
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
   const [selected, setSelected] = useState<string>("details");
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    if (!user) {
+      toast.error("Vous devez vous connecter");
+
+      return navigate({
+        to: "/auth/sign-in",
+        search: { redirect: location.pathname },
+      });
+    }
+
+    setOpen(!open);
+  };
 
   const { data: movie, isLoading: isLoadingDetails } = useQuery(
     movieDetailsQuery(movieId),
@@ -161,7 +180,7 @@ export default function MovieHeader() {
 
         <SynopsisContainer movie={movie} className="synopsis-mobile" />
 
-        <Dialog open={open} onOpenChange={setOpen}>
+        <Dialog open={open} onOpenChange={handleOpen}>
           <DialogTrigger asChild>
             <Button size="sm">
               <Plus size={20} />
@@ -188,6 +207,8 @@ export default function MovieHeader() {
 
               <Bookmark size={24} />
             </header>
+
+            <Rating />
 
             <div className="dialog-buttons">
               <Button variant="outline" size="sm">
