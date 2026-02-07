@@ -1,0 +1,85 @@
+@use "@/styles/abstracts/variables" as v;
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+  text-decoration: none;
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  /* Variants */
+  &--default {
+    background: v.$neutral-900;
+    color: v.$neutral-50;
+    &:hover {
+      background: v.$neutral-800;
+    }
+  }
+
+  &--secondary {
+    background: v.$neutral-100;
+    color: v.$neutral-900;
+    &:hover {
+      background: v.$neutral-200;
+    }
+  }
+
+  &--outline {
+    background: transparent;
+    border-color: v.$neutral-200;
+    color: v.$neutral-900;
+    &:hover {
+      background: v.$neutral-100;
+    }
+  }
+
+  &--ghost {
+    background: transparent;
+    color: v.$neutral-900;
+    &:hover {
+      background: v.$neutral-100;
+    }
+  }
+
+  &--destructive {
+    background: v.$destructive;
+    color: v.$neutral-50;
+    &:hover {
+      background: v.$destructive-hover;
+    }
+  }
+
+  /* Sizes */
+  &--sm {
+    height: 2rem;
+    padding: 0 0.75rem;
+    font-size: 0.875rem;
+  }
+  &--md {
+    height: 2.5rem;
+    padding: 0 1rem;
+    font-size: 0.875rem;
+  }
+  &--lg {
+    height: 3rem;
+    padding: 0 1.5rem;
+    font-size: 1rem;
+  }
+  &--icon {
+    height: 2.5rem;
+    width: 2.5rem;
+    padding: 0;
+  }
+}
