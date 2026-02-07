@@ -8,7 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import "./dialog.scss";
-import Button from "../button";
+import Button from "../button/button";
 
 type DialogContextType = {
   open: boolean;
