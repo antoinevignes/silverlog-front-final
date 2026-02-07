@@ -1,16 +1,7 @@
 import "./movie-header.scss";
 import Tabs from "@/components/ui/tabs/tabs";
-import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
-import {
-  Bookmark,
-  Check,
-  Dot,
-  Film,
-  ListPlus,
-  PenLine,
-  Plus,
-  Star,
-} from "lucide-react";
+import { getRouteApi, Link } from "@tanstack/react-router";
+import { Dot, Film, Star } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -23,15 +14,7 @@ import MovieCast from "@/components/layout/movie-tabs/movie-cast";
 import MovieCrew from "@/components/layout/movie-tabs/movie-crew";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 import SynopsisContainer from "@/components/layout/synopsis-container/synopsis-container";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog/dialog";
-import Button from "@/components/ui/button";
-import Rating from "@/components/layout/rating/rating";
-import { useAuth } from "@/auth";
-import { toast } from "sonner";
+import MovieActions from "./movie-actions/movie-actions";
 
 const tabs = [
   { id: "details", label: "Détails" },
@@ -42,24 +25,8 @@ const tabs = [
 export default function MovieHeader() {
   const routeApi = getRouteApi("/movies/$movieId/");
   const { movieId } = routeApi.useParams();
-  const navigate = useNavigate();
-  const { user } = useAuth();
 
   const [selected, setSelected] = useState<string>("details");
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    if (!user) {
-      toast.error("Vous devez vous connecter");
-
-      return navigate({
-        to: "/auth/sign-in",
-        search: { redirect: location.pathname },
-      });
-    }
-
-    setOpen(!open);
-  };
 
   const { data: movie, isLoading: isLoadingDetails } = useQuery(
     movieDetailsQuery(movieId),
@@ -175,56 +142,22 @@ export default function MovieHeader() {
             </p>
 
             <SynopsisContainer movie={movie} className="synopsis-desktop" />
+
+            <MovieActions
+              movie={movie}
+              movieYear={movieYear}
+              className="actions-desktop"
+            />
           </div>
         </header>
 
         <SynopsisContainer movie={movie} className="synopsis-mobile" />
 
-        <Dialog open={open} onOpenChange={handleOpen}>
-          <DialogTrigger asChild>
-            <Button size="sm">
-              <Plus size={20} />
-              Noter, logger, ajouter à une liste
-            </Button>
-          </DialogTrigger>
-
-          <DialogContent>
-            <header className="dialog-header">
-              <div className="dialog-movie-description">
-                <img
-                  src={`https://image.tmdb.org/t/p/w45/${movie.poster_path}`}
-                  alt=""
-                  aria-hidden
-                />
-
-                <div>
-                  <h2 className="font-sentient">{movie.title}</h2>
-                  <p className="text-secondary">
-                    {!Number.isNaN(movieYear) ? movieYear : "NC"}
-                  </p>
-                </div>
-              </div>
-
-              <Bookmark size={24} />
-            </header>
-
-            <Rating />
-
-            <div className="dialog-buttons">
-              <Button variant="outline" size="sm">
-                <Check size={16} /> Ajouter au journal
-              </Button>
-
-              <Button variant="outline" size="sm">
-                <PenLine size={16} /> Écrire un avis
-              </Button>
-
-              <Button variant="outline" size="sm">
-                <ListPlus size={16} /> Ajouter à une liste
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
+        <MovieActions
+          movie={movie}
+          movieYear={movieYear}
+          className="actions-mobile"
+        />
 
         <section className="details-section">
           <Tabs

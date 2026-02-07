@@ -29,16 +29,14 @@ export default function SearchBar() {
     const m = movies?.results || [];
     const p = persons?.results || [];
 
-    return (
-      [
-        ...m.map((i: MovieType) => ({ ...i, type: "movie" })),
-        ...p.map((i: PersonType) => ({ ...i, type: "person" })),
-      ]
-        // On trie TOUT par popularité, peu importe si c'est un film ou une personne
-        .sort((a, b) => (b.popularity || 0) - (a.popularity || 0))
-        .slice(0, 15)
-    ); // On garde le top 15 mondial
+    return [
+      ...m.map((i: MovieType) => ({ ...i, type: "movie" })),
+      ...p.map((i: PersonType) => ({ ...i, type: "person" })),
+    ]
+      .sort((a, b) => (b.popularity || 0) - (a.popularity || 0))
+      .slice(0, 15);
   }, [movies, persons]);
+
   const scrollRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
@@ -155,7 +153,6 @@ export default function SearchBar() {
                     className={`movie-result ${index === activeIndex ? "active" : ""}`}
                     onClick={() => setSearchQuery("")}
                   >
-                    {/* Ton contenu (Image + Info) ici... */}
                     {!item.poster_path && !item.profile_path ? (
                       <div className="search-poster-fallback">
                         <Film />

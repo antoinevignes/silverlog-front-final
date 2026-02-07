@@ -1,0 +1,29 @@
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+
+  .dialog-movie-description {
+    display: flex;
+    gap: 0.5rem;
+
+    h2 {
+      font-weight: 600;
+    }
+
+    .dialog-image {
+      object-fit: cover;
+      border-radius: 0.5rem;
+      width: 45px;
+      height: 68px;
+      margin: 0;
+    }
+  }
+}
+
+.dialog-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}

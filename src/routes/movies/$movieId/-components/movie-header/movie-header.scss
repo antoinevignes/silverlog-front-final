@@ -82,6 +82,22 @@
           font-size: 0.875rem;
         }
       }
+
+      .actions-desktop {
+        display: none;
+
+        @media (min-width: 768px) {
+          display: flex;
+        }
+      }
+    }
+  }
+
+  .actions-mobile {
+    width: 100%;
+
+    @media (min-width: 768px) {
+      display: none;
     }
   }
 
@@ -135,33 +151,6 @@
         }
       }
     }
-  }
-
-  .dialog-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-
-    .dialog-movie-description {
-      display: flex;
-      gap: 0.5rem;
-
-      h2 {
-        font-weight: 600;
-      }
-
-      img {
-        object-fit: cover;
-        border-radius: 0.5rem;
-      }
-    }
-  }
-
-  .dialog-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
   }
 
   @media (min-width: 768px) {
