@@ -50,7 +50,7 @@ export default function MovieCast() {
               </figure>
 
               <p className="actor-crew-details link">
-                {actor.name} ({actor.character})
+                {actor.name} {actor.character && `(${actor.character})`}
               </p>
             </Link>
           </li>
