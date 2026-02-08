@@ -7,8 +7,11 @@ import { useAppForm } from "@/utils/useAppForm";
 import z from "zod";
 import { useUpsertReview } from "@/queries/review.mutations";
 import { movieStateQuery } from "@/queries/user-movie.queries";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { movieReviewQuery } from "@/queries/review.query";
+import { useAuth } from "@/auth";
+import Skeleton from "@/components/ui/skeleton/skeleton";
 
 interface ReviewContentProps {
   onClose: () => void;
@@ -21,14 +24,17 @@ export default function ReviewDialog({
   onBack,
   movieId,
 }: ReviewContentProps) {
+  const { user } = useAuth();
+
   const {
     data: { rating },
   } = useSuspenseQuery(movieStateQuery(String(movieId)));
+  const { data: review, isLoading } = useQuery(movieReviewQuery(user, movieId));
   const { mutate: upsertReview, isPending } = useUpsertReview(movieId);
 
   const form = useAppForm({
     defaultValues: {
-      content: "",
+      content: review?.content || "",
     },
     validators: {
       onChange: z.object({
@@ -75,17 +81,23 @@ export default function ReviewDialog({
             name="content"
             children={(field) => (
               <>
-                <field.Textarea
-                  id="content"
-                  placeholder="Limite de 140 caractères..."
-                  rows={4}
-                />
+                {isLoading ? (
+                  <Skeleton width="100%" height={115} />
+                ) : (
+                  <>
+                    <field.Textarea
+                      id="content"
+                      placeholder="Limite de 140 caractères..."
+                      rows={4}
+                    />
 
-                <span
-                  className={`content-count ${field.state.value.length > 140 ? "error" : ""}`}
-                >
-                  {field.state.value.length}/140
-                </span>
+                    <span
+                      className={`content-count ${field.state.value.length > 140 ? "error" : ""}`}
+                    >
+                      {field.state.value.length}/140
+                    </span>
+                  </>
+                )}
               </>
             )}
           />
