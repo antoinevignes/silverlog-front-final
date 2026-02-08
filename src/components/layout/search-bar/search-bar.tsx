@@ -11,6 +11,11 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 import { personSearchQuery } from "@/queries/person.queries";
 import type { PersonType } from "@/utils/types/person";
+import {
+  getCloudinaryPlaceholder,
+  getCloudinarySrc,
+} from "@/utils/cloudinary-handler";
+import { Image } from "@unpic/react";
 
 export default function SearchBar() {
   const navigate = useNavigate();
@@ -137,47 +142,61 @@ export default function SearchBar() {
             <SearchCardSkeleton />
           ) : (
             <ul className="movie-results" ref={scrollRef}>
-              {allResults.map((item, index) => (
-                <li key={`${item.type}-${item.id}`}>
-                  <Link
-                    to={
-                      item.type === "movie"
-                        ? "/movies/$movieId"
-                        : "/person/$personId"
-                    }
-                    params={
-                      item.type === "movie"
-                        ? { movieId: String(item.id) }
-                        : { personId: String(item.id) }
-                    }
-                    className={`movie-result ${index === activeIndex ? "active" : ""}`}
-                    onClick={() => setSearchQuery("")}
-                  >
-                    {!item.poster_path && !item.profile_path ? (
-                      <div className="search-poster-fallback">
-                        <Film />
-                      </div>
-                    ) : (
-                      <img
-                        src={`https://image.tmdb.org/t/p/w45/${item.poster_path || item.profile_path}`}
-                        alt={item.title || item.name}
-                      />
-                    )}
-                    <div className="movie-info">
-                      <h2 className="font-sentient">
-                        {item.title || item.name}
-                      </h2>
-                      {item.type === "movie" && (
-                        <p className="text-secondary">
-                          {item.release_date
-                            ? new Date(item.release_date).getFullYear()
-                            : "NC"}
-                        </p>
+              {allResults.map((item, index) => {
+                const posterSrc = getCloudinarySrc(
+                  item?.poster_path || item?.profile_path,
+                  "posters",
+                );
+
+                return (
+                  <li key={`${item.type}-${item.id}`}>
+                    <Link
+                      to={
+                        item.type === "movie"
+                          ? "/movies/$movieId"
+                          : "/person/$personId"
+                      }
+                      params={
+                        item.type === "movie"
+                          ? { movieId: String(item.id) }
+                          : { personId: String(item.id) }
+                      }
+                      className={`movie-result ${index === activeIndex ? "active" : ""}`}
+                      onClick={() => setSearchQuery("")}
+                    >
+                      {!item.poster_path && !item.profile_path ? (
+                        <div className="search-poster-fallback text-secondary">
+                          <Film />
+                        </div>
+                      ) : (
+                        <Image
+                          src={posterSrc}
+                          width={45}
+                          aspectRatio={2 / 3}
+                          alt={item.title || item.name}
+                          background={getCloudinaryPlaceholder(
+                            item.poster_path || item.profile_path,
+                            "posters",
+                          )}
+                          className="search-poster"
+                        />
                       )}
-                    </div>
-                  </Link>
-                </li>
-              ))}
+                      <div className="movie-info">
+                        <h2 className="font-sentient">
+                          {item.title || item.name}
+                        </h2>
+                        {item.type === "movie" && (
+                          <p className="text-secondary">
+                            {item.release_date
+                              ? new Date(item.release_date).getFullYear()
+                              : "NC"}
+                          </p>
+                        )}
+                      </div>
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           )}
         </Card>

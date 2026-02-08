@@ -49,6 +49,11 @@
           background-color: v.$neutral-200;
         }
 
+        .search-poster {
+          color: transparent;
+          border-radius: 0.5rem;
+        }
+
         .search-poster-fallback {
           border-radius: 0.5rem;
           border: 1px solid v.$neutral-200;
@@ -58,10 +63,6 @@
           width: 45px;
           height: 68px;
           aspect-ratio: 2 / 3;
-        }
-
-        img {
-          border-radius: 0.5rem;
         }
 
         h2 {
