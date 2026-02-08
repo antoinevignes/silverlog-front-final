@@ -6,6 +6,11 @@ import HorizontalScroller from "../horizontal-scroller/horizontal-scroller";
 import { useMemo } from "react";
 import translateJob from "@/utils/translate-job";
 import { CircleUser } from "lucide-react";
+import {
+  getCloudinaryPlaceholder,
+  getCloudinarySrc,
+} from "@/utils/cloudinary-handler";
+import { Image } from "@unpic/react";
 
 const MAJOR_JOBS = [
   "Director",
@@ -64,31 +69,41 @@ export default function MovieCrew() {
   return (
     <>
       <HorizontalScroller className="cast-scroller">
-        {filteredCrew.map((member) => (
-          <li key={`${member.id}-${member.job}`} className="actor-crew-card">
-            <Link
-              to="/person/$personId"
-              params={{ personId: String(member.id) }}
-            >
-              <figure className="actor-crew-image">
-                {!member.profile_path ? (
-                  <div className="actor-poster-fallback">
-                    <CircleUser size={32} aria-hidden color="#262626" />
-                  </div>
-                ) : (
-                  <img
-                    src={`https://image.tmdb.org/t/p/w200/${member.profile_path}`}
-                    alt={`Image de ${member.name}`}
-                  />
-                )}
-              </figure>
+        {filteredCrew.map((member) => {
+          const posterSrc = getCloudinarySrc(member.profile_path, "persons");
 
-              <p className="actor-crew-details link">
-                {member.name} ({translateJob(member.job)})
-              </p>
-            </Link>
-          </li>
-        ))}
+          return (
+            <li key={`${member.id}-${member.job}`} className="actor-crew-card">
+              <Link
+                to="/person/$personId"
+                params={{ personId: String(member.id) }}
+              >
+                <figure className="actor-crew-image">
+                  {!member.profile_path ? (
+                    <div className="actor-poster-fallback">
+                      <CircleUser size={32} aria-hidden color="#262626" />
+                    </div>
+                  ) : (
+                    <Image
+                      src={posterSrc}
+                      layout="fullWidth"
+                      background={getCloudinaryPlaceholder(
+                        member.profile_path,
+                        "persons",
+                      )}
+                      alt={`Image de ${member.name}`}
+                      className="person-image"
+                    />
+                  )}
+                </figure>
+
+                <p className="actor-crew-details link">
+                  {member.name} ({translateJob(member.job)})
+                </p>
+              </Link>
+            </li>
+          );
+        })}
       </HorizontalScroller>
     </>
   );
