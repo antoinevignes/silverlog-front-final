@@ -2,6 +2,11 @@ import type { MovieType } from "@/utils/types/movie";
 import "./movie-card.scss";
 import { Link } from "@tanstack/react-router";
 import { Film } from "lucide-react";
+import { Image } from "@unpic/react";
+import {
+  getCloudinaryPlaceholder,
+  getCloudinarySrc,
+} from "@/utils/cloudinary-handler";
 
 type MovieCardSize = "sm" | "md" | "lg";
 
@@ -12,6 +17,8 @@ export default function MovieCard({
   movie: MovieType;
   size?: MovieCardSize;
 }) {
+  const posterSrc = getCloudinarySrc(movie?.poster_path, "posters");
+
   return (
     <Link
       to={`/movies/$movieId`}
@@ -23,9 +30,12 @@ export default function MovieCard({
           <Film size={32} aria-hidden color="#262626" />
         </div>
       ) : (
-        <img
-          src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-          alt={`Poster du film ${movie.title}`}
+        <Image
+          src={posterSrc}
+          layout="fullWidth"
+          alt={movie.title}
+          background={getCloudinaryPlaceholder(movie.poster_path, "posters")}
+          className="movie-card-poster"
         />
       )}
       <p className="movie-title" aria-hidden>
