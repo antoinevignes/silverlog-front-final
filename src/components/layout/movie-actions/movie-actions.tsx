@@ -60,7 +60,7 @@ export default function MovieActions({
         {currentView === "main" && (
           <>
             <header className="dialog-header">
-              <div className="dialog-movie-description">
+              <section className="dialog-movie-description">
                 <img
                   src={`https://image.tmdb.org/t/p/w45/${movie.poster_path}`}
                   alt=""
@@ -74,14 +74,14 @@ export default function MovieActions({
                     {!Number.isNaN(movieYear) ? movieYear : "NC"}
                   </p>
                 </div>
-              </div>
+              </section>
 
               <Bookmark size={24} />
             </header>
 
             <Rating />
 
-            <div className="dialog-buttons">
+            <section className="dialog-buttons">
               <Button variant="outline" size="sm">
                 <Check size={16} /> Ajouter au journal
               </Button>
@@ -93,7 +93,7 @@ export default function MovieActions({
               <Button variant="outline" size="sm">
                 <ListPlus size={16} /> Ajouter à une liste
               </Button>
-            </div>
+            </section>
           </>
         )}
 

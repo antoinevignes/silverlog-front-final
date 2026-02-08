@@ -60,7 +60,7 @@ export default function Reviews() {
                 <p>{review.content}</p>
 
                 <CardFooter className="review-footer">
-                  <div className="review-actions">
+                  <section className="review-actions">
                     <button
                       className="like-button"
                       onClick={() => likeReview(review.id)}
@@ -78,7 +78,7 @@ export default function Reviews() {
                     <Link className="link" to="/">
                       Répondre
                     </Link>
-                  </div>
+                  </section>
 
                   <p>
                     Publié le {new Date(review.created_at).toLocaleDateString()}
