@@ -13,6 +13,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import MovieHeader from "../../../components/layout/movie-header/movie-header";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 import { movieStateQuery } from "@/queries/user-movie.queries";
+import Reviews from "@/components/layout/reviews/reviews";
 
 export const Route = createFileRoute("/movies/$movieId/")({
   loader: ({ context: { queryClient }, params: { movieId } }) => {
@@ -34,8 +35,8 @@ function RouteComponent() {
       <MovieHeader />
 
       <Separator />
-      {/* 
-      <Critics /> */}
+
+      <Reviews />
 
       <Separator />
 

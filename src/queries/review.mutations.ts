@@ -38,6 +38,7 @@ export function useUpsertReview(movieId: number) {
       queryClient.invalidateQueries({
         queryKey: ["review", movieId],
       });
+      queryClient.invalidateQueries({ queryKey: ["reviews", movieId] });
     },
 
     onError: (error) => {
