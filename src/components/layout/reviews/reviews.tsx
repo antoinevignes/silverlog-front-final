@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { movieReviewsQuery } from "@/queries/review.query";
+import { useLikeReview } from "@/queries/review.mutations";
 
 type ReviewType = {
   id: string;
@@ -30,6 +31,7 @@ export default function Reviews() {
   const { data: reviews, isLoading } = useQuery(
     movieReviewsQuery(Number(movieId)),
   );
+  const { mutate: likeReview, isPending } = useLikeReview(Number(movieId));
 
   return (
     <section className="reviews container">
@@ -59,7 +61,11 @@ export default function Reviews() {
 
                 <CardFooter className="review-footer">
                   <div className="review-actions">
-                    <button className="like-button">
+                    <button
+                      className="like-button"
+                      onClick={() => likeReview(review.id)}
+                      disabled={isPending}
+                    >
                       <Heart
                         size={16}
                         aria-hidden
