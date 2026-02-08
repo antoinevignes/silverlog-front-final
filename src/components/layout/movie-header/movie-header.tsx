@@ -15,6 +15,11 @@ import MovieCrew from "@/components/layout/movie-tabs/movie-crew";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 import SynopsisContainer from "@/components/layout/synopsis-container/synopsis-container";
 import MovieActions from "../movie-actions/movie-actions";
+import { Image } from "@unpic/react";
+import {
+  getCloudinaryPlaceholder,
+  getCloudinarySrc,
+} from "@/utils/cloudinary-handler";
 
 const tabs = [
   { id: "details", label: "Détails" },
@@ -53,43 +58,52 @@ export default function MovieHeader() {
     return <MovieHeaderSkeleton />;
   }
 
+  const backdropSrc = getCloudinarySrc(movie?.backdrop_path, "backdrops");
+  const posterSrc = getCloudinarySrc(movie?.poster_path, "posters");
+
   return (
     <>
-      <div className="image-container" aria-hidden>
-        <picture>
-          <source
-            srcSet={`https://image.tmdb.org/t/p/w1280/${movie.backdrop_path}`}
-            media="(min-width: 768px)"
-          />
-          <img
-            src={`https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`}
-            alt={`Affiche du film ${movie.title}`}
-            className="image-backdrop"
-          />
-        </picture>
-      </div>
+      {backdropSrc ? (
+        <Image
+          src={backdropSrc}
+          layout="fullWidth"
+          aspectRatio={21 / 9}
+          alt={`Affiche du film ${movie.title}`}
+          background={getCloudinaryPlaceholder(
+            movie.backdrop_path,
+            "backdrops",
+          )}
+          priority
+          className="backdrop"
+        />
+      ) : (
+        <div className="backdrop-fallback">
+          <Film size={32} aria-hidden color="#262626" />
+        </div>
+      )}
 
       <article className="movie container">
         <header className="movie-header">
-          <figure>
-            {!movie.poster_path ? (
-              <div className="header-poster-fallback">
-                <Film size={64} aria-hidden color="#262626" />
-              </div>
+          <div className="poster-wrapper">
+            {posterSrc ? (
+              <Image
+                src={posterSrc}
+                layout="fullWidth"
+                aspectRatio={2 / 3}
+                alt={movie.title}
+                background={getCloudinaryPlaceholder(
+                  movie.poster_path,
+                  "posters",
+                )}
+                priority
+                className="poster"
+              />
             ) : (
-              <picture>
-                <source
-                  srcSet={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                  media="(min-width: 768px)"
-                />
-
-                <img
-                  src={`https://image.tmdb.org/t/p/w200/${movie.poster_path}`}
-                  alt={`Affiche du film ${movie.title}`}
-                />
-              </picture>
+              <div className="poster-fallback">
+                <Film size={64} />
+              </div>
             )}
-          </figure>
+          </div>
 
           <div className="movie-details">
             <h1 className="movie-title">{movie.title}</h1>
@@ -181,14 +195,12 @@ export default function MovieHeader() {
 function MovieHeaderSkeleton() {
   return (
     <>
-      <div className="image-container">
-        <Skeleton width="100%" height="100%" />
-      </div>
+      <Skeleton width="100%" height="100%" className="backdrop-fallback" />
 
       <article className="movie container">
         <header className="movie-header">
-          <div>
-            <Skeleton className="header-poster-fallback" />
+          <div className="poster-wrapper">
+            <Skeleton className="poster-fallback" />
           </div>
 
           <div className="movie-details">
@@ -208,19 +220,25 @@ function MovieHeaderSkeleton() {
 
             <Skeleton
               width="100%"
-              height="100%"
+              height={200}
               className="synopsis synopsis-desktop"
             />
 
             <Skeleton width={100} height={16} className="genre-badges" />
+
+            <Skeleton width={150} height={20} className="actions-desktop" />
           </div>
         </header>
 
         <Skeleton
           width="100%"
-          height="10rem"
+          height="8rem"
           className="synopsis synopsis-mobile"
         />
+
+        <Skeleton width={100} height={16} className="genre-badges" />
+
+        <Skeleton width={150} height={20} className="actions-mobile" />
 
         <section className="details-section">
           <Skeleton width="100%" height="10rem" className="tabs" />

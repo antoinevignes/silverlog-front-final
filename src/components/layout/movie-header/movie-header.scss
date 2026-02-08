@@ -1,18 +1,37 @@
 @use "@/styles/abstracts/variables" as v;
 
-.image-container {
+.backdrop,
+.backdrop-fallback {
+  width: 100%;
+  height: 100%;
+  background-color: v.$neutral-200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   aspect-ratio: 21/9;
-  overflow: hidden;
 
-  @media (min-width: 768px) {
-    aspect-ratio: 10/2;
-  }
+  max-height: 20rem;
+}
 
-  .image-backdrop {
+.backdrop {
+  opacity: 0.4;
+}
+
+.backdrop,
+.poster {
+  color: transparent;
+
+  display: flow-root;
+
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    opacity: 0.4;
+    background-color: transparent;
   }
 }
 
@@ -25,25 +44,32 @@
     display: flex;
     gap: 1rem;
 
-    img,
-    .header-poster-fallback {
+    .poster-wrapper {
       margin-top: -3rem;
-      border-radius: 0.5rem;
-    }
+      width: 140px;
+      aspect-ratio: 2 / 3;
+      flex-shrink: 0;
 
-    img {
-      max-width: 140px;
-    }
+      @media (min-width: 768px) {
+        width: 40%;
+      }
 
-    .header-poster-fallback {
-      border: 1px solid v.$neutral-200;
+      .poster,
+      .poster-fallback {
+        width: 100%;
+        height: 100%;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        object-fit: cover;
+      }
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      min-width: 140px;
-      aspect-ratio: 2/3;
+      .poster-fallback {
+        border: 1px solid v.$neutral-200;
+        background-color: v.$neutral-50;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     }
 
     .movie-details {
@@ -129,62 +155,6 @@
           gap: 0.1rem;
         }
       }
-    }
-
-    .cast-scroller {
-      .actor-crew-card {
-        width: 6.5rem;
-
-        .actor-crew-image {
-          aspect-ratio: 2 / 3;
-          overflow: hidden;
-          border-radius: 0.5rem;
-
-          img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-        }
-
-        .actor-crew-details {
-          max-width: 6.5rem;
-          margin-top: 0.5rem;
-          font-size: 0.875rem;
-        }
-      }
-    }
-  }
-
-  @media (min-width: 768px) {
-    .movie-header {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 1rem;
-      grid-template-areas:
-        "poster details"
-        "poster synopsis-area";
-
-      > div:first-child {
-        grid-area: poster;
-        width: 100%;
-      }
-
-      img,
-      .header-poster-fallback {
-        width: 100%;
-        aspect-ratio: 2/3;
-        object-fit: cover;
-        max-width: none;
-      }
-
-      .movie-details {
-        grid-area: details;
-      }
-    }
-
-    .details-section {
-      margin-top: 0.75rem;
     }
   }
 }
