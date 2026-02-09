@@ -2,12 +2,15 @@ import { getRouteApi } from "@tanstack/react-router";
 import "./rating.scss";
 import { Star } from "lucide-react";
 import { useState } from "react";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { movieStateQuery } from "@/queries/user-movie.queries";
 import {
   useDeleteMovieRating,
   useUpdateMovieRating,
 } from "@/queries/user-movie.mutations";
+import { movieReviewQuery } from "@/queries/review.query";
+import { useAuth } from "@/auth";
+import { toast } from "sonner";
 
 const MAX_STARS = 10;
 
@@ -23,12 +26,16 @@ function StarWrapper({
 }
 
 export default function Rating() {
+  const { user } = useAuth();
   const routeApi = getRouteApi("/movies/$movieId/");
   const { movieId } = routeApi.useParams();
 
   const {
     data: { rating: initialRating },
   } = useSuspenseQuery(movieStateQuery(movieId));
+  const { data: review, isLoading } = useQuery(movieReviewQuery(user, movieId));
+
+  console.log(review);
 
   const [hoverValue, setHoverValue] = useState<number | null>(null);
 
@@ -52,9 +59,14 @@ export default function Rating() {
   const isPending = isUpdating || isDeleting;
 
   const handleClick = (value: number) => {
-    if (isPending) return;
+    if (isPending || isLoading) return;
 
     setHoverValue(null);
+
+    if (review && value === rating) {
+      toast.error("Vous devez supprimer votre avis avant de supprimer la note");
+      return;
+    }
 
     if (value === rating) {
       deleteRating();
