@@ -13,4 +13,5 @@ export type MovieType = {
   spoken_languages: { iso_639_1: string; name: string }[];
   production_companies: { name: string }[];
   tagline: string;
+  popularity: number;
 };

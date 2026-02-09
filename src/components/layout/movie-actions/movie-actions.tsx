@@ -12,6 +12,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { Bookmark, Check, ListPlus, PenLine, Plus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import ReviewDialog from "../review-dialog/review-dialog";
 
 export default function MovieActions({
   movie,
@@ -25,8 +26,9 @@ export default function MovieActions({
   const { user } = useAuth();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [currentView, setCurrentView] = useState<string>("main");
 
-  const handleOpen = () => {
+  const handleOpen = (nextOpen: boolean) => {
     if (!user) {
       toast.error("Vous devez vous connecter");
 
@@ -36,8 +38,14 @@ export default function MovieActions({
       });
     }
 
-    setOpen(!open);
+    setOpen(nextOpen);
+    if (nextOpen) {
+      setCurrentView("main");
+    }
   };
+
+  const goBackToMain = () => setCurrentView("main");
+  const goToReview = () => setCurrentView("review");
 
   return (
     <Dialog open={open} onOpenChange={handleOpen}>
@@ -49,41 +57,53 @@ export default function MovieActions({
       </DialogTrigger>
 
       <DialogContent>
-        <header className="dialog-header">
-          <div className="dialog-movie-description">
-            <img
-              src={`https://image.tmdb.org/t/p/w45/${movie.poster_path}`}
-              alt=""
-              aria-hidden
-              className="dialog-image"
-            />
+        {currentView === "main" && (
+          <>
+            <header className="dialog-header">
+              <section className="dialog-movie-description">
+                <img
+                  src={`https://image.tmdb.org/t/p/w45/${movie.poster_path}`}
+                  alt=""
+                  aria-hidden
+                  className="dialog-image"
+                />
 
-            <div>
-              <h2 className="font-sentient">{movie.title}</h2>
-              <p className="text-secondary">
-                {!Number.isNaN(movieYear) ? movieYear : "NC"}
-              </p>
-            </div>
-          </div>
+                <div>
+                  <h2 className="font-sentient">{movie.title}</h2>
+                  <p className="text-secondary">
+                    {!Number.isNaN(movieYear) ? movieYear : "NC"}
+                  </p>
+                </div>
+              </section>
 
-          <Bookmark size={24} />
-        </header>
+              <Bookmark size={24} />
+            </header>
 
-        <Rating />
+            <Rating />
 
-        <div className="dialog-buttons">
-          <Button variant="outline" size="sm">
-            <Check size={16} /> Ajouter au journal
-          </Button>
+            <section className="dialog-buttons">
+              <Button variant="outline" size="sm">
+                <Check size={16} /> Ajouter au journal
+              </Button>
 
-          <Button variant="outline" size="sm">
-            <PenLine size={16} /> Écrire un avis
-          </Button>
+              <Button variant="outline" size="sm" onClick={goToReview}>
+                <PenLine size={16} /> Écrire un avis
+              </Button>
 
-          <Button variant="outline" size="sm">
-            <ListPlus size={16} /> Ajouter à une liste
-          </Button>
-        </div>
+              <Button variant="outline" size="sm">
+                <ListPlus size={16} /> Ajouter à une liste
+              </Button>
+            </section>
+          </>
+        )}
+
+        {currentView === "review" && (
+          <ReviewDialog
+            onClose={() => setOpen(false)}
+            onBack={goBackToMain}
+            movieId={movie.id}
+          />
+        )}
       </DialogContent>
     </Dialog>
   );
