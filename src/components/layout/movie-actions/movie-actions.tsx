@@ -101,7 +101,7 @@ export default function MovieActions({
           <ReviewDialog
             onClose={() => setOpen(false)}
             onBack={goBackToMain}
-            movieId={movie.id}
+            movieId={String(movie.id)}
           />
         )}
       </DialogContent>

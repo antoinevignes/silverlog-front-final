@@ -41,6 +41,7 @@ export function useUpdateMovieRating(movieId: string) {
       });
       queryClient.invalidateQueries({ queryKey: ["reviews", movieId] });
       queryClient.invalidateQueries({ queryKey: ["movie", movieId, "data"] });
+      queryClient.invalidateQueries({ queryKey: ["reviews", movieId] });
     },
 
     onError: (error) => {

@@ -28,10 +28,8 @@ export default function Reviews() {
   const routeApi = getRouteApi("/movies/$movieId/");
   const { movieId } = routeApi.useParams();
 
-  const { data: reviews, isLoading } = useQuery(
-    movieReviewsQuery(Number(movieId)),
-  );
-  const { mutate: likeReview, isPending } = useLikeReview(Number(movieId));
+  const { data: reviews, isLoading } = useQuery(movieReviewsQuery(movieId));
+  const { mutate: likeReview, isPending } = useLikeReview(movieId);
 
   return (
     <section className="reviews container">

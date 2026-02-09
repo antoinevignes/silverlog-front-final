@@ -16,7 +16,7 @@ import Skeleton from "@/components/ui/skeleton/skeleton";
 interface ReviewContentProps {
   onClose: () => void;
   onBack: () => void;
-  movieId: number;
+  movieId: string;
 }
 
 export default function ReviewDialog({

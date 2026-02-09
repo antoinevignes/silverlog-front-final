@@ -1,6 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 
-export const movieReviewQuery = (user: any, movieId: number) =>
+export const movieReviewQuery = (user: any, movieId: string) =>
   queryOptions({
     queryKey: ["review", movieId],
     queryFn: async () => {
@@ -18,7 +18,7 @@ export const movieReviewQuery = (user: any, movieId: number) =>
     enabled: !!user,
   });
 
-export const movieReviewsQuery = (movieId: number) =>
+export const movieReviewsQuery = (movieId: string) =>
   queryOptions({
     queryKey: ["reviews", movieId],
     queryFn: async () => {

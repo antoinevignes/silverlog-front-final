@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import { useAuth } from "@/auth";
 import { useNavigate } from "@tanstack/react-router";
 
-export function useUpsertReview(movieId: number) {
+export function useUpsertReview(movieId: string) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -56,7 +56,7 @@ export function useUpsertReview(movieId: number) {
   });
 }
 
-export function useLikeReview(movie_id: number) {
+export function useLikeReview(movie_id: string) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
