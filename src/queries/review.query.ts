@@ -16,7 +16,6 @@ export const movieReviewQuery = (user: any, movieId: number) =>
       return data;
     },
     enabled: !!user,
-    retry: false,
   });
 
 export const movieReviewsQuery = (movieId: number) =>

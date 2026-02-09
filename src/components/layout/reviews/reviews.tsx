@@ -74,10 +74,6 @@ export default function Reviews() {
                       />
                       {review.like_count}
                     </button>
-
-                    <Link className="link" to="/">
-                      Répondre
-                    </Link>
                   </section>
 
                   <p>
