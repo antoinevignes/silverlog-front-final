@@ -1,3 +1,5 @@
+@use "@/styles/abstracts/variables" as v;
+
 .review-dialog-header {
   .back-button {
     border: none;
@@ -25,6 +27,34 @@
 
       &.error {
         color: #ef4444;
+      }
+    }
+
+    .dialog-footer {
+      display: flex;
+      align-items: center;
+      width: 100%;
+
+      .footer-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-left: auto;
+      }
+
+      .delete-button {
+        padding: 0.5rem;
+        color: v.$destructive;
+        &:hover {
+          background-color: rgba(v.$destructive, 0.1);
+        }
+
+        &.confirm-mode {
+          color: white;
+
+          &:hover {
+            background-color: v.$destructive-hover;
+          }
+        }
       }
     }
   }

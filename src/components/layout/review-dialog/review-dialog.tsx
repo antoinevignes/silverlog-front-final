@@ -1,17 +1,18 @@
 import "./review-dialog.scss";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Trash2 } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import Rating from "@/components/layout/rating/rating";
 import Button from "@/components/ui/button/button";
 import { useAppForm } from "@/utils/useAppForm";
 import z from "zod";
-import { useUpsertReview } from "@/queries/review.mutations";
+import { useDeleteReview, useUpsertReview } from "@/queries/review.mutations";
 import { movieStateQuery } from "@/queries/user-movie.queries";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { movieReviewQuery } from "@/queries/review.query";
 import { useAuth } from "@/auth";
 import Skeleton from "@/components/ui/skeleton/skeleton";
+import { useEffect, useState } from "react";
 
 interface ReviewContentProps {
   onClose: () => void;
@@ -54,6 +55,33 @@ export default function ReviewDialog({
       });
     },
   });
+
+  const [isConfirming, setIsConfirming] = useState(false);
+  const { mutate: deleteReview, isPending: isDeleting } = useDeleteReview(
+    review?.id,
+    movieId,
+  );
+
+  useEffect(() => {
+    if (isConfirming) {
+      const timer = setTimeout(() => setIsConfirming(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [isConfirming]);
+
+  const handleDelete = () => {
+    if (!isConfirming) {
+      setIsConfirming(true);
+      return;
+    }
+
+    deleteReview(undefined, {
+      onSuccess: () => {
+        setIsConfirming(false);
+        onClose();
+      },
+    });
+  };
 
   return (
     <>
@@ -103,29 +131,49 @@ export default function ReviewDialog({
           />
 
           <div className="dialog-footer">
-            <Button type="button" variant="secondary" onClick={onBack}>
-              Annuler
-            </Button>
-
-            <form.AppForm>
-              <form.Subscribe
-                selector={(state) => [
-                  state.canSubmit,
-                  state.isSubmitting,
-                  state.isPristine,
-                ]}
-                children={([canSubmit, isSubmitting, isPristine]) => (
-                  <form.Button
-                    type="submit"
-                    disabled={
-                      !canSubmit || isSubmitting || isPending || isPristine
-                    }
-                  >
-                    {isSubmitting ? "Publication..." : "Publier"}
-                  </form.Button>
+            {review && (
+              <Button
+                type="button"
+                variant={isConfirming ? "destructive" : "ghost"}
+                className={`delete-button ${isConfirming ? "confirm-mode" : ""}`}
+                onClick={handleDelete}
+                disabled={isDeleting}
+              >
+                {isDeleting ? (
+                  "..."
+                ) : isConfirming ? (
+                  <>Confirmer ?</>
+                ) : (
+                  <Trash2 size={18} />
                 )}
-              />
-            </form.AppForm>
+              </Button>
+            )}
+
+            <div className="footer-actions">
+              <Button type="button" variant="secondary" onClick={onBack}>
+                Annuler
+              </Button>
+
+              <form.AppForm>
+                <form.Subscribe
+                  selector={(state) => [
+                    state.canSubmit,
+                    state.isSubmitting,
+                    state.isPristine,
+                  ]}
+                  children={([canSubmit, isSubmitting, isPristine]) => (
+                    <form.Button
+                      type="submit"
+                      disabled={
+                        !canSubmit || isSubmitting || isPending || isPristine
+                      }
+                    >
+                      {isSubmitting ? "Publication..." : "Publier"}
+                    </form.Button>
+                  )}
+                />
+              </form.AppForm>
+            </div>
           </div>
         </form>
       </section>
