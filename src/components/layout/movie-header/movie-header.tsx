@@ -61,6 +61,13 @@ export default function MovieHeader() {
   const backdropSrc = getCloudinarySrc(movie?.backdrop_path, "backdrops");
   const posterSrc = getCloudinarySrc(movie?.poster_path, "posters");
 
+  const voteAvg =
+    (Number(movieData.movie_avg) * Number(movieData.rating_count) +
+      Number(movie.vote_average) * Number(movie.vote_count)) /
+    (Number(movieData.rating_count) + Number(movie.vote_count));
+
+  console.log(voteAvg);
+
   return (
     <>
       {backdropSrc ? (
@@ -139,18 +146,16 @@ export default function MovieHeader() {
 
               <strong className="rating">
                 <data value={movie.vote_average}>
-                  {movieData.movie_avg
-                    ? movieData.movie_avg
-                    : Math.round(movie.vote_average * 10) / 10}
+                  {Math.round(voteAvg * 10) / 10}
                 </data>
                 /10
               </strong>
 
               <span className="text-secondary rating-count">
                 (
-                {movieData.rating_count > 0
-                  ? movieData.rating_count.toLocaleString()
-                  : movie.vote_count.toLocaleString()}
+                {(
+                  Number(movieData.rating_count) + Number(movie.vote_count)
+                ).toLocaleString()}
                 )
               </span>
             </p>

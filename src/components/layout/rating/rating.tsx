@@ -35,8 +35,6 @@ export default function Rating() {
   } = useSuspenseQuery(movieStateQuery(movieId));
   const { data: review, isLoading } = useQuery(movieReviewQuery(user, movieId));
 
-  console.log(review);
-
   const [hoverValue, setHoverValue] = useState<number | null>(null);
 
   const getStarValue = (
