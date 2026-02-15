@@ -66,8 +66,6 @@ export default function MovieHeader() {
       Number(movie.vote_average) * Number(movie.vote_count)) /
     (Number(movieData.rating_count) + Number(movie.vote_count));
 
-  console.log(voteAvg);
-
   return (
     <>
       {backdropSrc ? (
