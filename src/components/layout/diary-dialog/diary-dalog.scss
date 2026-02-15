@@ -1,0 +1,47 @@
+@use "@/styles/abstracts/variables" as v;
+
+.diary-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.75rem;
+
+  .back-button {
+    position: relative;
+    z-index: 2;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .diary-title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0;
+    z-index: 1;
+
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    pointer-events: none;
+  }
+}
+
+.diary-dialog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  .diary-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+  }
+}

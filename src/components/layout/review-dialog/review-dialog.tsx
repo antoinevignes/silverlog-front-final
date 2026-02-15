@@ -174,7 +174,7 @@ export default function ReviewDialog({
                         !canSubmit || isSubmitting || isPending || isPristine
                       }
                     >
-                      {isSubmitting ? "Publication..." : "Publier"}
+                      {isPending ? "Publication..." : "Publier"}
                     </form.Button>
                   )}
                 />
