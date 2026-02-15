@@ -1,6 +1,6 @@
 import { DayPicker } from "react-day-picker";
 import { fr } from "react-day-picker/locale";
-import "../../ui/date-picker/date-picker.scss";
+import "../../../ui/date-picker/date-picker.scss";
 import "./diary-dalog.scss";
 import { useAppForm } from "@/utils/useAppForm";
 import z from "zod";
