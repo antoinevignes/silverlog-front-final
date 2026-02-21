@@ -2,6 +2,7 @@ import { useAuth } from "@/auth";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
+import { seenMoviesQuery } from "./user-movie.queries";
 
 export function useUpdateMovieRating(movieId: string) {
   const { user } = useAuth();
@@ -42,6 +43,13 @@ export function useUpdateMovieRating(movieId: string) {
       queryClient.invalidateQueries({ queryKey: ["reviews", movieId] });
       queryClient.invalidateQueries({ queryKey: ["movie", movieId, "data"] });
       queryClient.invalidateQueries({ queryKey: ["reviews", movieId] });
+      queryClient.invalidateQueries({ queryKey: ["movie", movieId] });
+      queryClient.invalidateQueries({
+        queryKey: seenMoviesQuery(String(user?.id)).queryKey,
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["movie", movieId, "details"],
+      });
     },
 
     onError: (error) => {

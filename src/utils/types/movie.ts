@@ -14,4 +14,5 @@ export type MovieType = {
   production_companies: { name: string }[];
   tagline: string;
   popularity: number;
+  seen_at: Date;
 };
