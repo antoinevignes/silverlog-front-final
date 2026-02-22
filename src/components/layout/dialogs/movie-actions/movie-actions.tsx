@@ -13,6 +13,7 @@ import { Bookmark, Check, ListPlus, PenLine, Plus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import ReviewDialog from "../review-dialog/review-dialog";
+import DiaryDialog from "../diary-dialog/diary-dialog";
 
 export default function MovieActions({
   movie,
@@ -46,6 +47,7 @@ export default function MovieActions({
 
   const goBackToMain = () => setCurrentView("main");
   const goToReview = () => setCurrentView("review");
+  const goToDiary = () => setCurrentView("diary");
 
   return (
     <Dialog open={open} onOpenChange={handleOpen}>
@@ -82,7 +84,7 @@ export default function MovieActions({
             <Rating />
 
             <section className="dialog-buttons">
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" onClick={goToDiary}>
                 <Check size={16} /> Ajouter au journal
               </Button>
 
@@ -99,6 +101,14 @@ export default function MovieActions({
 
         {currentView === "review" && (
           <ReviewDialog
+            onClose={() => setOpen(false)}
+            onBack={goBackToMain}
+            movieId={String(movie.id)}
+          />
+        )}
+
+        {currentView === "diary" && (
+          <DiaryDialog
             onClose={() => setOpen(false)}
             onBack={goBackToMain}
             movieId={String(movie.id)}

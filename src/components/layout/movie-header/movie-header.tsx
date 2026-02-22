@@ -14,7 +14,7 @@ import MovieCast from "@/components/layout/movie-tabs/movie-cast";
 import MovieCrew from "@/components/layout/movie-tabs/movie-crew";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 import SynopsisContainer from "@/components/layout/synopsis-container/synopsis-container";
-import MovieActions from "../movie-actions/movie-actions";
+import MovieActions from "../dialogs/movie-actions/movie-actions";
 import { Image } from "@unpic/react";
 import {
   getCloudinaryPlaceholder,
@@ -99,8 +99,6 @@ export default function MovieHeader() {
     (Number(movieData.movie_avg) * Number(movieData.rating_count) +
       Number(movie.vote_average) * Number(movie.vote_count)) /
     (Number(movieData.rating_count) + Number(movie.vote_count));
-
-  console.log(voteAvg);
 
   return (
     <>

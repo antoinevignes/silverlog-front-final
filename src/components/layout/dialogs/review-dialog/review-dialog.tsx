@@ -86,9 +86,15 @@ export default function ReviewDialog({
   return (
     <>
       <header className="review-dialog-header">
-        <button className="back-button" onClick={onBack} aria-label="Retour">
+        <button
+          className="back-button link"
+          onClick={onBack}
+          aria-label="Retour"
+        >
           <ArrowLeft size={20} />
         </button>
+
+        <h2 className="review-title">Écrire un avis</h2>
       </header>
 
       <section className="review-content">
@@ -168,7 +174,7 @@ export default function ReviewDialog({
                         !canSubmit || isSubmitting || isPending || isPristine
                       }
                     >
-                      {isSubmitting ? "Publication..." : "Publier"}
+                      {isPending ? "Publication..." : "Publier"}
                     </form.Button>
                   )}
                 />
