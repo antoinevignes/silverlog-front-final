@@ -15,4 +15,5 @@ export type MovieType = {
   tagline: string;
   popularity: number;
   seen_at: Date;
+  personal_rating: number;
 };

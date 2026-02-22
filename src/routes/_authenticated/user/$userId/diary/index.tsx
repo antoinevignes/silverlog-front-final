@@ -1,22 +1,14 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import "./diary.scss";
 import ArticleTitle from "@/components/layout/section-title/article-title";
 import { seenMoviesQuery } from "@/queries/user-movie.queries";
 import { useQueries, useQuery } from "@tanstack/react-query";
-import { Image } from "@unpic/react";
-import {
-  getCloudinaryPlaceholder,
-  getCloudinarySrc,
-} from "@/utils/cloudinary-handler";
-import Badge from "@/components/ui/badge";
-import {
-  LayoutPanelLeft,
-  Medal,
-  SlidersHorizontal,
-  Star,
-  X,
-} from "lucide-react";
 import type { MovieType } from "@/utils/types/movie";
+import DiaryMobile from "@/components/layout/diary/diary-mobile";
+import { useMemo } from "react";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
+import DiaryDesktop from "@/components/layout/diary/diary-desktop";
 
 type JournalItem = {
   movie_id: number;
@@ -57,25 +49,36 @@ function RouteComponent() {
     })),
   });
 
-  const sorted = (
-    movieDetailsResults.map((r) => r.data).filter(Boolean) as MovieType[]
-  ).sort(
-    (a, b) => new Date(b.seen_at).getTime() - new Date(a.seen_at).getTime(),
-  );
+  const groups = useMemo(() => {
+    const movies = (
+      movieDetailsResults.map((r) => r.data).filter(Boolean) as MovieType[]
+    ).sort(
+      (a, b) => new Date(b.seen_at).getTime() - new Date(a.seen_at).getTime(),
+    );
 
-  const groupedMovies = sorted.reduce(
-    (acc, movie: MovieType) => {
-      const date = new Date(movie.seen_at);
-      const monthYear = date.toLocaleDateString("fr-FR", {
-        month: "long",
-        year: "numeric",
-      });
-      if (!acc[monthYear]) acc[monthYear] = [];
-      acc[monthYear].push(movie);
-      return acc;
-    },
-    {} as Record<string, any[]>,
-  );
+    const map = movies.reduce(
+      (acc, movie) => {
+        const date = new Date(movie.seen_at);
+        const key = format(date, "yyyy-MM");
+        if (!acc[key]) {
+          acc[key] = {
+            id: key,
+            label: format(date, "MMMM yyyy", { locale: fr }),
+            date: date,
+            movies: [],
+          };
+        }
+        acc[key].movies.push(movie);
+        return acc;
+      },
+      {} as Record<
+        string,
+        { id: string; label: string; date: Date; movies: MovieType[] }
+      >,
+    );
+
+    return Object.values(map);
+  }, [movieDetailsResults]);
 
   const isLoading =
     isLoadingJournal || movieDetailsResults.some((r) => r.isLoading);
@@ -84,92 +87,17 @@ function RouteComponent() {
     <main className="container diary-page">
       <ArticleTitle title="Journal" />
 
-      <section className="filter-badges">
-        <Badge>
-          <X size={16} />
-          <span>Tous ({journalItems?.length})</span>
-        </Badge>
-
-        <Badge variant="secondary">
-          <SlidersHorizontal size={16} />
-          <span>Filtrer</span>
-        </Badge>
-
-        <Badge variant="secondary">
-          <Medal size={16} />
-          <span>Dans mon top</span>
-        </Badge>
-
-        <LayoutPanelLeft />
-      </section>
-
       {isLoading ? (
         <p>Chargement...</p>
       ) : (
-        Object.entries(groupedMovies).map(([month, movies]) => (
-          <section key={month} className="diary-month-section">
-            <h2 className="month-title">{month}</h2>
-            <ul className="diary-list">
-              {movies.map((movie) => (
-                <li key={movie.id} className="diary-item">
-                  <Link
-                    to={`/movies/$movieId`}
-                    params={{ movieId: String(movie.id) }}
-                    className="diary-link"
-                  >
-                    <div className="poster-container">
-                      <Image
-                        src={getCloudinarySrc(movie.poster_path, "posters")}
-                        layout="constrained"
-                        width={60}
-                        aspectRatio={2 / 3}
-                        alt={movie.title}
-                        background={getCloudinaryPlaceholder(
-                          movie.poster_path,
-                          "posters",
-                        )}
-                        priority
-                        className="poster"
-                      />
-
-                      <span className="day-badge">
-                        {new Date(movie.seen_at).getDate()}
-                      </span>
-                    </div>
-
-                    <section className="movie-info">
-                      <h3>{movie.title}</h3>
-                      <p className="year text-secondary">
-                        ({movie.release_date.split("-")[0]})
-                      </p>
-
-                      {movie.personal_rating && (
-                        <section className="rating-section">
-                          <div>
-                            {Array.from({
-                              length: Math.floor(movie.personal_rating / 2),
-                            }).map((_, index) => (
-                              <Star
-                                key={index}
-                                size={14}
-                                stroke="#F2C265"
-                                fill="#F2C265"
-                              />
-                            ))}
-                          </div>
-
-                          <span className="text-secondary rating-number">
-                            ({movie.personal_rating / 2} / 10)
-                          </span>
-                        </section>
-                      )}
-                    </section>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))
+        <div className="diary-content">
+          {groups.map((group) => (
+            <div key={group.id} className="diary-month-wrapper">
+              <DiaryMobile month={group.label} movies={group.movies} />
+              <DiaryDesktop monthDate={group.date} movies={group.movies} />
+            </div>
+          ))}
+        </div>
       )}
     </main>
   );
