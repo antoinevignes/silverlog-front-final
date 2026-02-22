@@ -3,72 +3,74 @@
 .month-grid-section {
   margin-bottom: 3rem;
 
-  .month-title {
-    text-transform: capitalize;
-    font-size: 1.1rem;
-    color: v.$neutral-800;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    position: sticky;
-    top: 0;
-    background: white;
-    z-index: 20;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    text-align: center;
-    border: 1px solid v.$neutral-200;
-  }
-
   .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    border: 1px solid v.$neutral-200;
-    border-radius: 0.5rem;
-    background: v.$neutral-200;
-    gap: 1px;
-    overflow: hidden;
+    gap: 0.5rem;
 
     .weekday-label {
-      padding: 1rem;
+      padding: 0.5rem 0;
       text-align: center;
       font-size: 0.75rem;
       letter-spacing: 0.1em;
       font-weight: 700;
       color: v.$neutral-600;
-      background: white;
     }
 
     .calendar-day {
       aspect-ratio: 2 / 3;
       position: relative;
-      background: white;
-      transition: background 0.2s ease;
+      border-radius: 0.5rem;
+      transition: all 0.2s ease;
 
       &.outside {
-        background: v.$neutral-50;
-        opacity: 0.4;
+        opacity: 0.2;
       }
 
       &.is-empty {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        .add-movie-link {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-decoration: none;
+          position: relative;
+          color: inherit;
+        }
 
         .day-number {
           font-size: 0.875rem;
           font-weight: 500;
           color: v.$neutral-400;
+          transition: opacity 0.2s ease;
+        }
+
+        .add-icon {
+          position: absolute;
+          opacity: 0;
+          transform: scale(0.8);
+          transition: all 0.2s cubic-bezier(0.2, 1, 0.3, 1);
+          color: v.$neutral-600;
         }
 
         &:hover {
-          background: v.$neutral-50;
+          background: v.$neutral-100;
+
           .day-number {
-            color: v.$neutral-900;
+            opacity: 0;
+          }
+
+          .add-icon {
+            opacity: 1;
+            transform: scale(1);
           }
         }
       }
 
       &.has-movies {
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         overflow: hidden;
 
         .poster-link {
@@ -82,6 +84,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            border-radius: 0.5rem;
             transition: transform 0.5s cubic-bezier(0.2, 1, 0.3, 1);
           }
 
@@ -92,15 +95,13 @@
             align-items: center;
             justify-content: center;
             background: rgba(0, 0, 0, 0.3);
+            border-radius: 0.5rem;
             transition: background 0.3s ease;
-
-            .number {
-              color: white;
-              font-size: 1.5rem;
-              font-weight: 800;
-              opacity: 0.9;
-              text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-            }
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 800;
+            opacity: 0.9;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
           }
 
           &:hover {

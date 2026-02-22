@@ -17,13 +17,15 @@ import {
   getCloudinaryPlaceholder,
   getCloudinarySrc,
 } from "@/utils/cloudinary-handler";
+import type { MovieType } from "@/utils/types/movie";
+import { Plus } from "lucide-react";
 
 export default function DiaryDesktop({
   monthDate,
   movies,
 }: {
   monthDate: Date;
-  movies: any[];
+  movies: MovieType[];
 }) {
   const days = useMemo(() => {
     const start = startOfWeek(startOfMonth(monthDate), { weekStartsOn: 1 });
@@ -33,15 +35,11 @@ export default function DiaryDesktop({
 
   return (
     <section className="month-grid-section">
-      <h2 className="month-title">
-        {format(monthDate, "MMMM yyyy", { locale: fr })}
-      </h2>
-
-      <div className="calendar-grid">
+      <ol className="calendar-grid">
         {["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"].map((d) => (
-          <div key={d} className="weekday-label">
+          <li key={d} className="weekday-label">
             {d}
-          </div>
+          </li>
         ))}
 
         {days.map((day) => {
@@ -50,14 +48,27 @@ export default function DiaryDesktop({
           );
           const isCurrentMonth = isSameMonth(day, monthDate);
           const hasMovies = moviesThisDay.length > 0;
+          const dayFormatted = format(day, "d");
 
           return (
-            <div
+            <li
               key={day.toString()}
               className={`calendar-day ${!isCurrentMonth ? "outside" : ""} ${hasMovies ? "has-movies" : "is-empty"}`}
             >
               {isCurrentMonth && !hasMovies && (
-                <span className="day-number">{format(day, "d")}</span>
+                <Link
+                  to="/"
+                  className="add-movie-link"
+                  aria-label={`Ajouter un film le ${format(day, "d MMMM yyyy", { locale: fr })}`}
+                >
+                  <time
+                    dateTime={format(day, "yyyy-MM-dd")}
+                    className="day-number"
+                  >
+                    {dayFormatted}
+                  </time>
+                  <Plus size={24} className="add-icon" />
+                </Link>
               )}
 
               {moviesThisDay.map((movie) => (
@@ -66,6 +77,7 @@ export default function DiaryDesktop({
                   to={`/movies/$movieId`}
                   params={{ movieId: String(movie.id) }}
                   className="poster-link"
+                  aria-label={`${movie.title}, vu le ${format(day, "d MMMM", { locale: fr })}`}
                 >
                   <Image
                     src={getCloudinarySrc(movie.poster_path, "posters")}
@@ -77,17 +89,21 @@ export default function DiaryDesktop({
                       "posters",
                     )}
                     priority
-                    className="poster"
+                    className="poster-img"
                   />
-                  <div className="day-overlay">
-                    <span className="number">{format(day, "d")}</span>
-                  </div>
+
+                  <time
+                    dateTime={format(movie.seen_at, "yyyy-MM-dd")}
+                    className="day-overlay"
+                  >
+                    {format(day, "d")}
+                  </time>
                 </Link>
               ))}
-            </div>
+            </li>
           );
         })}
-      </div>
+      </ol>
     </section>
   );
 }

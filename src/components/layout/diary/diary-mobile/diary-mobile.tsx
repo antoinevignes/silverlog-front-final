@@ -5,20 +5,13 @@ import {
 import type { MovieType } from "@/utils/types/movie";
 import { Link } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
-import { Star } from "lucide-react";
+import { Star, StarHalf } from "lucide-react";
 import "./diary-mobile.scss";
+import { format } from "date-fns";
 
-export default function DiaryMobile({
-  month,
-  movies,
-}: {
-  month: string;
-  movies: MovieType[];
-}) {
+export default function DiaryMobile({ movies }: { movies: MovieType[] }) {
   return (
-    <section key={month} className="diary-mobile">
-      <h2 className="month-title">{month}</h2>
-
+    <section className="diary-mobile">
       <ul className="diary-list">
         {movies.map((movie) => (
           <li key={movie.id} className="diary-item">
@@ -27,7 +20,7 @@ export default function DiaryMobile({
               params={{ movieId: String(movie.id) }}
               className="diary-link"
             >
-              <div className="poster-container">
+              <figure className="poster-container">
                 <Image
                   src={getCloudinarySrc(movie.poster_path, "posters")}
                   layout="constrained"
@@ -42,39 +35,46 @@ export default function DiaryMobile({
                   className="poster"
                 />
 
-                <span className="day-badge">
-                  {new Date(movie.seen_at).getDate()}
-                </span>
-              </div>
+                <time
+                  dateTime={format(movie.seen_at, "yyyy-MM-dd")}
+                  className="day-overlay"
+                >
+                  {format(movie.seen_at, "d")}
+                </time>
+              </figure>
 
-              <section className="movie-info">
+              <div className="movie-info">
                 <h3>{movie.title}</h3>
 
-                <p className="year text-secondary">
-                  ({movie.release_date.split("-")[0]})
-                </p>
+                <p className="year">{format(movie.release_date, "yyyy")}</p>
 
                 {movie.personal_rating && (
-                  <section className="rating-section">
+                  <div
+                    className="rating-section"
+                    aria-label={`Note : ${movie.personal_rating / 2} sur 10`}
+                  >
                     <div>
                       {Array.from({
                         length: Math.floor(movie.personal_rating / 2),
                       }).map((_, index) => (
                         <Star
-                          key={index}
+                          key={`full-${index}`}
                           size={14}
                           stroke="#F2C265"
                           fill="#F2C265"
                         />
                       ))}
+                      {movie.personal_rating % 2 !== 0 && (
+                        <StarHalf size={14} stroke="#F2C265" fill="#F2C265" />
+                      )}
                     </div>
 
                     <span className="text-secondary rating-number">
                       ({movie.personal_rating / 2} / 10)
                     </span>
-                  </section>
+                  </div>
                 )}
-              </section>
+              </div>
             </Link>
           </li>
         ))}
