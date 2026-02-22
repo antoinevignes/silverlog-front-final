@@ -12,7 +12,7 @@ export default function SynopsisContainer({
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const overviewPreviewLength = 180;
+  const overviewPreviewLength = className === "synopsis-desktop" ? 300 : 150;
   const shouldShowReadMore =
     movie.overview.length > overviewPreviewLength && !isExpanded;
 
@@ -23,14 +23,14 @@ export default function SynopsisContainer({
       )}
 
       <p className={isExpanded ? "overview-expanded" : "overview-preview"}>
-        {isExpanded || className === "synopsis-desktop"
+        {isExpanded
           ? movie.overview
           : shouldShowReadMore
             ? `${movie.overview.substring(0, overviewPreviewLength)}...`
             : movie.overview}
       </p>
 
-      {shouldShowReadMore && className !== "synopsis-desktop" && (
+      {shouldShowReadMore && (
         <button
           className="read-more-btn underline-link"
           onClick={() => setIsExpanded(true)}

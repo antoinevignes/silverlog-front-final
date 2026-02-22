@@ -27,6 +27,40 @@ const tabs = [
   { id: "crew", label: "Équipe technique" },
 ];
 
+function RatingBadge({
+  movie,
+  movieData,
+  voteAvg,
+  className,
+}: {
+  movie: any;
+  movieData: any;
+  voteAvg: number;
+  className?: string;
+}) {
+  return (
+    <p
+      className={`grade ${className || ""}`}
+      aria-label={`Note de ${movie?.vote_average} sur 10`}
+    >
+      <Star className="star-icon" aria-hidden color="#F1DA51" fill="#F1DA51" />
+
+      <strong className="rating">
+        <data value={movie?.vote_average}>{Math.round(voteAvg * 10) / 10}</data>
+        /10
+      </strong>
+
+      <span className="text-secondary rating-count">
+        (
+        {(
+          Number(movieData?.rating_count) + Number(movie?.vote_count)
+        ).toLocaleString()}
+        )
+      </span>
+    </p>
+  );
+}
+
 export default function MovieHeader() {
   const routeApi = getRouteApi("/movies/$movieId/");
   const { movieId } = routeApi.useParams();
@@ -91,25 +125,34 @@ export default function MovieHeader() {
 
       <article className="movie container">
         <header className="movie-header">
-          <div className="poster-wrapper">
-            {posterSrc ? (
-              <Image
-                src={posterSrc}
-                layout="fullWidth"
-                aspectRatio={2 / 3}
-                alt={movie.title}
-                background={getCloudinaryPlaceholder(
-                  movie.poster_path,
-                  "posters",
-                )}
-                priority
-                className="poster"
+          <div className="poster-container-wrapper">
+            <div className="poster-wrapper">
+              {posterSrc ? (
+                <Image
+                  src={posterSrc}
+                  layout="fullWidth"
+                  aspectRatio={2 / 3}
+                  alt={movie.title}
+                  background={getCloudinaryPlaceholder(
+                    movie.poster_path,
+                    "posters",
+                  )}
+                  priority
+                  className="poster"
+                />
+              ) : (
+                <div className="poster-fallback">
+                  <Film size={64} />
+                </div>
+              )}
+
+              <RatingBadge
+                movie={movie}
+                movieData={movieData}
+                voteAvg={voteAvg}
+                className="grade-mobile"
               />
-            ) : (
-              <div className="poster-fallback">
-                <Film size={64} />
-              </div>
-            )}
+            </div>
           </div>
 
           <div className="movie-details">
@@ -138,27 +181,12 @@ export default function MovieHeader() {
               <time dateTime={`PT${movie.runtime}M`}>{movie.runtime} mins</time>
             </p>
 
-            <p
-              className="grade"
-              aria-label={`Note de ${movie.vote_average} sur 10`}
-            >
-              <Star size={20} aria-hidden color="#F1DA51" fill="#F1DA51" />
-
-              <strong className="rating">
-                <data value={movie.vote_average}>
-                  {Math.round(voteAvg * 10) / 10}
-                </data>
-                /10
-              </strong>
-
-              <span className="text-secondary rating-count">
-                (
-                {(
-                  Number(movieData.rating_count) + Number(movie.vote_count)
-                ).toLocaleString()}
-                )
-              </span>
-            </p>
+            <RatingBadge
+              movie={movie}
+              movieData={movieData}
+              voteAvg={voteAvg}
+              className="grade-desktop"
+            />
 
             <SynopsisContainer movie={movie} className="synopsis-desktop" />
 
@@ -204,8 +232,11 @@ function MovieHeaderSkeleton() {
 
       <article className="movie container">
         <header className="movie-header">
-          <div className="poster-wrapper">
-            <Skeleton className="poster-fallback" />
+          <div className="poster-container-wrapper">
+            <div className="poster-wrapper">
+              <Skeleton className="poster-fallback" />
+            </div>
+            <Skeleton width={100} height={30} className="grade grade-mobile" />
           </div>
 
           <div className="movie-details">
@@ -219,7 +250,7 @@ function MovieHeaderSkeleton() {
               <Skeleton width={50} height={16} />
             </div>
 
-            <div className="grade">
+            <div className="grade grade-desktop">
               <Skeleton width={100} height={30} />
             </div>
 

@@ -1,7 +1,6 @@
 import HorizontalScroller from "@/components/layout/horizontal-scroller/horizontal-scroller";
 import MovieCard from "@/components/layout/movie-card/movie-card";
 import ArticleTitle from "@/components/layout/section-title/article-title";
-import { Separator } from "@/components/ui/separator";
 import {
   movieCreditsQuery,
   movieDetailsQuery,
@@ -31,14 +30,12 @@ function RouteComponent() {
   const { data: similar, isLoading } = useQuery(similarMoviesQuery(movieId));
 
   return (
-    <main>
+    <main className="movie-page-content">
       <MovieHeader />
 
-      <Separator />
-
-      <Reviews />
-
-      <Separator />
+      <div className="reviews-wrapper">
+        <Reviews />
+      </div>
 
       <section className="container suggestions">
         <ArticleTitle title="Films similaires" />
@@ -57,8 +54,6 @@ function RouteComponent() {
               ))}
         </HorizontalScroller>
       </section>
-
-      <Separator />
     </main>
   );
 }
