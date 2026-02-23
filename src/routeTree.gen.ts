@@ -18,6 +18,7 @@ import { Route as AboutMentionsLegalesRouteImport } from './routes/about/mention
 import { Route as PersonPersonIdIndexRouteImport } from './routes/person/$personId/index'
 import { Route as MoviesMovieIdIndexRouteImport } from './routes/movies/$movieId/index'
 import { Route as AuthenticatedUserUserIdWatchlistIndexRouteImport } from './routes/_authenticated/user/$userId/watchlist/index'
+import { Route as AuthenticatedUserUserIdTopIndexRouteImport } from './routes/_authenticated/user/$userId/top/index'
 import { Route as AuthenticatedUserUserIdDiaryIndexRouteImport } from './routes/_authenticated/user/$userId/diary/index'
 
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -65,6 +66,12 @@ const AuthenticatedUserUserIdWatchlistIndexRoute =
     path: '/user/$userId/watchlist/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedUserUserIdTopIndexRoute =
+  AuthenticatedUserUserIdTopIndexRouteImport.update({
+    id: '/user/$userId/top/',
+    path: '/user/$userId/top/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedUserUserIdDiaryIndexRoute =
   AuthenticatedUserUserIdDiaryIndexRouteImport.update({
     id: '/user/$userId/diary/',
@@ -81,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/movies/$movieId/': typeof MoviesMovieIdIndexRoute
   '/person/$personId/': typeof PersonPersonIdIndexRoute
   '/user/$userId/diary/': typeof AuthenticatedUserUserIdDiaryIndexRoute
+  '/user/$userId/top/': typeof AuthenticatedUserUserIdTopIndexRoute
   '/user/$userId/watchlist/': typeof AuthenticatedUserUserIdWatchlistIndexRoute
 }
 export interface FileRoutesByTo {
@@ -92,6 +100,7 @@ export interface FileRoutesByTo {
   '/movies/$movieId': typeof MoviesMovieIdIndexRoute
   '/person/$personId': typeof PersonPersonIdIndexRoute
   '/user/$userId/diary': typeof AuthenticatedUserUserIdDiaryIndexRoute
+  '/user/$userId/top': typeof AuthenticatedUserUserIdTopIndexRoute
   '/user/$userId/watchlist': typeof AuthenticatedUserUserIdWatchlistIndexRoute
 }
 export interface FileRoutesById {
@@ -105,6 +114,7 @@ export interface FileRoutesById {
   '/movies/$movieId/': typeof MoviesMovieIdIndexRoute
   '/person/$personId/': typeof PersonPersonIdIndexRoute
   '/_authenticated/user/$userId/diary/': typeof AuthenticatedUserUserIdDiaryIndexRoute
+  '/_authenticated/user/$userId/top/': typeof AuthenticatedUserUserIdTopIndexRoute
   '/_authenticated/user/$userId/watchlist/': typeof AuthenticatedUserUserIdWatchlistIndexRoute
 }
 export interface FileRouteTypes {
@@ -118,6 +128,7 @@ export interface FileRouteTypes {
     | '/movies/$movieId/'
     | '/person/$personId/'
     | '/user/$userId/diary/'
+    | '/user/$userId/top/'
     | '/user/$userId/watchlist/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -129,6 +140,7 @@ export interface FileRouteTypes {
     | '/movies/$movieId'
     | '/person/$personId'
     | '/user/$userId/diary'
+    | '/user/$userId/top'
     | '/user/$userId/watchlist'
   id:
     | '__root__'
@@ -141,6 +153,7 @@ export interface FileRouteTypes {
     | '/movies/$movieId/'
     | '/person/$personId/'
     | '/_authenticated/user/$userId/diary/'
+    | '/_authenticated/user/$userId/top/'
     | '/_authenticated/user/$userId/watchlist/'
   fileRoutesById: FileRoutesById
 }
@@ -220,6 +233,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedUserUserIdWatchlistIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/user/$userId/top/': {
+      id: '/_authenticated/user/$userId/top/'
+      path: '/user/$userId/top'
+      fullPath: '/user/$userId/top/'
+      preLoaderRoute: typeof AuthenticatedUserUserIdTopIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/user/$userId/diary/': {
       id: '/_authenticated/user/$userId/diary/'
       path: '/user/$userId/diary'
@@ -232,12 +252,14 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedUserUserIdDiaryIndexRoute: typeof AuthenticatedUserUserIdDiaryIndexRoute
+  AuthenticatedUserUserIdTopIndexRoute: typeof AuthenticatedUserUserIdTopIndexRoute
   AuthenticatedUserUserIdWatchlistIndexRoute: typeof AuthenticatedUserUserIdWatchlistIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedUserUserIdDiaryIndexRoute:
     AuthenticatedUserUserIdDiaryIndexRoute,
+  AuthenticatedUserUserIdTopIndexRoute: AuthenticatedUserUserIdTopIndexRoute,
   AuthenticatedUserUserIdWatchlistIndexRoute:
     AuthenticatedUserUserIdWatchlistIndexRoute,
 }
