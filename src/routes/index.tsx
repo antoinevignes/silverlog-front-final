@@ -1,4 +1,5 @@
 import { useAuth } from "@/auth";
+import SearchBar from "@/components/layout/search-bar/search-bar";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
@@ -12,6 +13,8 @@ function App() {
 
   return (
     <div>
+      <SearchBar />
+
       <h1>Home</h1>
       <p>{user?.username}</p>
       <button onClick={logout}>Logout</button>

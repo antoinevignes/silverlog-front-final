@@ -1,0 +1,157 @@
+@use "@/styles/abstracts/variables" as v;
+
+.watchlist-page {
+  padding-bottom: 4rem;
+
+  .watchlist-stats {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    .stat-card {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+      border-right: 1px solid v.$neutral-200;
+      padding-right: 1.5rem;
+
+      &:last-child {
+        border-right: none;
+        padding-right: 0;
+      }
+
+      .stat-value {
+        font-weight: 700;
+        font-size: 1.125rem;
+        color: v.$neutral-900;
+        line-height: 1;
+
+        @media (min-width: 768px) {
+          font-size: 1.5rem;
+        }
+      }
+
+      .stat-label {
+        font-size: 0.6875rem;
+        color: v.$neutral-500;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+
+        @media (min-width: 768px) {
+          font-size: 0.8125rem;
+        }
+      }
+    }
+  }
+
+  .watchlist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+
+    @media (min-width: 480px) {
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 2rem;
+    }
+  }
+
+  .watchlist-movie-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    transition: transform 0.2s cubic-bezier(0.2, 1, 0.3, 1);
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-4px);
+
+      .poster {
+        transform: scale(1.05);
+      }
+    }
+
+    .poster-container {
+      margin: 0;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      background-color: v.$neutral-100;
+
+      .poster {
+        display: block;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        transition: transform 0.3s cubic-bezier(0.2, 1, 0.3, 1);
+      }
+    }
+
+    .movie-details {
+      margin-top: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+
+      .movie-title {
+        font-weight: 600;
+        font-size: 0.9375rem;
+        color: v.$neutral-900;
+        margin: 0;
+        line-height: 1.2;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .movie-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.8125rem;
+        color: v.$neutral-600;
+
+        .tmdb-rating {
+          display: flex;
+          align-items: center;
+          gap: 0.125rem;
+          color: v.$neutral-800;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  .empty-state {
+    text-align: center;
+    color: v.$neutral-500;
+    margin-top: 4rem;
+    font-size: 1rem;
+    background: v.$neutral-50;
+    padding: 3rem 1rem;
+    border-radius: 1rem;
+    border: 1px dashed v.$neutral-200;
+  }
+}

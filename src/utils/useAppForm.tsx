@@ -1,5 +1,6 @@
-import Button from "@/components/ui/button";
+import Button from "@/components/ui/button/button";
 import Input from "@/components/ui/input";
+import Textarea from "@/components/ui/textarea/textarea";
 import {
   createFormHook,
   createFormHookContexts,
@@ -12,6 +13,7 @@ export const { fieldContext, formContext, useFieldContext } =
 export const { useAppForm } = createFormHook({
   fieldComponents: {
     Input,
+    Textarea,
   },
   formComponents: {
     Button,
