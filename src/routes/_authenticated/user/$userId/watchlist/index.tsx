@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useAuth } from "@/auth";
 import { listDataQuery } from "@/queries/list.queries";
 import { useQueries, useQuery } from "@tanstack/react-query";
@@ -51,34 +50,6 @@ function RouteComponent() {
     .map((r) => r.data)
     .filter(Boolean) as MovieType[];
 
-  const { totalRuntime, averageRating } = useMemo(() => {
-    if (!movies.length) return { totalRuntime: 0, averageRating: 0 };
-
-    let runtime = 0;
-    let totalRating = 0;
-    let ratingCount = 0;
-
-    for (const movie of movies) {
-      if ((movie as any).runtime) runtime += (movie as any).runtime;
-      if ((movie as any).vote_average) {
-        totalRating += (movie as any).vote_average;
-        ratingCount++;
-      }
-    }
-
-    return {
-      totalRuntime: runtime,
-      averageRating: ratingCount > 0 ? totalRating / ratingCount : 0,
-    };
-  }, [movies]);
-
-  const formatRuntime = (minutes: number) => {
-    if (!minutes) return "0h";
-    const h = Math.floor(minutes / 60);
-    const m = minutes % 60;
-    return m > 0 ? `${h}h ${m}m` : `${h}h`;
-  };
-
   const isFetchingMovies =
     isLoadingList || movieDetailsResults.some((r) => r.isLoading);
 
@@ -86,41 +57,41 @@ function RouteComponent() {
     <main className="container watchlist-page">
       <ArticleTitle title="Ma Watchlist" />
 
-      <section className="watchlist-stats">
-        <div className="stat-card">
-          <span className="stat-value">
-            {isLoadingList ? "-" : movies.length}
-          </span>
-          <span className="stat-label">Films à voir</span>
-        </div>
-
-        <div className="stat-card">
-          <span className="stat-value">
-            {isLoadingList ? "-" : formatRuntime(totalRuntime)}
-          </span>
-          <span className="stat-label">Temps estimé</span>
-        </div>
-
-        <div className="stat-card">
-          <span className="stat-value">
-            {isLoadingList
-              ? "-"
-              : averageRating > 0
-                ? `${averageRating.toFixed(1)} / 10`
-                : "-"}
-          </span>
-          <span className="stat-label">Note moyenne TMDB</span>
-        </div>
-      </section>
-
       {isFetchingMovies ? (
-        <div className="watchlist-grid">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <Skeleton key={i} width="100%" height={260} />
+        <div className="watchlist-layout">
+          {Array.from({ length: 10 }).map((_, i) => (
+            <div
+              key={i}
+              style={{ display: "flex", gap: "1rem", marginBottom: "1rem" }}
+            >
+              <div
+                style={{
+                  width: 60,
+                  height: 90,
+                  borderRadius: "0.5rem",
+                  overflow: "hidden",
+                  flexShrink: 0,
+                }}
+              >
+                <Skeleton width="100%" height="100%" />
+              </div>
+              <div
+                style={{
+                  flex: 1,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.5rem",
+                  justifyContent: "center",
+                }}
+              >
+                <Skeleton width="60%" height={24} />
+                <Skeleton width="40%" height={20} />
+              </div>
+            </div>
           ))}
         </div>
       ) : movies.length > 0 ? (
-        <section className="watchlist-grid">
+        <section className="watchlist-layout">
           {movies.map((movie) => (
             <Link
               to={`/movies/$movieId`}
@@ -131,7 +102,8 @@ function RouteComponent() {
               <figure className="poster-container">
                 <Image
                   src={getCloudinarySrc(movie.poster_path, "posters")}
-                  layout="fullWidth"
+                  layout="constrained"
+                  width={80}
                   aspectRatio={2 / 3}
                   alt={movie.title}
                   background={getCloudinaryPlaceholder(
