@@ -99,7 +99,6 @@ export default function ReviewDialog({
 
       <section className="review-content">
         <div className="rating-section">
-          <Label>Ma note :</Label>
           <Rating />
         </div>
 

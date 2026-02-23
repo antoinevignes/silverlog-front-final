@@ -7,20 +7,43 @@
   height: 24px;
   cursor: pointer;
   margin-right: 4px;
-}
+  transition: transform 0.2s cubic-bezier(0.2, 1, 0.3, 1);
 
-.star-container {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-
-  .star-background {
-    position: absolute;
-    inset: 0;
+  &:hover {
+    transform: scale(1.15);
   }
 
-  .star-foreground {
-    position: absolute;
-    inset: 0;
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.rating-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+
+  .star-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+
+    .star-background {
+      position: absolute;
+      inset: 0;
+    }
+
+    .star-foreground {
+      position: absolute;
+      inset: 0;
+    }
+  }
+
+  .rating-status {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: v.$neutral-600;
+    min-height: 1.25rem;
   }
 }

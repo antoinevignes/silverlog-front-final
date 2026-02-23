@@ -84,17 +84,17 @@ export default function MovieActions({
             <Rating />
 
             <section className="dialog-buttons">
-              <Button variant="outline" size="sm" onClick={goToDiary}>
-                <Check size={16} /> Ajouter au journal
-              </Button>
+              <button className="action-card" onClick={goToDiary}>
+                <Check size={18} /> Ajouter au journal
+              </button>
 
-              <Button variant="outline" size="sm" onClick={goToReview}>
-                <PenLine size={16} /> Écrire un avis
-              </Button>
+              <button className="action-card" onClick={goToReview}>
+                <PenLine size={18} /> Écrire un avis
+              </button>
 
-              <Button variant="outline" size="sm">
-                <ListPlus size={16} /> Ajouter à une liste
-              </Button>
+              <button className="action-card">
+                <ListPlus size={18} /> Ajouter à une liste
+              </button>
             </section>
           </>
         )}
