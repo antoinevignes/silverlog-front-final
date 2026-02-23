@@ -6,6 +6,7 @@ type Variant = "default" | "secondary" | "outline" | "destructive";
 interface BadgeProps {
   variant?: Variant;
   children: ReactNode;
+  className?: string;
 }
 
 const variantStyles = {
@@ -50,10 +51,11 @@ const StyledBadge = styled.p<Required<Pick<BadgeProps, "variant">>>`
 export default function Badge({
   variant = "default",
   children,
+  className,
   ...props
 }: BadgeProps) {
   return (
-    <StyledBadge variant={variant} {...props}>
+    <StyledBadge variant={variant} {...props} className={className}>
       {children}
     </StyledBadge>
   );
