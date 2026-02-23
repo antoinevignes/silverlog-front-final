@@ -8,12 +8,15 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog/dialog";
 import type { MovieType } from "@/utils/types/movie";
-import { useNavigate } from "@tanstack/react-router";
-import { Bookmark, Check, ListPlus, PenLine, Plus } from "lucide-react";
+import { getRouteApi, useNavigate } from "@tanstack/react-router";
+import { Bookmark, Check, ListPlus, Medal, PenLine, Plus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import ReviewDialog from "../review-dialog/review-dialog";
 import DiaryDialog from "../diary-dialog/diary-dialog";
+import { useToggleMovieList } from "@/queries/list.mutations";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { movieStateQuery } from "@/queries/user-movie.queries";
 
 export default function MovieActions({
   movie,
@@ -26,8 +29,18 @@ export default function MovieActions({
 }) {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const routeApi = getRouteApi("/movies/$movieId/");
+  const { movieId } = routeApi.useParams();
+
   const [open, setOpen] = useState(false);
   const [currentView, setCurrentView] = useState<string>("main");
+
+  const { data: movieState } = useSuspenseQuery(movieStateQuery(movieId));
+  const { mutate: toggleList, isPending } = useToggleMovieList(movieId);
+
+  const isInWatchlist = movieState.lists.some(
+    (list: { list_type: string }) => list.list_type === "watchlist",
+  );
 
   const handleOpen = (nextOpen: boolean) => {
     if (!user) {
@@ -78,7 +91,13 @@ export default function MovieActions({
                 </div>
               </section>
 
-              <Bookmark size={24} />
+              <button
+                className="watchlist-btn"
+                disabled={isPending}
+                onClick={() => toggleList({ type: "watchlist", movieId })}
+              >
+                <Bookmark fill={isInWatchlist ? "#262626" : "none"} />
+              </button>
             </header>
 
             <Rating />
@@ -92,6 +111,9 @@ export default function MovieActions({
                 <PenLine size={18} /> Écrire un avis
               </button>
 
+              <button className="action-card">
+                <Medal size={18} /> Ajouter à mon top
+              </button>
               <button className="action-card">
                 <ListPlus size={18} /> Ajouter à une liste
               </button>
