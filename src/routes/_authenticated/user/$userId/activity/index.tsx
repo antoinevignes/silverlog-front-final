@@ -44,7 +44,6 @@ function RouteComponent() {
         ? (watchlistData ?? []).map((item: any) => ({
             queryKey: ["movie", item.movie_id, "details", item.added_at],
             queryFn: async () => {
-              await new Promise((resolve) => setTimeout(resolve, 1000));
               const res = await fetch(
                 `${import.meta.env.VITE_API_URL}/tmdb/movie/${item.movie_id}?language=fr-FR`,
               );
@@ -63,7 +62,6 @@ function RouteComponent() {
         ? (topListData ?? []).map((item: any) => ({
             queryKey: ["movie", item.movie_id, "details", item.added_at],
             queryFn: async () => {
-              await new Promise((resolve) => setTimeout(resolve, 1000));
               const res = await fetch(
                 `${import.meta.env.VITE_API_URL}/tmdb/movie/${item.movie_id}?language=fr-FR`,
               );
