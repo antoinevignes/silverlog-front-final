@@ -121,19 +121,6 @@ function RouteComponent() {
     return Object.values(map);
   }, [journalMoviesDetailsResults]);
 
-  const totalMovies = groups.reduce((acc, g) => acc + g.movies.length, 0);
-  const averageRating =
-    groups.length > 0
-      ? (
-          groups.reduce(
-            (acc, g) =>
-              acc +
-              g.movies.reduce((sum, m) => sum + (m.personal_rating || 0), 0),
-            0,
-          ) / totalMovies || 0
-        ).toFixed(1)
-      : null;
-
   const isFetchingMovies =
     selected === "watchlist"
       ? isLoadingWatchlist ||
@@ -158,12 +145,7 @@ function RouteComponent() {
       )}
 
       {selected === "diary" && (
-        <Diary
-          isFetchingMovies={isFetchingMovies}
-          groups={groups}
-          averageRating={averageRating}
-          totalMovies={totalMovies}
-        />
+        <Diary isFetchingMovies={isFetchingMovies} groups={groups} />
       )}
     </>
   );

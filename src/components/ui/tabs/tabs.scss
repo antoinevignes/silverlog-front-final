@@ -62,7 +62,7 @@
     padding: 0.3rem;
     border-radius: 999px;
     gap: 0.25rem;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     width: fit-content;
     margin-inline: auto;
 
@@ -73,6 +73,7 @@
       padding: 0.375rem 1rem;
       color: v.$neutral-600;
       background-color: v.$neutral-200;
+      font-weight: 600;
 
       &:hover {
         color: v.$neutral-900;

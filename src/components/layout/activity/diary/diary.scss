@@ -1,24 +1,7 @@
 @use "@/styles/abstracts/variables" as v;
 
 .diary-page {
-  .article-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 2rem;
-
-    h2 {
-      font-size: 1.5rem;
-    }
-  }
-
-  .filter-badges {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-  }
+  margin-top: 2rem;
 
   .diary-layout {
     display: flex;
