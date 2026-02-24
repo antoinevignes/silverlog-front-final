@@ -19,6 +19,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { movieStateQuery } from "@/queries/user-movie.queries";
 import { TrophyIcon as TrophySolid } from "@heroicons/react/24/solid";
 import { TrophyIcon } from "@heroicons/react/24/outline";
+import CustomList from "../custom-list/custom-list";
 
 export default function MovieActions({
   movie,
@@ -66,6 +67,7 @@ export default function MovieActions({
   const goBackToMain = () => setCurrentView("main");
   const goToReview = () => setCurrentView("review");
   const goToDiary = () => setCurrentView("diary");
+  const goToCustomLists = () => setCurrentView("custom-list");
 
   return (
     <Dialog open={open} onOpenChange={handleOpen}>
@@ -129,7 +131,7 @@ export default function MovieActions({
                 {isInTop ? "Dans mon top" : "Ajouter à mon top"}
               </button>
 
-              <button className="action-card">
+              <button className="action-card" onClick={goToCustomLists}>
                 <ListPlus size={18} /> Ajouter à une liste
               </button>
             </section>
@@ -150,6 +152,10 @@ export default function MovieActions({
             onBack={goBackToMain}
             movieId={String(movie.id)}
           />
+        )}
+
+        {currentView === "custom-list" && (
+          <CustomList onBack={goBackToMain} movieId={movieId} />
         )}
       </DialogContent>
     </Dialog>
