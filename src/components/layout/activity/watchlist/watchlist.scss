@@ -1,13 +1,12 @@
 @use "@/styles/abstracts/variables" as v;
 
 .watchlist-page {
-  padding-bottom: 4rem;
+  margin-top: 2rem;
 
   .watchlist-layout {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 1rem;
-    margin-top: 2rem;
   }
 
   .empty-state {
