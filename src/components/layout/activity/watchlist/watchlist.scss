@@ -1,11 +1,59 @@
 @use "@/styles/abstracts/variables" as v;
 
 .watchlist-page {
-  margin-top: 2rem;
+  margin: 2rem auto;
+
+  .watchlist-filters {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+    align-items: center;
+
+    > div {
+      min-width: 0;
+      flex: 0 1 auto;
+    }
+    button {
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    .filter-badge {
+      cursor: pointer;
+      min-width: 0;
+      max-width: 100%;
+
+      @media (min-width: 768px) {
+        max-width: 220px;
+      }
+
+      &:hover {
+        background-color: v.$neutral-200;
+      }
+
+      .truncate {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        min-width: 0;
+        flex: 0 1 auto;
+      }
+
+      .icon-shrink {
+        flex-shrink: 0;
+      }
+    }
+
+    .sort-badge {
+      margin-left: auto;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+  }
 
   .watchlist-layout {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     gap: 1rem;
   }
 
