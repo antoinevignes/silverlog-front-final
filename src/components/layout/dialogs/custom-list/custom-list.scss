@@ -1,7 +1,10 @@
 @use "@/styles/abstracts/variables" as v;
 
 .dialog-header {
-  margin-bottom: 1rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
 
   .back-button {
     position: relative;
@@ -12,6 +15,19 @@
     padding: 0;
     display: flex;
     align-items: center;
+  }
+
+  .custom-list-title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0;
+    z-index: 1;
+
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    pointer-events: none;
   }
 }
 

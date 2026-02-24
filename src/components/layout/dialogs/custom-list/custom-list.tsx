@@ -35,6 +35,8 @@ export default function CustomList({
         >
           <ArrowLeft size={20} />
         </button>
+
+        <h2 className="custom-list-title">Ajouter à une liste</h2>
       </header>
 
       <section className="custom-lists-container">
