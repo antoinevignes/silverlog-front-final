@@ -75,8 +75,8 @@ export default function CustomList({
                   onClick={() => addToList({ listId: list.id })}
                   disabled={isPending}
                 >
-                  {inList && <Check size={16} />}
-                  {list.title}
+                  <span>{list.title}</span>
+                  {inList && <Check size={18} />}
                 </button>
               );
             })}
