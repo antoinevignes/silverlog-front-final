@@ -41,11 +41,7 @@ export default function CustomList({
       </header>
 
       <section className="custom-lists-container">
-        <button
-          className="underline-link new-list-link"
-          onClick={onCreateNew}
-          type="button"
-        >
+        <button className="new-list-link" onClick={onCreateNew} type="button">
           <Plus size={16} />
           Créer une liste
         </button>
