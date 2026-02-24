@@ -2,18 +2,19 @@ import "./custom-list.scss";
 import { useAuth } from "@/auth";
 import { ArrowLeft, Check, Plus, Loader2 } from "lucide-react";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
-import { Link } from "@tanstack/react-router";
 import { movieStateQuery } from "@/queries/user-movie.queries";
 import { customListsQuery } from "@/queries/list.queries";
 import { useToggleCustomList } from "@/queries/list.mutations";
 
 interface CustomListContentProps {
   onBack: () => void;
+  onCreateNew: () => void;
   movieId: string;
 }
 
 export default function CustomList({
   onBack,
+  onCreateNew,
   movieId,
 }: CustomListContentProps) {
   const { user } = useAuth();
@@ -40,10 +41,14 @@ export default function CustomList({
       </header>
 
       <section className="custom-lists-container">
-        <Link to="/" className="underline-link new-list-link">
+        <button
+          className="underline-link new-list-link"
+          onClick={onCreateNew}
+          type="button"
+        >
           <Plus size={16} />
           Créer une liste
-        </Link>
+        </button>
 
         <div className="custom-lists">
           {isLoading && (
