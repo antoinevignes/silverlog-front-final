@@ -16,6 +16,10 @@ import {
 import Badge from "@/components/ui/badge/badge";
 
 export default function Watchlist() {
+  const [sortOrder, setSortOrder] = useState<"desc" | "asc">("desc");
+  const [selectedYear, setSelectedYear] = useState<string>("all");
+  const [selectedGenre, setSelectedGenre] = useState<number | "all">("all");
+
   const { user } = useAuth();
   const { data: watchlistData, isLoading: isLoadingWatchlist } = useQuery(
     listDataQuery(user!.watchlist_id!),
@@ -45,10 +49,7 @@ export default function Watchlist() {
     .map((r) => r.data)
     .filter(Boolean) as MovieType[];
 
-  const [sortOrder, setSortOrder] = useState<"desc" | "asc">("desc");
-  const [selectedYear, setSelectedYear] = useState<string>("all");
-  const [selectedGenre, setSelectedGenre] = useState<number | "all">("all");
-
+  // FILTRES
   const availableYears = useMemo(() => {
     const years = new Set<string>();
     movies.forEach((m) => {
@@ -71,6 +72,7 @@ export default function Watchlist() {
     );
   }, [movies]);
 
+  // TRI
   const filteredMovies = useMemo(() => {
     let result = [...movies];
 
@@ -95,6 +97,7 @@ export default function Watchlist() {
     return result;
   }, [movies, selectedYear, selectedGenre, sortOrder]);
 
+  // LOADING
   const isFetchingMovies =
     isLoadingWatchlist ||
     watchlistMoviesDetailsResults.some((r) => r.isLoading);
