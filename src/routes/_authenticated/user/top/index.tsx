@@ -14,7 +14,7 @@ import { Star } from "lucide-react";
 import "./top-list.scss";
 import Badge from "@/components/ui/badge/badge";
 
-export const Route = createFileRoute("/_authenticated/user/$userId/top/")({
+export const Route = createFileRoute("/_authenticated/user/top/")({
   loader: ({ context }) => {
     context.queryClient.ensureQueryData(
       listDataQuery(context.auth.user!.top_list_id!),

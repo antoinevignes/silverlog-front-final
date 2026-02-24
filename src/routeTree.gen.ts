@@ -17,8 +17,8 @@ import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
 import { Route as AboutMentionsLegalesRouteImport } from './routes/about/mentions-legales'
 import { Route as PersonPersonIdIndexRouteImport } from './routes/person/$personId/index'
 import { Route as MoviesMovieIdIndexRouteImport } from './routes/movies/$movieId/index'
-import { Route as AuthenticatedUserUserIdTopIndexRouteImport } from './routes/_authenticated/user/$userId/top/index'
-import { Route as AuthenticatedUserUserIdActivityIndexRouteImport } from './routes/_authenticated/user/$userId/activity/index'
+import { Route as AuthenticatedUserTopIndexRouteImport } from './routes/_authenticated/user/top/index'
+import { Route as AuthenticatedUserActivityIndexRouteImport } from './routes/_authenticated/user/activity/index'
 
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
@@ -59,16 +59,16 @@ const MoviesMovieIdIndexRoute = MoviesMovieIdIndexRouteImport.update({
   path: '/movies/$movieId/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedUserUserIdTopIndexRoute =
-  AuthenticatedUserUserIdTopIndexRouteImport.update({
-    id: '/user/$userId/top/',
-    path: '/user/$userId/top/',
+const AuthenticatedUserTopIndexRoute =
+  AuthenticatedUserTopIndexRouteImport.update({
+    id: '/user/top/',
+    path: '/user/top/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedUserUserIdActivityIndexRoute =
-  AuthenticatedUserUserIdActivityIndexRouteImport.update({
-    id: '/user/$userId/activity/',
-    path: '/user/$userId/activity/',
+const AuthenticatedUserActivityIndexRoute =
+  AuthenticatedUserActivityIndexRouteImport.update({
+    id: '/user/activity/',
+    path: '/user/activity/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 
@@ -80,8 +80,8 @@ export interface FileRoutesByFullPath {
   '/auth/verify-email': typeof AuthVerifyEmailRoute
   '/movies/$movieId/': typeof MoviesMovieIdIndexRoute
   '/person/$personId/': typeof PersonPersonIdIndexRoute
-  '/user/$userId/activity/': typeof AuthenticatedUserUserIdActivityIndexRoute
-  '/user/$userId/top/': typeof AuthenticatedUserUserIdTopIndexRoute
+  '/user/activity/': typeof AuthenticatedUserActivityIndexRoute
+  '/user/top/': typeof AuthenticatedUserTopIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -91,8 +91,8 @@ export interface FileRoutesByTo {
   '/auth/verify-email': typeof AuthVerifyEmailRoute
   '/movies/$movieId': typeof MoviesMovieIdIndexRoute
   '/person/$personId': typeof PersonPersonIdIndexRoute
-  '/user/$userId/activity': typeof AuthenticatedUserUserIdActivityIndexRoute
-  '/user/$userId/top': typeof AuthenticatedUserUserIdTopIndexRoute
+  '/user/activity': typeof AuthenticatedUserActivityIndexRoute
+  '/user/top': typeof AuthenticatedUserTopIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -104,8 +104,8 @@ export interface FileRoutesById {
   '/auth/verify-email': typeof AuthVerifyEmailRoute
   '/movies/$movieId/': typeof MoviesMovieIdIndexRoute
   '/person/$personId/': typeof PersonPersonIdIndexRoute
-  '/_authenticated/user/$userId/activity/': typeof AuthenticatedUserUserIdActivityIndexRoute
-  '/_authenticated/user/$userId/top/': typeof AuthenticatedUserUserIdTopIndexRoute
+  '/_authenticated/user/activity/': typeof AuthenticatedUserActivityIndexRoute
+  '/_authenticated/user/top/': typeof AuthenticatedUserTopIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -117,8 +117,8 @@ export interface FileRouteTypes {
     | '/auth/verify-email'
     | '/movies/$movieId/'
     | '/person/$personId/'
-    | '/user/$userId/activity/'
-    | '/user/$userId/top/'
+    | '/user/activity/'
+    | '/user/top/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -128,8 +128,8 @@ export interface FileRouteTypes {
     | '/auth/verify-email'
     | '/movies/$movieId'
     | '/person/$personId'
-    | '/user/$userId/activity'
-    | '/user/$userId/top'
+    | '/user/activity'
+    | '/user/top'
   id:
     | '__root__'
     | '/'
@@ -140,8 +140,8 @@ export interface FileRouteTypes {
     | '/auth/verify-email'
     | '/movies/$movieId/'
     | '/person/$personId/'
-    | '/_authenticated/user/$userId/activity/'
-    | '/_authenticated/user/$userId/top/'
+    | '/_authenticated/user/activity/'
+    | '/_authenticated/user/top/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -213,32 +213,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MoviesMovieIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/user/$userId/top/': {
-      id: '/_authenticated/user/$userId/top/'
-      path: '/user/$userId/top'
-      fullPath: '/user/$userId/top/'
-      preLoaderRoute: typeof AuthenticatedUserUserIdTopIndexRouteImport
+    '/_authenticated/user/top/': {
+      id: '/_authenticated/user/top/'
+      path: '/user/top'
+      fullPath: '/user/top/'
+      preLoaderRoute: typeof AuthenticatedUserTopIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/user/$userId/activity/': {
-      id: '/_authenticated/user/$userId/activity/'
-      path: '/user/$userId/activity'
-      fullPath: '/user/$userId/activity/'
-      preLoaderRoute: typeof AuthenticatedUserUserIdActivityIndexRouteImport
+    '/_authenticated/user/activity/': {
+      id: '/_authenticated/user/activity/'
+      path: '/user/activity'
+      fullPath: '/user/activity/'
+      preLoaderRoute: typeof AuthenticatedUserActivityIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedUserUserIdActivityIndexRoute: typeof AuthenticatedUserUserIdActivityIndexRoute
-  AuthenticatedUserUserIdTopIndexRoute: typeof AuthenticatedUserUserIdTopIndexRoute
+  AuthenticatedUserActivityIndexRoute: typeof AuthenticatedUserActivityIndexRoute
+  AuthenticatedUserTopIndexRoute: typeof AuthenticatedUserTopIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedUserUserIdActivityIndexRoute:
-    AuthenticatedUserUserIdActivityIndexRoute,
-  AuthenticatedUserUserIdTopIndexRoute: AuthenticatedUserUserIdTopIndexRoute,
+  AuthenticatedUserActivityIndexRoute: AuthenticatedUserActivityIndexRoute,
+  AuthenticatedUserTopIndexRoute: AuthenticatedUserTopIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

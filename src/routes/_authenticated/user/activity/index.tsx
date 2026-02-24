@@ -11,12 +11,12 @@ const tabs = [
   { id: "diary", label: "Journal" },
 ];
 
-export const Route = createFileRoute("/_authenticated/user/$userId/activity/")({
-  loader: async ({ context, params: { userId } }) => {
+export const Route = createFileRoute("/_authenticated/user/activity/")({
+  loader: async ({ context }) => {
     context.queryClient.ensureQueryData(
       listDataQuery(context.auth.user!.watchlist_id!),
     );
-    context.queryClient.ensureQueryData(seenMoviesQuery(userId));
+    context.queryClient.ensureQueryData(seenMoviesQuery(context.auth.user!.id));
   },
   component: RouteComponent,
 });
