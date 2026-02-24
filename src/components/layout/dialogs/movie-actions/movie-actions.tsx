@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog/dialog";
 import type { MovieType } from "@/utils/types/movie";
 import { getRouteApi, useNavigate } from "@tanstack/react-router";
-import { Bookmark, Check, ListPlus, Medal, PenLine, Plus } from "lucide-react";
+import { Bookmark, Check, ListPlus, PenLine, Plus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import ReviewDialog from "../review-dialog/review-dialog";
@@ -17,6 +17,8 @@ import DiaryDialog from "../diary-dialog/diary-dialog";
 import { useToggleMovieList } from "@/queries/list.mutations";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { movieStateQuery } from "@/queries/user-movie.queries";
+import { TrophyIcon as TrophySolid } from "@heroicons/react/24/solid";
+import { TrophyIcon } from "@heroicons/react/24/outline";
 
 export default function MovieActions({
   movie,
@@ -38,6 +40,9 @@ export default function MovieActions({
   const { data: movieState } = useSuspenseQuery(movieStateQuery(movieId));
   const { mutate: toggleList, isPending } = useToggleMovieList(movieId);
 
+  const isInTop = movieState.lists.some(
+    (list: { list_type: string }) => list.list_type === "top",
+  );
   const isInWatchlist = movieState.lists.some(
     (list: { list_type: string }) => list.list_type === "watchlist",
   );
@@ -111,9 +116,19 @@ export default function MovieActions({
                 <PenLine size={18} /> Écrire un avis
               </button>
 
-              <button className="action-card">
-                <Medal size={18} /> Ajouter à mon top
+              <button
+                className="action-card"
+                onClick={() => toggleList({ type: "top", movieId })}
+                disabled={isPending}
+              >
+                {isInTop ? (
+                  <TrophySolid width={20} aria-hidden className="toggled-svg" />
+                ) : (
+                  <TrophyIcon width={20} aria-hidden strokeWidth={2} />
+                )}
+                {isInTop ? "Dans mon top" : "Ajouter à mon top"}
               </button>
+
               <button className="action-card">
                 <ListPlus size={18} /> Ajouter à une liste
               </button>
