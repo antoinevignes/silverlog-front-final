@@ -1,23 +1,56 @@
+import { useAuth } from "@/auth";
 import Badge from "@/components/ui/badge";
 import Skeleton from "@/components/ui/skeleton/skeleton";
+import { listDataQuery } from "@/queries/list.queries";
 import {
   getCloudinaryPlaceholder,
   getCloudinarySrc,
 } from "@/utils/cloudinary-handler";
 import type { MovieType } from "@/utils/types/movie";
-import { Link } from "@tanstack/react-router";
+import { useQueries, useQuery } from "@tanstack/react-query";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
 import { format } from "date-fns";
 import { Star } from "lucide-react";
 import "./top-list.scss";
 
-export default function TopList({
-  isFetchingMovies,
-  movies,
-}: {
-  isFetchingMovies: boolean;
-  movies: MovieType[];
-}) {
+export const Route = createFileRoute("/_authenticated/user/$userId/top/")({
+  loader: ({ context }) => {
+    context.queryClient.ensureQueryData(
+      listDataQuery(context.auth.user!.top_list_id!),
+    );
+  },
+  component: RouteComponent,
+});
+
+function RouteComponent() {
+  const { user } = useAuth();
+  const { data: topListData, isLoading: isLoadingTopList } = useQuery(
+    listDataQuery(user!.top_list_id!),
+  );
+
+  const topListMoviesDetailsResults = useQueries({
+    queries: (topListData ?? []).map((item: any) => ({
+      queryKey: ["movie", item.movie_id, "details", item.added_at],
+      queryFn: async () => {
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/tmdb/movie/${item.movie_id}?language=fr-FR`,
+        );
+        const details = await res.json();
+
+        return details;
+      },
+      staleTime: 1000 * 60 * 60 * 24,
+    })),
+  });
+
+  const movies = topListMoviesDetailsResults
+    .map((r) => r.data)
+    .filter(Boolean) as MovieType[];
+
+  const isFetchingMovies =
+    isLoadingTopList || topListMoviesDetailsResults.some((r) => r.isLoading);
+
   return (
     <main className="container top-list-page">
       {isFetchingMovies ? (

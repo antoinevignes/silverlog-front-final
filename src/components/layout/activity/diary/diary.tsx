@@ -1,16 +1,14 @@
-import { createFileRoute } from "@tanstack/react-router";
-import "./diary.scss";
-import ArticleTitle from "@/components/layout/section-title/article-title";
-import { seenMoviesQuery } from "@/queries/user-movie.queries";
-import { useQueries, useQuery } from "@tanstack/react-query";
-import type { MovieType } from "@/utils/types/movie";
-
-import { useMemo } from "react";
 import { format } from "date-fns";
+import DiarySkeleton from "./diary-skeleton/diary-skeleton";
 import { fr } from "date-fns/locale";
-import DiaryMobile from "@/components/layout/diary/diary-mobile/diary-mobile";
-import DiaryDesktop from "@/components/layout/diary/diary-desktop/diary-desktop";
-import DiarySkeleton from "@/components/layout/diary/diary-skeleton/diary-skeleton";
+import DiaryMobile from "./diary-mobile/diary-mobile";
+import DiaryDesktop from "./diary-desktop/diary-desktop";
+import "./diary.scss";
+import { useQueries, useQuery } from "@tanstack/react-query";
+import { seenMoviesQuery } from "@/queries/user-movie.queries";
+import { useAuth } from "@/auth";
+import type { MovieType } from "@/utils/types/movie";
+import { useMemo } from "react";
 
 type JournalItem = {
   movie_id: number;
@@ -18,21 +16,13 @@ type JournalItem = {
   rating: number;
 };
 
-export const Route = createFileRoute("/_authenticated/user/$userId/diary/")({
-  loader: async ({ context: { queryClient }, params: { userId } }) => {
-    queryClient.ensureQueryData(seenMoviesQuery(userId));
-  },
-  component: RouteComponent,
-});
-
-function RouteComponent() {
-  const { userId } = Route.useParams();
-
+export default function Diary() {
+  const { user } = useAuth();
   const { data: journalItems, isLoading: isLoadingJournal } = useQuery(
-    seenMoviesQuery(userId),
+    seenMoviesQuery(user!.id),
   );
 
-  const movieDetailsResults = useQueries({
+  const journalMoviesDetailsResults = useQueries({
     queries: (journalItems ?? []).map((item: JournalItem) => ({
       queryKey: ["movie", item.movie_id, "details", item.rating],
       queryFn: async () => {
@@ -53,7 +43,9 @@ function RouteComponent() {
 
   const groups = useMemo(() => {
     const movies = (
-      movieDetailsResults.map((r) => r.data).filter(Boolean) as MovieType[]
+      journalMoviesDetailsResults
+        .map((r) => r.data)
+        .filter(Boolean) as MovieType[]
     ).sort(
       (a, b) => new Date(b.seen_at).getTime() - new Date(a.seen_at).getTime(),
     );
@@ -80,29 +72,11 @@ function RouteComponent() {
     );
 
     return Object.values(map);
-  }, [movieDetailsResults]);
-
-  const isLoading =
-    isLoadingJournal || movieDetailsResults.some((r) => r.isLoading);
-
-  const totalMovies = groups.reduce((acc, g) => acc + g.movies.length, 0);
-  const averageRating =
-    groups.length > 0
-      ? (
-          groups.reduce(
-            (acc, g) =>
-              acc +
-              g.movies.reduce((sum, m) => sum + (m.personal_rating || 0), 0),
-            0,
-          ) / totalMovies || 0
-        ).toFixed(1)
-      : null;
+  }, [journalMoviesDetailsResults]);
 
   return (
     <main className="container diary-page">
-      <ArticleTitle title="Journal" />
-
-      {isLoading ? (
+      {isLoadingJournal ? (
         <DiarySkeleton />
       ) : (
         <div className="diary-layout">
@@ -129,24 +103,6 @@ function RouteComponent() {
 
           {groups.length > 0 && (
             <aside className="diary-sidebar">
-              <section className="sidebar-card stats-card">
-                <h3>Statistiques</h3>
-                <ul>
-                  <li>
-                    <span className="stat-label">Films vus</span>
-                    <span className="stat-value">{totalMovies}</span>
-                  </li>
-                  {averageRating && (
-                    <li>
-                      <span className="stat-label">Note moyenne</span>
-                      <span className="stat-value">
-                        {Number(averageRating) / 2} / 10
-                      </span>
-                    </li>
-                  )}
-                </ul>
-              </section>
-
               <section className="sidebar-card timeline-card">
                 <h3>Chronologie</h3>
                 <nav className="timeline-nav">

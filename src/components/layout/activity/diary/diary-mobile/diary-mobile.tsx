@@ -5,9 +5,10 @@ import {
 import type { MovieType } from "@/utils/types/movie";
 import { Link } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
-import { Star, StarHalf } from "lucide-react";
+import { Star } from "lucide-react";
 import "./diary-mobile.scss";
 import { format } from "date-fns";
+import Badge from "@/components/ui/badge";
 
 export default function DiaryMobile({ movies }: { movies: MovieType[] }) {
   return (
@@ -42,39 +43,24 @@ export default function DiaryMobile({ movies }: { movies: MovieType[] }) {
                   {format(movie.seen_at, "d")}
                 </time>
               </figure>
+              <section className="movie-details">
+                <h3 className="movie-title">{movie.title}</h3>
 
-              <div className="movie-info">
-                <h3>{movie.title}</h3>
-
-                <p className="year">{format(movie.release_date, "yyyy")}</p>
-
-                {movie.personal_rating && (
-                  <div
-                    className="rating-section"
-                    aria-label={`Note : ${movie.personal_rating / 2} sur 10`}
-                  >
-                    <div>
-                      {Array.from({
-                        length: Math.floor(movie.personal_rating / 2),
-                      }).map((_, index) => (
-                        <Star
-                          key={`full-${index}`}
-                          size={14}
-                          stroke="#F2C265"
-                          fill="#F2C265"
-                        />
-                      ))}
-                      {movie.personal_rating % 2 !== 0 && (
-                        <StarHalf size={14} stroke="#F2C265" fill="#F2C265" />
-                      )}
-                    </div>
-
-                    <span className="text-secondary rating-number">
-                      ({movie.personal_rating / 2} / 10)
+                <div className="movie-meta">
+                  {movie.release_date && (
+                    <span className="release-year">
+                      {format(new Date(movie.release_date), "yyyy")}
                     </span>
-                  </div>
-                )}
-              </div>
+                  )}
+
+                  {movie.personal_rating && (
+                    <Badge variant="outline" className="tmdb-rating">
+                      <Star size={14} fill="#F2C265" stroke="#F2C265" />
+                      {(movie.personal_rating / 2).toFixed(1)}
+                    </Badge>
+                  )}
+                </div>
+              </section>
             </Link>
           </li>
         ))}

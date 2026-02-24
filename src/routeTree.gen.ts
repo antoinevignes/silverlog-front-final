@@ -17,7 +17,7 @@ import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
 import { Route as AboutMentionsLegalesRouteImport } from './routes/about/mentions-legales'
 import { Route as PersonPersonIdIndexRouteImport } from './routes/person/$personId/index'
 import { Route as MoviesMovieIdIndexRouteImport } from './routes/movies/$movieId/index'
-import { Route as AuthenticatedUserUserIdDiaryIndexRouteImport } from './routes/_authenticated/user/$userId/diary/index'
+import { Route as AuthenticatedUserUserIdTopIndexRouteImport } from './routes/_authenticated/user/$userId/top/index'
 import { Route as AuthenticatedUserUserIdActivityIndexRouteImport } from './routes/_authenticated/user/$userId/activity/index'
 
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -59,10 +59,10 @@ const MoviesMovieIdIndexRoute = MoviesMovieIdIndexRouteImport.update({
   path: '/movies/$movieId/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedUserUserIdDiaryIndexRoute =
-  AuthenticatedUserUserIdDiaryIndexRouteImport.update({
-    id: '/user/$userId/diary/',
-    path: '/user/$userId/diary/',
+const AuthenticatedUserUserIdTopIndexRoute =
+  AuthenticatedUserUserIdTopIndexRouteImport.update({
+    id: '/user/$userId/top/',
+    path: '/user/$userId/top/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedUserUserIdActivityIndexRoute =
@@ -81,7 +81,7 @@ export interface FileRoutesByFullPath {
   '/movies/$movieId/': typeof MoviesMovieIdIndexRoute
   '/person/$personId/': typeof PersonPersonIdIndexRoute
   '/user/$userId/activity/': typeof AuthenticatedUserUserIdActivityIndexRoute
-  '/user/$userId/diary/': typeof AuthenticatedUserUserIdDiaryIndexRoute
+  '/user/$userId/top/': typeof AuthenticatedUserUserIdTopIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -92,7 +92,7 @@ export interface FileRoutesByTo {
   '/movies/$movieId': typeof MoviesMovieIdIndexRoute
   '/person/$personId': typeof PersonPersonIdIndexRoute
   '/user/$userId/activity': typeof AuthenticatedUserUserIdActivityIndexRoute
-  '/user/$userId/diary': typeof AuthenticatedUserUserIdDiaryIndexRoute
+  '/user/$userId/top': typeof AuthenticatedUserUserIdTopIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -105,7 +105,7 @@ export interface FileRoutesById {
   '/movies/$movieId/': typeof MoviesMovieIdIndexRoute
   '/person/$personId/': typeof PersonPersonIdIndexRoute
   '/_authenticated/user/$userId/activity/': typeof AuthenticatedUserUserIdActivityIndexRoute
-  '/_authenticated/user/$userId/diary/': typeof AuthenticatedUserUserIdDiaryIndexRoute
+  '/_authenticated/user/$userId/top/': typeof AuthenticatedUserUserIdTopIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -118,7 +118,7 @@ export interface FileRouteTypes {
     | '/movies/$movieId/'
     | '/person/$personId/'
     | '/user/$userId/activity/'
-    | '/user/$userId/diary/'
+    | '/user/$userId/top/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -129,7 +129,7 @@ export interface FileRouteTypes {
     | '/movies/$movieId'
     | '/person/$personId'
     | '/user/$userId/activity'
-    | '/user/$userId/diary'
+    | '/user/$userId/top'
   id:
     | '__root__'
     | '/'
@@ -141,7 +141,7 @@ export interface FileRouteTypes {
     | '/movies/$movieId/'
     | '/person/$personId/'
     | '/_authenticated/user/$userId/activity/'
-    | '/_authenticated/user/$userId/diary/'
+    | '/_authenticated/user/$userId/top/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -213,11 +213,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MoviesMovieIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/user/$userId/diary/': {
-      id: '/_authenticated/user/$userId/diary/'
-      path: '/user/$userId/diary'
-      fullPath: '/user/$userId/diary/'
-      preLoaderRoute: typeof AuthenticatedUserUserIdDiaryIndexRouteImport
+    '/_authenticated/user/$userId/top/': {
+      id: '/_authenticated/user/$userId/top/'
+      path: '/user/$userId/top'
+      fullPath: '/user/$userId/top/'
+      preLoaderRoute: typeof AuthenticatedUserUserIdTopIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/user/$userId/activity/': {
@@ -232,14 +232,13 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedUserUserIdActivityIndexRoute: typeof AuthenticatedUserUserIdActivityIndexRoute
-  AuthenticatedUserUserIdDiaryIndexRoute: typeof AuthenticatedUserUserIdDiaryIndexRoute
+  AuthenticatedUserUserIdTopIndexRoute: typeof AuthenticatedUserUserIdTopIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedUserUserIdActivityIndexRoute:
     AuthenticatedUserUserIdActivityIndexRoute,
-  AuthenticatedUserUserIdDiaryIndexRoute:
-    AuthenticatedUserUserIdDiaryIndexRoute,
+  AuthenticatedUserUserIdTopIndexRoute: AuthenticatedUserUserIdTopIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

@@ -1,23 +1,40 @@
-import Badge from "@/components/ui/badge";
 import Skeleton from "@/components/ui/skeleton/skeleton";
-import {
-  getCloudinaryPlaceholder,
-  getCloudinarySrc,
-} from "@/utils/cloudinary-handler";
-import { Link } from "@tanstack/react-router";
-import { Image } from "@unpic/react";
-import { format } from "date-fns";
-import { Star } from "lucide-react";
 import type { MovieType } from "@/utils/types/movie";
 import "./watchlist.scss";
+import MovieCard from "../../movie-card/movie-card";
+import { useQueries, useQuery } from "@tanstack/react-query";
+import { useAuth } from "@/auth";
+import { listDataQuery } from "@/queries/list.queries";
 
-export default function Watchlist({
-  isFetchingMovies,
-  movies,
-}: {
-  isFetchingMovies: boolean;
-  movies: MovieType[];
-}) {
+export default function Watchlist() {
+  const { user } = useAuth();
+  const { data: watchlistData, isLoading: isLoadingWatchlist } = useQuery(
+    listDataQuery(user!.watchlist_id!),
+  );
+
+  const watchlistMoviesDetailsResults = useQueries({
+    queries: (watchlistData ?? []).map((item: any) => ({
+      queryKey: ["movie", item.movie_id, "details", item.added_at],
+      queryFn: async () => {
+        const res = await fetch(
+          `${import.meta.env.VITE_API_URL}/tmdb/movie/${item.movie_id}?language=fr-FR`,
+        );
+        const details = await res.json();
+
+        return details;
+      },
+      staleTime: 1000 * 60 * 60 * 24,
+    })),
+  });
+
+  const movies = watchlistMoviesDetailsResults
+    .map((r) => r.data)
+    .filter(Boolean) as MovieType[];
+
+  const isFetchingMovies =
+    isLoadingWatchlist ||
+    watchlistMoviesDetailsResults.some((r) => r.isLoading);
+
   return (
     <main className="container watchlist-page">
       {isFetchingMovies ? (
@@ -25,46 +42,7 @@ export default function Watchlist({
       ) : movies.length > 0 ? (
         <section className="watchlist-layout">
           {movies.map((movie) => (
-            <Link
-              to={`/movies/$movieId`}
-              params={{ movieId: String(movie.id) }}
-              className="watchlist-movie-card"
-              key={movie.id}
-            >
-              <figure className="poster-container">
-                <Image
-                  src={getCloudinarySrc(movie.poster_path, "posters")}
-                  layout="constrained"
-                  width={80}
-                  aspectRatio={2 / 3}
-                  alt={movie.title}
-                  background={getCloudinaryPlaceholder(
-                    movie.poster_path,
-                    "posters",
-                  )}
-                  className="poster"
-                />
-              </figure>
-
-              <section className="movie-details">
-                <h3 className="movie-title">{movie.title}</h3>
-
-                <div className="movie-meta">
-                  {movie.release_date && (
-                    <span className="release-year">
-                      {format(new Date(movie.release_date), "yyyy")}
-                    </span>
-                  )}
-
-                  {(movie as any).vote_average > 0 && (
-                    <Badge variant="outline" className="tmdb-rating">
-                      <Star size={14} fill="#F2C265" stroke="#F2C265" />
-                      {(movie as any).vote_average.toFixed(1)}
-                    </Badge>
-                  )}
-                </div>
-              </section>
-            </Link>
+            <MovieCard movie={movie} size="sm" key={movie.id} />
           ))}
         </section>
       ) : (
@@ -77,7 +55,7 @@ export default function Watchlist({
 function WatchlistSkeleton() {
   return (
     <div className="watchlist-layout">
-      {Array.from({ length: 10 }).map((_, i) => (
+      {Array.from({ length: 40 }).map((_, i) => (
         <Skeleton key={i} width="100%" className="watchlist-skeleton" />
       ))}
     </div>
