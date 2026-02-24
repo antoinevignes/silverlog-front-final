@@ -113,7 +113,7 @@ export default function Watchlist() {
                   <ChevronDown size={14} />
                 </Badge>
               </DropdownTrigger>
-              <DropdownContent>
+              <DropdownContent align="left">
                 <DropdownItem onClick={() => setSelectedYear("all")}>
                   Toutes les années
                 </DropdownItem>
@@ -137,7 +137,7 @@ export default function Watchlist() {
                   <ChevronDown size={14} />
                 </Badge>
               </DropdownTrigger>
-              <DropdownContent>
+              <DropdownContent align="left">
                 <DropdownItem onClick={() => setSelectedGenre("all")}>
                   Tous les genres
                 </DropdownItem>

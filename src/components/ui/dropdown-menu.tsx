@@ -39,10 +39,13 @@ export const StyledTrigger = styled.button`
   }
 `;
 
-export const StyledContent = styled.div<{ $open: boolean }>`
+export const StyledContent = styled.div<{
+  $open: boolean;
+  $align?: "left" | "right";
+}>`
   position: absolute;
   top: calc(100% + 0.5rem);
-  right: 0;
+  ${({ $align }) => ($align === "left" ? "left: 0;" : "right: 0;")}
 
   min-width: 180px;
   padding: 0.5rem;
@@ -57,7 +60,8 @@ export const StyledContent = styled.div<{ $open: boolean }>`
   flex-direction: column;
   gap: 0.25rem;
 
-  transform-origin: top right;
+  transform-origin: ${({ $align }) =>
+    $align === "left" ? "top left" : "top right"};
 
   animation: ${({ $open }) =>
     $open &&
@@ -142,13 +146,19 @@ export function DropdownTrigger({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function DropdownContent({ children }: { children: React.ReactNode }) {
+export function DropdownContent({
+  children,
+  align = "right",
+}: {
+  children: React.ReactNode;
+  align?: "left" | "right";
+}) {
   const { open } = useDropdownContext();
 
   if (!open) return null;
 
   return (
-    <StyledContent id="dropdown-menu" role="menu" $open>
+    <StyledContent id="dropdown-menu" role="menu" $open $align={align}>
       {children}
     </StyledContent>
   );
