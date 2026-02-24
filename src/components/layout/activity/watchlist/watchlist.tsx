@@ -112,8 +112,10 @@ export default function Watchlist() {
             <DropdownMenu>
               <DropdownTrigger>
                 <Badge variant="secondary" className="filter-badge" size="lg">
-                  {selectedYear === "all" ? "Année" : selectedYear}
-                  <ChevronDown size={14} />
+                  <span className="truncate">
+                    {selectedYear === "all" ? "Année" : selectedYear}
+                  </span>
+                  <ChevronDown size={14} className="icon-shrink" />
                 </Badge>
               </DropdownTrigger>
               <DropdownContent align="left">
@@ -134,10 +136,14 @@ export default function Watchlist() {
             <DropdownMenu>
               <DropdownTrigger>
                 <Badge variant="secondary" className="filter-badge" size="lg">
-                  {selectedGenre === "all"
-                    ? "Genre"
-                    : availableGenres.find(([id]) => id === selectedGenre)?.[1]}
-                  <ChevronDown size={14} />
+                  <span className="truncate">
+                    {selectedGenre === "all"
+                      ? "Genre"
+                      : availableGenres.find(
+                          ([id]) => id === selectedGenre,
+                        )?.[1]}
+                  </span>
+                  <ChevronDown size={14} className="icon-shrink" />
                 </Badge>
               </DropdownTrigger>
               <DropdownContent align="left">
@@ -160,8 +166,10 @@ export default function Watchlist() {
                 setSortOrder((prev) => (prev === "desc" ? "asc" : "desc"))
               }
             >
-              {sortOrder === "desc" ? "Trier : Récents" : "Trier : Anciens"}
-              <ArrowDownUp size={14} />
+              <span className="truncate">
+                {sortOrder === "desc" ? "Ajout : Récents" : "Ajout : Anciens"}
+              </span>
+              <ArrowDownUp size={14} className="icon-shrink" />
             </Badge>
           </header>
 
