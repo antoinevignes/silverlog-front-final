@@ -146,3 +146,60 @@ export function useToggleCustomList(movieId: string) {
     },
   });
 }
+
+// CREER UNE LISTE PERSONNALISEE
+export const useCreateList = () => {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: async ({
+      title,
+      description,
+      is_public,
+    }: {
+      title: string;
+      description: string;
+      is_public: boolean;
+    }) => {
+      if (!user) {
+        throw new Error("Unauthenticated");
+      }
+
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/lists`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, description, is_public }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Une erreur est survenue");
+      }
+
+      const data = await res.json();
+      return data;
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["custom-lists", user?.id],
+      });
+      toast.success("Liste créée avec succès");
+    },
+
+    onError: (error) => {
+      if (error.message === "Unauthenticated") {
+        toast.error("Vous devez vous connecter");
+
+        return navigate({
+          to: "/auth/sign-in",
+          search: { redirect: location.pathname },
+        });
+      }
+
+      toast.error("Une erreur est survenue lors de la création de la liste");
+    },
+  });
+};
