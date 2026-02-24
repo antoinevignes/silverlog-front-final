@@ -1,0 +1,50 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+
+  white-space: nowrap;
+
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1;
+
+  border-radius: 1rem;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid transparent;
+
+  background: #171717;
+  color: #fafafa;
+
+  &.badge-secondary {
+    background: #f5f5f5;
+    color: #171717;
+  }
+
+  &.badge-outline {
+    background: transparent;
+    border-color: #e5e5e5;
+    color: #171717;
+  }
+
+  &.badge-destructive {
+    background: #ef4444;
+    color: #fafafa;
+  }
+
+  &.badge-sm {
+    font-size: 0.625rem;
+    padding: 0.15rem 0.3rem;
+  }
+
+  &.badge-md {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.5rem;
+  }
+
+  &.badge-lg {
+    font-size: 0.875rem;
+    padding: 0.45rem 0.7rem;
+  }
+}

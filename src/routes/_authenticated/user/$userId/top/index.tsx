@@ -1,5 +1,4 @@
 import { useAuth } from "@/auth";
-import Badge from "@/components/ui/badge";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 import { listDataQuery } from "@/queries/list.queries";
 import {
@@ -13,6 +12,7 @@ import { Image } from "@unpic/react";
 import { format } from "date-fns";
 import { Star } from "lucide-react";
 import "./top-list.scss";
+import Badge from "@/components/ui/badge/badge";
 
 export const Route = createFileRoute("/_authenticated/user/$userId/top/")({
   loader: ({ context }) => {

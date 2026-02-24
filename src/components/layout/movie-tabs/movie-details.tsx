@@ -1,5 +1,5 @@
+import Badge from "@/components/ui/badge/badge";
 import "./movie-tabs.scss";
-import Badge from "@/components/ui/badge";
 import { movieDetailsQuery } from "@/queries/movie.queries";
 import type { MovieType } from "@/utils/types/movie";
 import { useSuspenseQuery } from "@tanstack/react-query";

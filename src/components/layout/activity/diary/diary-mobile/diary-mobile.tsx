@@ -8,7 +8,7 @@ import { Image } from "@unpic/react";
 import { Star } from "lucide-react";
 import "./diary-mobile.scss";
 import { format } from "date-fns";
-import Badge from "@/components/ui/badge";
+import Badge from "@/components/ui/badge/badge";
 
 export default function DiaryMobile({ movies }: { movies: MovieType[] }) {
   return (
