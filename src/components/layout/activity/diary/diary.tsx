@@ -4,54 +4,33 @@ import { fr } from "date-fns/locale";
 import DiaryMobile from "./diary-mobile/diary-mobile";
 import DiaryDesktop from "./diary-desktop/diary-desktop";
 import "./diary.scss";
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { seenMoviesQuery } from "@/queries/user-movie.queries";
 import { useAuth } from "@/auth";
 import type { MovieType } from "@/utils/types/movie";
 import { useMemo } from "react";
 
-type JournalItem = {
-  movie_id: number;
-  seen_at: string;
-  rating: number;
-};
+interface DiaryGroup {
+  id: string;
+  label: string;
+  date: Date;
+  movies: MovieType[];
+}
 
 export default function Diary() {
   const { user } = useAuth();
-  const { data: journalItems, isLoading: isLoadingJournal } = useQuery(
-    seenMoviesQuery(user!.id),
-  );
-
-  const journalMoviesDetailsResults = useQueries({
-    queries: (journalItems ?? []).map((item: JournalItem) => ({
-      queryKey: ["movie", item.movie_id, "details", item.rating],
-      queryFn: async () => {
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/tmdb/movie/${item.movie_id}?language=fr-FR`,
-        );
-        const details = await res.json();
-
-        return {
-          ...details,
-          seen_at: item.seen_at,
-          personal_rating: item.rating,
-        };
-      },
-      staleTime: 1000 * 60 * 60 * 24,
-    })),
-  });
+  const { data: rawMovies, isLoading } = useQuery(seenMoviesQuery(user!.id));
 
   const groups = useMemo(() => {
-    const movies = (
-      journalMoviesDetailsResults
-        .map((r) => r.data)
-        .filter(Boolean) as MovieType[]
-    ).sort(
-      (a, b) => new Date(b.seen_at).getTime() - new Date(a.seen_at).getTime(),
+    if (!rawMovies) return [];
+
+    const movies = [...rawMovies].sort(
+      (a: MovieType, b: MovieType) =>
+        new Date(b.seen_at).getTime() - new Date(a.seen_at).getTime(),
     );
 
     const map = movies.reduce(
-      (acc, movie) => {
+      (acc: Record<string, DiaryGroup>, movie: MovieType) => {
         const date = new Date(movie.seen_at);
         const key = format(date, "yyyy-MM");
         if (!acc[key]) {
@@ -65,23 +44,20 @@ export default function Diary() {
         acc[key].movies.push(movie);
         return acc;
       },
-      {} as Record<
-        string,
-        { id: string; label: string; date: Date; movies: MovieType[] }
-      >,
+      {} as Record<string, DiaryGroup>,
     );
 
-    return Object.values(map);
-  }, [journalMoviesDetailsResults]);
+    return Object.values(map) as DiaryGroup[];
+  }, [rawMovies]);
 
   return (
     <main className="container diary-page">
-      {isLoadingJournal ? (
+      {isLoading ? (
         <DiarySkeleton />
       ) : (
         <div className="diary-layout">
           <section className="diary-content">
-            {groups.map((group) => (
+            {groups.map((group: DiaryGroup) => (
               <section
                 key={group.id}
                 id={group.id}
@@ -107,7 +83,7 @@ export default function Diary() {
                 <h3>Chronologie</h3>
                 <nav className="timeline-nav">
                   <ul>
-                    {groups.map((group) => (
+                    {groups.map((group: DiaryGroup) => (
                       <li key={`nav-${group.id}`}>
                         <a href={`#${group.id}`}>
                           {format(group.date, "MMMM yyyy", { locale: fr })}

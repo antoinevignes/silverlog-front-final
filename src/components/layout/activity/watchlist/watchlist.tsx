@@ -1,8 +1,7 @@
 import Skeleton from "@/components/ui/skeleton/skeleton";
-import type { MovieType } from "@/utils/types/movie";
 import "./watchlist.scss";
 import MovieCard from "../../movie-card/movie-card";
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "@/auth";
 import { listDataQuery } from "@/queries/list.queries";
 import { useState, useMemo } from "react";
@@ -21,38 +20,18 @@ export default function Watchlist() {
   const [selectedGenre, setSelectedGenre] = useState<number | "all">("all");
 
   const { user } = useAuth();
-  const { data: watchlistData, isLoading: isLoadingWatchlist } = useQuery(
+  const { data: movies, isLoading } = useQuery(
     listDataQuery(user!.watchlist_id!),
   );
 
-  const watchlistMoviesDetailsResults = useQueries({
-    queries: (watchlistData ?? []).map((item: any) => ({
-      queryKey: ["movie", item.movie_id, "details", item.added_at],
-      queryFn: async () => {
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/tmdb/movie/${item.movie_id}?language=fr-FR`,
-        );
-        const details = await res.json();
-
-        const movie = {
-          ...details,
-          added_at: item.added_at,
-        };
-
-        return movie;
-      },
-      staleTime: 1000 * 60 * 60 * 24,
-    })),
-  });
-
-  const movies = watchlistMoviesDetailsResults
-    .map((r) => r.data)
-    .filter(Boolean) as MovieType[];
+  console.log(movies);
 
   // FILTRES
   const availableYears = useMemo(() => {
+    if (!movies) return [];
+
     const years = new Set<string>();
-    movies.forEach((m) => {
+    movies.forEach((m: { release_date: string }) => {
       if (m.release_date) {
         years.add(m.release_date.substring(0, 4));
       }
@@ -62,7 +41,7 @@ export default function Watchlist() {
 
   const availableGenres = useMemo(() => {
     const genreMap = new Map<number, string>();
-    movies.forEach((m) => {
+    movies.forEach((m: { genres: { id: number; name: string }[] }) => {
       m.genres?.forEach((g) => {
         if (g.id && g.name) genreMap.set(g.id, g.name);
       });
@@ -84,7 +63,9 @@ export default function Watchlist() {
 
     if (selectedGenre !== "all") {
       result = result.filter(
-        (m) => m.genres && m.genres.some((g) => g.id === selectedGenre),
+        (m) =>
+          m.genres &&
+          m.genres.some((g: { id: number }) => g.id === selectedGenre),
       );
     }
 
@@ -97,14 +78,9 @@ export default function Watchlist() {
     return result;
   }, [movies, selectedYear, selectedGenre, sortOrder]);
 
-  // LOADING
-  const isFetchingMovies =
-    isLoadingWatchlist ||
-    watchlistMoviesDetailsResults.some((r) => r.isLoading);
-
   return (
     <main className="container watchlist-page">
-      {isFetchingMovies ? (
+      {isLoading ? (
         <WatchlistSkeleton />
       ) : movies.length > 0 ? (
         <>

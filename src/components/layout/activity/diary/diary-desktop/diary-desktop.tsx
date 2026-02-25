@@ -93,7 +93,7 @@ export default function DiaryDesktop({
                   />
 
                   <time
-                    dateTime={format(movie.seen_at, "yyyy-MM-dd")}
+                    dateTime={format(new Date(movie.seen_at), "yyyy-MM-dd")}
                     className="day-overlay"
                   >
                     {format(day, "d")}

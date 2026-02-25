@@ -7,17 +7,20 @@ import z from "zod";
 import { useUpdateSeenDate } from "@/queries/user-movie.mutations";
 import { ArrowLeft } from "lucide-react";
 import Button from "@/components/ui/button/button";
+import type { MovieType } from "@/utils/types/movie";
 
 interface ReviewContentProps {
   onClose: () => void;
   onBack: () => void;
   movieId: string;
+  movie: MovieType;
 }
 
 export default function DiaryDialog({
   onClose,
   onBack,
   movieId,
+  movie,
 }: ReviewContentProps) {
   const { mutate: updateDate, isPending } = useUpdateSeenDate(movieId);
 
@@ -33,9 +36,19 @@ export default function DiaryDialog({
     onSubmit: ({ value }) => {
       if (!value.seen_at) return;
 
-      updateDate(value.seen_at, {
-        onSuccess: () => onClose(),
-      });
+      updateDate(
+        {
+          seenDate: value.seen_at,
+          title: movie.title,
+          posterPath: movie.poster_path,
+          backdropPath: movie.backdrop_path,
+          releaseDate: movie.release_date,
+          genres: movie.genres,
+        },
+        {
+          onSuccess: () => onClose(),
+        },
+      );
     },
   });
 
