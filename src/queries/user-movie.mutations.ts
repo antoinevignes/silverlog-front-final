@@ -121,7 +121,21 @@ export function useUpdateSeenDate(movieId: string) {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: async (seenDate: Date) => {
+    mutationFn: async ({
+      seenDate,
+      title,
+      posterPath,
+      backdropPath,
+      releaseDate,
+      genres,
+    }: {
+      seenDate: Date;
+      title: string;
+      posterPath: string | null;
+      backdropPath: string | null;
+      releaseDate: string | null;
+      genres: { id: number; name: string }[];
+    }) => {
       if (!user) {
         throw new Error("Unauthenticated");
       }
@@ -134,7 +148,14 @@ export function useUpdateSeenDate(movieId: string) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ date: seenDate }),
+          body: JSON.stringify({
+            date: seenDate,
+            title,
+            poster_path: posterPath?.trim() === "" ? null : posterPath,
+            backdrop_path: backdropPath?.trim() === "" ? null : backdropPath,
+            release_date: releaseDate?.trim() === "" ? null : releaseDate,
+            genres: genres.length > 0 ? genres : null,
+          }),
         },
       );
 

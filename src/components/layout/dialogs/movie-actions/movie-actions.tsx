@@ -173,6 +173,7 @@ export default function MovieActions({
             onClose={() => setOpen(false)}
             onBack={goBackToMain}
             movieId={String(movie.id)}
+            movie={movie}
           />
         )}
 
