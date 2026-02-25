@@ -87,7 +87,7 @@ export default function MovieActions({
               <section className="dialog-movie-description">
                 <img
                   src={`https://image.tmdb.org/t/p/w45/${movie.poster_path}`}
-                  alt=""
+                  alt={`Poster du film ${movie.title}`}
                   aria-hidden
                   className="dialog-image"
                 />
