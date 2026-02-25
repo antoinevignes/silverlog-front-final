@@ -1,5 +1,4 @@
 import "./reviews.scss";
-import ArticleTitle from "@/components/layout/section-title/article-title";
 import { ArrowRight, Heart } from "lucide-react";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import {
@@ -10,7 +9,7 @@ import {
   CardTitle,
   CardTitleRow,
 } from "@/components/ui/card";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { movieReviewsQuery } from "@/queries/review.query";
 import { useLikeReview } from "@/queries/review.mutations";
 
@@ -28,13 +27,11 @@ export default function Reviews() {
   const routeApi = getRouteApi("/movies/$movieId/");
   const { movieId } = routeApi.useParams();
 
-  const { data: reviews, isLoading } = useQuery(movieReviewsQuery(movieId));
+  const { data: reviews } = useSuspenseQuery(movieReviewsQuery(movieId));
   const { mutate: likeReview, isPending } = useLikeReview(movieId);
 
   return (
-    <section className="reviews container">
-      <ArticleTitle title="Avis de la communauté" />
-
+    <>
       {(!reviews || reviews.length === 0) && (
         <p className="text-secondary">
           Aucune critique pour ce film. Soyez le premier!
@@ -42,45 +39,42 @@ export default function Reviews() {
       )}
 
       <ul className="review-list">
-        {isLoading && <p>Loading...</p>}
+        {reviews.map((review: ReviewType) => (
+          <li key={review.id}>
+            <Card>
+              <CardHeader>
+                <CardTitleRow>
+                  <CardTitle>{review.username}</CardTitle>
+                  <CardRating>({review.rating / 2} / 10)</CardRating>
+                </CardTitleRow>
+              </CardHeader>
 
-        {!isLoading &&
-          reviews.map((review: ReviewType) => (
-            <li key={review.id}>
-              <Card>
-                <CardHeader>
-                  <CardTitleRow>
-                    <CardTitle>{review.username}</CardTitle>
-                    <CardRating>({review.rating / 2} / 10)</CardRating>
-                  </CardTitleRow>
-                </CardHeader>
+              <p>{review.content}</p>
 
-                <p>{review.content}</p>
+              <CardFooter className="review-footer">
+                <section className="review-actions">
+                  <button
+                    className="like-button"
+                    onClick={() => likeReview(review.id)}
+                    disabled={isPending}
+                  >
+                    <Heart
+                      size={16}
+                      aria-hidden
+                      fill={review.is_liked_by_user ? "red" : "none"}
+                      stroke={review.is_liked_by_user ? "red" : "black"}
+                    />
+                    {review.like_count}
+                  </button>
+                </section>
 
-                <CardFooter className="review-footer">
-                  <section className="review-actions">
-                    <button
-                      className="like-button"
-                      onClick={() => likeReview(review.id)}
-                      disabled={isPending}
-                    >
-                      <Heart
-                        size={16}
-                        aria-hidden
-                        fill={review.is_liked_by_user ? "red" : "none"}
-                        stroke={review.is_liked_by_user ? "red" : "black"}
-                      />
-                      {review.like_count}
-                    </button>
-                  </section>
-
-                  <p>
-                    Publié le {new Date(review.created_at).toLocaleDateString()}
-                  </p>
-                </CardFooter>
-              </Card>
-            </li>
-          ))}
+                <p>
+                  Publié le {new Date(review.created_at).toLocaleDateString()}
+                </p>
+              </CardFooter>
+            </Card>
+          </li>
+        ))}
       </ul>
 
       {reviews && reviews.length > 0 && (
@@ -89,6 +83,6 @@ export default function Reviews() {
           <ArrowRight size={16} />
         </Link>
       )}
-    </section>
+    </>
   );
 }
