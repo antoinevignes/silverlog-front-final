@@ -103,7 +103,17 @@ export default function MovieActions({
               <button
                 className="watchlist-btn"
                 disabled={isPending}
-                onClick={() => toggleList({ type: "watchlist", movieId })}
+                onClick={() =>
+                  toggleList({
+                    type: "watchlist",
+                    movieId,
+                    title: movie.title,
+                    posterPath: movie.poster_path,
+                    backdropPath: movie.backdrop_path,
+                    releaseDate: movie.release_date,
+                    genres: movie.genres,
+                  })
+                }
               >
                 <Bookmark fill={isInWatchlist ? "#262626" : "none"} />
               </button>
@@ -122,7 +132,17 @@ export default function MovieActions({
 
               <button
                 className="action-card"
-                onClick={() => toggleList({ type: "top", movieId })}
+                onClick={() =>
+                  toggleList({
+                    type: "top",
+                    movieId,
+                    title: movie.title,
+                    posterPath: movie.poster_path,
+                    backdropPath: movie.backdrop_path,
+                    releaseDate: movie.release_date,
+                    genres: movie.genres,
+                  })
+                }
                 disabled={isPending}
               >
                 {isInTop ? (
