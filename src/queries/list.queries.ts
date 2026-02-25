@@ -28,3 +28,16 @@ export const customListsQuery = (userId: string) =>
     },
     enabled: !!userId,
   });
+
+export const publicListsQuery = () =>
+  queryOptions({
+    queryKey: ["public-lists"],
+    queryFn: async () => {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/lists/public`, {
+        credentials: "include",
+      });
+      const data = await res.json();
+
+      return data;
+    },
+  });

@@ -1,0 +1,37 @@
+@use "@/styles/abstracts/variables" as v;
+
+.public-lists-page {
+  margin: 2rem auto;
+
+  .page-header {
+    margin-bottom: 2.5rem;
+
+    h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .lists-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 1.5rem;
+    }
+  }
+}
+
+.list-skeleton {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+  }
+}

@@ -17,6 +17,7 @@ import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
 import { Route as AboutMentionsLegalesRouteImport } from './routes/about/mentions-legales'
 import { Route as PersonPersonIdIndexRouteImport } from './routes/person/$personId/index'
 import { Route as MoviesMovieIdIndexRouteImport } from './routes/movies/$movieId/index'
+import { Route as AuthenticatedListsIndexRouteImport } from './routes/_authenticated/lists/index'
 import { Route as AuthenticatedUserTopIndexRouteImport } from './routes/_authenticated/user/top/index'
 import { Route as AuthenticatedUserActivityIndexRouteImport } from './routes/_authenticated/user/activity/index'
 
@@ -59,6 +60,11 @@ const MoviesMovieIdIndexRoute = MoviesMovieIdIndexRouteImport.update({
   path: '/movies/$movieId/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedListsIndexRoute = AuthenticatedListsIndexRouteImport.update({
+  id: '/lists/',
+  path: '/lists/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedUserTopIndexRoute =
   AuthenticatedUserTopIndexRouteImport.update({
     id: '/user/top/',
@@ -78,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/auth/verify-email': typeof AuthVerifyEmailRoute
+  '/lists/': typeof AuthenticatedListsIndexRoute
   '/movies/$movieId/': typeof MoviesMovieIdIndexRoute
   '/person/$personId/': typeof PersonPersonIdIndexRoute
   '/user/activity/': typeof AuthenticatedUserActivityIndexRoute
@@ -89,6 +96,7 @@ export interface FileRoutesByTo {
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/auth/verify-email': typeof AuthVerifyEmailRoute
+  '/lists': typeof AuthenticatedListsIndexRoute
   '/movies/$movieId': typeof MoviesMovieIdIndexRoute
   '/person/$personId': typeof PersonPersonIdIndexRoute
   '/user/activity': typeof AuthenticatedUserActivityIndexRoute
@@ -102,6 +110,7 @@ export interface FileRoutesById {
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/auth/verify-email': typeof AuthVerifyEmailRoute
+  '/_authenticated/lists/': typeof AuthenticatedListsIndexRoute
   '/movies/$movieId/': typeof MoviesMovieIdIndexRoute
   '/person/$personId/': typeof PersonPersonIdIndexRoute
   '/_authenticated/user/activity/': typeof AuthenticatedUserActivityIndexRoute
@@ -115,6 +124,7 @@ export interface FileRouteTypes {
     | '/auth/sign-in'
     | '/auth/sign-up'
     | '/auth/verify-email'
+    | '/lists/'
     | '/movies/$movieId/'
     | '/person/$personId/'
     | '/user/activity/'
@@ -126,6 +136,7 @@ export interface FileRouteTypes {
     | '/auth/sign-in'
     | '/auth/sign-up'
     | '/auth/verify-email'
+    | '/lists'
     | '/movies/$movieId'
     | '/person/$personId'
     | '/user/activity'
@@ -138,6 +149,7 @@ export interface FileRouteTypes {
     | '/auth/sign-in'
     | '/auth/sign-up'
     | '/auth/verify-email'
+    | '/_authenticated/lists/'
     | '/movies/$movieId/'
     | '/person/$personId/'
     | '/_authenticated/user/activity/'
@@ -213,6 +225,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MoviesMovieIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/lists/': {
+      id: '/_authenticated/lists/'
+      path: '/lists'
+      fullPath: '/lists/'
+      preLoaderRoute: typeof AuthenticatedListsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/user/top/': {
       id: '/_authenticated/user/top/'
       path: '/user/top'
@@ -231,11 +250,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedListsIndexRoute: typeof AuthenticatedListsIndexRoute
   AuthenticatedUserActivityIndexRoute: typeof AuthenticatedUserActivityIndexRoute
   AuthenticatedUserTopIndexRoute: typeof AuthenticatedUserTopIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedListsIndexRoute: AuthenticatedListsIndexRoute,
   AuthenticatedUserActivityIndexRoute: AuthenticatedUserActivityIndexRoute,
   AuthenticatedUserTopIndexRoute: AuthenticatedUserTopIndexRoute,
 }
