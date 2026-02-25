@@ -181,6 +181,7 @@ export default function MovieActions({
             onBack={goBackToMain}
             onCreateNew={goToCreateList}
             movieId={movieId}
+            movie={movie}
           />
         )}
 

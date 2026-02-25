@@ -5,17 +5,20 @@ import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { movieStateQuery } from "@/queries/user-movie.queries";
 import { customListsQuery } from "@/queries/list.queries";
 import { useToggleCustomList } from "@/queries/list.mutations";
+import type { MovieType } from "@/utils/types/movie";
 
 interface CustomListContentProps {
   onBack: () => void;
   onCreateNew: () => void;
   movieId: string;
+  movie: MovieType;
 }
 
 export default function CustomList({
   onBack,
   onCreateNew,
   movieId,
+  movie,
 }: CustomListContentProps) {
   const { user } = useAuth();
 
@@ -68,7 +71,16 @@ export default function CustomList({
                   key={list.id}
                   type="button"
                   className={`custom-list-item ${inList ? "selected" : ""}`}
-                  onClick={() => addToList({ listId: list.id })}
+                  onClick={() =>
+                    addToList({
+                      listId: list.id,
+                      title: movie.title,
+                      posterPath: movie.poster_path,
+                      backdropPath: movie.backdrop_path,
+                      releaseDate: movie.release_date,
+                      genres: movie.genres,
+                    })
+                  }
                   disabled={isPending}
                 >
                   <span>{list.title}</span>

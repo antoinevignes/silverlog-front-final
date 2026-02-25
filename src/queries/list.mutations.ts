@@ -111,7 +111,21 @@ export function useToggleCustomList(movieId: string) {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: async ({ listId }: { listId: number }) => {
+    mutationFn: async ({
+      listId,
+      title,
+      posterPath,
+      backdropPath,
+      releaseDate,
+      genres,
+    }: {
+      listId: number;
+      title: string;
+      posterPath: string | null;
+      backdropPath: string | null;
+      releaseDate: string | null;
+      genres: { id: number; name: string }[];
+    }) => {
       if (!user) {
         throw new Error("Unauthenticated");
       }
@@ -126,6 +140,11 @@ export function useToggleCustomList(movieId: string) {
           },
           body: JSON.stringify({
             movie_id: movieId,
+            title,
+            poster_path: posterPath?.trim() === "" ? null : posterPath,
+            backdrop_path: backdropPath?.trim() === "" ? null : backdropPath,
+            release_date: releaseDate?.trim() === "" ? null : releaseDate,
+            genres: genres.length > 0 ? genres : null,
           }),
         },
       );
