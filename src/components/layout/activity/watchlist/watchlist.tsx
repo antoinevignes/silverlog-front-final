@@ -28,6 +28,8 @@ export default function Watchlist() {
 
   // FILTRES
   const availableYears = useMemo(() => {
+    if (!movies) return [];
+
     const years = new Set<string>();
     movies.forEach((m: { release_date: string }) => {
       if (m.release_date) {

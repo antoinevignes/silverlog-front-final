@@ -37,10 +37,10 @@ export default function DiaryMobile({ movies }: { movies: MovieType[] }) {
                 />
 
                 <time
-                  dateTime={format(movie.seen_at, "yyyy-MM-dd")}
+                  dateTime={format(new Date(movie.seen_at), "yyyy-MM-dd")}
                   className="day-overlay"
                 >
-                  {format(movie.seen_at, "d")}
+                  {format(new Date(movie.seen_at), "d")}
                 </time>
               </figure>
               <section className="movie-details">
