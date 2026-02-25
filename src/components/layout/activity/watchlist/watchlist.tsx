@@ -1,7 +1,6 @@
-import Skeleton from "@/components/ui/skeleton/skeleton";
 import "./watchlist.scss";
 import MovieCard from "../../movie-card/movie-card";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { useAuth } from "@/auth";
 import { listDataQuery } from "@/queries/list.queries";
 import { useState, useMemo } from "react";
@@ -20,11 +19,7 @@ export default function Watchlist() {
   const [selectedGenre, setSelectedGenre] = useState<number | "all">("all");
 
   const { user } = useAuth();
-  const { data: movies, isLoading } = useQuery(
-    listDataQuery(user!.watchlist_id!),
-  );
-
-  console.log(movies);
+  const { data: movies } = useSuspenseQuery(listDataQuery(user!.watchlist_id!));
 
   // FILTRES
   const availableYears = useMemo(() => {
@@ -40,6 +35,8 @@ export default function Watchlist() {
   }, [movies]);
 
   const availableGenres = useMemo(() => {
+    if (!movies) return [];
+
     const genreMap = new Map<number, string>();
     movies.forEach((m: { genres: { id: number; name: string }[] }) => {
       m.genres?.forEach((g) => {
@@ -53,6 +50,8 @@ export default function Watchlist() {
 
   // TRI
   const filteredMovies = useMemo(() => {
+    if (!movies) return [];
+
     let result = [...movies];
 
     if (selectedYear !== "all") {
@@ -80,9 +79,7 @@ export default function Watchlist() {
 
   return (
     <main className="container watchlist-page">
-      {isLoading ? (
-        <WatchlistSkeleton />
-      ) : movies.length > 0 ? (
+      {movies.length > 0 ? (
         <>
           <header className="watchlist-filters">
             <DropdownMenu>
@@ -165,15 +162,5 @@ export default function Watchlist() {
         <p className="empty-state">Votre watchlist est vide pour le moment.</p>
       )}
     </main>
-  );
-}
-
-function WatchlistSkeleton() {
-  return (
-    <div className="watchlist-layout">
-      {Array.from({ length: 40 }).map((_, i) => (
-        <Skeleton key={i} width="100%" className="watchlist-skeleton" />
-      ))}
-    </div>
   );
 }

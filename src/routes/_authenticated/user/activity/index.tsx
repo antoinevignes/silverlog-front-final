@@ -4,7 +4,9 @@ import Tabs from "@/components/ui/tabs/tabs";
 import { listDataQuery } from "@/queries/list.queries";
 import { seenMoviesQuery } from "@/queries/user-movie.queries";
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { Suspense, useState } from "react";
+import DiarySkeleton from "@/components/layout/activity/diary/diary-skeleton/diary-skeleton";
+import WatchlistSkeleton from "@/components/layout/activity/watchlist/watchlist-skeleton/watchlist-skeleton";
 
 const tabs = [
   { id: "watchlist", label: "Watchlist" },
@@ -12,11 +14,11 @@ const tabs = [
 ];
 
 export const Route = createFileRoute("/_authenticated/user/activity/")({
-  loader: async ({ context }) => {
-    context.queryClient.ensureQueryData(
+  loader: ({ context }) => {
+    context.queryClient.prefetchQuery(
       listDataQuery(context.auth.user!.watchlist_id!),
     );
-    context.queryClient.ensureQueryData(seenMoviesQuery(context.auth.user!.id));
+    context.queryClient.prefetchQuery(seenMoviesQuery(context.auth.user!.id));
   },
   component: RouteComponent,
 });
@@ -33,9 +35,17 @@ function RouteComponent() {
         variant="header"
       />
 
-      {selected === "watchlist" && <Watchlist />}
+      {selected === "watchlist" && (
+        <Suspense fallback={<WatchlistSkeleton />}>
+          <Watchlist />
+        </Suspense>
+      )}
 
-      {selected === "diary" && <Diary />}
+      {selected === "diary" && (
+        <Suspense fallback={<DiarySkeleton />}>
+          <Diary />
+        </Suspense>
+      )}
     </>
   );
 }
