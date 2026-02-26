@@ -30,7 +30,7 @@ export default function Diary() {
       (acc: Record<string, DiaryGroup>, movie: MovieType) => {
         const date = new Date(movie.seen_at);
         const key = format(date, "yyyy-MM");
-        if (!acc[key]) {
+        if (!(key in acc)) {
           acc[key] = {
             id: key,
             label: format(date, "MMMM yyyy", { locale: fr }),

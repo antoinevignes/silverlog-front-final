@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Image } from "@unpic/react";
 import MovieActions from "../dialogs/movie-actions/movie-actions";
+import type { MovieType } from "@/utils/types/movie";
 import Tabs from "@/components/ui/tabs/tabs";
 import {
   movieCreditsQuery,
@@ -28,33 +29,27 @@ const tabs = [
 
 function RatingBadge({
   movie,
-  movieData,
   voteAvg,
   className,
 }: {
-  movie: any;
-  movieData: any;
+  movie: MovieType;
   voteAvg: number;
   className?: string;
 }) {
   return (
     <p
       className={`grade ${className || ""}`}
-      aria-label={`Note de ${movie?.vote_average} sur 10`}
+      aria-label={`Note de ${movie.vote_average} sur 10`}
     >
       <Star className="star-icon" aria-hidden color="#F1DA51" fill="#F1DA51" />
 
       <strong className="rating">
-        <data value={movie?.vote_average}>{Math.round(voteAvg * 10) / 10}</data>
+        <data value={movie.vote_average}>{Math.round(voteAvg * 10) / 10}</data>
         /10
       </strong>
 
       <span className="text-secondary rating-count">
-        (
-        {(
-          Number(movieData?.rating_count) + Number(movie?.vote_count)
-        ).toLocaleString()}
-        )
+        ({(Number(voteAvg) + Number(movie.vote_count)).toLocaleString()})
       </span>
     </p>
   );
@@ -135,7 +130,6 @@ export default function MovieHeader() {
 
               <RatingBadge
                 movie={movie}
-                movieData={movieData}
                 voteAvg={voteAvg}
                 className="grade-mobile"
               />
@@ -170,7 +164,6 @@ export default function MovieHeader() {
 
             <RatingBadge
               movie={movie}
-              movieData={movieData}
               voteAvg={voteAvg}
               className="grade-desktop"
             />

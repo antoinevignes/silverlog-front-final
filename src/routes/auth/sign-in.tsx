@@ -21,7 +21,7 @@ export const Route = createFileRoute("/auth/sign-in")({
 
 function RouteComponent() {
   const { auth } = Route.useRouteContext();
-  const { redirect } = Route.useSearch();
+  const { redirect: redirectPath } = Route.useSearch();
   const navigate = Route.useNavigate();
 
   const form = useAppForm({
@@ -37,7 +37,7 @@ function RouteComponent() {
     },
     onSubmit: async ({ value }) => {
       await auth.login(value.email, value.password);
-      navigate({ to: redirect, search: (prev) => prev });
+      navigate({ to: redirectPath, search: (prev) => prev });
     },
   });
 

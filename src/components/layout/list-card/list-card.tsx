@@ -2,6 +2,7 @@ import { Image } from "@unpic/react";
 import { Bookmark, Film, UserCircle } from "lucide-react";
 import "./list-card.scss";
 import { Link } from "@tanstack/react-router";
+import type { ListType } from "@/utils/types/list";
 import Badge from "@/components/ui/badge/badge";
 import {
   getCloudinaryPlaceholder,
@@ -9,11 +10,11 @@ import {
 } from "@/utils/cloudinary-handler";
 import { formatCompactNumber } from "@/utils/format-compact-number";
 
-export default function ListCard({ list }: { list: any }) {
+export default function ListCard({ list }: { list: ListType }) {
   return (
     <Link
       to="/lists/$listId"
-      params={{ listId: list.id }}
+      params={{ listId: String(list.id) }}
       className="public-list-card"
     >
       <section className="list-info-block">
@@ -37,7 +38,7 @@ export default function ListCard({ list }: { list: any }) {
       </section>
 
       <section className="posters-overlap-container">
-        {list.movies.slice(0, 3).map((movie: any, index: number) => {
+        {list.movies.slice(0, 3).map((movie, index: number) => {
           return (
             <Image
               src={getCloudinarySrc(movie.poster_path, "posters")}

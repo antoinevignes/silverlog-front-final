@@ -36,9 +36,8 @@ export default function MovieCrew() {
       .filter((member) => MAJOR_JOBS.includes(member.job))
       .reduce(
         (acc, member) => {
-          const existing = acc[member.id];
-
-          if (existing) {
+          if (member.id in acc) {
+            const existing = acc[member.id];
             if (!existing.allJobs.includes(member.job)) {
               existing.allJobs.push(member.job);
             }

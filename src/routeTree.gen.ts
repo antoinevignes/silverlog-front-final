@@ -8,280 +8,280 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from "./routes/__root";
-import { Route as AuthenticatedRouteRouteImport } from "./routes/_authenticated/route";
-import { Route as IndexRouteImport } from "./routes/index";
-import { Route as ListsIndexRouteImport } from "./routes/lists/index";
-import { Route as AuthVerifyEmailRouteImport } from "./routes/auth/verify-email";
-import { Route as AuthSignUpRouteImport } from "./routes/auth/sign-up";
-import { Route as AuthSignInRouteImport } from "./routes/auth/sign-in";
-import { Route as AboutMentionsLegalesRouteImport } from "./routes/about/mentions-legales";
-import { Route as PersonPersonIdIndexRouteImport } from "./routes/person/$personId/index";
-import { Route as MoviesMovieIdIndexRouteImport } from "./routes/movies/$movieId/index";
-import { Route as ListsListIdIndexRouteImport } from "./routes/lists/$listId/index";
-import { Route as AuthenticatedUserTopIndexRouteImport } from "./routes/_authenticated/user/top/index";
-import { Route as AuthenticatedUserActivityIndexRouteImport } from "./routes/_authenticated/user/activity/index";
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as ListsIndexRouteImport } from './routes/lists/index'
+import { Route as AuthVerifyEmailRouteImport } from './routes/auth/verify-email'
+import { Route as AuthSignUpRouteImport } from './routes/auth/sign-up'
+import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
+import { Route as AboutMentionsLegalesRouteImport } from './routes/about/mentions-legales'
+import { Route as PersonPersonIdIndexRouteImport } from './routes/person/$personId/index'
+import { Route as MoviesMovieIdIndexRouteImport } from './routes/movies/$movieId/index'
+import { Route as ListsListIdIndexRouteImport } from './routes/lists/$listId/index'
+import { Route as AuthenticatedUserTopIndexRouteImport } from './routes/_authenticated/user/top/index'
+import { Route as AuthenticatedUserActivityIndexRouteImport } from './routes/_authenticated/user/activity/index'
 
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: "/_authenticated",
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const IndexRoute = IndexRouteImport.update({
-  id: "/",
-  path: "/",
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const ListsIndexRoute = ListsIndexRouteImport.update({
-  id: "/lists/",
-  path: "/lists/",
+  id: '/lists/',
+  path: '/lists/',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const AuthVerifyEmailRoute = AuthVerifyEmailRouteImport.update({
-  id: "/auth/verify-email",
-  path: "/auth/verify-email",
+  id: '/auth/verify-email',
+  path: '/auth/verify-email',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const AuthSignUpRoute = AuthSignUpRouteImport.update({
-  id: "/auth/sign-up",
-  path: "/auth/sign-up",
+  id: '/auth/sign-up',
+  path: '/auth/sign-up',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const AuthSignInRoute = AuthSignInRouteImport.update({
-  id: "/auth/sign-in",
-  path: "/auth/sign-in",
+  id: '/auth/sign-in',
+  path: '/auth/sign-in',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const AboutMentionsLegalesRoute = AboutMentionsLegalesRouteImport.update({
-  id: "/about/mentions-legales",
-  path: "/about/mentions-legales",
+  id: '/about/mentions-legales',
+  path: '/about/mentions-legales',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const PersonPersonIdIndexRoute = PersonPersonIdIndexRouteImport.update({
-  id: "/person/$personId/",
-  path: "/person/$personId/",
+  id: '/person/$personId/',
+  path: '/person/$personId/',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const MoviesMovieIdIndexRoute = MoviesMovieIdIndexRouteImport.update({
-  id: "/movies/$movieId/",
-  path: "/movies/$movieId/",
+  id: '/movies/$movieId/',
+  path: '/movies/$movieId/',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const ListsListIdIndexRoute = ListsListIdIndexRouteImport.update({
-  id: "/lists/$listId/",
-  path: "/lists/$listId/",
+  id: '/lists/$listId/',
+  path: '/lists/$listId/',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const AuthenticatedUserTopIndexRoute =
   AuthenticatedUserTopIndexRouteImport.update({
-    id: "/user/top/",
-    path: "/user/top/",
+    id: '/user/top/',
+    path: '/user/top/',
     getParentRoute: () => AuthenticatedRouteRoute,
-  } as any);
+  } as any)
 const AuthenticatedUserActivityIndexRoute =
   AuthenticatedUserActivityIndexRouteImport.update({
-    id: "/user/activity/",
-    path: "/user/activity/",
+    id: '/user/activity/',
+    path: '/user/activity/',
     getParentRoute: () => AuthenticatedRouteRoute,
-  } as any);
+  } as any)
 
 export interface FileRoutesByFullPath {
-  "/": typeof IndexRoute;
-  "/about/mentions-legales": typeof AboutMentionsLegalesRoute;
-  "/auth/sign-in": typeof AuthSignInRoute;
-  "/auth/sign-up": typeof AuthSignUpRoute;
-  "/auth/verify-email": typeof AuthVerifyEmailRoute;
-  "/lists/": typeof ListsIndexRoute;
-  "/lists/$listId/": typeof ListsListIdIndexRoute;
-  "/movies/$movieId/": typeof MoviesMovieIdIndexRoute;
-  "/person/$personId/": typeof PersonPersonIdIndexRoute;
-  "/user/activity/": typeof AuthenticatedUserActivityIndexRoute;
-  "/user/top/": typeof AuthenticatedUserTopIndexRoute;
+  '/': typeof IndexRoute
+  '/about/mentions-legales': typeof AboutMentionsLegalesRoute
+  '/auth/sign-in': typeof AuthSignInRoute
+  '/auth/sign-up': typeof AuthSignUpRoute
+  '/auth/verify-email': typeof AuthVerifyEmailRoute
+  '/lists/': typeof ListsIndexRoute
+  '/lists/$listId/': typeof ListsListIdIndexRoute
+  '/movies/$movieId/': typeof MoviesMovieIdIndexRoute
+  '/person/$personId/': typeof PersonPersonIdIndexRoute
+  '/user/activity/': typeof AuthenticatedUserActivityIndexRoute
+  '/user/top/': typeof AuthenticatedUserTopIndexRoute
 }
 export interface FileRoutesByTo {
-  "/": typeof IndexRoute;
-  "/about/mentions-legales": typeof AboutMentionsLegalesRoute;
-  "/auth/sign-in": typeof AuthSignInRoute;
-  "/auth/sign-up": typeof AuthSignUpRoute;
-  "/auth/verify-email": typeof AuthVerifyEmailRoute;
-  "/lists": typeof ListsIndexRoute;
-  "/lists/$listId": typeof ListsListIdIndexRoute;
-  "/movies/$movieId": typeof MoviesMovieIdIndexRoute;
-  "/person/$personId": typeof PersonPersonIdIndexRoute;
-  "/user/activity": typeof AuthenticatedUserActivityIndexRoute;
-  "/user/top": typeof AuthenticatedUserTopIndexRoute;
+  '/': typeof IndexRoute
+  '/about/mentions-legales': typeof AboutMentionsLegalesRoute
+  '/auth/sign-in': typeof AuthSignInRoute
+  '/auth/sign-up': typeof AuthSignUpRoute
+  '/auth/verify-email': typeof AuthVerifyEmailRoute
+  '/lists': typeof ListsIndexRoute
+  '/lists/$listId': typeof ListsListIdIndexRoute
+  '/movies/$movieId': typeof MoviesMovieIdIndexRoute
+  '/person/$personId': typeof PersonPersonIdIndexRoute
+  '/user/activity': typeof AuthenticatedUserActivityIndexRoute
+  '/user/top': typeof AuthenticatedUserTopIndexRoute
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport;
-  "/": typeof IndexRoute;
-  "/_authenticated": typeof AuthenticatedRouteRouteWithChildren;
-  "/about/mentions-legales": typeof AboutMentionsLegalesRoute;
-  "/auth/sign-in": typeof AuthSignInRoute;
-  "/auth/sign-up": typeof AuthSignUpRoute;
-  "/auth/verify-email": typeof AuthVerifyEmailRoute;
-  "/lists/": typeof ListsIndexRoute;
-  "/lists/$listId/": typeof ListsListIdIndexRoute;
-  "/movies/$movieId/": typeof MoviesMovieIdIndexRoute;
-  "/person/$personId/": typeof PersonPersonIdIndexRoute;
-  "/_authenticated/user/activity/": typeof AuthenticatedUserActivityIndexRoute;
-  "/_authenticated/user/top/": typeof AuthenticatedUserTopIndexRoute;
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/about/mentions-legales': typeof AboutMentionsLegalesRoute
+  '/auth/sign-in': typeof AuthSignInRoute
+  '/auth/sign-up': typeof AuthSignUpRoute
+  '/auth/verify-email': typeof AuthVerifyEmailRoute
+  '/lists/': typeof ListsIndexRoute
+  '/lists/$listId/': typeof ListsListIdIndexRoute
+  '/movies/$movieId/': typeof MoviesMovieIdIndexRoute
+  '/person/$personId/': typeof PersonPersonIdIndexRoute
+  '/_authenticated/user/activity/': typeof AuthenticatedUserActivityIndexRoute
+  '/_authenticated/user/top/': typeof AuthenticatedUserTopIndexRoute
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
+  fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | "/"
-    | "/about/mentions-legales"
-    | "/auth/sign-in"
-    | "/auth/sign-up"
-    | "/auth/verify-email"
-    | "/lists/"
-    | "/lists/$listId/"
-    | "/movies/$movieId/"
-    | "/person/$personId/"
-    | "/user/activity/"
-    | "/user/top/";
-  fileRoutesByTo: FileRoutesByTo;
+    | '/'
+    | '/about/mentions-legales'
+    | '/auth/sign-in'
+    | '/auth/sign-up'
+    | '/auth/verify-email'
+    | '/lists/'
+    | '/lists/$listId/'
+    | '/movies/$movieId/'
+    | '/person/$personId/'
+    | '/user/activity/'
+    | '/user/top/'
+  fileRoutesByTo: FileRoutesByTo
   to:
-    | "/"
-    | "/about/mentions-legales"
-    | "/auth/sign-in"
-    | "/auth/sign-up"
-    | "/auth/verify-email"
-    | "/lists"
-    | "/lists/$listId"
-    | "/movies/$movieId"
-    | "/person/$personId"
-    | "/user/activity"
-    | "/user/top";
+    | '/'
+    | '/about/mentions-legales'
+    | '/auth/sign-in'
+    | '/auth/sign-up'
+    | '/auth/verify-email'
+    | '/lists'
+    | '/lists/$listId'
+    | '/movies/$movieId'
+    | '/person/$personId'
+    | '/user/activity'
+    | '/user/top'
   id:
-    | "__root__"
-    | "/"
-    | "/_authenticated"
-    | "/about/mentions-legales"
-    | "/auth/sign-in"
-    | "/auth/sign-up"
-    | "/auth/verify-email"
-    | "/lists/"
-    | "/lists/$listId/"
-    | "/movies/$movieId/"
-    | "/person/$personId/"
-    | "/_authenticated/user/activity/"
-    | "/_authenticated/user/top/";
-  fileRoutesById: FileRoutesById;
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/about/mentions-legales'
+    | '/auth/sign-in'
+    | '/auth/sign-up'
+    | '/auth/verify-email'
+    | '/lists/'
+    | '/lists/$listId/'
+    | '/movies/$movieId/'
+    | '/person/$personId/'
+    | '/_authenticated/user/activity/'
+    | '/_authenticated/user/top/'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute;
-  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren;
-  AboutMentionsLegalesRoute: typeof AboutMentionsLegalesRoute;
-  AuthSignInRoute: typeof AuthSignInRoute;
-  AuthSignUpRoute: typeof AuthSignUpRoute;
-  AuthVerifyEmailRoute: typeof AuthVerifyEmailRoute;
-  ListsIndexRoute: typeof ListsIndexRoute;
-  ListsListIdIndexRoute: typeof ListsListIdIndexRoute;
-  MoviesMovieIdIndexRoute: typeof MoviesMovieIdIndexRoute;
-  PersonPersonIdIndexRoute: typeof PersonPersonIdIndexRoute;
+  IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AboutMentionsLegalesRoute: typeof AboutMentionsLegalesRoute
+  AuthSignInRoute: typeof AuthSignInRoute
+  AuthSignUpRoute: typeof AuthSignUpRoute
+  AuthVerifyEmailRoute: typeof AuthVerifyEmailRoute
+  ListsIndexRoute: typeof ListsIndexRoute
+  ListsListIdIndexRoute: typeof ListsListIdIndexRoute
+  MoviesMovieIdIndexRoute: typeof MoviesMovieIdIndexRoute
+  PersonPersonIdIndexRoute: typeof PersonPersonIdIndexRoute
 }
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/_authenticated": {
-      id: "/_authenticated";
-      path: "";
-      fullPath: "/";
-      preLoaderRoute: typeof AuthenticatedRouteRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/": {
-      id: "/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof IndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/lists/": {
-      id: "/lists/";
-      path: "/lists";
-      fullPath: "/lists/";
-      preLoaderRoute: typeof ListsIndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/auth/verify-email": {
-      id: "/auth/verify-email";
-      path: "/auth/verify-email";
-      fullPath: "/auth/verify-email";
-      preLoaderRoute: typeof AuthVerifyEmailRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/auth/sign-up": {
-      id: "/auth/sign-up";
-      path: "/auth/sign-up";
-      fullPath: "/auth/sign-up";
-      preLoaderRoute: typeof AuthSignUpRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/auth/sign-in": {
-      id: "/auth/sign-in";
-      path: "/auth/sign-in";
-      fullPath: "/auth/sign-in";
-      preLoaderRoute: typeof AuthSignInRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/about/mentions-legales": {
-      id: "/about/mentions-legales";
-      path: "/about/mentions-legales";
-      fullPath: "/about/mentions-legales";
-      preLoaderRoute: typeof AboutMentionsLegalesRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/person/$personId/": {
-      id: "/person/$personId/";
-      path: "/person/$personId";
-      fullPath: "/person/$personId/";
-      preLoaderRoute: typeof PersonPersonIdIndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/movies/$movieId/": {
-      id: "/movies/$movieId/";
-      path: "/movies/$movieId";
-      fullPath: "/movies/$movieId/";
-      preLoaderRoute: typeof MoviesMovieIdIndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/lists/$listId/": {
-      id: "/lists/$listId/";
-      path: "/lists/$listId";
-      fullPath: "/lists/$listId/";
-      preLoaderRoute: typeof ListsListIdIndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/_authenticated/user/top/": {
-      id: "/_authenticated/user/top/";
-      path: "/user/top";
-      fullPath: "/user/top/";
-      preLoaderRoute: typeof AuthenticatedUserTopIndexRouteImport;
-      parentRoute: typeof AuthenticatedRouteRoute;
-    };
-    "/_authenticated/user/activity/": {
-      id: "/_authenticated/user/activity/";
-      path: "/user/activity";
-      fullPath: "/user/activity/";
-      preLoaderRoute: typeof AuthenticatedUserActivityIndexRouteImport;
-      parentRoute: typeof AuthenticatedRouteRoute;
-    };
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lists/': {
+      id: '/lists/'
+      path: '/lists'
+      fullPath: '/lists/'
+      preLoaderRoute: typeof ListsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/verify-email': {
+      id: '/auth/verify-email'
+      path: '/auth/verify-email'
+      fullPath: '/auth/verify-email'
+      preLoaderRoute: typeof AuthVerifyEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/sign-up': {
+      id: '/auth/sign-up'
+      path: '/auth/sign-up'
+      fullPath: '/auth/sign-up'
+      preLoaderRoute: typeof AuthSignUpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/sign-in': {
+      id: '/auth/sign-in'
+      path: '/auth/sign-in'
+      fullPath: '/auth/sign-in'
+      preLoaderRoute: typeof AuthSignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about/mentions-legales': {
+      id: '/about/mentions-legales'
+      path: '/about/mentions-legales'
+      fullPath: '/about/mentions-legales'
+      preLoaderRoute: typeof AboutMentionsLegalesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/person/$personId/': {
+      id: '/person/$personId/'
+      path: '/person/$personId'
+      fullPath: '/person/$personId/'
+      preLoaderRoute: typeof PersonPersonIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/movies/$movieId/': {
+      id: '/movies/$movieId/'
+      path: '/movies/$movieId'
+      fullPath: '/movies/$movieId/'
+      preLoaderRoute: typeof MoviesMovieIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lists/$listId/': {
+      id: '/lists/$listId/'
+      path: '/lists/$listId'
+      fullPath: '/lists/$listId/'
+      preLoaderRoute: typeof ListsListIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/user/top/': {
+      id: '/_authenticated/user/top/'
+      path: '/user/top'
+      fullPath: '/user/top/'
+      preLoaderRoute: typeof AuthenticatedUserTopIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/user/activity/': {
+      id: '/_authenticated/user/activity/'
+      path: '/user/activity'
+      fullPath: '/user/activity/'
+      preLoaderRoute: typeof AuthenticatedUserActivityIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedUserActivityIndexRoute: typeof AuthenticatedUserActivityIndexRoute;
-  AuthenticatedUserTopIndexRoute: typeof AuthenticatedUserTopIndexRoute;
+  AuthenticatedUserActivityIndexRoute: typeof AuthenticatedUserActivityIndexRoute
+  AuthenticatedUserTopIndexRoute: typeof AuthenticatedUserTopIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedUserActivityIndexRoute: AuthenticatedUserActivityIndexRoute,
   AuthenticatedUserTopIndexRoute: AuthenticatedUserTopIndexRoute,
-};
+}
 
 const AuthenticatedRouteRouteWithChildren =
-  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren);
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -294,7 +294,7 @@ const rootRouteChildren: RootRouteChildren = {
   ListsListIdIndexRoute: ListsListIdIndexRoute,
   MoviesMovieIdIndexRoute: MoviesMovieIdIndexRoute,
   PersonPersonIdIndexRoute: PersonPersonIdIndexRoute,
-};
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
+  ._addFileTypes<FileRouteTypes>()

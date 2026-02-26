@@ -86,7 +86,7 @@ export default function Input({
   disabled,
   ...props
 }: InputProps) {
-  const field = useFieldContext<any>();
+  const field = useFieldContext<string>();
 
   return (
     <InputWrapper $hasLeftIcon={!!leftIcon} $hasRightIcon={!!rightIcon}>

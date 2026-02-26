@@ -7,7 +7,7 @@ export default function Textarea({
   disabled,
   ...props
 }: TextareaHTMLAttributes<HTMLTextAreaElement>) {
-  const field = useFieldContext<any>();
+  const field = useFieldContext<string>();
 
   return (
     <textarea

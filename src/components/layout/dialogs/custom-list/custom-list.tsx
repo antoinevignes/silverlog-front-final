@@ -27,7 +27,7 @@ export default function CustomList({
   const { mutate: addToList, isPending } = useToggleCustomList(movieId);
 
   const isMovieInList = (listId: number) =>
-    movieState.lists.some((l: any) => l.id === listId);
+    movieState.lists.some((l: { id: number }) => l.id === listId);
 
   return (
     <>

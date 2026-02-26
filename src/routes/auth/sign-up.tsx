@@ -65,7 +65,7 @@ function RouteComponent() {
           .regex(/[a-z]/, "Doit contenir au moins une minuscule")
           .regex(/\d/, "Doit contenir au moins un chiffre")
           .regex(
-            /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~`]/,
+            new RegExp("[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?~`]"),
             "Doit contenir un caractère spécial",
           )
           .refine((val) => !/\s/.test(val), "Ne doit pas contenir d'espace"),

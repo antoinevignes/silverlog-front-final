@@ -31,7 +31,7 @@ export function useToggleMovieList(movieId: string) {
   return useMutation({
     mutationFn: async ({
       type,
-      movieId,
+      movieId: payloadMovieId,
       title,
       posterPath,
       backdropPath,
@@ -61,7 +61,7 @@ export function useToggleMovieList(movieId: string) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            movie_id: movieId,
+            movie_id: payloadMovieId,
             title,
             poster_path: posterPath?.trim() === "" ? null : posterPath,
             backdrop_path: backdropPath?.trim() === "" ? null : backdropPath,

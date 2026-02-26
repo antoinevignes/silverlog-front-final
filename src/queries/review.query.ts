@@ -1,6 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 
-export const movieReviewQuery = (user: any, movieId: string) =>
+export const movieReviewQuery = (user: unknown, movieId: string) =>
   queryOptions({
     queryKey: ["review", movieId],
     queryFn: async () => {

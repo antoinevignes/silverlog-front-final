@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import "./index.scss";
 import { Suspense } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import type { ListType } from "@/utils/types/list";
 import { publicListsQuery } from "@/queries/list.queries";
 import ListCard from "@/components/layout/list-card/list-card";
 import Skeleton from "@/components/ui/skeleton/skeleton";
@@ -43,7 +44,7 @@ export default function Lists() {
 
   return (
     <section className="lists-grid">
-      {lists.map((list: any) => (
+      {lists.map((list: ListType) => (
         <ListCard key={list.id} list={list} />
       ))}
     </section>

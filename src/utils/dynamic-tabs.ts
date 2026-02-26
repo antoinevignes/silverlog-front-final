@@ -1,26 +1,36 @@
 type Tab = { id: string; label: string };
 
-export const getDynamicTabs = (details: any, credits: any): Array<Tab> => {
+export const getDynamicTabs = (
+  details: { known_for_department?: string } | null | undefined,
+  credits:
+    | { cast?: Array<unknown>; crew?: Array<{ job: string }> }
+    | null
+    | undefined,
+): Array<Tab> => {
   if (!details || !credits) return [];
 
   const source = [
-    { id: "actor", label: "Acteur", exists: credits.cast?.length > 0 },
+    {
+      id: "actor",
+      label: "Acteur",
+      exists: Array.isArray(credits.cast) && credits.cast.length > 0,
+    },
     {
       id: "director",
       label: "Réalisateur",
-      exists: credits.crew?.some((m: any) => m.job === "Director"),
+      exists: credits.crew?.some((m: { job: string }) => m.job === "Director"),
     },
     {
       id: "producer",
       label: "Producteur",
-      exists: credits.crew?.some((m: any) =>
+      exists: credits.crew?.some((m: { job: string }) =>
         ["Producer", "Executive Producer"].includes(m.job),
       ),
     },
     {
       id: "writer",
       label: "Scénariste",
-      exists: credits.crew?.some((m: any) =>
+      exists: credits.crew?.some((m: { job: string }) =>
         ["Story", "Screenplay", "Writer"].includes(m.job),
       ),
     },
@@ -28,20 +38,20 @@ export const getDynamicTabs = (details: any, credits: any): Array<Tab> => {
       id: "photography",
       label: "Dir. de la photo.",
       exists: credits.crew?.some(
-        (m: any) => m.job === "Director of Photography",
+        (m: { job: string }) => m.job === "Director of Photography",
       ),
     },
     {
       id: "composer",
       label: "Musique",
       exists: credits.crew?.some(
-        (m: any) => m.job === "Original Music Composer",
+        (m: { job: string }) => m.job === "Original Music Composer",
       ),
     },
     {
       id: "editor",
       label: "Montage",
-      exists: credits.crew?.some((m: any) => m.job === "Editor"),
+      exists: credits.crew?.some((m: { job: string }) => m.job === "Editor"),
     },
   ];
 
@@ -62,7 +72,7 @@ export const getDynamicTabs = (details: any, credits: any): Array<Tab> => {
     Editing: ["editor", "producer", "director"],
   };
 
-  const order = PRIORITIES[details.known_for_department];
+  const order = PRIORITIES[details.known_for_department ?? ""] ?? [];
 
   const sortedWorkTabs = source
     .filter((tab) => tab.exists)
