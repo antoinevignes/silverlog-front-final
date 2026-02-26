@@ -1,0 +1,65 @@
+@use "@/styles/abstracts/variables" as v;
+
+.mobile-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: v.$neutral-50;
+  border-top: 1px solid v.$neutral-200;
+  padding-bottom: env(safe-area-inset-bottom);
+  z-index: 50;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+
+  .nav-items {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem 0;
+
+    li {
+      flex: 1;
+
+      .nav-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.25rem;
+        color: v.$neutral-400;
+        text-decoration: none;
+        font-size: 0.75rem;
+        font-weight: 500;
+        transition:
+          color 0.2s,
+          transform 0.2s;
+
+        span {
+          margin-top: 0.125rem;
+        }
+
+        &.active,
+        &:hover {
+          color: v.$neutral-900;
+        }
+
+        &:active {
+          transform: scale(0.95);
+        }
+      }
+    }
+  }
+}
+
+// Global rule helper for the main app routing layout
+.mobile-nav-padded-layout {
+  padding-bottom: calc(4rem + env(safe-area-inset-bottom));
+
+  @media (min-width: 768px) {
+    padding-bottom: 0;
+  }
+}
