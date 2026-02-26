@@ -4,18 +4,12 @@ import {
   getCloudinarySrc,
 } from "@/utils/cloudinary-handler";
 import { Image } from "@unpic/react";
-import { Film, Heart, UserCircle } from "lucide-react";
+import { Bookmark, Film, UserCircle } from "lucide-react";
 import "./list-card.scss";
 import { Link } from "@tanstack/react-router";
+import { formatCompactNumber } from "@/utils/format-compact-number";
 
 export default function ListCard({ list }: { list: any }) {
-  const formatCompactNumber = (number: number) => {
-    return Intl.NumberFormat("en-US", {
-      notation: "compact",
-      maximumFractionDigits: 1,
-    }).format(number);
-  };
-
   return (
     <Link
       to="/lists/$listId"
@@ -32,8 +26,8 @@ export default function ListCard({ list }: { list: any }) {
         <p className="list-description truncate-2-lines">{list.description}</p>
 
         <p className="stat-badge likes">
-          <Heart size={14} fill="red" stroke="red" />{" "}
-          {formatCompactNumber(3500)}
+          <Bookmark size={14} fill="currentColor" />{" "}
+          {formatCompactNumber(list.saved_count)}
         </p>
 
         <div className="list-author">
