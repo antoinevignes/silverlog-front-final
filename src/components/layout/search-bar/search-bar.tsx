@@ -1,21 +1,21 @@
-import { useAppForm } from "@/utils/useAppForm";
-import "./search-bar.scss";
 import z from "zod";
 import { Film, Search, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { Image } from "@unpic/react";
+import type { MovieType } from "@/utils/types/movie";
+import type { PersonType } from "@/utils/types/person";
+import { useAppForm } from "@/utils/useAppForm";
+import "./search-bar.scss";
 import { movieSearchQuery } from "@/queries/movie.queries";
 import { Card } from "@/components/ui/card";
-import type { MovieType } from "@/utils/types/movie";
-import { Link, useNavigate } from "@tanstack/react-router";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 import { personSearchQuery } from "@/queries/person.queries";
-import type { PersonType } from "@/utils/types/person";
 import {
   getCloudinaryPlaceholder,
   getCloudinarySrc,
 } from "@/utils/cloudinary-handler";
-import { Image } from "@unpic/react";
 
 export default function SearchBar() {
   const navigate = useNavigate();
@@ -105,7 +105,7 @@ export default function SearchBar() {
         query: z.string().trim(),
       }),
     },
-    onSubmit: async ({ value }) => {
+    onSubmit: ({ value }) => {
       setSearchQuery(value.query);
     },
   });

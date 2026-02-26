@@ -1,7 +1,7 @@
-import {  useRef } from "react";
-import type {ReactNode} from "react";
-import "./horizontal-scroller.scss";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useRef } from "react";
+import type { ReactNode } from "react";
+import "./horizontal-scroller.scss";
 
 export default function HorizontalScroller({
   className,

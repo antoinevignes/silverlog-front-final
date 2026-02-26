@@ -1,8 +1,8 @@
+import { Image } from "@unpic/react";
+import { Film } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import type { MovieType } from "@/utils/types/movie";
 import "./movie-card.scss";
-import { Link } from "@tanstack/react-router";
-import { Film } from "lucide-react";
-import { Image } from "@unpic/react";
 import {
   getCloudinaryPlaceholder,
   getCloudinarySrc,
@@ -17,7 +17,7 @@ export default function MovieCard({
   movie: MovieType;
   size?: MovieCardSize;
 }) {
-  const posterSrc = getCloudinarySrc(movie?.poster_path, "posters");
+  const posterSrc = getCloudinarySrc(movie.poster_path, "posters");
 
   return (
     <Link

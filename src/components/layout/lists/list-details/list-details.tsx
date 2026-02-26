@@ -1,10 +1,3 @@
-import Badge from "@/components/ui/badge/badge";
-import {
-  DropdownContent,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Image } from "@unpic/react";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -21,6 +14,13 @@ import { getRouteApi } from "@tanstack/react-router";
 import "./list-details.scss";
 import MovieCard from "../../movie-card/movie-card";
 import type { MovieType } from "@/utils/types/movie";
+import Badge from "@/components/ui/badge/badge";
+import {
+  DropdownContent,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/auth";
 import { useSaveList } from "@/queries/list.mutations";
 import { listDataQuery } from "@/queries/list.queries";
@@ -62,7 +62,7 @@ export default function ListDetails() {
 
     const genreMap = new Map<number, string>();
     movies.forEach((m: { genres: Array<{ id: number; name: string }> }) => {
-      m.genres?.forEach((g) => {
+      m.genres.forEach((g) => {
         if (g.id && g.name) genreMap.set(g.id, g.name);
       });
     });
@@ -259,10 +259,7 @@ export default function ListDetails() {
                   Tous les genres
                 </DropdownItem>
                 {availableGenres.map(([id, name]) => (
-                  <DropdownItem
-                    key={id}
-                    onClick={() => setSelectedGenre(id)}
-                  >
+                  <DropdownItem key={id} onClick={() => setSelectedGenre(id)}>
                     {name}
                   </DropdownItem>
                 ))}

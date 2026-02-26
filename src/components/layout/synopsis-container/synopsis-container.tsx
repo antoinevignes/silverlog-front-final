@@ -1,7 +1,7 @@
+import { useState } from "react";
+import type { MovieType } from "@/utils/types/movie";
 import Badge from "@/components/ui/badge/badge";
 import "./synopsis-container.scss";
-import type { MovieType } from "@/utils/types/movie";
-import { useState } from "react";
 
 export default function SynopsisContainer({
   movie,

@@ -32,8 +32,6 @@ export default function MovieCrew() {
   );
 
   const filteredCrew = useMemo(() => {
-    if (!crew) return [];
-
     const grouped = crew
       .filter((member) => MAJOR_JOBS.includes(member.job))
       .reduce(

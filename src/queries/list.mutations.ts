@@ -50,7 +50,7 @@ export function useToggleMovieList(movieId: string) {
         throw new Error("Unauthenticated");
       }
 
-      const listId = user?.[LIST_CONFIG[type].idKey];
+      const listId = user[LIST_CONFIG[type].idKey];
 
       const res = await fetch(
         `${import.meta.env.VITE_API_URL}/lists/${listId}/movies/toggle`,

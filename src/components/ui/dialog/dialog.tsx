@@ -1,15 +1,13 @@
 import {
-  
-  
   cloneElement,
   createContext,
   useContext,
   useEffect,
-  useState
+  useState,
 } from "react";
-import type {ReactElement, ReactNode} from "react";
-import "./dialog.scss";
 import Button from "../button/button";
+import type { ReactElement, ReactNode } from "react";
+import "./dialog.scss";
 
 type DialogContextType = {
   open: boolean;
