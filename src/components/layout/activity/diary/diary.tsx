@@ -1,13 +1,13 @@
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 import DiaryMobile from "./diary-mobile/diary-mobile";
 import DiaryDesktop from "./diary-desktop/diary-desktop";
 import "./diary.scss";
-import { useSuspenseQuery } from "@tanstack/react-query";
 import type { MovieType } from "@/utils/types/movie";
 import { seenMoviesQuery } from "@/queries/user-movie.queries";
 import { useAuth } from "@/auth";
-import { useMemo } from "react";
 
 interface DiaryGroup {
   id: string;
@@ -44,7 +44,7 @@ export default function Diary() {
       {} as Record<string, DiaryGroup>,
     );
 
-    return Object.values(map);
+    return Object.values(map) as Array<DiaryGroup>;
   }, [rawMovies]);
 
   return (

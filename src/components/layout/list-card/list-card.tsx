@@ -1,12 +1,12 @@
+import { Image } from "@unpic/react";
+import { Bookmark, Film, UserCircle } from "lucide-react";
+import "./list-card.scss";
+import { Link } from "@tanstack/react-router";
 import Badge from "@/components/ui/badge/badge";
 import {
   getCloudinaryPlaceholder,
   getCloudinarySrc,
 } from "@/utils/cloudinary-handler";
-import { Image } from "@unpic/react";
-import { Bookmark, Film, UserCircle } from "lucide-react";
-import "./list-card.scss";
-import { Link } from "@tanstack/react-router";
 import { formatCompactNumber } from "@/utils/format-compact-number";
 
 export default function ListCard({ list }: { list: any }) {

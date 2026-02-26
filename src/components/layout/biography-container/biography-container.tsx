@@ -1,6 +1,6 @@
-import type { PersonType } from "@/utils/types/person";
 import "./biography-container.scss";
 import { useState } from "react";
+import type { PersonType } from "@/utils/types/person";
 
 export default function BiographyContainer({
   personDetails,

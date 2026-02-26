@@ -47,7 +47,7 @@ export default function Watchlist() {
 
     const genreMap = new Map<number, string>();
     movies.forEach((m: { genres: Array<{ id: number; name: string }> }) => {
-      m.genres?.forEach((g) => {
+      m.genres.forEach((g) => {
         if (g.id && g.name) genreMap.set(g.id, g.name);
       });
     });
@@ -77,8 +77,8 @@ export default function Watchlist() {
     }
 
     result.sort((a, b) => {
-      const dateA = new Date((a).added_at).getTime();
-      const dateB = new Date((b).added_at).getTime();
+      const dateA = new Date(a.added_at).getTime();
+      const dateB = new Date(b.added_at).getTime();
       return sortOrder === "desc" ? dateB - dateA : dateA - dateB;
     });
 
