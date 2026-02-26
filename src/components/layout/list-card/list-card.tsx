@@ -6,6 +6,7 @@ import {
 import { Image } from "@unpic/react";
 import { Film, Heart, UserCircle } from "lucide-react";
 import "./list-card.scss";
+import { Link } from "@tanstack/react-router";
 
 export default function ListCard({ list }: { list: any }) {
   const formatCompactNumber = (number: number) => {
@@ -16,7 +17,11 @@ export default function ListCard({ list }: { list: any }) {
   };
 
   return (
-    <article key={list.id} className="public-list-card">
+    <Link
+      to="/lists/$listId"
+      params={{ listId: list.id }}
+      className="public-list-card"
+    >
       <section className="list-info-block">
         <h3 className="list-title truncate-2-lines">{list.title}</h3>
 
@@ -55,6 +60,6 @@ export default function ListCard({ list }: { list: any }) {
           );
         })}
       </section>
-    </article>
+    </Link>
   );
 }

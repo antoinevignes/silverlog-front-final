@@ -19,7 +19,15 @@ export default function Watchlist() {
   const [selectedGenre, setSelectedGenre] = useState<number | "all">("all");
 
   const { user } = useAuth();
-  const { data: movies } = useSuspenseQuery(listDataQuery(user!.watchlist_id!));
+  const { data: listData } = useSuspenseQuery(
+    listDataQuery(user!.watchlist_id!),
+  );
+
+  console.log(listData);
+
+  const movies = listData.movies;
+
+  console.log(movies);
 
   // FILTRES
   const availableYears = useMemo(() => {

@@ -237,3 +237,58 @@ export const useCreateList = () => {
     },
   });
 };
+
+// SAUVEGARDER UNE LISTE
+export const useSaveList = (listId: string) => {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: async () => {
+      if (!user) {
+        throw new Error("Unauthenticated");
+      }
+
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/lists/${listId}/toggle`,
+        {
+          method: "POST",
+          credentials: "include",
+        },
+      );
+
+      if (!res.ok) {
+        throw new Error("Une erreur est survenue");
+      }
+
+      const data = await res.json();
+      return data;
+    },
+
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: ["list", listId, "data"],
+      });
+
+      if (data.action === "un-saved") {
+        toast.success("Liste retirée avec succès");
+      } else {
+        toast.success("Liste sauvegardée avec succès");
+      }
+    },
+
+    onError: (error) => {
+      if (error.message === "Unauthenticated") {
+        toast.error("Vous devez vous connecter");
+
+        return navigate({
+          to: "/auth/sign-in",
+          search: { redirect: location.pathname },
+        });
+      }
+
+      toast.error("Une erreur est survenue lors de la sauvegarde de la liste");
+    },
+  });
+};
