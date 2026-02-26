@@ -8,7 +8,7 @@ interface TabItem {
 interface TabsProps {
   selected: string;
   setSelected: (value: string) => void;
-  tabs: TabItem[];
+  tabs: Array<TabItem>;
   variant?: string;
 }
 

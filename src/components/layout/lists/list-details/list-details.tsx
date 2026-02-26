@@ -5,11 +5,6 @@ import {
   DropdownMenu,
   DropdownTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  getCloudinaryPlaceholder,
-  getCloudinarySrc,
-} from "@/utils/cloudinary-handler";
-import { formatCompactNumber } from "@/utils/format-compact-number";
 import { Image } from "@unpic/react";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -20,15 +15,20 @@ import {
   TrendingUp,
   UserCircle,
 } from "lucide-react";
-import type { MovieType } from "@/utils/types/movie";
 import { useMemo, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { listDataQuery } from "@/queries/list.queries";
-import { useSaveList } from "@/queries/list.mutations";
 import { getRouteApi } from "@tanstack/react-router";
-import { useAuth } from "@/auth";
 import "./list-details.scss";
 import MovieCard from "../../movie-card/movie-card";
+import type { MovieType } from "@/utils/types/movie";
+import { useAuth } from "@/auth";
+import { useSaveList } from "@/queries/list.mutations";
+import { listDataQuery } from "@/queries/list.queries";
+import { formatCompactNumber } from "@/utils/format-compact-number";
+import {
+  getCloudinaryPlaceholder,
+  getCloudinarySrc,
+} from "@/utils/cloudinary-handler";
 
 export default function ListDetails() {
   const routeApi = getRouteApi("/lists/$listId/");
@@ -61,7 +61,7 @@ export default function ListDetails() {
     if (!movies) return [];
 
     const genreMap = new Map<number, string>();
-    movies.forEach((m: { genres: { id: number; name: string }[] }) => {
+    movies.forEach((m: { genres: Array<{ id: number; name: string }> }) => {
       m.genres?.forEach((g) => {
         if (g.id && g.name) genreMap.set(g.id, g.name);
       });
@@ -261,7 +261,7 @@ export default function ListDetails() {
                 {availableGenres.map(([id, name]) => (
                   <DropdownItem
                     key={id}
-                    onClick={() => setSelectedGenre(id as number)}
+                    onClick={() => setSelectedGenre(id)}
                   >
                     {name}
                   </DropdownItem>

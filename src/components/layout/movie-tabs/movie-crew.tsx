@@ -1,16 +1,16 @@
-import { movieCreditsQuery } from "@/queries/movie.queries";
-import type { CrewType } from "@/utils/types/crew";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getRouteApi, Link } from "@tanstack/react-router";
-import HorizontalScroller from "../horizontal-scroller/horizontal-scroller";
+import { Link, getRouteApi } from "@tanstack/react-router";
 import { useMemo } from "react";
-import translateJob from "@/utils/translate-job";
 import { CircleUser } from "lucide-react";
+import { Image } from "@unpic/react";
+import HorizontalScroller from "../horizontal-scroller/horizontal-scroller";
+import type { CrewType } from "@/utils/types/crew";
 import {
   getCloudinaryPlaceholder,
   getCloudinarySrc,
 } from "@/utils/cloudinary-handler";
-import { Image } from "@unpic/react";
+import translateJob from "@/utils/translate-job";
+import { movieCreditsQuery } from "@/queries/movie.queries";
 
 const MAJOR_JOBS = [
   "Director",
@@ -27,7 +27,7 @@ export default function MovieCrew() {
   const { movieId } = routeApi.useParams();
   const {
     data: { crew },
-  }: { data: { crew: CrewType[] } } = useSuspenseQuery(
+  }: { data: { crew: Array<CrewType> } } = useSuspenseQuery(
     movieCreditsQuery(movieId),
   );
 
@@ -52,7 +52,7 @@ export default function MovieCrew() {
           }
           return acc;
         },
-        {} as Record<number, CrewType & { allJobs: string[] }>,
+        {} as Record<number, CrewType & { allJobs: Array<string> }>,
       );
 
     return Object.values(grouped)

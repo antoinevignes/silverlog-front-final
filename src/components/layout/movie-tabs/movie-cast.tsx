@@ -1,10 +1,10 @@
-import { movieCreditsQuery } from "@/queries/movie.queries";
-import type { CastType } from "@/utils/types/cast";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getRouteApi, Link } from "@tanstack/react-router";
-import HorizontalScroller from "../horizontal-scroller/horizontal-scroller";
+import { Link, getRouteApi } from "@tanstack/react-router";
 import { CircleUser } from "lucide-react";
 import { Image } from "@unpic/react";
+import HorizontalScroller from "../horizontal-scroller/horizontal-scroller";
+import type { CastType } from "@/utils/types/cast";
+import { movieCreditsQuery } from "@/queries/movie.queries";
 import {
   getCloudinaryPlaceholder,
   getCloudinarySrc,
@@ -15,7 +15,7 @@ export default function MovieCast() {
   const { movieId } = routeApi.useParams();
   const {
     data: { cast },
-  }: { data: { cast: CastType[] } } = useSuspenseQuery(
+  }: { data: { cast: Array<CastType> } } = useSuspenseQuery(
     movieCreditsQuery(movieId),
   );
 

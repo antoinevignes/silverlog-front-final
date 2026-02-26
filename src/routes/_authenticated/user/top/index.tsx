@@ -1,23 +1,23 @@
-import { useAuth } from "@/auth";
-import Skeleton from "@/components/ui/skeleton/skeleton";
-import { listDataQuery } from "@/queries/list.queries";
+import { useQueries, useQuery } from "@tanstack/react-query";
+import { Link, createFileRoute } from "@tanstack/react-router";
+import { Image } from "@unpic/react";
+import { format } from "date-fns";
+import { Star } from "lucide-react";
+import type { MovieType } from "@/utils/types/movie";
 import {
   getCloudinaryPlaceholder,
   getCloudinarySrc,
 } from "@/utils/cloudinary-handler";
-import type { MovieType } from "@/utils/types/movie";
-import { useQueries, useQuery } from "@tanstack/react-query";
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { Image } from "@unpic/react";
-import { format } from "date-fns";
-import { Star } from "lucide-react";
+import { listDataQuery } from "@/queries/list.queries";
+import Skeleton from "@/components/ui/skeleton/skeleton";
+import { useAuth } from "@/auth";
 import "./top-list.scss";
 import Badge from "@/components/ui/badge/badge";
 
 export const Route = createFileRoute("/_authenticated/user/top/")({
   loader: ({ context }) => {
     context.queryClient.ensureQueryData(
-      listDataQuery(context.auth.user!.top_list_id!),
+      listDataQuery(context.auth.user!.top_list_id),
     );
   },
   component: RouteComponent,
@@ -26,7 +26,7 @@ export const Route = createFileRoute("/_authenticated/user/top/")({
 function RouteComponent() {
   const { user } = useAuth();
   const { data: topListData, isLoading: isLoadingTopList } = useQuery(
-    listDataQuery(user!.top_list_id!),
+    listDataQuery(user!.top_list_id),
   );
 
   const topListMoviesDetailsResults = useQueries({
@@ -46,7 +46,7 @@ function RouteComponent() {
 
   const movies = topListMoviesDetailsResults
     .map((r) => r.data)
-    .filter(Boolean) as MovieType[];
+    .filter(Boolean) as Array<MovieType>;
 
   const isFetchingMovies =
     isLoadingTopList || topListMoviesDetailsResults.some((r) => r.isLoading);

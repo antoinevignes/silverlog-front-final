@@ -1,12 +1,12 @@
 import "./auth.scss";
-import { Separator } from "@/components/ui/separator";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
-import { Label } from "@/components/ui/label";
 import { Lock, Mail, User } from "lucide-react";
 import { z } from "zod";
-import { FieldInfo, useAppForm } from "@/utils/useAppForm";
 import { useMutation } from "@tanstack/react-query";
+import { FieldInfo, useAppForm } from "@/utils/useAppForm";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
 
 export const Route = createFileRoute("/auth/sign-up")({
   component: RouteComponent,

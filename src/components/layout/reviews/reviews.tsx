@@ -1,6 +1,7 @@
 import "./reviews.scss";
 import { ArrowRight, Heart } from "lucide-react";
-import { getRouteApi, Link } from "@tanstack/react-router";
+import { Link, getRouteApi } from "@tanstack/react-router";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   Card,
   CardFooter,
@@ -9,7 +10,6 @@ import {
   CardTitle,
   CardTitleRow,
 } from "@/components/ui/card";
-import { useSuspenseQuery } from "@tanstack/react-query";
 import { movieReviewsQuery } from "@/queries/review.query";
 import { useLikeReview } from "@/queries/review.mutations";
 

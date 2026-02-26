@@ -1,6 +1,6 @@
 import "./mentions-legales.scss";
-import { Separator } from "@/components/ui/separator";
 import { createFileRoute } from "@tanstack/react-router";
+import { Separator } from "@/components/ui/separator";
 
 export const Route = createFileRoute("/about/mentions-legales")({
   component: RouteComponent,

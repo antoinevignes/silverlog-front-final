@@ -1,4 +1,9 @@
 import "./person.scss";
+import { useQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+import { Cake, CircleUser, Film, MapPin } from "lucide-react";
+import { useMemo, useState } from "react";
+import type { MovieType } from "@/utils/types/movie";
 import BiographyContainer from "@/components/layout/biography-container/biography-container";
 import MovieCard from "@/components/layout/movie-card/movie-card";
 import { Separator } from "@/components/ui/separator";
@@ -10,11 +15,6 @@ import {
 } from "@/queries/person.queries";
 import { dateFormatter } from "@/utils/date-formatter";
 import { getDynamicTabs } from "@/utils/dynamic-tabs";
-import type { MovieType } from "@/utils/types/movie";
-import { useQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
-import { Cake, CircleUser, Film, MapPin } from "lucide-react";
-import { useMemo, useState } from "react";
 
 export const Route = createFileRoute("/person/$personId/")({
   loader: ({ context: { queryClient }, params: { personId } }) => {

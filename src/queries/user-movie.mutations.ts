@@ -1,8 +1,8 @@
-import { useAuth } from "@/auth";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { seenMoviesQuery } from "./user-movie.queries";
+import { useAuth } from "@/auth";
 
 export function useUpdateMovieRating(movieId: string) {
   const { user } = useAuth();
@@ -134,7 +134,7 @@ export function useUpdateSeenDate(movieId: string) {
       posterPath: string | null;
       backdropPath: string | null;
       releaseDate: string | null;
-      genres: { id: number; name: string }[];
+      genres: Array<{ id: number; name: string }>;
     }) => {
       if (!user) {
         throw new Error("Unauthenticated");

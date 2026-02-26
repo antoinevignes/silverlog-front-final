@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import type { ReactNode, InputHTMLAttributes } from "react";
+import type { InputHTMLAttributes, ReactNode } from "react";
 import { useFieldContext } from "@/utils/useAppForm";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {

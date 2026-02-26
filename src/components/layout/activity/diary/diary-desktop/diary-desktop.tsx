@@ -13,19 +13,19 @@ import { useMemo } from "react";
 import "./diary-desktop.scss";
 import { Link } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
+import { Plus } from "lucide-react";
+import type { MovieType } from "@/utils/types/movie";
 import {
   getCloudinaryPlaceholder,
   getCloudinarySrc,
 } from "@/utils/cloudinary-handler";
-import type { MovieType } from "@/utils/types/movie";
-import { Plus } from "lucide-react";
 
 export default function DiaryDesktop({
   monthDate,
   movies,
 }: {
   monthDate: Date;
-  movies: MovieType[];
+  movies: Array<MovieType>;
 }) {
   const days = useMemo(() => {
     const start = startOfWeek(startOfMonth(monthDate), { weekStartsOn: 1 });

@@ -1,10 +1,10 @@
 import "./auth.scss";
 
-import { createFileRoute, Link, redirect } from "@tanstack/react-router";
+import { Link, createFileRoute, redirect } from "@tanstack/react-router";
 import { Lock, Mail } from "lucide-react";
+import z from "zod";
 import { Label } from "@/components/ui/label";
 import { FieldInfo, useAppForm } from "@/utils/useAppForm";
-import z from "zod";
 
 export const Route = createFileRoute("/auth/sign-in")({
   validateSearch: (search) => ({

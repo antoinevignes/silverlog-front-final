@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { useAuth } from "@/auth";
 import { useNavigate } from "@tanstack/react-router";
+import { useAuth } from "@/auth";
 
 export function useUpsertReview(movieId: string) {
   const { user } = useAuth();

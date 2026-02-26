@@ -1,7 +1,7 @@
-import { useAuth } from "@/auth";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
+import { useAuth } from "@/auth";
 
 const LIST_CONFIG: Record<
   "top" | "watchlist",
@@ -44,7 +44,7 @@ export function useToggleMovieList(movieId: string) {
       posterPath: string | null;
       backdropPath: string | null;
       releaseDate: string | null;
-      genres: { id: number; name: string }[];
+      genres: Array<{ id: number; name: string }>;
     }) => {
       if (!user) {
         throw new Error("Unauthenticated");
@@ -124,7 +124,7 @@ export function useToggleCustomList(movieId: string) {
       posterPath: string | null;
       backdropPath: string | null;
       releaseDate: string | null;
-      genres: { id: number; name: string }[];
+      genres: Array<{ id: number; name: string }>;
     }) => {
       if (!user) {
         throw new Error("Unauthenticated");

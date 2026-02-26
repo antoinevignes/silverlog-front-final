@@ -1,15 +1,15 @@
 import "./watchlist.scss";
-import MovieCard from "../../movie-card/movie-card";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { useMemo, useState } from "react";
+import { ArrowDownUp, ChevronDown } from "lucide-react";
+import MovieCard from "../../movie-card/movie-card";
 import { useAuth } from "@/auth";
 import { listDataQuery } from "@/queries/list.queries";
-import { useState, useMemo } from "react";
-import { ChevronDown, ArrowDownUp } from "lucide-react";
 import {
-  DropdownMenu,
-  DropdownTrigger,
   DropdownContent,
   DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
 } from "@/components/ui/dropdown-menu";
 import Badge from "@/components/ui/badge/badge";
 
@@ -20,7 +20,7 @@ export default function Watchlist() {
 
   const { user } = useAuth();
   const { data: listData } = useSuspenseQuery(
-    listDataQuery(user!.watchlist_id!),
+    listDataQuery(user!.watchlist_id),
   );
 
   console.log(listData);
@@ -46,7 +46,7 @@ export default function Watchlist() {
     if (!movies) return [];
 
     const genreMap = new Map<number, string>();
-    movies.forEach((m: { genres: { id: number; name: string }[] }) => {
+    movies.forEach((m: { genres: Array<{ id: number; name: string }> }) => {
       m.genres?.forEach((g) => {
         if (g.id && g.name) genreMap.set(g.id, g.name);
       });
@@ -77,8 +77,8 @@ export default function Watchlist() {
     }
 
     result.sort((a, b) => {
-      const dateA = new Date((a as any).added_at).getTime();
-      const dateB = new Date((b as any).added_at).getTime();
+      const dateA = new Date((a).added_at).getTime();
+      const dateB = new Date((b).added_at).getTime();
       return sortOrder === "desc" ? dateB - dateA : dateA - dateB;
     });
 

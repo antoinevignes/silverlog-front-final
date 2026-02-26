@@ -1,12 +1,13 @@
 import {
+  
+  
   cloneElement,
   createContext,
   useContext,
   useEffect,
-  useState,
-  type ReactElement,
-  type ReactNode,
+  useState
 } from "react";
+import type {ReactElement, ReactNode} from "react";
 import "./dialog.scss";
 import Button from "../button/button";
 

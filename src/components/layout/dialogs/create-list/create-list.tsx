@@ -1,9 +1,9 @@
 import "./create-list.scss";
 import { ArrowLeft, Globe, Lock } from "lucide-react";
+import z from "zod";
 import Button from "@/components/ui/button/button";
 import { Label } from "@/components/ui/label";
 import { useAppForm } from "@/utils/useAppForm";
-import z from "zod";
 import { useCreateList } from "@/queries/list.mutations";
 
 interface CreateListProps {

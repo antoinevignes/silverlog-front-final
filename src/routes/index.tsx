@@ -1,6 +1,6 @@
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { useAuth } from "@/auth";
 import SearchBar from "@/components/layout/search-bar/search-bar";
-import { createFileRoute, Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
   component: App,

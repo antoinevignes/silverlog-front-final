@@ -1,3 +1,8 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+import { Suspense } from "react";
+import MovieHeader from "../../../components/layout/movie-header/movie-header";
+import type { MovieType } from "@/utils/types/movie";
 import HorizontalScroller from "@/components/layout/horizontal-scroller/horizontal-scroller";
 import MovieCard from "@/components/layout/movie-card/movie-card";
 import ArticleTitle from "@/components/layout/section-title/article-title";
@@ -6,14 +11,9 @@ import {
   movieDetailsQuery,
   similarMoviesQuery,
 } from "@/queries/movie.queries";
-import type { MovieType } from "@/utils/types/movie";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
-import MovieHeader from "../../../components/layout/movie-header/movie-header";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 import { movieStateQuery } from "@/queries/user-movie.queries";
 import Reviews from "@/components/layout/reviews/reviews";
-import { Suspense } from "react";
 import MovieHeaderSkeleton from "@/components/layout/movie-header/movie-header-skeleton";
 
 export const Route = createFileRoute("/movies/$movieId/")({

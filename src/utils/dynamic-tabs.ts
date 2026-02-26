@@ -1,6 +1,6 @@
 type Tab = { id: string; label: string };
 
-export const getDynamicTabs = (details: any, credits: any): Tab[] => {
+export const getDynamicTabs = (details: any, credits: any): Array<Tab> => {
   if (!details || !credits) return [];
 
   const source = [
@@ -45,7 +45,7 @@ export const getDynamicTabs = (details: any, credits: any): Tab[] => {
     },
   ];
 
-  const PRIORITIES: Record<string, string[]> = {
+  const PRIORITIES: Record<string, Array<string>> = {
     Directing: [
       "director",
       "writer",

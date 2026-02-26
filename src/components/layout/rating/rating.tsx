@@ -3,6 +3,7 @@ import "./rating.scss";
 import { Star } from "lucide-react";
 import { useState } from "react";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { toast } from "sonner";
 import { movieStateQuery } from "@/queries/user-movie.queries";
 import {
   useDeleteMovieRating,
@@ -10,7 +11,6 @@ import {
 } from "@/queries/user-movie.mutations";
 import { movieReviewQuery } from "@/queries/review.query";
 import { useAuth } from "@/auth";
-import { toast } from "sonner";
 
 const MAX_STARS = 10;
 

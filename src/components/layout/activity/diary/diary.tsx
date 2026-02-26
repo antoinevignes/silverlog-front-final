@@ -4,16 +4,16 @@ import DiaryMobile from "./diary-mobile/diary-mobile";
 import DiaryDesktop from "./diary-desktop/diary-desktop";
 import "./diary.scss";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import type { MovieType } from "@/utils/types/movie";
 import { seenMoviesQuery } from "@/queries/user-movie.queries";
 import { useAuth } from "@/auth";
-import type { MovieType } from "@/utils/types/movie";
 import { useMemo } from "react";
 
 interface DiaryGroup {
   id: string;
   label: string;
   date: Date;
-  movies: MovieType[];
+  movies: Array<MovieType>;
 }
 
 export default function Diary() {
@@ -44,7 +44,7 @@ export default function Diary() {
       {} as Record<string, DiaryGroup>,
     );
 
-    return Object.values(map) as DiaryGroup[];
+    return Object.values(map);
   }, [rawMovies]);
 
   return (

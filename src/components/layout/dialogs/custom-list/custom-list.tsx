@@ -1,11 +1,11 @@
 import "./custom-list.scss";
-import { useAuth } from "@/auth";
-import { ArrowLeft, Check, Plus, Loader2 } from "lucide-react";
+import { ArrowLeft, Check, Loader2, Plus } from "lucide-react";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import type { MovieType } from "@/utils/types/movie";
+import { useAuth } from "@/auth";
 import { movieStateQuery } from "@/queries/user-movie.queries";
 import { customListsQuery } from "@/queries/list.queries";
 import { useToggleCustomList } from "@/queries/list.mutations";
-import type { MovieType } from "@/utils/types/movie";
 
 interface CustomListContentProps {
   onBack: () => void;

@@ -1,9 +1,11 @@
 import "./movie-header.scss";
-import Tabs from "@/components/ui/tabs/tabs";
-import { getRouteApi, Link } from "@tanstack/react-router";
+import { Link, getRouteApi } from "@tanstack/react-router";
 import { Dot, Film, Star } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { Image } from "@unpic/react";
+import MovieActions from "../dialogs/movie-actions/movie-actions";
+import Tabs from "@/components/ui/tabs/tabs";
 import {
   movieCreditsQuery,
   movieDataQuery,
@@ -13,8 +15,6 @@ import MovieDetails from "@/components/layout/movie-tabs/movie-details";
 import MovieCast from "@/components/layout/movie-tabs/movie-cast";
 import MovieCrew from "@/components/layout/movie-tabs/movie-crew";
 import SynopsisContainer from "@/components/layout/synopsis-container/synopsis-container";
-import MovieActions from "../dialogs/movie-actions/movie-actions";
-import { Image } from "@unpic/react";
 import {
   getCloudinaryPlaceholder,
   getCloudinarySrc,

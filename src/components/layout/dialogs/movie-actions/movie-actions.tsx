@@ -1,26 +1,26 @@
 import "./movie-actions.scss";
-import { useAuth } from "@/auth";
-import Rating from "@/components/layout/rating/rating";
-import Button from "@/components/ui/button/button";
+import { getRouteApi, useNavigate } from "@tanstack/react-router";
+import { Bookmark, Check, ListPlus, PenLine, Plus } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { TrophyIcon as TrophySolid } from "@heroicons/react/24/solid";
+import { TrophyIcon } from "@heroicons/react/24/outline";
+import DiaryDialog from "../diary-dialog/diary-dialog";
+import ReviewDialog from "../review-dialog/review-dialog";
+import CustomList from "../custom-list/custom-list";
+import CreateList from "../create-list/create-list";
+import type { MovieType } from "@/utils/types/movie";
+import { movieStateQuery } from "@/queries/user-movie.queries";
+import { useToggleMovieList } from "@/queries/list.mutations";
 import {
   Dialog,
   DialogContent,
   DialogTrigger,
 } from "@/components/ui/dialog/dialog";
-import type { MovieType } from "@/utils/types/movie";
-import { getRouteApi, useNavigate } from "@tanstack/react-router";
-import { Bookmark, Check, ListPlus, PenLine, Plus } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
-import ReviewDialog from "../review-dialog/review-dialog";
-import DiaryDialog from "../diary-dialog/diary-dialog";
-import { useToggleMovieList } from "@/queries/list.mutations";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { movieStateQuery } from "@/queries/user-movie.queries";
-import { TrophyIcon as TrophySolid } from "@heroicons/react/24/solid";
-import { TrophyIcon } from "@heroicons/react/24/outline";
-import CustomList from "../custom-list/custom-list";
-import CreateList from "../create-list/create-list";
+import Button from "@/components/ui/button/button";
+import Rating from "@/components/layout/rating/rating";
+import { useAuth } from "@/auth";
 
 export default function MovieActions({
   movie,

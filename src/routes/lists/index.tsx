@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import "./index.scss";
-import { publicListsQuery } from "@/queries/list.queries";
 import { Suspense } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { publicListsQuery } from "@/queries/list.queries";
 import ListCard from "@/components/layout/list-card/list-card";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 

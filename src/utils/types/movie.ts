@@ -7,11 +7,11 @@ export type MovieType = {
   vote_count: number;
   overview: string;
   backdrop_path: string;
-  genres: { id: number; name: string }[];
+  genres: Array<{ id: number; name: string }>;
   runtime: number;
-  origin_country: string[];
-  spoken_languages: { iso_639_1: string; name: string }[];
-  production_companies: { name: string }[];
+  origin_country: Array<string>;
+  spoken_languages: Array<{ iso_639_1: string; name: string }>;
+  production_companies: Array<{ name: string }>;
   tagline: string;
   popularity: number;
   seen_at: string;

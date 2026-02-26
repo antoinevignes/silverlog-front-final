@@ -10,7 +10,7 @@ import "./diary-mobile.scss";
 import { format } from "date-fns";
 import Badge from "@/components/ui/badge/badge";
 
-export default function DiaryMobile({ movies }: { movies: MovieType[] }) {
+export default function DiaryMobile({ movies }: { movies: Array<MovieType> }) {
   return (
     <section className="diary-mobile">
       <ul className="diary-list">
