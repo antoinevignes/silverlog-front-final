@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { TrophyIcon as TrophySolid } from "@heroicons/react/24/solid";
 import { TrophyIcon } from "@heroicons/react/24/outline";
+import { Image } from "@unpic/react";
 import DiaryDialog from "../diary-dialog/diary-dialog";
 import ReviewDialog from "../review-dialog/review-dialog";
 import CustomList from "../custom-list/custom-list";
@@ -21,6 +22,10 @@ import {
 import Button from "@/components/ui/button/button";
 import Rating from "@/components/layout/rating/rating";
 import { useAuth } from "@/auth";
+import {
+  getCloudinaryPlaceholder,
+  getCloudinarySrc,
+} from "@/utils/cloudinary-handler";
 
 export default function MovieActions({
   movie,
@@ -85,10 +90,17 @@ export default function MovieActions({
           <>
             <header className="dialog-header">
               <section className="dialog-movie-description">
-                <img
-                  src={`https://image.tmdb.org/t/p/w45/${movie.poster_path}`}
-                  alt={`Poster du film ${movie.title}`}
-                  aria-hidden
+                <Image
+                  src={getCloudinarySrc(movie.poster_path, "posters")}
+                  layout="constrained"
+                  width={45}
+                  aspectRatio={2 / 3}
+                  alt={movie.title}
+                  background={getCloudinaryPlaceholder(
+                    movie.poster_path,
+                    "posters",
+                  )}
+                  priority
                   className="dialog-image"
                 />
 
