@@ -11,6 +11,9 @@ export const movieReviewQuery = (user: any, movieId: string) =>
         },
       );
 
+      if (!res.ok)
+        throw new Error("Erreur réseau : impossible de récupérer l'avis.");
+
       const data = await res.json();
 
       return data;
@@ -28,6 +31,9 @@ export const movieReviewsQuery = (movieId: string) =>
           credentials: "include",
         },
       );
+
+      if (!res.ok)
+        throw new Error("Erreur réseau : impossible de récupérer les avis.");
 
       const data = await res.json();
 

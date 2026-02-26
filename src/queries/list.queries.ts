@@ -10,6 +10,9 @@ export const listDataQuery = (listId: string) =>
         { credentials: "include" },
       );
 
+      if (!res.ok)
+        throw new Error("Erreur réseau : impossible de récupérer cette liste.");
+
       return await res.json();
     },
   });
@@ -22,6 +25,10 @@ export const customListsQuery = (userId: string) =>
       const res = await fetch(`${import.meta.env.VITE_API_URL}/lists`, {
         credentials: "include",
       });
+      if (!res.ok)
+        throw new Error(
+          "Erreur réseau : impossible de récupérer vos listes custom.",
+        );
       const data = await res.json();
 
       return data.filter(
@@ -39,6 +46,12 @@ export const publicListsQuery = () =>
       const res = await fetch(`${import.meta.env.VITE_API_URL}/lists/public`, {
         credentials: "include",
       });
+
+      if (!res.ok)
+        throw new Error(
+          "Erreur réseau : impossible de récupérer les listes publiques.",
+        );
+
       const data = await res.json();
 
       return data;

@@ -23,11 +23,7 @@ export default function Watchlist() {
     listDataQuery(user!.watchlist_id),
   );
 
-  console.log(listData);
-
   const movies = listData.movies;
-
-  console.log(movies);
 
   // FILTRES
   const availableYears = useMemo(() => {

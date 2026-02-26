@@ -53,12 +53,10 @@ export default function SearchBar() {
       const activeElement = scrollRef.current.children[
         activeIndex
       ] as HTMLElement;
-      if (activeElement) {
-        activeElement.scrollIntoView({
-          behavior: "smooth",
-          block: "nearest",
-        });
-      }
+      activeElement.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
     }
   }, [activeIndex]);
 
