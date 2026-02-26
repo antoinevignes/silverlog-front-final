@@ -51,7 +51,7 @@ export default function Diary() {
     <main className="container diary-page">
       <div className="diary-layout">
         <section className="diary-content">
-          {groups.map((group: DiaryGroup) => (
+          {groups.map((group) => (
             <section
               key={group.id}
               id={group.id}
@@ -77,7 +77,7 @@ export default function Diary() {
               <h3>Chronologie</h3>
               <nav className="timeline-nav">
                 <ul>
-                  {groups.map((group: DiaryGroup) => (
+                  {groups.map((group) => (
                     <li key={`nav-${group.id}`}>
                       <a href={`#${group.id}`}>
                         {format(group.date, "MMMM yyyy", { locale: fr })}
