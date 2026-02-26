@@ -3,7 +3,7 @@ import Tabs from "@/components/ui/tabs/tabs";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { Dot, Film, Star } from "lucide-react";
 import { useMemo, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   movieCreditsQuery,
   movieDataQuery,
@@ -12,7 +12,6 @@ import {
 import MovieDetails from "@/components/layout/movie-tabs/movie-details";
 import MovieCast from "@/components/layout/movie-tabs/movie-cast";
 import MovieCrew from "@/components/layout/movie-tabs/movie-crew";
-import Skeleton from "@/components/ui/skeleton/skeleton";
 import SynopsisContainer from "@/components/layout/synopsis-container/synopsis-container";
 import MovieActions from "../dialogs/movie-actions/movie-actions";
 import { Image } from "@unpic/react";
@@ -67,33 +66,23 @@ export default function MovieHeader() {
 
   const [selected, setSelected] = useState<string>("details");
 
-  const { data: movie, isLoading: isLoadingDetails } = useQuery(
-    movieDetailsQuery(movieId),
-  );
-  const { data: movieData, isLoading: isLoadingData } = useQuery(
-    movieDataQuery(movieId),
-  );
-  const { data: credits, isLoading: isLoadingCredits } = useQuery(
-    movieCreditsQuery(movieId),
-  );
+  const { data: movie } = useSuspenseQuery(movieDetailsQuery(movieId));
+  const { data: movieData } = useSuspenseQuery(movieDataQuery(movieId));
+  const { data: credits } = useSuspenseQuery(movieCreditsQuery(movieId));
 
   const director = useMemo(() => {
-    return credits?.crew?.find(
+    return credits.crew.find(
       (item: { job: string }) => item.job === "Director",
     );
   }, [credits]);
 
   const movieYear = useMemo(() => {
-    if (!movie?.release_date) return NaN;
+    if (!movie.release_date) return NaN;
     return new Date(movie.release_date).getFullYear();
-  }, [movie?.release_date]);
+  }, [movie.release_date]);
 
-  if (isLoadingDetails || isLoadingData || isLoadingCredits) {
-    return <MovieHeaderSkeleton />;
-  }
-
-  const backdropSrc = getCloudinarySrc(movie?.backdrop_path, "backdrops");
-  const posterSrc = getCloudinarySrc(movie?.poster_path, "posters");
+  const backdropSrc = getCloudinarySrc(movie.backdrop_path, "backdrops");
+  const posterSrc = getCloudinarySrc(movie.poster_path, "posters");
 
   const voteAvg =
     (Number(movieData.movie_avg) * Number(movieData.rating_count) +
@@ -217,65 +206,6 @@ export default function MovieHeader() {
           {selected === "cast" && <MovieCast />}
 
           {selected === "crew" && <MovieCrew />}
-        </section>
-      </article>
-    </>
-  );
-}
-
-function MovieHeaderSkeleton() {
-  return (
-    <>
-      <Skeleton width="100%" height="100%" className="backdrop-fallback" />
-
-      <article className="movie container">
-        <header className="movie-header">
-          <div className="poster-container-wrapper">
-            <div className="poster-wrapper">
-              <Skeleton className="poster-fallback" />
-            </div>
-            <Skeleton width={100} height={30} className="grade grade-mobile" />
-          </div>
-
-          <div className="movie-details">
-            <Skeleton width="10rem" height={32} className="movie-title" />
-
-            <div className="director-wrapper">
-              <Skeleton width={100} height={16} />
-            </div>
-
-            <div className="movie-meta">
-              <Skeleton width={50} height={16} />
-            </div>
-
-            <div className="grade grade-desktop">
-              <Skeleton width={100} height={30} />
-            </div>
-
-            <Skeleton
-              width="100%"
-              height={200}
-              className="synopsis synopsis-desktop"
-            />
-
-            <Skeleton width={100} height={16} className="genre-badges" />
-
-            <Skeleton width={150} height={20} className="actions-desktop" />
-          </div>
-        </header>
-
-        <Skeleton
-          width="100%"
-          height="8rem"
-          className="synopsis synopsis-mobile"
-        />
-
-        <Skeleton width={100} height={16} className="genre-badges" />
-
-        <Skeleton width={150} height={20} className="actions-mobile" />
-
-        <section className="details-section">
-          <Skeleton width="100%" height="10rem" className="tabs" />
         </section>
       </article>
     </>

@@ -1,5 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 
+// DETAILS D'UNE LISTE
 export const listDataQuery = (listId: string) =>
   queryOptions({
     queryKey: ["list", listId, "data"],
@@ -13,6 +14,7 @@ export const listDataQuery = (listId: string) =>
     },
   });
 
+// LISTES CUSTOM UTILISATEUR
 export const customListsQuery = (userId: string) =>
   queryOptions({
     queryKey: ["custom-lists", userId],
@@ -27,4 +29,18 @@ export const customListsQuery = (userId: string) =>
       );
     },
     enabled: !!userId,
+  });
+
+// LISTES PUBLIQUES
+export const publicListsQuery = () =>
+  queryOptions({
+    queryKey: ["public-lists"],
+    queryFn: async () => {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/lists/public`, {
+        credentials: "include",
+      });
+      const data = await res.json();
+
+      return data;
+    },
   });

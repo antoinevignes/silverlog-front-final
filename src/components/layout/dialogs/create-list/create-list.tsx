@@ -22,7 +22,7 @@ export default function CreateList({ onBack }: CreateListProps) {
     validators: {
       onChange: z.object({
         title: z.string().trim().min(1).max(140),
-        description: z.string().trim().max(140),
+        description: z.string().trim(),
         is_public: z.boolean(),
       }),
     },

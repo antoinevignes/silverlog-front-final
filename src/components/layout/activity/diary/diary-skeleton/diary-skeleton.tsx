@@ -6,7 +6,7 @@ export default function DiarySkeleton() {
   const gridDays = Array.from({ length: 35 });
 
   return (
-    <div className="diary-layout">
+    <div className="diary-layout container">
       <section className="diary-content diary-skeleton">
         {[1, 2].map((month) => (
           <div key={month} className="diary-month-wrapper">
