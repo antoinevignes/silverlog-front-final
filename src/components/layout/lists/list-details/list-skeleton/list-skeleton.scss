@@ -1,0 +1,78 @@
+@use "@/styles/abstracts/variables" as v;
+
+.list-skeleton-page {
+  margin: 2rem auto;
+
+  .skeleton-backdrop {
+    aspect-ratio: 16 / 9;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .skeleton-author-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+
+    .author-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+
+      .author-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+    }
+  }
+
+  .skeleton-description {
+    margin-bottom: 2rem;
+
+    .skeleton-desc-line {
+      margin-bottom: 0.25rem;
+    }
+
+    .skeleton-desc-button {
+      display: flex;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+  }
+
+  .skeleton-stats {
+    margin-bottom: 1.5rem;
+  }
+
+  .skeleton-meta-row {
+    margin-bottom: 1.5rem;
+  }
+
+  .skeleton-filters {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+
+    .left-filters {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .skeleton-badge {
+      border-radius: 1rem;
+    }
+  }
+
+  .skeleton-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1rem;
+
+    .skeleton-poster {
+      aspect-ratio: 2 / 3;
+      border-radius: 0.5rem;
+    }
+  }
+}

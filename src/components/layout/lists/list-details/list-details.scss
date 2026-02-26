@@ -181,5 +181,12 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     gap: 1rem;
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      color: v.$neutral-500;
+      margin-top: 2rem;
+    }
   }
 }

@@ -1,43 +1,40 @@
-import { createFileRoute } from "@tanstack/react-router";
+import Badge from "@/components/ui/badge/badge";
 import {
-  Film,
-  Bookmark,
-  UserCircle,
-  TrendingUp,
-  ChevronDown,
-} from "lucide-react";
-import { useState, useMemo } from "react";
-import "./index.scss";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { listDataQuery } from "@/queries/list.queries";
-import { formatDistanceToNow } from "date-fns";
-import { fr } from "date-fns/locale";
-import { Image } from "@unpic/react";
-import {
-  DropdownMenu,
-  DropdownTrigger,
   DropdownContent,
   DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
   getCloudinaryPlaceholder,
   getCloudinarySrc,
 } from "@/utils/cloudinary-handler";
-import MovieCard from "@/components/layout/movie-card/movie-card";
-import type { MovieType } from "@/utils/types/movie";
-import { useSaveList } from "@/queries/list.mutations";
 import { formatCompactNumber } from "@/utils/format-compact-number";
-import Badge from "@/components/ui/badge/badge";
+import { Image } from "@unpic/react";
+import { formatDistanceToNow } from "date-fns";
+import { fr } from "date-fns/locale";
+import {
+  Bookmark,
+  ChevronDown,
+  Film,
+  TrendingUp,
+  UserCircle,
+} from "lucide-react";
+import type { MovieType } from "@/utils/types/movie";
+import { useMemo, useState } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { listDataQuery } from "@/queries/list.queries";
+import { useSaveList } from "@/queries/list.mutations";
+import { getRouteApi } from "@tanstack/react-router";
+import { useAuth } from "@/auth";
+import "./list-details.scss";
+import MovieCard from "../../movie-card/movie-card";
 
-export const Route = createFileRoute("/_authenticated/lists/$listId/")({
-  loader: ({ context: { queryClient }, params }) => {
-    queryClient.prefetchQuery(listDataQuery(params.listId));
-  },
-  component: ListDetailsPage,
-});
+export default function ListDetails() {
+  const routeApi = getRouteApi("/lists/$listId/");
+  const { listId } = routeApi.useParams();
 
-function ListDetailsPage() {
-  const { listId } = Route.useParams();
+  const { user } = useAuth();
 
   const [isExpanded, setIsExpanded] = useState(false);
   const [filterType, setFilterType] = useState<"all" | "watched" | "unwatched">(
@@ -110,9 +107,6 @@ function ListDetailsPage() {
 
     return result;
   }, [movies, filterType, selectedGenre, sortBy]);
-
-  console.log(listData);
-
   return (
     <main className="list-details-page container">
       <h1 className="list-title">{listData.title}</h1>
@@ -175,32 +169,34 @@ function ListDetailsPage() {
           {movies.length} films
         </p>
 
-        <p className="list-stat">
-          <div className="progress-icon" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24">
-              <circle
-                cx="12"
-                cy="12"
-                r="9"
-                fill="none"
-                strokeWidth="3"
-                stroke="#e5e7eb"
-              />
-              <circle
-                cx="12"
-                cy="12"
-                r="9"
-                fill="none"
-                strokeWidth="3"
-                strokeDasharray={`${(watchedPercent / 100) * 56.5} 56.5`}
-                strokeLinecap="round"
-                transform="rotate(-90 12 12)"
-                className="progress"
-              />
-            </svg>
-          </div>
-          {watchedPercent}% vu
-        </p>
+        {user && (
+          <p className="list-stat">
+            <div className="progress-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24">
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="9"
+                  fill="none"
+                  strokeWidth="3"
+                  stroke="#e5e7eb"
+                />
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="9"
+                  fill="none"
+                  strokeWidth="3"
+                  strokeDasharray={`${(watchedPercent / 100) * 56.5} 56.5`}
+                  strokeLinecap="round"
+                  transform="rotate(-90 12 12)"
+                  className="progress"
+                />
+              </svg>
+            </div>
+            {watchedPercent}% vu
+          </p>
+        )}
       </section>
 
       <section className="meta-stats-row">
@@ -217,31 +213,33 @@ function ListDetailsPage() {
       <section>
         <header className="list-filters">
           <div className="left-filters">
-            <DropdownMenu>
-              <DropdownTrigger>
-                <Badge variant="secondary" className="filter-badge" size="lg">
-                  <span className="truncate">
-                    {filterType === "all"
-                      ? "Statut"
-                      : filterType === "unwatched"
-                        ? "À voir"
-                        : "Vu"}
-                  </span>
-                  <ChevronDown size={14} className="icon-shrink" />
-                </Badge>
-              </DropdownTrigger>
-              <DropdownContent align="left">
-                <DropdownItem onClick={() => setFilterType("all")}>
-                  Tous
-                </DropdownItem>
-                <DropdownItem onClick={() => setFilterType("unwatched")}>
-                  À voir
-                </DropdownItem>
-                <DropdownItem onClick={() => setFilterType("watched")}>
-                  Vu
-                </DropdownItem>
-              </DropdownContent>
-            </DropdownMenu>
+            {user && (
+              <DropdownMenu>
+                <DropdownTrigger>
+                  <Badge variant="secondary" className="filter-badge" size="lg">
+                    <span className="truncate">
+                      {filterType === "all"
+                        ? "Statut"
+                        : filterType === "unwatched"
+                          ? "À voir"
+                          : "Vu"}
+                    </span>
+                    <ChevronDown size={14} className="icon-shrink" />
+                  </Badge>
+                </DropdownTrigger>
+                <DropdownContent align="left">
+                  <DropdownItem onClick={() => setFilterType("all")}>
+                    Tous
+                  </DropdownItem>
+                  <DropdownItem onClick={() => setFilterType("unwatched")}>
+                    À voir
+                  </DropdownItem>
+                  <DropdownItem onClick={() => setFilterType("watched")}>
+                    Vu
+                  </DropdownItem>
+                </DropdownContent>
+              </DropdownMenu>
+            )}
 
             <DropdownMenu>
               <DropdownTrigger>
@@ -256,7 +254,7 @@ function ListDetailsPage() {
                   <ChevronDown size={14} className="icon-shrink" />
                 </Badge>
               </DropdownTrigger>
-              <DropdownContent align="left">
+              <DropdownContent align="right">
                 <DropdownItem onClick={() => setSelectedGenre("all")}>
                   Tous les genres
                 </DropdownItem>
@@ -302,9 +300,15 @@ function ListDetailsPage() {
         </header>
 
         <section className="posters-grid">
-          {filteredMovies.map((movie: MovieType) => (
-            <MovieCard key={movie.id} movie={movie} size="sm" />
-          ))}
+          {filteredMovies.length === 0 ? (
+            <p className="empty-state">
+              Aucun film ne correspond à vos filtres.
+            </p>
+          ) : (
+            filteredMovies.map((movie: MovieType) => (
+              <MovieCard key={movie.id} movie={movie} size="sm" />
+            ))
+          )}
         </section>
       </section>
     </main>

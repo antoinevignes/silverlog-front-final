@@ -6,7 +6,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import ListCard from "@/components/layout/list-card/list-card";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 
-export const Route = createFileRoute("/_authenticated/lists/")({
+export const Route = createFileRoute("/lists/")({
   loader: ({ context: { queryClient } }) => {
     queryClient.prefetchQuery(publicListsQuery());
   },
