@@ -5,7 +5,7 @@ export default function Title({
   subtitle,
   variant = "h2",
   size = "md",
-  className,
+  className = "",
 }: {
   title: string;
   subtitle?: string;

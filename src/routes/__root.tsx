@@ -13,7 +13,7 @@ interface MyRouterContext {
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: () => (
-    <div className="app-root-container">
+    <div className="app-root-container mobile-nav-padded-layout">
       <DesktopNav />
       <Outlet />
       <MobileNav />
