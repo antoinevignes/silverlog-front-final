@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Home, ListVideo, Bookmark, User } from "lucide-react";
+import { Bookmark, Home, ListVideo, User } from "lucide-react";
 import "./mobile-nav.scss";
 
 export default function MobileNav() {

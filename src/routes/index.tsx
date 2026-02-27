@@ -1,4 +1,4 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useAuth } from "@/auth";
 import SearchBar from "@/components/layout/search-bar/search-bar";
 
@@ -7,20 +7,22 @@ export const Route = createFileRoute("/")({
 });
 
 function App() {
-  const { logout, user } = useAuth();
+  const { user } = useAuth();
 
   console.log(user);
 
   return (
     <div>
-      <SearchBar />
-
-      <h1>Home</h1>
-      <p>{user?.username}</p>
-      <button onClick={logout}>Logout</button>
-      <Link search={{ redirect: "/" }} to="/auth/sign-in">
-        Login
-      </Link>
+      <div className="mobile-only-search" style={{ display: "block" }}>
+        <style>{`
+          @media (min-width: 768px) {
+            .mobile-only-search {
+              display: none !important;
+            }
+          }
+        `}</style>
+        <SearchBar />
+      </div>
     </div>
   );
 }
