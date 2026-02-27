@@ -107,18 +107,6 @@
       display: flex;
       flex-direction: column;
 
-      .movie-title {
-        font-size: 1.75rem;
-        font-weight: 800;
-        line-height: 1.2;
-        margin-bottom: 0.5rem;
-        color: v.$neutral-900;
-
-        @media (min-width: 768px) {
-          font-size: 2.25rem;
-        }
-      }
-
       .director-wrapper {
         display: inline-block;
         font-size: 1rem;
@@ -251,10 +239,5 @@
 .movie-page-content {
   .reviews-wrapper {
     margin-top: 2rem;
-  }
-
-  .suggestions {
-    margin-top: 3rem;
-    margin-bottom: 3rem;
   }
 }

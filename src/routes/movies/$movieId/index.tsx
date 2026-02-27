@@ -5,7 +5,6 @@ import MovieHeader from "../../../components/layout/movie-header/movie-header";
 import type { MovieType } from "@/utils/types/movie";
 import HorizontalScroller from "@/components/layout/horizontal-scroller/horizontal-scroller";
 import MovieCard from "@/components/layout/movie-card/movie-card";
-import ArticleTitle from "@/components/layout/section-title/article-title";
 import {
   movieCreditsQuery,
   movieDetailsQuery,
@@ -15,6 +14,8 @@ import Skeleton from "@/components/ui/skeleton/skeleton";
 import { movieStateQuery } from "@/queries/user-movie.queries";
 import Reviews from "@/components/layout/reviews/reviews";
 import MovieHeaderSkeleton from "@/components/layout/movie-header/movie-header-skeleton";
+import Title from "@/components/layout/title/title";
+import "./index.scss";
 
 export const Route = createFileRoute("/movies/$movieId/")({
   loader: ({ context: { queryClient }, params: { movieId } }) => {
@@ -34,7 +35,7 @@ function RouteComponent() {
       </Suspense>
 
       <section className="reviews container">
-        <ArticleTitle title="Avis de la communauté" />
+        <Title title="Avis de la communauté" />
 
         <Suspense
           fallback={
@@ -52,7 +53,7 @@ function RouteComponent() {
       </section>
 
       <section className="suggestions container">
-        <ArticleTitle title="Films similaires" />
+        <Title title="Films similaires" />
 
         <Suspense
           fallback={

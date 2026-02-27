@@ -4,8 +4,9 @@ import { Suspense } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import type { ListType } from "@/utils/types/list";
 import { publicListsQuery } from "@/queries/list.queries";
-import ListCard from "@/components/layout/list-card/list-card";
+import ListCard from "@/components/layout/lists/list-card/list-card";
 import Skeleton from "@/components/ui/skeleton/skeleton";
+import Title from "@/components/layout/title/title";
 
 export const Route = createFileRoute("/lists/")({
   loader: ({ context: { queryClient } }) => {
@@ -18,10 +19,12 @@ function PublicListsPage() {
   return (
     <div className="public-lists-page container">
       <header className="page-header">
-        <h1 className="font-sentient">Listes Publiques</h1>
-        <p className="text-secondary text-lg">
-          Découvrez les sélections de la communauté.
-        </p>
+        <Title
+          title="Listes Publiques"
+          size="lg"
+          variant="h1"
+          subtitle="Découvrez les sélections de la communauté."
+        />
       </header>
 
       <Suspense

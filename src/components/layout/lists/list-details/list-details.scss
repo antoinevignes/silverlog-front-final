@@ -3,12 +3,8 @@
 .list-details-page {
   margin: 2rem auto;
 
-  h1.list-title {
-    font-size: 1.75rem;
-    font-weight: 800;
-    color: v.$neutral-900;
+  .list-title {
     margin-bottom: 1.25rem;
-    line-height: 1.2;
   }
 
   .list-backdrop {

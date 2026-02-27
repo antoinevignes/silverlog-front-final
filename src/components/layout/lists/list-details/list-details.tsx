@@ -29,6 +29,7 @@ import {
   getCloudinaryPlaceholder,
   getCloudinarySrc,
 } from "@/utils/cloudinary-handler";
+import Title from "../../title/title";
 
 export default function ListDetails() {
   const routeApi = getRouteApi("/lists/$listId/");
@@ -109,7 +110,12 @@ export default function ListDetails() {
   }, [movies, filterType, selectedGenre, sortBy]);
   return (
     <main className="list-details-page container">
-      <h1 className="list-title">{listData.title}</h1>
+      <Title
+        title={listData.title}
+        variant="h1"
+        size="lg"
+        className="list-title"
+      />
 
       <Image
         src={getCloudinarySrc(movies[0].backdrop_path, "backdrops")}

@@ -20,6 +20,7 @@ import {
   getCloudinaryPlaceholder,
   getCloudinarySrc,
 } from "@/utils/cloudinary-handler";
+import Title from "../title/title";
 
 const tabs = [
   { id: "details", label: "Détails" },
@@ -137,7 +138,7 @@ export default function MovieHeader() {
           </div>
 
           <div className="movie-details">
-            <h1 className="movie-title">{movie.title}</h1>
+            <Title title={movie.title} size="xl" variant="h1" />
 
             <p className="director-wrapper">
               Réal. par{" "}
