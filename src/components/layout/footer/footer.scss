@@ -1,0 +1,114 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.global-footer {
+  display: none;
+  background-color: white;
+  border-top: 1px solid v.$neutral-200;
+  margin-top: auto;
+  padding-top: v.$space-2xl;
+
+  @include m.responsive(v.$bp-md) {
+    display: block;
+  }
+
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-xl;
+    padding-bottom: v.$space-xl;
+
+    @include m.responsive(v.$bp-md) {
+      flex-direction: row;
+      justify-content: space-between;
+      gap: v.$space-2xl;
+    }
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-sm;
+    max-width: 400px;
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+
+      .logo {
+        height: 28px;
+        width: auto;
+      }
+
+      .brand-name {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: v.$neutral-900;
+      }
+    }
+
+    .footer-description {
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+  }
+
+  .footer-links-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: v.$space-xl;
+
+    @include m.responsive(v.$bp-sm) {
+      gap: v.$space-2xl;
+    }
+
+    .footer-col {
+      min-width: 140px;
+
+      .col-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: v.$neutral-900;
+        margin-bottom: v.$space-md;
+      }
+
+      .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: v.$space-sm;
+
+        li {
+          font-size: 0.95rem;
+        }
+      }
+    }
+  }
+
+  .footer-bottom {
+    border-top: 1px solid v.$neutral-200;
+    padding: v.$space-md 0;
+    background-color: v.$neutral-50;
+
+    .footer-bottom-content {
+      @include m.flex-between;
+      flex-direction: column;
+      gap: v.$space-xs;
+      text-align: center;
+
+      @include m.responsive(v.$bp-sm) {
+        flex-direction: row;
+        text-align: left;
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.85rem;
+      }
+    }
+  }
+}

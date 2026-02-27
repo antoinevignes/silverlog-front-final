@@ -33,6 +33,21 @@ body {
   background: v.$neutral-50;
 }
 
+.app-root-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  .main-content {
+    flex: 1;
+    padding-bottom: calc(4rem + env(safe-area-inset-bottom));
+
+    @include m.responsive(v.$bp-md) {
+      padding-bottom: 0;
+    }
+  }
+}
+
 :focus-visible {
   outline: 1px solid v.$neutral-600;
   outline-offset: 2px;
