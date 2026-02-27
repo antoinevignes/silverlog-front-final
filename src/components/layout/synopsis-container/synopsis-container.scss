@@ -1,3 +1,5 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
 .synopsis-desktop {
   display: none;
 }
@@ -41,7 +43,7 @@
   }
 }
 
-@media (min-width: 768px) {
+@include m.responsive(v.$bp-md) {
   .synopsis-mobile {
     display: none;
   }

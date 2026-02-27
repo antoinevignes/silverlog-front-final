@@ -1,13 +1,12 @@
 @use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
 
 .backdrop,
 .backdrop-fallback {
   width: 100%;
   height: 100%;
   background-color: v.$neutral-200;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include m.flex-center;
   aspect-ratio: 21/9;
 
   max-height: 20rem;
@@ -54,7 +53,7 @@
       flex-direction: column;
       align-items: center;
 
-      @media (min-width: 768px) {
+      @include m.responsive(v.$bp-md) {
         width: 30%;
         max-width: 300px;
         margin-bottom: 0;
@@ -70,7 +69,7 @@
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         border: 1px solid v.$neutral-200;
 
-        @media (min-width: 768px) {
+        @include m.responsive(v.$bp-md) {
           display: none;
         }
       }
@@ -95,9 +94,7 @@
         .poster-fallback {
           border: 1px solid v.$neutral-200;
           background-color: v.$neutral-50;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          @include m.flex-center;
         }
       }
     }
@@ -127,7 +124,7 @@
       .actions-desktop {
         display: none;
 
-        @media (min-width: 768px) {
+        @include m.responsive(v.$bp-md) {
           display: flex;
           margin-top: 1rem;
         }
@@ -147,12 +144,12 @@
       &.grade-desktop {
         display: none;
 
-        @media (min-width: 768px) {
+        @include m.responsive(v.$bp-md) {
           display: flex;
         }
       }
 
-      @media (min-width: 768px) {
+      @include m.responsive(v.$bp-md) {
         padding: 0.25rem 0.75rem;
         gap: 0.5rem;
         margin-bottom: 0.5rem;
@@ -162,7 +159,7 @@
         width: 16px;
         height: 16px;
 
-        @media (min-width: 768px) {
+        @include m.responsive(v.$bp-md) {
           width: 24px;
           height: 24px;
         }
@@ -173,7 +170,7 @@
         font-size: 0.875rem;
         color: v.$neutral-800;
 
-        @media (min-width: 768px) {
+        @include m.responsive(v.$bp-md) {
           font-size: 1.5rem;
         }
       }
@@ -182,7 +179,7 @@
         font-size: 0.75rem;
         color: v.$neutral-500;
 
-        @media (min-width: 768px) {
+        @include m.responsive(v.$bp-md) {
           font-size: 1rem;
         }
       }
@@ -193,7 +190,7 @@
     width: 100%;
     margin-top: 0.5rem;
 
-    @media (min-width: 768px) {
+    @include m.responsive(v.$bp-md) {
       display: none;
     }
   }

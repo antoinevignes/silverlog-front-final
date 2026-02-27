@@ -1,4 +1,5 @@
 @use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
 
 .list-details-page {
   margin: 1rem auto;
@@ -14,9 +15,7 @@
   }
 
   .author-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @include m.flex-between;
     margin-bottom: 1.5rem;
 
     .author-info {
@@ -51,9 +50,7 @@
       width: 44px;
       height: 44px;
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      @include m.flex-center;
       cursor: pointer;
       transition: transform 0.2s;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -105,7 +102,7 @@
     margin-bottom: 1.5rem;
     align-items: center;
 
-    @media (min-width: 768px) {
+    @include m.responsive(v.$bp-md) {
       justify-content: flex-start;
     }
 

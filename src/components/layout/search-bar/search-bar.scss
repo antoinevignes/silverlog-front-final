@@ -1,12 +1,13 @@
 @use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
 
 .search-bar {
   position: relative;
-  z-index: 50;
+  z-index: v.$z-dropdown;
   max-width: 400px;
   margin: 1rem auto;
 
-  @media (min-width: 768px) {
+  @include m.responsive(v.$bp-md) {
     margin: 0;
   }
 
@@ -14,7 +15,7 @@
     margin-bottom: 1rem;
     margin-inline: 1rem;
 
-    @media (min-width: 768px) {
+    @include m.responsive(v.$bp-md) {
       margin-bottom: 0;
       margin-inline: 0;
     }
@@ -66,9 +67,7 @@
         .search-poster-fallback {
           border-radius: 0.5rem;
           border: 1px solid v.$neutral-200;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          @include m.flex-center;
           width: 45px;
           height: 68px;
           aspect-ratio: 2 / 3;

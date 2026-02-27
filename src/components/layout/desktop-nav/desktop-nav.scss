@@ -1,4 +1,5 @@
 @use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
 
 @keyframes slideLeftFade {
   from {
@@ -14,20 +15,18 @@
 .desktop-top-nav {
   display: none;
 
-  @media (min-width: 768px) {
+  @include m.responsive(v.$bp-md) {
     display: block;
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: v.$z-nav;
     background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid v.$neutral-200;
     padding: 1rem 0;
 
     .nav-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      @include m.flex-between;
 
       .brand {
         display: flex;
@@ -94,9 +93,7 @@
             border: none;
             cursor: pointer;
             color: v.$neutral-700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            @include m.flex-center;
             padding: 0.25rem;
             transition: color 0.2s ease;
 
@@ -121,9 +118,7 @@
           align-items: center;
 
           .avatar-trigger {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            @include m.flex-center;
             width: 36px;
             height: 36px;
             border-radius: 50%;

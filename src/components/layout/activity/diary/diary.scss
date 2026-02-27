@@ -1,4 +1,5 @@
 @use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
 
 .diary-page {
   margin-top: 2rem;
@@ -9,7 +10,7 @@
     gap: 2rem;
     position: relative;
 
-    @media (min-width: 1024px) {
+    @include m.responsive(v.$bp-lg) {
       flex-direction: row;
       align-items: flex-start;
     }
@@ -17,7 +18,7 @@
     .diary-content {
       flex: 1;
 
-      @media (min-width: 1280px) {
+      @include m.responsive(v.$bp-xl) {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 3rem;
@@ -28,7 +29,7 @@
     .diary-sidebar {
       display: none;
 
-      @media (min-width: 1024px) {
+      @include m.responsive(v.$bp-lg) {
         display: flex;
         flex-direction: column;
         gap: 1.5rem;
@@ -58,9 +59,7 @@
             gap: 0.75rem;
 
             li {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
+              @include m.flex-between;
 
               .stat-label {
                 color: v.$neutral-600;
@@ -125,7 +124,7 @@
       background: v.$neutral-50;
       z-index: 20;
 
-      @media (min-width: 768px) {
+      @include m.responsive(v.$bp-md) {
         font-size: 1.5rem;
         margin-bottom: 1.5rem;
         position: relative;
@@ -136,14 +135,14 @@
 
     .diary-mobile {
       display: block;
-      @media (min-width: 768px) {
+      @include m.responsive(v.$bp-md) {
         display: none;
       }
     }
 
     .month-grid-section {
       display: none;
-      @media (min-width: 768px) {
+      @include m.responsive(v.$bp-md) {
         display: block;
       }
     }

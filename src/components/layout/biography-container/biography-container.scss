@@ -1,3 +1,5 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
 .biography {
   position: relative;
   margin: 0.5rem 0;
@@ -26,7 +28,7 @@
     padding: 0.25rem 0;
   }
 
-  @media (min-width: 768px) {
+  @include m.responsive(v.$bp-md) {
     .overview-preview {
       line-clamp: 6;
       -webkit-line-clamp: 6;

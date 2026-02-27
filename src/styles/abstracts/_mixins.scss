@@ -59,9 +59,23 @@
     color: v.$neutral-600;
   }
 }
-// A VOIR POUR UTILISATION
-// @mixin responsive($breakpoint) {
-//   @media screen and (min-width: $breakpoint) {
-//     @content;
-//   }
-// }
+
+// FLEXBOX LAYOUTS
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// RESPONSIVE QUERIES
+@mixin responsive($breakpoint) {
+  @media screen and (min-width: $breakpoint) {
+    @content;
+  }
+}

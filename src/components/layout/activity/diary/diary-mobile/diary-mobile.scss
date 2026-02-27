@@ -1,4 +1,5 @@
 @use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
 
 .diary-mobile {
   .diary-list {
@@ -52,9 +53,7 @@
           .day-overlay {
             position: absolute;
             inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            @include m.flex-center;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 0.5rem;
             color: white;
@@ -83,7 +82,7 @@
           -webkit-box-orient: vertical;
           overflow: hidden;
 
-          @media (min-width: 480px) {
+          @include m.responsive(v.$bp-sm) {
             font-size: 1.25rem;
           }
         }
@@ -97,7 +96,7 @@
           color: v.$neutral-500;
           font-weight: 500;
 
-          @media (min-width: 480px) {
+          @include m.responsive(v.$bp-sm) {
             font-size: 0.875rem;
           }
 

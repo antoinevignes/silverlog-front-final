@@ -1,10 +1,11 @@
 @use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
 
 .image-container {
   aspect-ratio: 21/9;
   overflow: hidden;
 
-  @media (min-width: 768px) {
+  @include m.responsive(v.$bp-md) {
     aspect-ratio: 10/2;
   }
 
@@ -12,9 +13,7 @@
     width: 100%;
     height: 100%;
     background-color: v.$neutral-200;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include m.flex-center;
   }
 
   .image-backdrop {
@@ -35,7 +34,7 @@
     flex-direction: column;
     gap: 1rem;
 
-    @media (min-width: 768px) {
+    @include m.responsive(v.$bp-md) {
       flex-direction: row;
       gap: 2rem;
     }
@@ -60,12 +59,10 @@
         aspect-ratio: 1/1;
         background-color: v.$neutral-100;
         border: 1px solid v.$neutral-200;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        @include m.flex-center;
       }
 
-      @media (min-width: 768px) {
+      @include m.responsive(v.$bp-md) {
         width: 200px;
         height: 200px;
         margin-top: -5rem;
@@ -110,7 +107,7 @@
       gap: 1rem;
     }
 
-    @media (min-width: 768px) {
+    @include m.responsive(v.$bp-md) {
       margin-top: 1.5rem;
     }
   }

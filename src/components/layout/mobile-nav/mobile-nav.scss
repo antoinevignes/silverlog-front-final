@@ -1,4 +1,5 @@
 @use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
 
 .mobile-bottom-nav {
   position: fixed;
@@ -8,9 +9,9 @@
   background-color: v.$neutral-50;
   border-top: 1px solid v.$neutral-200;
   padding-bottom: env(safe-area-inset-bottom);
-  z-index: 50;
+  z-index: v.$z-nav;
 
-  @media (min-width: 768px) {
+  @include m.responsive(v.$bp-md) {
     display: none;
   }
 
@@ -59,7 +60,7 @@
 .mobile-nav-padded-layout {
   padding-bottom: calc(4rem + env(safe-area-inset-bottom));
 
-  @media (min-width: 768px) {
+  @include m.responsive(v.$bp-md) {
     padding-bottom: 0;
   }
 }

@@ -17,6 +17,26 @@ $destructive-hover: #dc2626;
 
 $disabled: #cbd5e1;
 
+// BREAKPOINTS
+$bp-sm: 480px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+$bp-xl: 1280px;
+
+// ESPACEMENTS (Spacing)
+$space-xs: 0.25rem;
+$space-sm: 0.5rem;
+$space-md: 1rem;
+$space-lg: 1.5rem;
+$space-xl: 2rem;
+$space-2xl: 3rem;
+
+// Z-INDEX
+$z-dropdown: 50;
+$z-nav: 100;
+$z-modal: 200;
+$z-toast: 9999;
+
 // AUTRES
 
 $transition: 150ms ease-in-out;

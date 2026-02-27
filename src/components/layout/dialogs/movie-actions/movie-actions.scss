@@ -1,9 +1,8 @@
 @use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
 
 .dialog-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include m.flex-between;
   margin-bottom: 1.5rem;
 
   .dialog-movie-description {

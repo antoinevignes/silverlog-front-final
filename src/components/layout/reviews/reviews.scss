@@ -1,12 +1,12 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
 .review-list {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 
   .card-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    @include m.flex-between;
   }
 
   .button {
@@ -28,9 +28,7 @@
 }
 
 .see-more {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include m.flex-center;
   gap: 0.25rem;
   margin-top: 1rem;
 }

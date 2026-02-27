@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Image } from "@unpic/react";
 import MovieActions from "../dialogs/movie-actions/movie-actions";
+import Title from "../title/title";
 import type { MovieType } from "@/utils/types/movie";
 import Tabs from "@/components/ui/tabs/tabs";
 import {
@@ -20,7 +21,6 @@ import {
   getCloudinaryPlaceholder,
   getCloudinarySrc,
 } from "@/utils/cloudinary-handler";
-import Title from "../title/title";
 
 const tabs = [
   { id: "details", label: "Détails" },

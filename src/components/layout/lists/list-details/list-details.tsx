@@ -13,6 +13,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
 import "./list-details.scss";
 import MovieCard from "../../movie-card/movie-card";
+import Title from "../../title/title";
 import type { MovieType } from "@/utils/types/movie";
 import Badge from "@/components/ui/badge/badge";
 import {
@@ -29,7 +30,6 @@ import {
   getCloudinaryPlaceholder,
   getCloudinarySrc,
 } from "@/utils/cloudinary-handler";
-import Title from "../../title/title";
 
 export default function ListDetails() {
   const routeApi = getRouteApi("/lists/$listId/");

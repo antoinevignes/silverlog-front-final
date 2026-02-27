@@ -1,4 +1,5 @@
 @use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
 
 .movie-card {
   position: relative;
@@ -42,9 +43,7 @@
   .movie-title {
     position: absolute;
     inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include m.flex-center;
     padding: 0.75rem;
     text-align: center;
 

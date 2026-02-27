@@ -44,7 +44,7 @@ export default function Diary() {
       {} as Record<string, DiaryGroup>,
     );
 
-    return Object.values(map) as Array<DiaryGroup>;
+    return Object.values(map);
   }, [rawMovies]);
 
   return (
