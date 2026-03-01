@@ -167,7 +167,6 @@ function SettingSection({
         <span className="setting-icon" aria-hidden>
           {icon}
         </span>
-
         <div>
           <h2 className="setting-title">{title}</h2>
           <p className="setting-description text-secondary">{description}</p>
