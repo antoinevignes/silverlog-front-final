@@ -1,7 +1,7 @@
 import "./index.scss";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
-import { MapPin, Star, TextAlignStart } from "lucide-react";
+import { Link, createFileRoute } from "@tanstack/react-router";
+import { MapPin, Settings, Star, TextAlignStart } from "lucide-react";
 import { Suspense, useState } from "react";
 import type { MovieType } from "@/utils/types/movie";
 import { userQuery } from "@/queries/user.queries";
@@ -113,9 +113,23 @@ function RouteComponent() {
           >
             <div className="name-action-row">
               <h1 className="username">{userData.username}</h1>
-              <Button size="sm" className="follow-btn">
-                Suivre
-              </Button>
+
+              {Number(user?.id) === Number(userId) ? (
+                <Link
+                  to="/user/settings"
+                  className="settings-link"
+                  aria-label="Paramètres du profil"
+                >
+                  <Button size="sm" variant="ghost">
+                    <Settings size={16} aria-hidden />
+                    Paramètres
+                  </Button>
+                </Link>
+              ) : (
+                <Button size="sm" className="follow-btn">
+                  Suivre
+                </Button>
+              )}
             </div>
 
             {userData.description && (

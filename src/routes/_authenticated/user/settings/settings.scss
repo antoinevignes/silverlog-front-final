@@ -1,0 +1,156 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.settings-page {
+  padding-top: v.$space-xl;
+  padding-bottom: v.$space-2xl;
+}
+
+.settings-header {
+  margin-bottom: v.$space-xl;
+  border-bottom: 1px solid v.$neutral-200;
+  padding-bottom: v.$space-lg;
+
+  p {
+    margin-top: v.$space-xs;
+    font-size: 0.95rem;
+  }
+}
+
+.settings-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+// ── Chaque section de paramètre ──
+.setting-section {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-lg;
+  padding: v.$space-xl 0;
+  border-bottom: 1px solid v.$neutral-200;
+
+  @include m.responsive(v.$bp-md) {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: v.$space-2xl;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+// ── Colonne de gauche : label + description ──
+.setting-label {
+  display: flex;
+  align-items: flex-start;
+  gap: v.$space-md;
+  flex-shrink: 0;
+
+  @include m.responsive(v.$bp-md) {
+    width: 260px;
+  }
+}
+
+.setting-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: v.$neutral-100;
+  border: 1px solid v.$neutral-200;
+  border-radius: v.$radius;
+  flex-shrink: 0;
+  color: v.$neutral-700;
+}
+
+.setting-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: v.$neutral-900;
+  margin: 0 0 0.2rem;
+}
+
+.setting-description {
+  font-size: 0.82rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+// ── Colonne de droite : contrôle interactif ──
+.setting-control {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-md;
+  min-width: 0;
+}
+
+// ── Formulaire inline ──
+.setting-form {
+  display: flex;
+  gap: v.$space-sm;
+  align-items: center;
+
+  .setting-input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+    font-family: inherit;
+    border: 1px solid v.$neutral-300;
+    border-radius: v.$radius;
+    background: v.$neutral-50;
+    color: v.$neutral-900;
+    transition:
+      border-color v.$transition,
+      box-shadow v.$transition;
+    box-sizing: border-box;
+
+    &:focus {
+      outline: none;
+      border-color: v.$neutral-600;
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+    }
+
+    &::placeholder {
+      color: v.$neutral-400;
+    }
+  }
+}
+
+// ── Préviewers d'image ──
+.avatar-preview {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid v.$neutral-200;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.banner-preview {
+  width: 100%;
+  height: 120px;
+  border-radius: v.$radius;
+  overflow: hidden;
+  border: 1px solid v.$neutral-200;
+
+  @include m.responsive(v.$bp-md) {
+    height: 160px;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
