@@ -183,6 +183,11 @@ export default function MovieActions({
             onClose={() => setOpen(false)}
             onBack={goBackToMain}
             movieId={String(movie.id)}
+            title={movie.title}
+            posterPath={movie.poster_path}
+            backdropPath={movie.backdrop_path}
+            releaseDate={movie.release_date}
+            genres={movie.genres}
           />
         )}
 
