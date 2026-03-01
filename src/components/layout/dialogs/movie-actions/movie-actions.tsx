@@ -131,7 +131,13 @@ export default function MovieActions({
               </button>
             </header>
 
-            <Rating />
+            <Rating
+              title={movie.title}
+              posterPath={movie.poster_path}
+              backdropPath={movie.backdrop_path}
+              releaseDate={movie.release_date}
+              genres={movie.genres}
+            />
 
             <section className="dialog-buttons">
               <button className="action-card" onClick={goToDiary}>

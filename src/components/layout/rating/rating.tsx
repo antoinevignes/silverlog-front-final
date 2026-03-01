@@ -25,7 +25,19 @@ function StarWrapper({
   );
 }
 
-export default function Rating() {
+export default function Rating({
+  title,
+  posterPath,
+  backdropPath,
+  releaseDate,
+  genres,
+}: {
+  title: string;
+  posterPath: string | null;
+  backdropPath: string | null;
+  releaseDate: string | null;
+  genres: Array<{ id: number; name: string }>;
+}) {
   const { user } = useAuth();
   const routeApi = getRouteApi("/movies/$movieId/");
   const { movieId } = routeApi.useParams();
@@ -69,7 +81,14 @@ export default function Rating() {
     if (value === rating) {
       deleteRating();
     } else {
-      updateRating(value);
+      updateRating({
+        value,
+        title,
+        posterPath,
+        backdropPath,
+        releaseDate,
+        genres,
+      });
     }
   };
 
