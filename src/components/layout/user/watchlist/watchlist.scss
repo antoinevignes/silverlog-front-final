@@ -5,6 +5,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: v.$space-sm;
+  margin: v.$space-lg 0;
 
   @include m.responsive(v.$bp-md) {
     grid-template-columns: repeat(6, 1fr);

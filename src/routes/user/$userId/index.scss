@@ -227,22 +227,15 @@
     }
   }
 }
-
 .profile-content {
-  margin-top: v.$space-xl;
   display: flex;
   flex-direction: column;
-  gap: v.$space-xl;
-
-  @include m.responsive(v.$bp-md) {
-    margin-top: v.$space-2xl;
-    gap: v.$space-2xl;
-  }
+  gap: v.$space-md;
+  margin-top: v.$space-sm;
 
   .content-section {
     display: flex;
     flex-direction: column;
-    gap: v.$space-lg;
 
     .top-movies-grid {
       display: grid;
@@ -254,7 +247,6 @@
         gap: v.$space-md;
       }
 
-      // Forces the cards to shrink and fill the exact grid column size
       .movie-card {
         width: 100% !important;
         height: auto;
@@ -275,7 +267,6 @@
           width: 140px;
         }
 
-        // Forces the cards to match the wrapper width
         .movie-card {
           width: 100% !important;
           height: auto;

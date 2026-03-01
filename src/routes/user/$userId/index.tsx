@@ -138,14 +138,14 @@ function RouteComponent() {
           </section>
         </header>
 
-        <section className="profile-content" aria-label="Contenu du profil">
-          <Tabs
-            selected={selected}
-            setSelected={setSelected}
-            tabs={tabs}
-            variant="transparent"
-          />
+        <Tabs
+          selected={selected}
+          setSelected={setSelected}
+          tabs={tabs}
+          variant="transparent"
+        />
 
+        <section className="profile-content" aria-label="Contenu du profil">
           {selected === "a-propos" && (
             <>
               <section
