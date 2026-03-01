@@ -10,4 +10,43 @@
   @include m.responsive(v.$bp-md) {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .list-wrapper {
+    position: relative;
+
+    .delete-list-btn {
+      position: absolute;
+      top: v.$space-md;
+      right: v.$space-md;
+      z-index: 10;
+      width: 32px;
+      height: 32px;
+
+      &:hover {
+        background-color: v.$destructive;
+        color: white;
+      }
+    }
+  }
+}
+
+.delete-header {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-md;
+  z-index: v.$z-modal;
+
+  .delete-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: v.$neutral-900;
+    text-align: left;
+  }
+
+  .delete-description {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: v.$neutral-500;
+    margin: 0;
+  }
 }
