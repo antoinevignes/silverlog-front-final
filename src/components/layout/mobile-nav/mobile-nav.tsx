@@ -1,8 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import { Bookmark, Home, ListVideo, User } from "lucide-react";
 import "./mobile-nav.scss";
+import { useAuth } from "@/auth";
 
 export default function MobileNav() {
+  const { user } = useAuth();
+
   return (
     <nav className="mobile-bottom-nav">
       <ul className="nav-items">
@@ -38,9 +41,9 @@ export default function MobileNav() {
           </Link>
         </li>
         <li>
-          {/* Defaulting to home since profile page doesn't exist yet */}
           <Link
-            to="/"
+            to="/user/$userId"
+            params={{ userId: user?.id?.toString() || "" }}
             className="nav-link"
             activeProps={{ className: "active" }}
             aria-label="Profil"

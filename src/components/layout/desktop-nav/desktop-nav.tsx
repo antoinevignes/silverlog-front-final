@@ -80,7 +80,12 @@ export default function DesktopNav() {
                   </div>
                   <hr className="dropdown-divider" />
                   <DropdownItem
-                    onClick={() => navigate({ to: "/user/activity" })}
+                    onClick={() =>
+                      navigate({
+                        to: "/user/$userId",
+                        params: { userId: user?.id?.toString() || "" },
+                      })
+                    }
                   >
                     <BookOpen size={16} />
                     Mon Profil

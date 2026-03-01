@@ -16,6 +16,7 @@ import { Route as AuthVerifyEmailRouteImport } from './routes/auth/verify-email'
 import { Route as AuthSignUpRouteImport } from './routes/auth/sign-up'
 import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
 import { Route as AboutMentionsLegalesRouteImport } from './routes/about/mentions-legales'
+import { Route as UserUserIdIndexRouteImport } from './routes/user/$userId/index'
 import { Route as PersonPersonIdIndexRouteImport } from './routes/person/$personId/index'
 import { Route as MoviesMovieIdIndexRouteImport } from './routes/movies/$movieId/index'
 import { Route as ListsListIdIndexRouteImport } from './routes/lists/$listId/index'
@@ -56,6 +57,11 @@ const AboutMentionsLegalesRoute = AboutMentionsLegalesRouteImport.update({
   path: '/about/mentions-legales',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UserUserIdIndexRoute = UserUserIdIndexRouteImport.update({
+  id: '/user/$userId/',
+  path: '/user/$userId/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PersonPersonIdIndexRoute = PersonPersonIdIndexRouteImport.update({
   id: '/person/$personId/',
   path: '/person/$personId/',
@@ -94,6 +100,7 @@ export interface FileRoutesByFullPath {
   '/lists/$listId/': typeof ListsListIdIndexRoute
   '/movies/$movieId/': typeof MoviesMovieIdIndexRoute
   '/person/$personId/': typeof PersonPersonIdIndexRoute
+  '/user/$userId/': typeof UserUserIdIndexRoute
   '/user/activity/': typeof AuthenticatedUserActivityIndexRoute
   '/user/top/': typeof AuthenticatedUserTopIndexRoute
 }
@@ -107,6 +114,7 @@ export interface FileRoutesByTo {
   '/lists/$listId': typeof ListsListIdIndexRoute
   '/movies/$movieId': typeof MoviesMovieIdIndexRoute
   '/person/$personId': typeof PersonPersonIdIndexRoute
+  '/user/$userId': typeof UserUserIdIndexRoute
   '/user/activity': typeof AuthenticatedUserActivityIndexRoute
   '/user/top': typeof AuthenticatedUserTopIndexRoute
 }
@@ -122,6 +130,7 @@ export interface FileRoutesById {
   '/lists/$listId/': typeof ListsListIdIndexRoute
   '/movies/$movieId/': typeof MoviesMovieIdIndexRoute
   '/person/$personId/': typeof PersonPersonIdIndexRoute
+  '/user/$userId/': typeof UserUserIdIndexRoute
   '/_authenticated/user/activity/': typeof AuthenticatedUserActivityIndexRoute
   '/_authenticated/user/top/': typeof AuthenticatedUserTopIndexRoute
 }
@@ -137,6 +146,7 @@ export interface FileRouteTypes {
     | '/lists/$listId/'
     | '/movies/$movieId/'
     | '/person/$personId/'
+    | '/user/$userId/'
     | '/user/activity/'
     | '/user/top/'
   fileRoutesByTo: FileRoutesByTo
@@ -150,6 +160,7 @@ export interface FileRouteTypes {
     | '/lists/$listId'
     | '/movies/$movieId'
     | '/person/$personId'
+    | '/user/$userId'
     | '/user/activity'
     | '/user/top'
   id:
@@ -164,6 +175,7 @@ export interface FileRouteTypes {
     | '/lists/$listId/'
     | '/movies/$movieId/'
     | '/person/$personId/'
+    | '/user/$userId/'
     | '/_authenticated/user/activity/'
     | '/_authenticated/user/top/'
   fileRoutesById: FileRoutesById
@@ -179,6 +191,7 @@ export interface RootRouteChildren {
   ListsListIdIndexRoute: typeof ListsListIdIndexRoute
   MoviesMovieIdIndexRoute: typeof MoviesMovieIdIndexRoute
   PersonPersonIdIndexRoute: typeof PersonPersonIdIndexRoute
+  UserUserIdIndexRoute: typeof UserUserIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -230,6 +243,13 @@ declare module '@tanstack/react-router' {
       path: '/about/mentions-legales'
       fullPath: '/about/mentions-legales'
       preLoaderRoute: typeof AboutMentionsLegalesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/user/$userId/': {
+      id: '/user/$userId/'
+      path: '/user/$userId'
+      fullPath: '/user/$userId/'
+      preLoaderRoute: typeof UserUserIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/person/$personId/': {
@@ -294,6 +314,7 @@ const rootRouteChildren: RootRouteChildren = {
   ListsListIdIndexRoute: ListsListIdIndexRoute,
   MoviesMovieIdIndexRoute: MoviesMovieIdIndexRoute,
   PersonPersonIdIndexRoute: PersonPersonIdIndexRoute,
+  UserUserIdIndexRoute: UserUserIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
