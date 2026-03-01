@@ -165,17 +165,6 @@
       @include m.responsive(v.$bp-md) {
         font-size: 2rem;
       }
-
-      .verified-badge {
-        width: 20px;
-        height: 20px;
-        flex-shrink: 0;
-
-        @include m.responsive(v.$bp-md) {
-          width: 28px;
-          height: 28px;
-        }
-      }
     }
 
     .follow-btn {
@@ -276,19 +265,6 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 0 v.$space-xs;
-
-          .rating-stars {
-            display: flex;
-            align-items: center;
-            gap: 2px;
-          }
-
-          .review-icon {
-            color: v.$neutral-500;
-            display: flex;
-            align-items: center;
-          }
         }
       }
     }
