@@ -59,13 +59,16 @@ export const publicListsQuery = () =>
   });
 
 // LISTES PERSO
-export const personalListsQuery = () =>
+export const personalListsQuery = (userId: string, isPublic: boolean) =>
   queryOptions({
-    queryKey: ["personal-lists"],
+    queryKey: ["personal-lists", userId],
     queryFn: async () => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/lists/user`, {
-        credentials: "include",
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/lists/user/${userId}?is_public=${isPublic}`,
+        {
+          credentials: "include",
+        },
+      );
 
       if (!res.ok)
         throw new Error(

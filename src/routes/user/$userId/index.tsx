@@ -12,7 +12,6 @@ import HorizontalScroller from "@/components/layout/horizontal-scroller/horizont
 import Tabs from "@/components/ui/tabs/tabs";
 import Watchlist from "@/components/layout/user/watchlist/watchlist";
 import Lists from "@/components/layout/user/lists/lists";
-import Stats from "@/components/layout/user/stats/stats";
 import { useAuth } from "@/auth";
 
 export const Route = createFileRoute("/user/$userId/")({
@@ -29,8 +28,6 @@ function RouteComponent() {
 
   const [selected, setSelected] = useState<string>("a-propos");
 
-  console.log(userData);
-
   const tabs =
     Number(user?.id) === Number(userId)
       ? [
@@ -42,7 +39,10 @@ function RouteComponent() {
           { id: "lists", label: `Listes (${userData.custom_lists_total})` },
           // { id: "stats", label: "Statistiques" },
         ]
-      : [{ id: "a-propos", label: "À propos" }];
+      : [
+          { id: "a-propos", label: "À propos" },
+          { id: "lists", label: `Listes (${userData.custom_lists_total})` },
+        ];
 
   return (
     <main className="user-profile">
@@ -77,12 +77,14 @@ function RouteComponent() {
 
             <ul className="stats-container" role="list">
               <li className="stat-item">
-                <strong className="stat-value">{userData.viewed_movies}</strong>
+                <strong className="stat-value">
+                  {userData.viewed_movies_count}
+                </strong>
                 <span className="stat-label">Films</span>
               </li>
               <li className="stat-item">
                 <strong className="stat-value">
-                  {userData.viewed_movies_this_year}
+                  {userData.viewed_movies_this_year_count}
                 </strong>
                 <span className="stat-label">Cette année</span>
               </li>
@@ -210,7 +212,7 @@ function RouteComponent() {
             </Suspense>
           )}
 
-          {selected === "lists" && Number(user?.id) === Number(userId) && (
+          {selected === "lists" && (
             <Suspense fallback={<div>Loading...</div>}>
               <Lists />
             </Suspense>
