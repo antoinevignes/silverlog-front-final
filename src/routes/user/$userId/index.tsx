@@ -13,6 +13,7 @@ import Tabs from "@/components/ui/tabs/tabs";
 import Watchlist from "@/components/layout/user/watchlist/watchlist";
 import Lists from "@/components/layout/user/lists/lists";
 import { useAuth } from "@/auth";
+import Skeleton from "@/components/ui/skeleton/skeleton";
 
 export const Route = createFileRoute("/user/$userId/")({
   loader: async ({ context: { queryClient }, params: { userId } }) => {
@@ -207,13 +208,44 @@ function RouteComponent() {
           )}
 
           {selected === "watchlist" && Number(user?.id) === Number(userId) && (
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense
+              fallback={
+                <ul className="watchlist-grid">
+                  {Array.from({ length: 12 }).map((_, index) => (
+                    <li key={index}>
+                      <Skeleton className="poster-skeleton" />
+                    </li>
+                  ))}
+                </ul>
+              }
+            >
               <Watchlist />
             </Suspense>
           )}
 
           {selected === "lists" && (
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense
+              fallback={
+                <div className="lists-skeleton-grid">
+                  {Array.from({ length: 4 }).map((_, index) => (
+                    <div key={index} className="list-card-skeleton">
+                      <div className="skeleton-info">
+                        <Skeleton height={20} width="80%" />
+                        <Skeleton height={24} width="30%" />
+                        <Skeleton height={14} width="90%" />
+                        <Skeleton height={14} width="60%" />
+                        <Skeleton height={14} width="40%" />
+                      </div>
+                      <div className="skeleton-posters">
+                        <Skeleton className="poster depth-2" />
+                        <Skeleton className="poster depth-1" />
+                        <Skeleton className="poster depth-0" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              }
+            >
               <Lists />
             </Suspense>
           )}
