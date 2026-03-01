@@ -216,6 +216,7 @@
     }
   }
 }
+
 .profile-content {
   display: flex;
   flex-direction: column;
@@ -228,65 +229,44 @@
 
     .top-movies-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: v.$space-sm;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 1rem;
 
-      @include m.responsive(v.$bp-md) {
+      @include m.responsive(v.$bp-lg) {
         grid-template-columns: repeat(6, 1fr);
-        gap: v.$space-md;
       }
 
-      .movie-card {
-        width: 100% !important;
-        height: auto;
+      .card-desktop {
+        display: none;
+
+        @include m.responsive(v.$bp-lg) {
+          display: block;
+        }
+      }
+
+      .card-mobile {
+        @include m.responsive(v.$bp-lg) {
+          display: none;
+        }
       }
     }
 
     .recent-activity-scroller {
-      padding-bottom: v.$space-sm;
-
-      .activity-item {
+      .activity-meta {
         display: flex;
-        flex-direction: column;
-        gap: v.$space-sm;
-        width: 100px;
-        flex-shrink: 0;
-
-        @include m.responsive(v.$bp-md) {
-          width: 140px;
-        }
-
-        .movie-card {
-          width: 100% !important;
-          height: auto;
-        }
-
-        .activity-meta {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
+        align-items: center;
+        justify-content: space-between;
       }
     }
   }
 }
 
-.watchlist-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: v.$space-sm;
-
-  @include m.responsive(v.$bp-md) {
-    grid-template-columns: repeat(6, 1fr);
-    gap: v.$space-md;
-  }
-
-  .poster-skeleton {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 2 / 3;
-    border-radius: v.$radius;
-  }
+// SKELETONS
+.poster-skeleton {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  border-radius: v.$radius;
 }
 
 .lists-skeleton-grid {

@@ -38,7 +38,6 @@ function RouteComponent() {
             label: `Watchlist (${userData.watchlist_total})`,
           },
           { id: "lists", label: `Listes (${userData.custom_lists_total})` },
-          // { id: "stats", label: "Statistiques" },
         ]
       : [
           { id: "a-propos", label: "À propos" },
@@ -47,6 +46,7 @@ function RouteComponent() {
 
   return (
     <main className="user-profile">
+      {/* FIGURE A MODIFIER */}
       <figure className="profile-backdrop" aria-hidden="true">
         <picture>
           <source
@@ -62,9 +62,10 @@ function RouteComponent() {
         <div className="backdrop-overlay"></div>
       </figure>
 
-      <div className="container profile-layout">
+      <article className="container profile-layout">
         <header className="profile-header">
           <div className="avatar-stats-row">
+            {/* AVATAR A MODIFIER */}
             <figure className="avatar-container">
               <div
                 className="avatar font-sentient"
@@ -83,12 +84,14 @@ function RouteComponent() {
                 </strong>
                 <span className="stat-label">Films</span>
               </li>
+
               <li className="stat-item">
                 <strong className="stat-value">
                   {userData.viewed_movies_this_year_count}
                 </strong>
                 <span className="stat-label">Cette année</span>
               </li>
+
               <li className="stat-item">
                 <strong className="stat-value">
                   <Star
@@ -123,6 +126,7 @@ function RouteComponent() {
               <span>
                 <strong>145</strong> Abonnés
               </span>
+
               <span>
                 <strong>49</strong> Abonnements
               </span>
@@ -137,6 +141,8 @@ function RouteComponent() {
               )}
             </address>
           </section>
+
+          {/* STATS AFFICHER ICI */}
         </header>
 
         <Tabs
@@ -155,11 +161,18 @@ function RouteComponent() {
               >
                 <Title title="Top 6" id="top-movies-title" />
 
-                <div className="top-movies-grid">
+                <ul className="top-movies-grid" role="list">
                   {userData.top_movies.map((movie: MovieType) => (
-                    <MovieCard key={movie.id} movie={movie} size="md" />
+                    <>
+                      <li key={movie.id} className="card-mobile">
+                        <MovieCard movie={movie} size="sm" />
+                      </li>
+                      <li className="card-desktop">
+                        <MovieCard movie={movie} size="md" />
+                      </li>
+                    </>
                   ))}
-                </div>
+                </ul>
               </section>
 
               <section
@@ -249,12 +262,8 @@ function RouteComponent() {
               <Lists />
             </Suspense>
           )}
-
-          {/* {selected === "stats" && Number(user?.id) === Number(userId) && (
-            <Stats user={user} />
-          )} */}
         </section>
-      </div>
+      </article>
     </main>
   );
 }

@@ -17,9 +17,9 @@ import { personalListsQuery } from "@/queries/list.queries";
 import "./lists.scss";
 
 export default function Lists() {
+  const { user } = useAuth();
   const routeApi = getRouteApi("/user/$userId/");
   const { userId } = routeApi.useParams();
-  const { user } = useAuth();
 
   const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
 
@@ -63,6 +63,7 @@ export default function Lists() {
         ))}
       </div>
 
+      {/* MODALE DE SUPPRESSION */}
       <Dialog
         open={deleteTargetId !== null}
         onOpenChange={(open) => !open && setDeleteTargetId(null)}

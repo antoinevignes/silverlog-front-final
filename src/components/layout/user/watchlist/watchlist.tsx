@@ -17,7 +17,7 @@ export default function Watchlist() {
     <section className="content-section" aria-label="Watchlist">
       <div className="watchlist-grid">
         {movies.map((movie: MovieType) => (
-          <MovieCard key={movie.id} movie={movie} size="md" />
+          <MovieCard key={movie.id} movie={movie} size="sm" />
         ))}
       </div>
     </section>
