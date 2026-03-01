@@ -2,13 +2,18 @@ import "./index.scss";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { MapPin, Star, TextAlignStart } from "lucide-react";
+import { Suspense, useState } from "react";
 import type { MovieType } from "@/utils/types/movie";
-import { Separator } from "@/components/ui/separator";
 import { userQuery } from "@/queries/user.queries";
 import Button from "@/components/ui/button/button";
 import MovieCard from "@/components/layout/movie-card/movie-card";
 import Title from "@/components/layout/title/title";
 import HorizontalScroller from "@/components/layout/horizontal-scroller/horizontal-scroller";
+import Tabs from "@/components/ui/tabs/tabs";
+import Watchlist from "@/components/layout/user/watchlist/watchlist";
+import Lists from "@/components/layout/user/lists/lists";
+import Stats from "@/components/layout/user/stats/stats";
+import { useAuth } from "@/auth";
 
 export const Route = createFileRoute("/user/$userId/")({
   loader: async ({ context: { queryClient }, params: { userId } }) => {
@@ -18,14 +23,30 @@ export const Route = createFileRoute("/user/$userId/")({
 });
 
 function RouteComponent() {
+  const { user } = useAuth();
   const { userId } = Route.useParams();
-  const { data: user } = useSuspenseQuery(userQuery(userId));
+  const { data: userData } = useSuspenseQuery(userQuery(userId));
 
-  console.log(user);
+  const [selected, setSelected] = useState<string>("a-propos");
+
+  console.log(userData);
+
+  const tabs =
+    Number(user?.id) === Number(userId)
+      ? [
+          { id: "a-propos", label: "À propos" },
+          {
+            id: "watchlist",
+            label: `Watchlist (${userData.watchlist_total})`,
+          },
+          { id: "lists", label: `Listes (${userData.custom_lists_total})` },
+          // { id: "stats", label: "Statistiques" },
+        ]
+      : [{ id: "a-propos", label: "À propos" }];
 
   return (
     <main className="user-profile">
-      <div className="profile-backdrop" aria-hidden="true">
+      <figure className="profile-backdrop" aria-hidden="true">
         <picture>
           <source
             srcSet={`https://image.tmdb.org/t/p/w1280/zpEWFNqoN8Qg1SzMMHmaGyOBTdW.jpg`}
@@ -38,50 +59,62 @@ function RouteComponent() {
           />
         </picture>
         <div className="backdrop-overlay"></div>
-      </div>
+      </figure>
 
       <div className="container profile-layout">
         <header className="profile-header">
           <div className="avatar-stats-row">
-            <div className="avatar-container">
+            <figure className="avatar-container">
               <div
                 className="avatar font-sentient"
-                aria-label={`Initiale de ${user.username}`}
+                aria-label={`Initiale de ${userData.username}`}
               >
-                {user.username ? user.username.charAt(0).toUpperCase() : "U"}
+                {userData.username
+                  ? userData.username.charAt(0).toUpperCase()
+                  : "U"}
               </div>
-            </div>
+            </figure>
 
-            <div className="stats-container">
-              <div className="stat-item">
-                <span className="stat-value">{user.viewed_movies}</span>
+            <ul className="stats-container" role="list">
+              <li className="stat-item">
+                <strong className="stat-value">{userData.viewed_movies}</strong>
                 <span className="stat-label">Films</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-value">
-                  {user.viewed_movies_this_year}
-                </span>
+              </li>
+              <li className="stat-item">
+                <strong className="stat-value">
+                  {userData.viewed_movies_this_year}
+                </strong>
                 <span className="stat-label">Cette année</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-value">
-                  <Star size={14} fill="currentColor" className="star-icon" />
-                  {user.avg_rating}
-                </span>
+              </li>
+              <li className="stat-item">
+                <strong className="stat-value">
+                  <Star
+                    size={14}
+                    fill="currentColor"
+                    className="star-icon"
+                    aria-hidden="true"
+                  />
+                  {userData.avg_rating}
+                </strong>
                 <span className="stat-label">Note Moy.</span>
-              </div>
-            </div>
+              </li>
+            </ul>
           </div>
 
-          <div className="user-info-section">
+          <section
+            className="user-info-section"
+            aria-label="Informations de l'utilisateur"
+          >
             <div className="name-action-row">
-              <h1 className="username">{user.username}</h1>
+              <h1 className="username">{userData.username}</h1>
               <Button size="sm" className="follow-btn">
                 Suivre
               </Button>
             </div>
 
-            {user.description && <p className="user-bio">{user.description}</p>}
+            {userData.description && (
+              <p className="user-bio">{userData.description}</p>
+            )}
 
             <div className="user-social-stats">
               <span>
@@ -92,62 +125,100 @@ function RouteComponent() {
               </span>
             </div>
 
-            <div className="user-meta">
-              {user.location && (
+            <address className="user-meta" style={{ fontStyle: "normal" }}>
+              {userData.location && (
                 <span className="meta-item">
-                  <MapPin size={14} />
-                  {user.location}
+                  <MapPin size={14} aria-hidden />
+                  {userData.location}
                 </span>
               )}
-            </div>
-          </div>
+            </address>
+          </section>
         </header>
 
-        <section className="profile-content">
-          <Separator />
+        <section className="profile-content" aria-label="Contenu du profil">
+          <Tabs
+            selected={selected}
+            setSelected={setSelected}
+            tabs={tabs}
+            variant="transparent"
+          />
 
-          <div className="content-section">
-            <Title title="Top 6" />
+          {selected === "a-propos" && (
+            <>
+              <section
+                className="content-section"
+                aria-labelledby="top-movies-title"
+              >
+                <Title title="Top 6" id="top-movies-title" />
 
-            <div className="top-movies-grid">
-              {user.top_movies.map((movie: MovieType) => (
-                <MovieCard key={movie.id} movie={movie} size="md" />
-              ))}
-            </div>
-          </div>
+                <div className="top-movies-grid">
+                  {userData.top_movies.map((movie: MovieType) => (
+                    <MovieCard key={movie.id} movie={movie} size="md" />
+                  ))}
+                </div>
+              </section>
 
-          <div className="content-section">
-            <Title title="Activité récente" />
+              <section
+                className="content-section"
+                aria-labelledby="recent-activity-title"
+              >
+                <Title title="Activité récente" id="recent-activity-title" />
 
-            <HorizontalScroller className="recent-activity-scroller">
-              {user.recent_activity.map((movie: any) => (
-                <li key={movie.id} className="activity-item">
-                  <MovieCard movie={movie} size="md" />
+                <HorizontalScroller className="recent-activity-scroller">
+                  {userData.recent_activity.map((movie: any) => (
+                    <li key={movie.id} className="activity-item">
+                      <MovieCard movie={movie} size="sm" />
 
-                  <div className="activity-meta">
-                    <div className="rating-stars">
-                      {Array.from({ length: movie.rating / 2 }).map(
-                        (_, index) => (
-                          <Star
-                            key={index}
-                            size={10}
-                            fill="#F2C265"
-                            stroke="#F2C265"
-                          />
-                        ),
-                      )}
-                    </div>
+                      <div className="activity-meta">
+                        <div
+                          className="rating-stars"
+                          aria-label={`Note : ${movie.rating / 2} sur 5`}
+                        >
+                          {Array.from({ length: movie.rating / 2 }).map(
+                            (_, index) => (
+                              <Star
+                                key={index}
+                                size={10}
+                                fill="#F2C265"
+                                stroke="#F2C265"
+                                aria-hidden
+                              />
+                            ),
+                          )}
+                        </div>
 
-                    {movie.review_content && (
-                      <span className="review-icon">
-                        <TextAlignStart size={10} />
-                      </span>
-                    )}
-                  </div>
-                </li>
-              ))}
-            </HorizontalScroller>
-          </div>
+                        {movie.review_content && (
+                          <span
+                            className="review-icon"
+                            aria-label="Critique rédigée"
+                          >
+                            <TextAlignStart size={10} aria-hidden />
+                          </span>
+                        )}
+                      </div>
+                    </li>
+                  ))}
+                </HorizontalScroller>
+              </section>
+            </>
+          )}
+
+          {selected === "watchlist" && Number(user?.id) === Number(userId) && (
+            <Suspense fallback={<div>Loading...</div>}>
+              <Watchlist />
+            </Suspense>
+          )}
+
+          {selected === "lists" && Number(user?.id) === Number(userId) && (
+            <Suspense fallback={<div>Loading...</div>}>
+              <Lists />
+            </Suspense>
+          )}
+
+          {/* {selected === "stats" && Number(user?.id) === Number(userId) && (
+            <Stats user={user} />
+          )} */}
         </section>
       </div>
     </main>

@@ -1,0 +1,18 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.watchlist-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: v.$space-sm;
+
+  @include m.responsive(v.$bp-md) {
+    grid-template-columns: repeat(6, 1fr);
+    gap: v.$space-md;
+  }
+
+  .movie-card {
+    width: 100% !important;
+    height: auto;
+  }
+}
