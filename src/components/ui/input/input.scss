@@ -1,0 +1,67 @@
+@use "@/styles/abstracts/variables" as v;
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+
+  .input-icon {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: v.$neutral-400;
+    pointer-events: none;
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    &--left {
+      left: 0.75rem;
+    }
+
+    &--right {
+      right: 0.75rem;
+    }
+  }
+
+  .input-field {
+    width: 100%;
+    padding: 0.55rem 0.8rem;
+    font-size: 0.95rem;
+    font-family: inherit;
+    border-radius: v.$radius;
+    background-color: v.$neutral-50;
+    border: 1.5px solid v.$neutral-300;
+    color: v.$neutral-900;
+    transition: all v.$transition;
+    box-sizing: border-box;
+
+    &--has-left-icon {
+      padding-left: 2.2rem;
+    }
+
+    &--has-right-icon {
+      padding-right: 2.2rem;
+    }
+
+    &::placeholder {
+      color: v.$neutral-400;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(23, 23, 23, 0.1);
+    }
+
+    &:disabled {
+      background-color: v.$neutral-100;
+      color: v.$neutral-400;
+      cursor: not-allowed;
+    }
+  }
+}

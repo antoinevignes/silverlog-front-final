@@ -1,0 +1,91 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.settings-page {
+  padding-top: v.$space-xl;
+  padding-bottom: v.$space-2xl;
+
+  .settings-header {
+    margin-bottom: v.$space-xl;
+    border-bottom: 1px solid v.$neutral-200;
+    padding-bottom: v.$space-lg;
+
+    p {
+      margin-top: v.$space-xs;
+    }
+  }
+
+  .settings-body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .setting-section {
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-lg;
+    padding: v.$space-xl 0;
+    border-bottom: 1px solid v.$neutral-200;
+
+    @include m.responsive(v.$bp-md) {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: v.$space-2xl;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .setting-label {
+    display: flex;
+    align-items: flex-start;
+    gap: v.$space-md;
+    flex-shrink: 0;
+
+    @include m.responsive(v.$bp-md) {
+      width: 16rem;
+    }
+  }
+
+  .setting-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: v.$neutral-100;
+    border: 1px solid v.$neutral-200;
+    border-radius: v.$radius;
+    flex-shrink: 0;
+    color: v.$neutral-700;
+  }
+
+  .setting-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: v.$neutral-900;
+    margin-bottom: v.$space-xs;
+  }
+
+  .setting-description {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .setting-control {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-md;
+    min-width: 0;
+
+    .setting-form {
+      display: flex;
+      gap: v.$space-sm;
+      align-items: center;
+    }
+  }
+}

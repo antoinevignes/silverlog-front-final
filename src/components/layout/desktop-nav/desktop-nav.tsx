@@ -90,7 +90,9 @@ export default function DesktopNav() {
                     <BookOpen size={16} />
                     Mon Profil
                   </DropdownItem>
-                  <DropdownItem onClick={() => navigate({ to: "/" })}>
+                  <DropdownItem
+                    onClick={() => navigate({ to: "/user/settings" })}
+                  >
                     <Settings size={16} />
                     Paramètres
                   </DropdownItem>

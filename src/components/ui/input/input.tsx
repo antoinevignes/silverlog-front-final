@@ -1,0 +1,55 @@
+import type { InputHTMLAttributes, ReactNode } from "react";
+import { useFieldContext } from "@/utils/useAppForm";
+import "./input.scss";
+
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
+  leftIcon?: ReactNode;
+  rightIcon?: ReactNode;
+}
+
+export default function Input({
+  id,
+  label,
+  leftIcon,
+  rightIcon,
+  disabled,
+  className,
+  ...props
+}: InputProps) {
+  const field = useFieldContext<string>();
+
+  const fieldClasses = [
+    "input-field",
+    leftIcon ? "input-field--has-left-icon" : "",
+    rightIcon ? "input-field--has-right-icon" : "",
+    className ?? "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  return (
+    <div className="input-wrapper">
+      {leftIcon && (
+        <span className="input-icon input-icon--left" aria-hidden>
+          {leftIcon}
+        </span>
+      )}
+
+      <input
+        id={id}
+        disabled={disabled}
+        className={fieldClasses}
+        {...props}
+        value={field.state.value}
+        onChange={(e) => field.handleChange(e.target.value)}
+      />
+
+      {rightIcon && (
+        <span className="input-icon input-icon--right" aria-hidden>
+          {rightIcon}
+        </span>
+      )}
+    </div>
+  );
+}
