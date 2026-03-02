@@ -51,12 +51,24 @@
         &:active {
           transform: scale(0.95);
         }
+
+        .avatar-icon-wrapper {
+          width: 24px;
+          height: 24px;
+          margin: 0 auto;
+          border-radius: 50%;
+          background-color: v.$neutral-900;
+          color: white;
+          @include m.flex-center;
+          font-size: 0.65rem;
+          font-weight: 700;
+          overflow: hidden;
+        }
       }
     }
   }
 }
 
-// Global rule helper for the main app routing layout
 .mobile-nav-padded-layout {
   padding-bottom: calc(4rem + env(safe-area-inset-bottom));
 

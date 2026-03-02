@@ -118,19 +118,16 @@
           align-items: center;
 
           .avatar-trigger {
-            @include m.flex-center;
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            background: v.$neutral-100;
-            color: v.$neutral-700;
-            border: 1px solid v.$neutral-200;
-            transition: all 0.2s ease;
-
-            &:hover {
-              background: v.$neutral-200;
-              color: v.$neutral-900;
-            }
+            background-color: v.$neutral-900;
+            color: white;
+            @include m.flex-center;
+            font-size: 1rem;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
           }
 
           .dropdown-header {

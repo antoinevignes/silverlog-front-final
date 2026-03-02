@@ -11,6 +11,11 @@ import {
   DropdownTrigger,
 } from "@/components/ui/dropdown-menu";
 import Button from "@/components/ui/button/button";
+import { Image } from "@unpic/react";
+import {
+  getCloudinaryPlaceholder,
+  getCloudinarySrc,
+} from "@/utils/cloudinary-handler";
 
 export default function DesktopNav() {
   const { user, logout } = useAuth();
@@ -70,9 +75,33 @@ export default function DesktopNav() {
               <DropdownMenu>
                 <DropdownTrigger>
                   <div className="avatar-trigger">
-                    <User size={20} />
+                    {user.avatar_path ? (
+                      <Image
+                        src={getCloudinarySrc(user.avatar_path, "avatars")}
+                        layout="constrained"
+                        width={40}
+                        height={40}
+                        alt={user.username}
+                        background={getCloudinaryPlaceholder(
+                          user.avatar_path,
+                          "avatars",
+                        )}
+                        priority
+                        className="avatar"
+                      />
+                    ) : (
+                      <div
+                        className="font-sentient"
+                        aria-label={`Initiale de ${user.username}`}
+                      >
+                        {user.username
+                          ? user.username.charAt(0).toUpperCase()
+                          : "U"}
+                      </div>
+                    )}
                   </div>
                 </DropdownTrigger>
+
                 <DropdownContent align="right">
                   <div className="dropdown-header">
                     <span className="username">{user.username}</span>

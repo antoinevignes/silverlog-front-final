@@ -1,7 +1,7 @@
 import "./index.scss";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { MapPin, Settings, Star, TextAlignStart } from "lucide-react";
+import { Edit, MapPin, Star, TextAlignStart } from "lucide-react";
 import { Suspense, useState } from "react";
 import type { MovieType } from "@/utils/types/movie";
 import { userQuery } from "@/queries/user.queries";
@@ -14,6 +14,11 @@ import Watchlist from "@/components/layout/user/watchlist/watchlist";
 import Lists from "@/components/layout/user/lists/lists";
 import { useAuth } from "@/auth";
 import Skeleton from "@/components/ui/skeleton/skeleton";
+import { Image } from "@unpic/react";
+import {
+  getCloudinaryPlaceholder,
+  getCloudinarySrc,
+} from "@/utils/cloudinary-handler";
 
 export const Route = createFileRoute("/user/$userId/")({
   loader: async ({ context: { queryClient }, params: { userId } }) => {
@@ -65,16 +70,30 @@ function RouteComponent() {
       <article className="container profile-layout">
         <header className="profile-header">
           <div className="avatar-stats-row">
-            {/* AVATAR A MODIFIER */}
             <figure className="avatar-container">
-              <div
-                className="avatar font-sentient"
-                aria-label={`Initiale de ${userData.username}`}
-              >
-                {userData.username
-                  ? userData.username.charAt(0).toUpperCase()
-                  : "U"}
-              </div>
+              {userData.avatar_path ? (
+                <Image
+                  src={getCloudinarySrc(userData.avatar_path, "avatars")}
+                  layout="fullWidth"
+                  aspectRatio={1 / 1}
+                  alt={userData.username}
+                  background={getCloudinaryPlaceholder(
+                    userData.avatar_path,
+                    "avatars",
+                  )}
+                  priority
+                  className="avatar"
+                />
+              ) : (
+                <div
+                  className="avatar font-sentient"
+                  aria-label={`Initiale de ${userData.username}`}
+                >
+                  {userData.username
+                    ? userData.username.charAt(0).toUpperCase()
+                    : "U"}
+                </div>
+              )}
             </figure>
 
             <ul className="stats-container" role="list">
@@ -120,9 +139,11 @@ function RouteComponent() {
                   className="settings-link"
                   aria-label="Paramètres du profil"
                 >
-                  <Button size="sm" variant="ghost">
-                    <Settings size={16} aria-hidden />
-                    Paramètres
+                  <Button size="icon" variant="ghost">
+                    <Edit
+                      size={16}
+                      aria-label="Accéder au paramêtres du compte"
+                    />
                   </Button>
                 </Link>
               ) : (

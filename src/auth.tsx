@@ -8,6 +8,7 @@ interface User {
   email: string;
   top_list_id: string;
   watchlist_id: string;
+  avatar_path: string | null;
 }
 
 export interface AuthState {

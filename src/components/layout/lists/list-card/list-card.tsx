@@ -9,8 +9,11 @@ import {
   getCloudinarySrc,
 } from "@/utils/cloudinary-handler";
 import { formatCompactNumber } from "@/utils/format-compact-number";
+import { useAuth } from "@/auth";
 
 export default function ListCard({ list }: { list: ListType }) {
+  const { user } = useAuth();
+
   return (
     <Link
       to="/lists/$listId"
@@ -32,7 +35,21 @@ export default function ListCard({ list }: { list: ListType }) {
         </p>
 
         <div className="list-author">
-          <UserCircle size={16} />
+          {user?.avatar_path ? (
+            <Image
+              src={getCloudinarySrc(user.avatar_path, "avatars")}
+              layout="constrained"
+              width={20}
+              height={20}
+              alt={user.username}
+              background={getCloudinaryPlaceholder(user.avatar_path, "avatars")}
+              priority
+              className="avatar"
+            />
+          ) : (
+            <UserCircle size={16} />
+          )}
+
           <span>{list.username}</span>
         </div>
       </section>

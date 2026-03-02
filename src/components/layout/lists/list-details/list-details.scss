@@ -23,6 +23,18 @@
       align-items: center;
       gap: 0.75rem;
 
+      .avatar {
+        width: 44px;
+        height: 44px;
+        margin: 0 auto;
+        border-radius: 50%;
+        background-color: v.$neutral-900;
+        color: white;
+        @include m.flex-center;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+
       .author-details {
         display: flex;
         gap: 0.25rem;
