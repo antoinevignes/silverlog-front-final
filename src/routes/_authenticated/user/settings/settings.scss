@@ -89,3 +89,50 @@
     }
   }
 }
+
+.avatar-form {
+  align-items: center;
+
+  .avatar-upload-zone {
+    display: flex;
+    align-items: center;
+    gap: v.$space-md;
+
+    .avatar-preview-img,
+    .avatar-placeholder {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      border: 2px solid v.$neutral-200;
+      overflow: hidden;
+      object-fit: cover;
+    }
+
+    .avatar-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: v.$neutral-100;
+      color: v.$neutral-400;
+    }
+
+    .avatar-pick-btn {
+      font-size: 0.85rem;
+      font-family: inherit;
+      font-weight: 600;
+      color: v.$neutral-700;
+      background: none;
+      border: 1.5px solid v.$neutral-300;
+      border-radius: v.$radius;
+      padding: 0.4rem 0.9rem;
+      cursor: pointer;
+      transition: all v.$transition;
+
+      &:hover {
+        border-color: v.$neutral-600;
+        background: v.$neutral-100;
+      }
+    }
+  }
+}

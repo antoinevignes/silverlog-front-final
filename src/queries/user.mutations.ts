@@ -48,6 +48,7 @@ export function useUpdateUsername() {
     },
   });
 }
+
 // MISE A JOUR DE LA LOCALISATION UTILISATEUR
 export function useUpdateLocation() {
   const { user } = useAuth();
@@ -77,7 +78,7 @@ export function useUpdateLocation() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["session"] });
       queryClient.invalidateQueries({ queryKey: ["user", user?.id] });
-      toast.success("Profil mis à jour !");
+      toast.success("Localisation mise à jour !");
     },
 
     onError: (error) => {
@@ -90,6 +91,45 @@ export function useUpdateLocation() {
         });
       }
       toast.error("Une erreur est survenue");
+    },
+  });
+}
+
+// MISE A JOUR DE L'AVATAR UTILISATEUR (upload fichier)
+export function useUploadAvatar() {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (file: File) => {
+      if (!user) throw new Error("Unauthenticated");
+
+      const formData = new FormData();
+      formData.append("avatar", file);
+
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/user/avatar`, {
+        method: "PATCH",
+        credentials: "include",
+        body: formData,
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message ?? "Une erreur est survenue");
+      }
+
+      return data;
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["session"] });
+      queryClient.invalidateQueries({ queryKey: ["user", user?.id] });
+      toast.success("Avatar mis à jour !");
+    },
+
+    onError: (error) => {
+      toast.error(error.message ?? "Impossible d'uploader l'avatar");
     },
   });
 }

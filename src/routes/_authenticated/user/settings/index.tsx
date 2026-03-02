@@ -1,11 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { MapPin, User } from "lucide-react";
+import { Camera, MapPin, User } from "lucide-react";
+import { useRef, useState } from "react";
 import { useAuth } from "@/auth";
-import { useUpdateLocation, useUpdateUsername } from "@/queries/user.mutations";
+import {
+  useUpdateLocation,
+  useUpdateUsername,
+  useUploadAvatar,
+} from "@/queries/user.mutations";
 import Title from "@/components/layout/title/title";
 import "./settings.scss";
 import { useAppForm } from "@/utils/useAppForm";
 import z from "zod";
+import Button from "@/components/ui/button/button";
 
 export const Route = createFileRoute("/_authenticated/user/settings/")({
   component: RouteComponent,
@@ -45,6 +51,25 @@ function RouteComponent() {
       updateLocation(value.location);
     },
   });
+
+  const avatarFileRef = useRef<HTMLInputElement>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const { mutate: uploadAvatar, isPending: isUploadingAvatar } =
+    useUploadAvatar();
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setAvatarFile(file);
+    setPreviewUrl(URL.createObjectURL(file));
+  };
+
+  const handleUploadAvatar = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!avatarFile) return;
+    uploadAvatar(avatarFile);
+  };
 
   return (
     <main className="settings-page container">
@@ -143,6 +168,58 @@ function RouteComponent() {
                 )}
               />
             </locationForm.AppForm>
+          </form>
+        </SettingSection>
+
+        {/* AVATAR */}
+        <SettingSection
+          icon={<Camera size={20} />}
+          title="Avatar"
+          description="Photo de profil affichée sur votre page et dans vos commentaires."
+        >
+          <form
+            onSubmit={handleUploadAvatar}
+            className="setting-form avatar-form"
+          >
+            <div className="avatar-upload-zone">
+              {previewUrl ? (
+                <img
+                  src={previewUrl}
+                  alt="Aperçu avatar"
+                  className="avatar-preview-img"
+                />
+              ) : (
+                <span className="avatar-placeholder">
+                  <User size={28} aria-hidden />
+                </span>
+              )}
+
+              <Button
+                type="button"
+                size="sm"
+                variant="outline"
+                onClick={() => avatarFileRef.current?.click()}
+              >
+                Choisir une image
+              </Button>
+
+              <input
+                ref={avatarFileRef}
+                type="file"
+                accept="image/*"
+                hidden
+                onChange={handleFileChange}
+                aria-label="Choisir une photo de profil"
+              />
+            </div>
+
+            <Button
+              type="submit"
+              size="sm"
+              disabled={isUploadingAvatar || !avatarFile}
+            >
+              {isUploadingAvatar ? "Upload..." : "Enregistrer"}
+            </Button>
           </form>
         </SettingSection>
       </section>
