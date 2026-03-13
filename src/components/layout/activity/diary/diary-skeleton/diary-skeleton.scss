@@ -26,10 +26,10 @@
       display: flex;
       align-items: center;
       gap: 1rem;
-      background: white;
+      background: v.$c-surface;
       border-radius: 0.75rem;
       padding: 0.75rem;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 
       .skeleton-poster {
         border-radius: 0.5rem;
@@ -78,11 +78,11 @@
       .calendar-day-skeleton {
         aspect-ratio: 2 / 3;
         border-radius: 0.5rem;
-        background: v.$neutral-50;
+        background: v.$c-bg;
 
         &.filled {
-          background: white;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+          background: v.$c-surface;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
           position: relative;
           overflow: hidden;
 

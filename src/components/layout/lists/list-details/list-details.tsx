@@ -162,7 +162,10 @@ export default function ListDetails() {
           aria-label="Sauvegarder la liste"
           onClick={() => saveList()}
         >
-          <Bookmark size={20} fill={listData.is_saved ? "white" : "none"} />
+          <Bookmark
+            size={20}
+            fill={listData.is_saved ? "currentColor" : "none"}
+          />
         </button>
       </section>
 

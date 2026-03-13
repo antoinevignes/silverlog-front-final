@@ -3,20 +3,20 @@
 .public-list-card {
   display: flex;
   flex-direction: row;
-  background: v.$neutral-50;
-  border: 1px solid v.$neutral-200;
+  background: v.$c-bg;
+  border: 1px solid v.$c-border;
   border-radius: 0.5rem;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.2, 1, 0.3, 1);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
   min-height: 140px;
   position: relative;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
-    border-color: v.$neutral-300;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+    border-color: v.$c-border-h;
   }
 
   .list-info-block {
@@ -31,7 +31,7 @@
     .list-title {
       font-size: 1.05rem;
       font-weight: 700;
-      color: v.$neutral-900;
+      color: v.$c-heading;
       line-height: 1.25;
       margin: 0;
     }
@@ -43,7 +43,7 @@
 
     .list-description {
       font-size: 0.85rem;
-      color: v.$neutral-600;
+      color: v.$c-text;
       line-height: 1.4;
       margin: 0.25rem 0;
       flex-grow: 1;
@@ -55,10 +55,10 @@
       gap: 0.25rem;
       font-size: 0.8rem;
       font-weight: 600;
-      color: v.$neutral-500;
+      color: v.$c-muted;
 
       &.likes {
-        color: v.$neutral-600;
+        color: v.$c-text;
         .text-red-500 {
           color: #ef4444;
         }
@@ -70,7 +70,7 @@
       align-items: center;
       gap: 0.4rem;
       font-size: 0.75rem;
-      color: v.$neutral-500;
+      color: v.$c-muted;
       font-weight: 500;
 
       .avatar {
@@ -79,7 +79,7 @@
       }
 
       span {
-        color: v.$neutral-800;
+        color: v.$c-heading;
         font-weight: 600;
       }
     }
@@ -92,7 +92,7 @@
     .preview-poster {
       position: absolute;
       bottom: 0;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
       border-radius: 0.5rem;
 
       &.depth-0 {

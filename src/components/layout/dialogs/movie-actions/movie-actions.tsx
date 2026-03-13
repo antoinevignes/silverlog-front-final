@@ -127,7 +127,7 @@ export default function MovieActions({
                   })
                 }
               >
-                <Bookmark fill={isInWatchlist ? "#262626" : "none"} />
+                <Bookmark fill={isInWatchlist ? "currentColor" : "none"} />
               </button>
             </header>
 

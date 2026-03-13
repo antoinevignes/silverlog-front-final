@@ -45,11 +45,11 @@
 
         h3 {
           font-size: 1.1rem;
-          color: v.$neutral-900;
+          color: v.$c-heading;
           font-weight: 700;
           margin-bottom: 1rem;
           padding-bottom: 0.5rem;
-          border-bottom: 1px solid v.$neutral-200;
+          border-bottom: 1px solid v.$c-border;
         }
 
         &.stats-card {
@@ -62,14 +62,14 @@
               @include m.flex-between;
 
               .stat-label {
-                color: v.$neutral-600;
+                color: v.$c-text;
                 font-size: 0.875rem;
               }
 
               .stat-value {
                 font-weight: 600;
-                color: v.$neutral-600;
-                background: v.$neutral-50;
+                color: v.$c-text;
+                background: v.$c-bg;
                 padding: 0.2rem 0.6rem;
                 border-radius: 1rem;
                 font-size: 0.875rem;
@@ -84,20 +84,20 @@
               display: flex;
               flex-direction: column;
               gap: 0.5rem;
-              border-left: 2px solid v.$neutral-100;
+              border-left: 2px solid v.$c-surface;
               padding-left: 1rem;
               margin-left: 0.5rem;
 
               li {
                 a {
-                  color: v.$neutral-500;
+                  color: v.$c-muted;
                   text-decoration: none;
                   font-size: 0.875rem;
                   transition: color 0.2s ease;
                   text-transform: capitalize;
 
                   &:hover {
-                    color: v.$neutral-900;
+                    color: v.$c-heading;
                     font-weight: 500;
                   }
                 }
@@ -115,13 +115,13 @@
     .month-header {
       text-transform: capitalize;
       font-size: 1.25rem;
-      color: v.$neutral-800;
+      color: v.$c-heading;
       font-weight: 700;
       margin-bottom: 1rem;
       padding-bottom: 0.5rem;
       position: sticky;
       top: 0;
-      background: v.$neutral-50;
+      background: v.$c-bg;
       z-index: 20;
 
       @include m.responsive(v.$bp-md) {

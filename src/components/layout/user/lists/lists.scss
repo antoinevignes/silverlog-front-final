@@ -25,7 +25,7 @@
 
       &:hover {
         background-color: v.$destructive;
-        color: white;
+        color: v.$c-white;
       }
     }
   }
@@ -41,14 +41,14 @@
   .delete-title {
     font-size: 1.25rem;
     font-weight: 700;
-    color: v.$neutral-900;
+    color: v.$c-heading;
     text-align: left;
   }
 
   .delete-description {
     font-size: 0.95rem;
     line-height: 1.5;
-    color: v.$neutral-500;
+    color: v.$c-muted;
     margin: 0;
   }
 }

@@ -16,7 +16,7 @@
     @include m.flex-between;
     padding: 1rem;
     border-radius: 0.5rem;
-    background-color: v.$neutral-100;
+    background-color: v.$c-surface;
     margin-top: 0.5rem;
 
     .privacy-info {
@@ -27,12 +27,12 @@
       .privacy-label {
         font-weight: 600;
         font-size: 0.95rem;
-        color: v.$neutral-900;
+        color: v.$c-heading;
       }
 
       .privacy-desc {
         font-size: 0.8rem;
-        color: v.$neutral-500;
+        color: v.$c-muted;
       }
     }
 
@@ -43,7 +43,7 @@
       width: 56px;
       height: 32px;
       border-radius: 999px;
-      background-color: v.$neutral-300;
+      background-color: v.$c-border-h;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -51,7 +51,7 @@
       flex-shrink: 0;
 
       &.is-public {
-        background-color: v.$neutral-900;
+        background-color: v.$c-heading;
       }
 
       .switch-knob {
@@ -59,19 +59,19 @@
         left: 3px;
         width: 26px;
         height: 26px;
-        background-color: white;
+        background-color: v.$c-white;
         border-radius: 50%;
         @include m.flex-center;
-        color: v.$neutral-600;
+        color: v.$c-text;
         transition:
           transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
           color 0.3s ease;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
       }
 
       &.is-public .switch-knob {
         transform: translateX(24px);
-        color: v.$neutral-900;
+        color: v.$c-heading;
       }
     }
   }

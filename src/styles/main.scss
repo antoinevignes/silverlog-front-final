@@ -2,35 +2,16 @@
 @use "./abstracts/variables" as v;
 @use "./abstracts/mixins" as m;
 
-/* ========================= */
-/* SATOSHI — variable font  */
-/* ========================= */
-@font-face {
-  font-family: "Satoshi";
-  src: url("/Satoshi-Variable.woff2") format("woff2");
-  font-weight: 300 900;
-  font-display: swap;
-  font-style: normal;
-}
-
-/* ========================= */
-/* SENTIENT — variable font */
-/* ========================= */
-@font-face {
-  font-family: "Sentient";
-  src: url("/Sentient-Variable.woff2") format("woff2");
-  font-weight: 200 700;
-  font-style: normal;
-  font-display: swap;
-}
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Manrope:wght@200..800&display=swap");
 
 body {
   font-family:
-    "Satoshi",
+    "Manrope",
     system-ui,
     -apple-system,
     sans-serif;
-  background: v.$neutral-50;
+  background: v.$c-bg;
+  color: v.$c-heading;
 }
 
 .app-root-container {
@@ -49,13 +30,13 @@ body {
 }
 
 :focus-visible {
-  outline: 1px solid v.$neutral-600;
+  outline: 1px solid v.$c-text;
   outline-offset: 2px;
   border-radius: 0.25rem;
 }
 
 h1 {
-  font-family: "Sentient", Georgia, serif;
+  font-family: "Fraunces", Georgia, serif;
   font-weight: 700;
 }
 
@@ -64,11 +45,11 @@ a {
 }
 
 .font-sentient {
-  font-family: "Sentient", Georgia, serif;
+  font-family: "Fraunces", Georgia, serif;
 }
 
 .text-secondary {
-  color: v.$neutral-600;
+  color: v.$c-text;
 }
 
 .error-text {

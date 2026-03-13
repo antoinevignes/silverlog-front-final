@@ -27,7 +27,7 @@ export default function MovieCard({
     >
       {!movie.poster_path ? (
         <div className="poster-fallback">
-          <Film size={32} aria-hidden color="#262626" />
+          <Film size={32} aria-hidden color="currentColor" />
         </div>
       ) : (
         <Image

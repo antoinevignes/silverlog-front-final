@@ -39,11 +39,11 @@
       height: 140px;
       flex-shrink: 0;
       border-radius: 50%;
-      background: v.$neutral-50;
+      background: v.$c-bg;
       padding: 0.35rem; // Ring overlap effect
       box-shadow:
-        0 10px 15px -3px rgba(0, 0, 0, 0.1),
-        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        0 10px 15px -3px rgba(0, 0, 0, 0.5),
+        0 4px 6px -2px rgba(0, 0, 0, 0.4);
 
       img,
       .header-poster-fallback {
@@ -52,11 +52,11 @@
         border-radius: 50%;
         object-fit: cover;
         display: block;
-        background-color: v.$neutral-100;
+        background-color: v.$c-surface;
       }
 
       .header-poster-fallback {
-        border: 1px solid v.$neutral-200;
+        border: 1px solid v.$c-border;
         @include m.flex-center;
       }
 
@@ -102,7 +102,7 @@
           align-items: center;
           gap: v.$space-xs;
           font-size: 0.875rem;
-          color: v.$neutral-600;
+          color: v.$c-text;
           font-weight: 500;
         }
       }

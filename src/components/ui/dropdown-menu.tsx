@@ -33,7 +33,7 @@ export const StyledTrigger = styled.button`
   align-items: center;
 
   &:focus-visible {
-    outline: 1px solid #525252;
+    outline: 1px solid #8e8984; // $c-muted
     outline-offset: 2px;
     border-radius: 0.25rem;
   }
@@ -49,12 +49,14 @@ export const StyledContent = styled.div<{
 
   min-width: 180px;
   padding: 0.5rem;
-  background: #fafafa;
+  background: #1a1918; // $c-surface
+  color: #c8c1b8; // $c-text
   border-radius: 0.5rem;
+  border: 1px solid #2c2a28; // $c-border
 
   box-shadow:
-    0 2px 15px -3px rgba(0, 0, 0, 0.1),
-    0 2px 6px -4px rgba(0, 0, 0, 0.1);
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.8);
 
   display: flex;
   flex-direction: column;
@@ -82,7 +84,7 @@ export const StyledItem = styled.button`
 
   &:hover,
   &:focus-visible {
-    background-color: #e5e5e5;
+    background-color: #2c2a28; // $c-border
   }
 `;
 

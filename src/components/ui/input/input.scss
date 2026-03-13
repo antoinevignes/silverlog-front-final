@@ -12,7 +12,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: v.$neutral-400;
+    color: v.$c-muted;
     pointer-events: none;
 
     svg {
@@ -35,9 +35,9 @@
     font-size: 0.95rem;
     font-family: inherit;
     border-radius: v.$radius;
-    background-color: v.$neutral-50;
-    border: 1.5px solid v.$neutral-300;
-    color: v.$neutral-900;
+    background-color: v.$c-bg;
+    border: 1.5px solid v.$c-border-h;
+    color: v.$c-heading;
     transition: all v.$transition;
     box-sizing: border-box;
 
@@ -50,17 +50,17 @@
     }
 
     &::placeholder {
-      color: v.$neutral-400;
+      color: v.$c-muted;
     }
 
     &:focus {
       outline: none;
-      box-shadow: 0 0 0 2px rgba(23, 23, 23, 0.1);
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15);
     }
 
     &:disabled {
-      background-color: v.$neutral-100;
-      color: v.$neutral-400;
+      background-color: v.$c-surface;
+      color: v.$c-muted;
       cursor: not-allowed;
     }
   }
