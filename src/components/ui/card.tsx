@@ -3,7 +3,7 @@ import styled from "styled-components";
 // CARD
 export const Card = styled.article`
   background-color: var(--neutral-50);
-  box-shadow: 0px 2px 5px rgba(115, 115, 115, 0.3);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
   padding: 1.5rem;
   border-radius: 0.5rem;
 `;

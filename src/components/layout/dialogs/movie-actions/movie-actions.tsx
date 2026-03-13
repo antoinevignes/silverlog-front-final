@@ -127,11 +127,17 @@ export default function MovieActions({
                   })
                 }
               >
-                <Bookmark fill={isInWatchlist ? "#262626" : "none"} />
+                <Bookmark fill={isInWatchlist ? "currentColor" : "none"} />
               </button>
             </header>
 
-            <Rating />
+            <Rating
+              title={movie.title}
+              posterPath={movie.poster_path}
+              backdropPath={movie.backdrop_path}
+              releaseDate={movie.release_date}
+              genres={movie.genres}
+            />
 
             <section className="dialog-buttons">
               <button className="action-card" onClick={goToDiary}>
@@ -177,6 +183,11 @@ export default function MovieActions({
             onClose={() => setOpen(false)}
             onBack={goBackToMain}
             movieId={String(movie.id)}
+            title={movie.title}
+            posterPath={movie.poster_path}
+            backdropPath={movie.backdrop_path}
+            releaseDate={movie.release_date}
+            genres={movie.genres}
           />
         )}
 

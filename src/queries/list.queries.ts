@@ -57,3 +57,26 @@ export const publicListsQuery = () =>
       return data;
     },
   });
+
+// LISTES PERSO
+export const personalListsQuery = (userId: string, isPublic: boolean) =>
+  queryOptions({
+    queryKey: ["personal-lists", userId],
+    queryFn: async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/lists/user/${userId}?is_public=${isPublic}`,
+        {
+          credentials: "include",
+        },
+      );
+
+      if (!res.ok)
+        throw new Error(
+          "Erreur réseau : impossible de récupérer les listes personnelles.",
+        );
+
+      const data = await res.json();
+
+      return data;
+    },
+  });

@@ -1,0 +1,343 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.user-profile {
+  position: relative;
+  min-height: 100vh;
+}
+
+.profile-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  z-index: 0;
+
+  @include m.responsive(v.$bp-md) {
+    height: 320px;
+  }
+
+  .backdrop-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .backdrop-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 60%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+}
+
+.profile-layout {
+  position: relative;
+  z-index: 1;
+  padding-top: 156px;
+
+  @include m.responsive(v.$bp-md) {
+    padding-top: 250px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+}
+
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-lg;
+  margin-bottom: v.$space-xl;
+
+  @include m.responsive(v.$bp-md) {
+    gap: v.$space-xl;
+  }
+}
+
+.avatar-stats-row {
+  display: flex;
+  align-items: flex-end;
+  gap: v.$space-lg;
+
+  @include m.responsive(v.$bp-md) {
+    gap: v.$space-2xl;
+  }
+
+  .avatar-container {
+    flex-shrink: 0;
+
+    .avatar {
+      width: 6rem;
+      height: 6rem;
+      border-radius: 50%;
+      background-color: v.$c-heading;
+      color: white;
+      outline: 4px solid white;
+      @include m.flex-center;
+      font-size: 2rem;
+      font-weight: 700;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+
+      @include m.responsive(v.$bp-md) {
+        width: 9.5rem;
+        height: 9.5rem;
+        font-size: 3.5rem;
+        border-width: 6px;
+      }
+    }
+  }
+
+  .stats-container {
+    display: flex;
+    gap: v.$space-lg;
+    flex-grow: 1;
+    margin-bottom: v.$space-sm;
+
+    @include m.responsive(v.$bp-md) {
+      gap: v.$space-2xl;
+      margin-bottom: v.$space-md;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .stat-value {
+        font-size: 1.125rem;
+        font-weight: 800;
+        color: v.$c-heading;
+        display: flex;
+        align-items: center;
+        gap: v.$space-xs;
+
+        @include m.responsive(v.$bp-md) {
+          font-size: 1.5rem;
+        }
+
+        .star-icon {
+          color: #f5c518;
+        }
+      }
+
+      .stat-label {
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: v.$c-muted;
+        white-space: nowrap;
+
+        @include m.responsive(v.$bp-md) {
+          font-size: 0.875rem;
+        }
+      }
+    }
+  }
+}
+
+.user-info-section {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-md;
+
+  .name-action-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @include m.responsive(v.$bp-md) {
+      justify-content: flex-start;
+      gap: v.$space-xl;
+    }
+
+    .username {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: v.$c-heading;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: v.$space-sm;
+
+      @include m.responsive(v.$bp-md) {
+        font-size: 2rem;
+      }
+    }
+
+    .follow-btn {
+      border-radius: 9999px;
+      padding-left: v.$space-lg;
+      padding-right: v.$space-lg;
+      font-weight: 600;
+    }
+  }
+
+  .user-bio {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: v.$c-heading;
+
+    @include m.responsive(v.$bp-md) {
+      font-size: 1rem;
+    }
+  }
+
+  .user-social-stats {
+    display: flex;
+    gap: v.$space-lg;
+    font-size: 0.875rem;
+    color: v.$c-text;
+
+    strong {
+      color: v.$c-heading;
+      font-weight: 700;
+    }
+
+    @include m.responsive(v.$bp-md) {
+      font-size: 0.95rem;
+    }
+  }
+
+  .user-meta {
+    display: flex;
+    align-items: center;
+    gap: v.$space-md;
+    font-size: 0.875rem;
+    color: v.$c-muted;
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: v.$space-xs;
+    }
+  }
+}
+
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-md;
+  margin-top: v.$space-sm;
+
+  .content-section {
+    display: flex;
+    flex-direction: column;
+
+    .top-movies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 1rem;
+
+      @include m.responsive(v.$bp-lg) {
+        grid-template-columns: repeat(6, 1fr);
+      }
+
+      .card-desktop {
+        display: none;
+
+        @include m.responsive(v.$bp-lg) {
+          display: block;
+        }
+      }
+
+      .card-mobile {
+        @include m.responsive(v.$bp-lg) {
+          display: none;
+        }
+      }
+    }
+
+    .recent-activity-scroller {
+      .activity-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+  }
+}
+
+// SKELETONS
+.poster-skeleton {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  border-radius: v.$radius;
+}
+
+.lists-skeleton-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: v.$space-md;
+  margin: v.$space-lg 0;
+
+  @include m.responsive(v.$bp-md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .list-card-skeleton {
+    display: flex;
+    flex-direction: row;
+    background: v.$c-bg;
+    border: 1px solid v.$c-border;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    min-height: 140px;
+
+    .skeleton-info {
+      flex: 1;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      min-width: 0;
+    }
+
+    .skeleton-posters {
+      position: relative;
+      width: 140px;
+      flex-shrink: 0;
+
+      @include m.responsive(v.$bp-md) {
+        width: 200px;
+      }
+
+      .poster {
+        position: absolute;
+        bottom: 0;
+        width: 70px;
+        height: 105px;
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+
+        @include m.responsive(v.$bp-md) {
+          width: 100px;
+          height: 150px;
+        }
+
+        &.depth-0 {
+          right: 1.5rem;
+          z-index: 3;
+          @include m.responsive(v.$bp-md) {
+            right: 2rem;
+          }
+        }
+        &.depth-1 {
+          right: 0.75rem;
+          z-index: 2;
+          @include m.responsive(v.$bp-md) {
+            right: 1rem;
+          }
+        }
+        &.depth-2 {
+          right: 0;
+          z-index: 1;
+        }
+      }
+    }
+  }
+}

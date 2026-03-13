@@ -1,0 +1,93 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.stats-masonry {
+  column-count: 1;
+  column-gap: v.$space-md;
+  margin-top: v.$space-sm;
+
+  @include m.responsive(v.$bp-md) {
+    column-count: 2;
+    column-gap: v.$space-lg;
+  }
+
+  @include m.responsive(v.$bp-lg) {
+    column-count: 3;
+    column-gap: v.$space-lg;
+  }
+
+  .stat-card {
+    break-inside: avoid;
+    margin-bottom: v.$space-md;
+    padding: v.$space-lg;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-sm;
+    background: v.$c-surface;
+    border: 1px solid v.$c-border;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    transition:
+      transform v.$transition,
+      box-shadow v.$transition;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    @include m.responsive(v.$bp-md) {
+      margin-bottom: v.$space-lg;
+      padding: 1.75rem;
+    }
+
+    .stat-icon {
+      color: v.$c-muted;
+      margin-bottom: v.$space-xs;
+    }
+
+    .stat-value {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: v.$c-heading;
+      line-height: 1.1;
+
+      @include m.responsive(v.$bp-md) {
+        font-size: 2.25rem;
+      }
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: v.$c-muted;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    &.highlight-dark {
+      background: v.$c-heading;
+      border-color: v.$c-heading;
+
+      .stat-icon {
+        color: v.$c-muted;
+      }
+
+      .stat-value {
+        color: v.$c-bg;
+      }
+
+      .stat-label {
+        color: v.$c-muted;
+      }
+    }
+
+    &.highlight-accent {
+      background: v.$c-surface;
+      border-color: v.$c-border;
+
+      .stat-icon {
+        color: v.$c-heading;
+      }
+    }
+  }
+}

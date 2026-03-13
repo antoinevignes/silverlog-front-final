@@ -6,8 +6,8 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: v.$neutral-50;
-  border-top: 1px solid v.$neutral-200;
+  background-color: v.$c-bg;
+  border-top: 1px solid v.$c-border;
   padding-bottom: env(safe-area-inset-bottom);
   z-index: v.$z-nav;
 
@@ -31,7 +31,7 @@
         flex-direction: column;
         align-items: center;
         gap: 0.25rem;
-        color: v.$neutral-400;
+        color: v.$c-muted;
         text-decoration: none;
         font-size: 0.75rem;
         font-weight: 500;
@@ -45,18 +45,30 @@
 
         &.active,
         &:hover {
-          color: v.$neutral-900;
+          color: v.$c-heading;
         }
 
         &:active {
           transform: scale(0.95);
+        }
+
+        .avatar-icon-wrapper {
+          width: 24px;
+          height: 24px;
+          margin: 0 auto;
+          border-radius: 50%;
+          background-color: v.$c-heading;
+          color: v.$c-bg;
+          @include m.flex-center;
+          font-size: 0.65rem;
+          font-weight: 700;
+          overflow: hidden;
         }
       }
     }
   }
 }
 
-// Global rule helper for the main app routing layout
 .mobile-nav-padded-layout {
   padding-bottom: calc(4rem + env(safe-area-inset-bottom));
 

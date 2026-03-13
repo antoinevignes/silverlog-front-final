@@ -61,8 +61,8 @@ export default function Reviews() {
                     <Heart
                       size={16}
                       aria-hidden
-                      fill={review.is_liked_by_user ? "red" : "none"}
-                      stroke={review.is_liked_by_user ? "red" : "black"}
+                      fill={review.is_liked_by_user ? "#ef4444" : "none"}
+                      stroke={review.is_liked_by_user ? "#ef4444" : "currentColor"}
                     />
                     {review.like_count}
                   </button>

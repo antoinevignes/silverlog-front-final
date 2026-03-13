@@ -1,0 +1,54 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.lists-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: v.$space-md;
+  margin: v.$space-md 0;
+
+  @include m.responsive(v.$bp-md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .list-wrapper {
+    position: relative;
+    min-width: 0;
+
+    .delete-list-btn {
+      position: absolute;
+      top: v.$space-md;
+      right: v.$space-md;
+      z-index: 10;
+      width: 32px;
+      height: 32px;
+
+      &:hover {
+        background-color: v.$destructive;
+        color: v.$c-white;
+      }
+    }
+  }
+}
+
+// MODALE DELETE
+.delete-header {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-md;
+  z-index: v.$z-modal;
+
+  .delete-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: v.$c-heading;
+    text-align: left;
+  }
+
+  .delete-description {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: v.$c-muted;
+    margin: 0;
+  }
+}

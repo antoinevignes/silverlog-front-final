@@ -25,7 +25,7 @@
       transition: color 200ms ease-in-out;
 
       &:hover {
-        color: v.$neutral-900;
+        color: v.$c-heading;
       }
     }
   }
@@ -33,7 +33,7 @@
   .search-card {
     position: absolute;
     margin-inline: 1rem;
-    background-color: v.$neutral-50;
+    background-color: v.$c-bg;
     width: calc(100% - 5rem);
 
     .movie-results {
@@ -56,7 +56,7 @@
         border-radius: 0.5rem;
 
         &.active {
-          background-color: v.$neutral-200;
+          background-color: v.$c-border;
         }
 
         .search-poster {
@@ -66,7 +66,7 @@
 
         .search-poster-fallback {
           border-radius: 0.5rem;
-          border: 1px solid v.$neutral-200;
+          border: 1px solid v.$c-border;
           @include m.flex-center;
           width: 45px;
           height: 68px;
@@ -75,7 +75,7 @@
 
         h2 {
           font-size: 1.05rem;
-          color: v.$neutral-900;
+          color: v.$c-heading;
           display: -webkit-box;
           line-clamp: 2;
           -webkit-line-clamp: 2;

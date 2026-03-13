@@ -292,3 +292,55 @@ export const useSaveList = (listId: string) => {
     },
   });
 };
+
+// SUPPRIMER UNE LISTE PERSONNALISEE
+export const useDeleteList = () => {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: async (listId: number) => {
+      if (!user) {
+        throw new Error("Unauthenticated");
+      }
+
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/lists/${listId}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        },
+      );
+
+      if (!res.ok) {
+        throw new Error("Une erreur est survenue");
+      }
+
+      return res;
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["custom-lists", user?.id],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["personal-lists", user?.id?.toString()],
+      });
+      toast.success("Liste supprimée avec succès");
+    },
+
+    onError: (error) => {
+      if (error.message === "Unauthenticated") {
+        toast.error("Vous devez vous connecter");
+
+        return navigate({
+          to: "/auth/sign-in",
+          search: { redirect: location.pathname },
+        });
+      }
+
+      toast.error("Une erreur est survenue lors de la suppression de la liste");
+    },
+  });
+};

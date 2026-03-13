@@ -1,16 +1,17 @@
 // COULEURS
 
-$neutral-50: #fafafa;
-$neutral-100: #f5f5f5;
-$neutral-200: #e5e5e5;
-$neutral-300: #d4d4d4;
-$neutral-400: #a3a3a3;
-$neutral-500: #737373;
-$neutral-600: #525252;
-$neutral-700: #404040;
-$neutral-800: #262626;
-$neutral-900: #171717;
-$neutral-950: #0a0a0a;
+// ====== THEME SOMBRE ORIGINAL : "Silverlog Vintage Noir" ======
+// Un thème sombre chaleureux, élégant (façon vieille pellicule), et conçu spécifiquement
+// pour respecter parfaitement les règles d'accessibilité (Contrastes WCAG AA et AAA).
+
+$c-bg: #11100ffd; // Fond principal (très profond, chaleureux)
+$c-surface: #1a1918; // Cartes, header, navbar
+$c-border: #2c2a28; // Bordures et séparateurs
+$c-border-h: #3e3b38; // Bordures fortes et hover
+$c-muted: #b5afaa; // Texte secondaire (Contraste > 7:1, WCAG AAA OK)
+$c-text: #c8c1b8; // Texte de lecture régulier (Contraste 10:1 OK)
+$c-heading: #f0ebe4; // Titres (Blanc cassé très lumineux)
+$c-white: #ffffff; // Blanc pur (ancien $neutral-950)
 
 $destructive: #ef4444;
 $destructive-hover: #dc2626;

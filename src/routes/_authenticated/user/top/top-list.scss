@@ -22,20 +22,20 @@
     align-items: center;
     gap: 1rem;
     padding: 0.75rem;
-    background: white;
+    background: v.$c-surface;
     border-radius: 1rem;
     transition: all 0.3s cubic-bezier(0.2, 1, 0.3, 1);
-    border: 1px solid v.$neutral-100;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+    border: 1px solid v.$c-surface;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 
     &:hover,
     &:focus-visible {
       transform: translateY(-2px) translateX(4px);
-      background: white;
-      border-color: v.$neutral-200;
+      background: v.$c-surface;
+      border-color: v.$c-border;
       box-shadow:
-        0 12px 24px rgba(0, 0, 0, 0.08),
-        0 4px 8px rgba(0, 0, 0, 0.04);
+        0 12px 24px rgba(0, 0, 0, 0.6),
+        0 4px 8px rgba(0, 0, 0, 0.4);
 
       .poster {
         transform: scale(1.05);
@@ -51,11 +51,11 @@
       .rank-number {
         font-weight: 800;
         font-size: 1.75rem;
-        color: v.$neutral-300;
+        color: v.$c-border-h;
         transition: all 0.3s ease;
         text-shadow:
           1px 1px 0 rgba(255, 255, 255, 0.8),
-          -1px -1px 0 rgba(0, 0, 0, 0.05);
+          -1px -1px 0 rgba(0, 0, 0, 0.4);
 
         @include m.responsive(v.$bp-md) {
           font-size: 2rem;
@@ -64,8 +64,8 @@
     }
 
     &:hover .rank-display .rank-number {
-      color: v.$neutral-900;
-      text-shadow: 0 2px 8px rgba(v.$neutral-900, 0.2);
+      color: v.$c-heading;
+      text-shadow: 0 2px 8px rgba(v.$c-heading, 0.2);
       transform: scale(1.1);
     }
 
@@ -74,7 +74,7 @@
       width: 60px;
       border-radius: 0.5rem;
       overflow: hidden;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.7);
 
       @include m.responsive(v.$bp-sm) {
         width: 80px;
@@ -93,7 +93,7 @@
 
       .movie-title {
         font-weight: 700;
-        color: v.$neutral-900;
+        color: v.$c-heading;
         margin: 0;
         line-height: 1.2;
         display: -webkit-box;
@@ -113,7 +113,7 @@
         flex-wrap: wrap;
         gap: 0.75rem;
         font-size: 0.8125rem;
-        color: v.$neutral-500;
+        color: v.$c-muted;
         font-weight: 500;
 
         @include m.responsive(v.$bp-sm) {
@@ -122,7 +122,7 @@
 
         .tmdb-rating {
           font-weight: 700;
-          background: v.$neutral-50;
+          background: v.$c-bg;
         }
       }
     }
@@ -130,7 +130,7 @@
 
   .empty-state {
     text-align: center;
-    color: v.$neutral-500;
+    color: v.$c-muted;
     margin-top: 2rem;
     padding: 3rem 1rem;
   }

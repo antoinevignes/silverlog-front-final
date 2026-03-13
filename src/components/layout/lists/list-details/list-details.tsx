@@ -1,13 +1,7 @@
 import { Image } from "@unpic/react";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
-import {
-  Bookmark,
-  ChevronDown,
-  Film,
-  TrendingUp,
-  UserCircle,
-} from "lucide-react";
+import { Bookmark, ChevronDown, Film, TrendingUp } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
@@ -131,7 +125,25 @@ export default function ListDetails() {
 
       <section className="author-section">
         <div className="author-info">
-          <UserCircle size={44} strokeWidth={1.5} />
+          {user?.avatar_path ? (
+            <Image
+              src={getCloudinarySrc(user.avatar_path, "avatars")}
+              layout="constrained"
+              width={44}
+              height={44}
+              alt={user.username}
+              background={getCloudinaryPlaceholder(user.avatar_path, "avatars")}
+              priority
+              className="avatar"
+            />
+          ) : (
+            <div
+              className="avatar font-sentient"
+              aria-label={`Initiale de ${user?.username}`}
+            >
+              {user?.username ? user.username.charAt(0).toUpperCase() : "U"}
+            </div>
+          )}
 
           <div className="author-details">
             <span className="author-name">{listData.username}</span>
@@ -150,7 +162,10 @@ export default function ListDetails() {
           aria-label="Sauvegarder la liste"
           onClick={() => saveList()}
         >
-          <Bookmark size={20} fill={listData.is_saved ? "white" : "none"} />
+          <Bookmark
+            size={20}
+            fill={listData.is_saved ? "currentColor" : "none"}
+          />
         </button>
       </section>
 

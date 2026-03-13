@@ -3,8 +3,8 @@
 
 .global-footer {
   display: none;
-  background-color: white;
-  border-top: 1px solid v.$neutral-200;
+  background-color: v.$c-surface;
+  border-top: 1px solid v.$c-border;
   margin-top: auto;
   padding-top: v.$space-2xl;
 
@@ -45,7 +45,7 @@
       .brand-name {
         font-size: 1.5rem;
         font-weight: 800;
-        color: v.$neutral-900;
+        color: v.$c-heading;
       }
     }
 
@@ -70,7 +70,7 @@
       .col-title {
         font-size: 1.1rem;
         font-weight: 700;
-        color: v.$neutral-900;
+        color: v.$c-heading;
         margin-bottom: v.$space-md;
       }
 
@@ -90,9 +90,9 @@
   }
 
   .footer-bottom {
-    border-top: 1px solid v.$neutral-200;
+    border-top: 1px solid v.$c-border;
     padding: v.$space-md 0;
-    background-color: v.$neutral-50;
+    background-color: v.$c-bg;
 
     .footer-bottom-content {
       @include m.flex-between;

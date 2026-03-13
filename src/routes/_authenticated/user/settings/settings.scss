@@ -1,0 +1,161 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.settings-page {
+  padding-top: v.$space-xl;
+  padding-bottom: v.$space-2xl;
+
+  .settings-header {
+    margin-bottom: v.$space-xl;
+    border-bottom: 1px solid v.$c-border;
+    padding-bottom: v.$space-lg;
+
+    p {
+      margin-top: v.$space-xs;
+    }
+  }
+
+  .settings-body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .setting-section {
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-lg;
+    padding: v.$space-xl 0;
+    border-bottom: 1px solid v.$c-border;
+
+    @include m.responsive(v.$bp-md) {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: v.$space-2xl;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .setting-label {
+    display: flex;
+    align-items: flex-start;
+    gap: v.$space-md;
+    flex-shrink: 0;
+
+    @include m.responsive(v.$bp-md) {
+      width: 16rem;
+    }
+  }
+
+  .setting-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: v.$c-surface;
+    border: 1px solid v.$c-border;
+    border-radius: v.$radius;
+    flex-shrink: 0;
+    color: v.$c-text;
+  }
+
+  .setting-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: v.$c-heading;
+    margin-bottom: v.$space-xs;
+  }
+
+  .setting-description {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .setting-control {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-md;
+    min-width: 0;
+
+    .setting-form {
+      display: flex;
+      gap: v.$space-sm;
+      align-items: center;
+    }
+  }
+}
+
+.avatar-form {
+  align-items: center;
+
+  .avatar-upload-zone {
+    display: flex;
+    align-items: center;
+    gap: v.$space-md;
+
+    .avatar,
+    .avatar-placeholder {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      border: 2px solid v.$c-border;
+      overflow: hidden;
+      object-fit: cover;
+    }
+
+    .avatar-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: v.$c-surface;
+      color: v.$c-muted;
+    }
+
+    .avatar-pick-btn {
+      font-size: 0.85rem;
+      font-family: inherit;
+      font-weight: 600;
+      color: v.$c-text;
+      background: none;
+      border: 1.5px solid v.$c-border-h;
+      border-radius: v.$radius;
+      padding: 0.4rem 0.9rem;
+      cursor: pointer;
+      transition: all v.$transition;
+
+      &:hover {
+        border-color: v.$c-text;
+        background: v.$c-surface;
+      }
+    }
+  }
+}
+
+.delete-dialog-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: v.$c-heading;
+  margin-bottom: 0.5rem;
+}
+
+.delete-dialog-desc {
+  margin-bottom: 1.5rem;
+}
+
+.delete-dialog-footer {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.delete-btn {
+  width: fit-content;
+  margin-left: auto;
+}

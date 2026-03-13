@@ -18,12 +18,22 @@ interface ReviewContentProps {
   onClose: () => void;
   onBack: () => void;
   movieId: string;
+  title: string;
+  posterPath: string | null;
+  backdropPath: string | null;
+  releaseDate: string | null;
+  genres: Array<{ id: number; name: string }>;
 }
 
 export default function ReviewDialog({
   onClose,
   onBack,
   movieId,
+  title,
+  posterPath,
+  backdropPath,
+  releaseDate,
+  genres,
 }: ReviewContentProps) {
   const { user } = useAuth();
 
@@ -99,7 +109,13 @@ export default function ReviewDialog({
 
       <section className="review-content">
         <div className="rating-section">
-          <Rating />
+          <Rating
+            title={title}
+            posterPath={posterPath}
+            backdropPath={backdropPath}
+            releaseDate={releaseDate}
+            genres={genres}
+          />
         </div>
 
         <form

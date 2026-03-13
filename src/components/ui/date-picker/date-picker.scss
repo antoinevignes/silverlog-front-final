@@ -1,7 +1,9 @@
+@use "@/styles/abstracts/variables" as v;
+
 /* Variables declaration */
 .rdp-root {
-  --rdp-accent-color: #171717; /* The accent color used for selected days and UI elements. */
-  --rdp-accent-background-color: #e5e5e5; /* The accent background color used for selected days and UI elements. */
+  --rdp-accent-color: #{v.$c-heading}; /* The accent color used for selected days and UI elements. */
+  --rdp-accent-background-color: #{v.$c-border}; /* The accent background color used for selected days and UI elements. */
 
   --rdp-day-height: 33px; /* The height of the day cells. */
   --rdp-day-width: 33px; /* The width of the day cells. */
@@ -307,7 +309,7 @@
 
 .rdp-selected {
   background-color: var(--rdp-accent-color);
-  color: #fafafa;
+  color: v.$c-bg;
 
   &:hover {
     background-color: var(--rdp-accent-color);
@@ -316,7 +318,7 @@
 
 .rdp-selected.rdp-today {
   background-color: var(--rdp-today-color);
-  color: #fafafa;
+  color: v.$c-bg;
 }
 
 .rdp-selected .rdp-day_button {

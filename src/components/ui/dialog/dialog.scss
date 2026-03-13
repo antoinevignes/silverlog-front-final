@@ -79,7 +79,7 @@
   box-sizing: border-box;
   position: fixed;
   z-index: calc(v.$z-modal + 1);
-  background-color: v.$neutral-50;
+  background-color: v.$c-bg;
   overflow-y: auto;
   overscroll-behavior: contain;
   padding: 1rem 1rem 1.5rem;
