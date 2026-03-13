@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { BookOpen, LogOut, Search, Settings, User, X } from "lucide-react";
+import { BookOpen, LogOut, Search, Settings, X } from "lucide-react";
 import "./desktop-nav.scss";
 import { useState } from "react";
 import { useAuth } from "@/auth";
@@ -21,6 +21,8 @@ export default function DesktopNav() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  console.log(user);
 
   return (
     <header className="desktop-top-nav">
