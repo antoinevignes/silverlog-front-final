@@ -6,7 +6,7 @@
   min-height: 100vh;
 }
 
-.profile-backdrop {
+.profile-banner {
   position: absolute;
   top: 0;
   left: 0;
@@ -18,13 +18,23 @@
     height: 320px;
   }
 
-  .backdrop-image {
+  .banner-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
-  .backdrop-overlay {
+  .banner-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: v.$c-surface;
+    color: v.$c-muted;
+  }
+
+  .banner-overlay {
     position: absolute;
     inset: 0;
     background: linear-gradient(

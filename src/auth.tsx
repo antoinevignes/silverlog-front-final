@@ -9,6 +9,7 @@ interface User {
   top_list_id: string;
   watchlist_id: string;
   avatar_path: string | null;
+  banner_path: string | null;
 }
 
 export interface AuthState {

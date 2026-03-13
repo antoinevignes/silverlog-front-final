@@ -1,7 +1,7 @@
 import "./index.scss";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { Edit, MapPin, Star, TextAlignStart } from "lucide-react";
+import { Edit, MapPin, Star, TextAlignStart, Film } from "lucide-react";
 import { Suspense, useState } from "react";
 import type { MovieType } from "@/utils/types/movie";
 import { userQuery } from "@/queries/user.queries";
@@ -52,19 +52,25 @@ function RouteComponent() {
   return (
     <main className="user-profile">
       {/* FIGURE A MODIFIER */}
-      <figure className="profile-backdrop" aria-hidden="true">
-        <picture>
-          <source
-            srcSet={`https://image.tmdb.org/t/p/w1280/zpEWFNqoN8Qg1SzMMHmaGyOBTdW.jpg`}
-            media="(min-width: 768px)"
+      <figure className="profile-banner" aria-hidden="true">
+        {userData.banner_path ? (
+          <Image
+            src={getCloudinarySrc(userData.banner_path, "banners")}
+            layout="fullWidth"
+            className="banner-image"
+            background={getCloudinaryPlaceholder(
+              userData.banner_path,
+              "banners",
+            )}
+            alt={`Bannière de ${userData.username}`}
+            priority
           />
-          <img
-            src={`https://image.tmdb.org/t/p/w1280/zpEWFNqoN8Qg1SzMMHmaGyOBTdW.jpg`}
-            alt=""
-            className="backdrop-image"
-          />
-        </picture>
-        <div className="backdrop-overlay"></div>
+        ) : (
+          <div className="banner-placeholder">
+            <Film size={48} aria-hidden />
+          </div>
+        )}
+        <div className="banner-overlay"></div>
       </figure>
 
       <article className="container profile-layout">

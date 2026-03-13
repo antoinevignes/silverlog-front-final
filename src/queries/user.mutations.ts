@@ -134,6 +134,45 @@ export function useUploadAvatar() {
   });
 }
 
+// MISE A JOUR DU BANNER UTILISATEUR (upload fichier)
+export function useUploadBanner() {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (file: File) => {
+      if (!user) throw new Error("Unauthenticated");
+
+      const formData = new FormData();
+      formData.append("banner", file);
+
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/user/banner`, {
+        method: "PATCH",
+        credentials: "include",
+        body: formData,
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message ?? "Une erreur est survenue");
+      }
+
+      return data;
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["session"] });
+      queryClient.invalidateQueries({ queryKey: ["user", user?.id] });
+      toast.success("Bannière mise à jour !");
+    },
+
+    onError: (error) => {
+      toast.error(error.message ?? "Impossible d'uploader la bannière");
+    },
+  });
+}
+
 // SUPPRESSION DE COMPTE UTILISATEUR
 export function useDeleteAccount() {
   const queryClient = useQueryClient();
@@ -167,6 +206,76 @@ export function useDeleteAccount() {
 
     onError: (error) => {
       toast.error(error.message ?? "Impossible de supprimer le compte");
+    },
+  });
+}
+
+// SUPPRESSION DE L'AVATAR UTILISATEUR
+export function useDeleteAvatar() {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async () => {
+      if (!user) throw new Error("Unauthenticated");
+
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/user/avatar`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message ?? "Une erreur est survenue");
+      }
+
+      return data;
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["session"] });
+      queryClient.invalidateQueries({ queryKey: ["user", user?.id] });
+      toast.success("Avatar supprimé avec succès !");
+    },
+
+    onError: (error) => {
+      toast.error(error.message ?? "Impossible de supprimer l'avatar");
+    },
+  });
+}
+
+// SUPPRESSION DU BANNER UTILISATEUR
+export function useDeleteBanner() {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async () => {
+      if (!user) throw new Error("Unauthenticated");
+
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/user/banner`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message ?? "Une erreur est survenue");
+      }
+
+      return data;
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["session"] });
+      queryClient.invalidateQueries({ queryKey: ["user", user?.id] });
+      toast.success("Bannière supprimée avec succès !");
+    },
+
+    onError: (error) => {
+      toast.error(error.message ?? "Impossible de supprimer la bannière");
     },
   });
 }

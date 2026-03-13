@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Camera, MapPin, Trash2, User } from "lucide-react";
+import { Camera, MapPin, Trash2, User, Image as ImageIcon } from "lucide-react";
 import { useRef, useState } from "react";
 import { useAuth } from "@/auth";
 import {
@@ -7,6 +7,9 @@ import {
   useUpdateUsername,
   useUploadAvatar,
   useDeleteAccount,
+  useDeleteAvatar,
+  useUploadBanner,
+  useDeleteBanner,
 } from "@/queries/user.mutations";
 import Title from "@/components/layout/title/title";
 import "./settings.scss";
@@ -76,6 +79,8 @@ function RouteComponent() {
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const { mutate: uploadAvatar, isPending: isUploadingAvatar } =
     useUploadAvatar();
+  const { mutate: deleteAvatar, isPending: isDeletingAvatar } =
+    useDeleteAvatar();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -88,6 +93,30 @@ function RouteComponent() {
     e.preventDefault();
     if (!avatarFile) return;
     uploadAvatar(avatarFile);
+  };
+
+  // MAJ BACKDROP
+  const backdropFileRef = useRef<HTMLInputElement>(null);
+  const [backdropPreviewUrl, setBackdropPreviewUrl] = useState<string | null>(
+    null,
+  );
+  const [backdropFile, setBackdropFile] = useState<File | null>(null);
+  const { mutate: uploadBackdrop, isPending: isUploadingBackdrop } =
+    useUploadBanner();
+  const { mutate: deleteBackdrop, isPending: isDeletingBackdrop } =
+    useDeleteBanner();
+
+  const handleBackdropFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setBackdropFile(file);
+    setBackdropPreviewUrl(URL.createObjectURL(file));
+  };
+
+  const handleUploadBackdrop = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!backdropFile) return;
+    uploadBackdrop(backdropFile);
   };
 
   return (
@@ -257,7 +286,110 @@ function RouteComponent() {
               type="button"
               size="icon"
               variant="destructive"
-              onClick={() => avatarFileRef.current?.click()}
+              disabled={
+                isUploadingAvatar ||
+                isDeletingAvatar ||
+                (!previewUrl && !avatarFile && !user?.avatar_path)
+              }
+              onClick={() => {
+                if (previewUrl || avatarFile) {
+                  setPreviewUrl(null);
+                  setAvatarFile(null);
+                  if (avatarFileRef.current) avatarFileRef.current.value = "";
+                } else if (user?.avatar_path) {
+                  deleteAvatar();
+                }
+              }}
+              aria-label="Supprimer la photo de profil"
+            >
+              <Trash2 size={20} />
+            </Button>
+          </form>
+        </SettingSection>
+
+        {/* BACKDROP */}
+        <SettingSection
+          icon={<ImageIcon size={20} />}
+          title="Bannière"
+          description="Image de fond affichée sur votre page de profil."
+        >
+          <form
+            onSubmit={handleUploadBackdrop}
+            className="setting-form banner-form"
+          >
+            <div className="banner-upload-zone">
+              {backdropPreviewUrl ? (
+                <img
+                  src={backdropPreviewUrl}
+                  alt="Aperçu bannière"
+                  className="banner-preview-img"
+                />
+              ) : user?.banner_path ? (
+                <Image
+                  src={getCloudinarySrc(user.banner_path, "banners")}
+                  layout="constrained"
+                  width={160}
+                  height={90}
+                  alt={user.username}
+                  background={getCloudinaryPlaceholder(
+                    user.banner_path,
+                    "banners",
+                  )}
+                  priority
+                  className="banner-img"
+                />
+              ) : (
+                <span className="banner-placeholder">
+                  <ImageIcon size={28} aria-hidden />
+                </span>
+              )}
+
+              <Button
+                type="button"
+                size="sm"
+                variant="outline"
+                onClick={() => backdropFileRef.current?.click()}
+              >
+                Choisir une image
+              </Button>
+
+              <input
+                ref={backdropFileRef}
+                type="file"
+                accept="image/*"
+                hidden
+                onChange={handleBackdropFileChange}
+                aria-label="Choisir une bannière"
+              />
+            </div>
+
+            <Button
+              type="submit"
+              size="sm"
+              disabled={isUploadingBackdrop || !backdropFile}
+            >
+              {isUploadingBackdrop ? "Upload..." : "Enregistrer"}
+            </Button>
+            <Button
+              type="button"
+              size="icon"
+              variant="destructive"
+              disabled={
+                isUploadingBackdrop ||
+                isDeletingBackdrop ||
+                (!backdropPreviewUrl && !backdropFile && !user?.banner_path)
+              }
+              onClick={() => {
+                if (backdropPreviewUrl || backdropFile) {
+                  setBackdropPreviewUrl(null);
+                  setBackdropFile(null);
+                  if (backdropFileRef.current)
+                    backdropFileRef.current.value = "";
+                } else if (user?.banner_path) {
+                  deleteBackdrop();
+                }
+              }}
+              aria-label="Supprimer la bannière"
             >
               <Trash2 size={20} />
             </Button>
