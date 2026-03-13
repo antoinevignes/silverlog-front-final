@@ -1,17 +1,28 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Camera, MapPin, User } from "lucide-react";
+import { Camera, MapPin, Trash2, User } from "lucide-react";
 import { useRef, useState } from "react";
 import { useAuth } from "@/auth";
 import {
   useUpdateLocation,
   useUpdateUsername,
   useUploadAvatar,
+  useDeleteAccount,
 } from "@/queries/user.mutations";
 import Title from "@/components/layout/title/title";
 import "./settings.scss";
 import { useAppForm } from "@/utils/useAppForm";
 import z from "zod";
 import Button from "@/components/ui/button/button";
+import { Image } from "@unpic/react";
+import {
+  getCloudinaryPlaceholder,
+  getCloudinarySrc,
+} from "@/utils/cloudinary-handler";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+} from "@/components/ui/dialog/dialog";
 
 export const Route = createFileRoute("/_authenticated/user/settings/")({
   component: RouteComponent,
@@ -19,11 +30,17 @@ export const Route = createFileRoute("/_authenticated/user/settings/")({
 
 function RouteComponent() {
   const { user } = useAuth();
+
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
+  const { mutate: deleteAccount, isPending: isDeletingAccount } =
+    useDeleteAccount();
   const { mutate: updateUsername, isPending: isUpdatingUsername } =
     useUpdateUsername();
   const { mutate: updateLocation, isPending: isUpdatingLocation } =
     useUpdateLocation();
 
+  // MAJ PSEUDO
   const usernameForm = useAppForm({
     defaultValues: {
       username: user?.username ?? "",
@@ -38,6 +55,7 @@ function RouteComponent() {
     },
   });
 
+  // MAJ LOCALISATION
   const locationForm = useAppForm({
     defaultValues: {
       location: "",
@@ -52,6 +70,7 @@ function RouteComponent() {
     },
   });
 
+  // MAJ AVATAR
   const avatarFileRef = useRef<HTMLInputElement>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
@@ -188,6 +207,20 @@ function RouteComponent() {
                   alt="Aperçu avatar"
                   className="avatar-preview-img"
                 />
+              ) : user?.avatar_path ? (
+                <Image
+                  src={getCloudinarySrc(user.avatar_path, "avatars")}
+                  layout="constrained"
+                  width={40}
+                  height={40}
+                  alt={user.username}
+                  background={getCloudinaryPlaceholder(
+                    user.avatar_path,
+                    "avatars",
+                  )}
+                  priority
+                  className="avatar"
+                />
               ) : (
                 <span className="avatar-placeholder">
                   <User size={28} aria-hidden />
@@ -220,7 +253,65 @@ function RouteComponent() {
             >
               {isUploadingAvatar ? "Upload..." : "Enregistrer"}
             </Button>
+            <Button
+              type="button"
+              size="icon"
+              variant="destructive"
+              onClick={() => avatarFileRef.current?.click()}
+            >
+              <Trash2 size={20} />
+            </Button>
           </form>
+        </SettingSection>
+
+        {/* SUPPRIMER LE COMPTE */}
+        <SettingSection
+          icon={<Trash2 size={20} />}
+          title="Supprimer le compte"
+          description="Supprime votre compte et toutes ses données."
+        >
+          <Button
+            size="sm"
+            variant="destructive"
+            onClick={() => setIsDeleteDialogOpen(true)}
+            className="delete-btn"
+          >
+            Supprimer le compte
+          </Button>
+
+          <Dialog
+            open={isDeleteDialogOpen}
+            onOpenChange={setIsDeleteDialogOpen}
+          >
+            <DialogContent>
+              <h2 className="delete-dialog-title">Confirmer la suppression</h2>
+              <p className="text-secondary delete-dialog-desc">
+                Êtes-vous sûr de vouloir supprimer votre compte ? Cette action
+                est irréversible et toutes vos données seront perdues.
+              </p>
+
+              <DialogFooter>
+                <div className="delete-dialog-footer">
+                  <Button
+                    variant="secondary"
+                    onClick={() => setIsDeleteDialogOpen(false)}
+                    disabled={isDeletingAccount}
+                  >
+                    Annuler
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    onClick={() => deleteAccount()}
+                    disabled={isDeletingAccount}
+                  >
+                    {isDeletingAccount
+                      ? "Suppression..."
+                      : "Confirmer la suppression"}
+                  </Button>
+                </div>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </SettingSection>
       </section>
     </main>

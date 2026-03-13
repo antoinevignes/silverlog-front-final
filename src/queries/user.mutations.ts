@@ -133,3 +133,40 @@ export function useUploadAvatar() {
     },
   });
 }
+
+// SUPPRESSION DE COMPTE UTILISATEUR
+export function useDeleteAccount() {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: async () => {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/user/delete`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message ?? "Une erreur est survenue");
+      }
+
+      return data;
+    },
+
+    onSuccess: () => {
+      queryClient.setQueryData(["session"], {
+        user: null,
+        isAuthenticated: false,
+      });
+      queryClient.clear();
+      toast.success("Votre compte a été supprimé avec succès.");
+      navigate({ to: "/" });
+    },
+
+    onError: (error) => {
+      toast.error(error.message ?? "Impossible de supprimer le compte");
+    },
+  });
+}

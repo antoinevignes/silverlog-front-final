@@ -98,7 +98,7 @@
     align-items: center;
     gap: v.$space-md;
 
-    .avatar-preview-img,
+    .avatar,
     .avatar-placeholder {
       width: 64px;
       height: 64px;
@@ -135,4 +135,27 @@
       }
     }
   }
+}
+
+.delete-dialog-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: v.$c-heading;
+  margin-bottom: 0.5rem;
+}
+
+.delete-dialog-desc {
+  margin-bottom: 1.5rem;
+}
+
+.delete-dialog-footer {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.delete-btn {
+  width: fit-content;
+  margin-left: auto;
 }
