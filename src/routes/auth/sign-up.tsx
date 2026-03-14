@@ -21,7 +21,7 @@ function RouteComponent() {
       email: string;
       password: string;
     }) => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/user/sign-up`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/sign-up`, {
         method: "POST",
         credentials: "include",
         headers: {

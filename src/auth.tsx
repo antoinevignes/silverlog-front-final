@@ -27,7 +27,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { data: authData, isPending } = useQuery({
     queryKey: ["session"],
     queryFn: async () => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/user/session`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/session`, {
         credentials: "include",
       });
 
@@ -43,7 +43,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const loginMutation = useMutation({
     mutationFn: async (values: { email: string; password: string }) => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/user/sign-in`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/sign-in`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -77,7 +77,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       user: null,
       isAuthenticated: false,
     });
-    fetch(`${import.meta.env.VITE_API_URL}/user/sign-out`, {
+    fetch(`${import.meta.env.VITE_API_URL}/auth/sign-out`, {
       method: "POST",
       credentials: "include",
     });
