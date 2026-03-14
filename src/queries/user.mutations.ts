@@ -279,3 +279,83 @@ export function useDeleteBanner() {
     },
   });
 }
+
+// SUIVRE UN UTILISATEUR
+export function useFollowUser(userId: string) {
+  const queryClient = useQueryClient();
+  const { user } = useAuth();
+
+  return useMutation({
+    mutationFn: async () => {
+      if (!user) throw new Error("Unauthenticated");
+
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/user/${userId}/follow`,
+        {
+          method: "POST",
+          credentials: "include",
+        },
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message ?? "Une erreur est survenue");
+      }
+
+      return data;
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user", userId] });
+      queryClient.invalidateQueries({ queryKey: ["user", user?.id] });
+      queryClient.invalidateQueries({ queryKey: ["followers", userId] });
+      queryClient.invalidateQueries({ queryKey: ["following", user?.id] });
+      toast.success("Vous suivez maintenant cet utilisateur");
+    },
+
+    onError: (error) => {
+      toast.error(error.message ?? "Impossible de suivre cet utilisateur");
+    },
+  });
+}
+
+// NE PLUS SUIVRE UN UTILISATEUR
+export function useUnfollowUser(userId: string) {
+  const queryClient = useQueryClient();
+  const { user } = useAuth();
+
+  return useMutation({
+    mutationFn: async () => {
+      if (!user) throw new Error("Unauthenticated");
+
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/user/${userId}/follow`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        },
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message ?? "Une erreur est survenue");
+      }
+
+      return data;
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user", userId] });
+      queryClient.invalidateQueries({ queryKey: ["user", user?.id] });
+      queryClient.invalidateQueries({ queryKey: ["followers", userId] });
+      queryClient.invalidateQueries({ queryKey: ["following", user?.id] });
+      toast.success("Vous ne suivez plus cet utilisateur");
+    },
+
+    onError: (error) => {
+      toast.error(error.message ?? "Impossible d'arrêter de suivre cet utilisateur");
+    },
+  });
+}

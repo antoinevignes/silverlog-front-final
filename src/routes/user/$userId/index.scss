@@ -207,6 +207,13 @@
       font-weight: 700;
     }
 
+    .clickable-stat {
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
     @include m.responsive(v.$bp-md) {
       font-size: 0.95rem;
     }
