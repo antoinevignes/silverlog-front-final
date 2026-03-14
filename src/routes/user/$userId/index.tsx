@@ -1,6 +1,6 @@
 import "./index.scss";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Edit, MapPin, Star, TextAlignStart, Film } from "lucide-react";
 import { Suspense, useState } from "react";
 import type { MovieType } from "@/utils/types/movie";
@@ -19,6 +19,8 @@ import {
   getCloudinaryPlaceholder,
   getCloudinarySrc,
 } from "@/utils/cloudinary-handler";
+import FollowModal from "@/components/layout/user/follow-modal/follow-modal";
+import { useFollowUser, useUnfollowUser } from "@/queries/user.mutations";
 
 export const Route = createFileRoute("/user/$userId/")({
   loader: async ({ context: { queryClient }, params: { userId } }) => {
@@ -29,29 +31,36 @@ export const Route = createFileRoute("/user/$userId/")({
 
 function RouteComponent() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const { userId } = Route.useParams();
   const { data: userData } = useSuspenseQuery(userQuery(userId));
 
+  const { mutate: followUser } = useFollowUser(userId);
+  const { mutate: unfollowUser } = useUnfollowUser(userId);
+
   const [selected, setSelected] = useState<string>("a-propos");
 
-  const tabs =
-    Number(user?.id) === Number(userId)
-      ? [
-          { id: "a-propos", label: "À propos" },
-          {
-            id: "watchlist",
-            label: `Watchlist (${userData.watchlist_total})`,
-          },
-          { id: "lists", label: `Listes (${userData.custom_lists_total})` },
-        ]
-      : [
-          { id: "a-propos", label: "À propos" },
-          { id: "lists", label: `Listes (${userData.custom_lists_total})` },
-        ];
+  const [isFollowModalOpen, setIsFollowModalOpen] = useState(false);
+  const [followModalType, setFollowModalType] = useState<
+    "followers" | "following"
+  >("followers");
+
+  const openFollowModal = (type: "followers" | "following") => {
+    setFollowModalType(type);
+    setIsFollowModalOpen(true);
+  };
+
+  const tabs = [
+    { id: "a-propos", label: "À propos" },
+    {
+      id: "watchlist",
+      label: `Watchlist (${userData.watchlist_total})`,
+    },
+    { id: "lists", label: `Listes (${userData.custom_lists_total})` },
+  ];
 
   return (
     <main className="user-profile">
-      {/* FIGURE A MODIFIER */}
       <figure className="profile-banner" aria-hidden="true">
         {userData.banner_path ? (
           <Image
@@ -153,8 +162,22 @@ function RouteComponent() {
                   </Button>
                 </Link>
               ) : (
-                <Button size="sm" className="follow-btn">
-                  Suivre
+                <Button
+                  size="sm"
+                  className="follow-btn"
+                  variant={userData.is_following ? "outline" : "default"}
+                  onClick={() => {
+                    if (!user) {
+                      navigate({
+                        to: "/auth/sign-in",
+                        search: { redirect: window.location.pathname },
+                      });
+                      return;
+                    }
+                    userData.is_following ? unfollowUser() : followUser();
+                  }}
+                >
+                  {userData.is_following ? "Ne plus suivre" : "Suivre"}
                 </Button>
               )}
             </div>
@@ -164,12 +187,22 @@ function RouteComponent() {
             )}
 
             <div className="user-social-stats">
-              <span>
-                <strong>145</strong> Abonnés
+              <span
+                className="clickable-stat"
+                role="button"
+                tabIndex={0}
+                onClick={() => openFollowModal("followers")}
+              >
+                <strong>{userData.followers_count || 0}</strong> Abonnés
               </span>
 
-              <span>
-                <strong>49</strong> Abonnements
+              <span
+                className="clickable-stat"
+                role="button"
+                tabIndex={0}
+                onClick={() => openFollowModal("following")}
+              >
+                <strong>{userData.following_count || 0}</strong> Abonnements
               </span>
             </div>
 
@@ -261,7 +294,7 @@ function RouteComponent() {
             </>
           )}
 
-          {selected === "watchlist" && Number(user?.id) === Number(userId) && (
+          {selected === "watchlist" && (
             <Suspense
               fallback={
                 <ul className="watchlist-grid">
@@ -305,6 +338,16 @@ function RouteComponent() {
           )}
         </section>
       </article>
+
+      {isFollowModalOpen && (
+        <FollowModal
+          isOpen={isFollowModalOpen}
+          onClose={setIsFollowModalOpen}
+          userId={userId}
+          type={followModalType}
+          title={followModalType === "followers" ? "Abonnés" : "Abonnements"}
+        />
+      )}
     </main>
   );
 }

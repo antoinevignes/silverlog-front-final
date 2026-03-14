@@ -16,3 +16,29 @@ export const userQuery = (user_id: string) =>
       return data;
     },
   });
+
+export const userFollowersQuery = (user_id: string) =>
+  queryOptions({
+    queryKey: ["followers", user_id],
+    queryFn: async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/user/${user_id}/followers`,
+      );
+      if (!res.ok) throw new Error("Erreur de récupération des abonnés");
+      const data = await res.json();
+      return data;
+    },
+  });
+
+export const userFollowingQuery = (user_id: string) =>
+  queryOptions({
+    queryKey: ["following", user_id],
+    queryFn: async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/user/${user_id}/following`,
+      );
+      if (!res.ok) throw new Error("Erreur de récupération des abonnements");
+      const data = await res.json();
+      return data;
+    },
+  });
