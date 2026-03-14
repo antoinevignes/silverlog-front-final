@@ -83,3 +83,35 @@ export const movieSearchQuery = (query: string) =>
     },
     enabled: !!query,
   });
+
+export const popularMoviesQuery = () =>
+  queryOptions({
+    queryKey: ["movie", "popular"],
+    queryFn: async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/tmdb/trending/movie/week?language=fr-FR`,
+      );
+
+      if (!res.ok)
+        throw new Error(
+          "Erreur réseau : impossible de récupérer les films populaires.",
+        );
+
+      return await res.json();
+    },
+  });
+
+export const crewPicksQuery = () =>
+  queryOptions({
+    queryKey: ["movies", "crew-picks"],
+    queryFn: async () => {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/movies/crew-picks`);
+
+      if (!res.ok)
+        throw new Error(
+          "Erreur réseau : impossible de récupérer la sélection de la rédaction.",
+        );
+
+      return await res.json();
+    },
+  });

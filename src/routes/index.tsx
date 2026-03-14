@@ -1,28 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useAuth } from "@/auth";
-import SearchBar from "@/components/layout/search-bar/search-bar";
+import VisitorHome from "@/components/layout/home/visitor-home";
+import UserHome from "@/components/layout/home/user-home";
+import { popularMoviesQuery, crewPicksQuery } from "@/queries/movie.queries";
+import { recentReviewsQuery } from "@/queries/review.query";
 
 export const Route = createFileRoute("/")({
+  loader: ({ context: { queryClient } }) => {
+    queryClient.prefetchQuery(popularMoviesQuery());
+    queryClient.prefetchQuery(recentReviewsQuery());
+    queryClient.prefetchQuery(crewPicksQuery());
+  },
   component: App,
 });
 
 function App() {
   const { user } = useAuth();
 
-  console.log(user);
-
-  return (
-    <div>
-      <div className="mobile-only-search" style={{ display: "block" }}>
-        <style>{`
-          @media (min-width: 768px) {
-            .mobile-only-search {
-              display: none !important;
-            }
-          }
-        `}</style>
-        <SearchBar />
-      </div>
-    </div>
-  );
+  return user ? <UserHome /> : <VisitorHome />;
 }

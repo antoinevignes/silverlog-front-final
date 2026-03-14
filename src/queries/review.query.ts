@@ -40,3 +40,18 @@ export const movieReviewsQuery = (movieId: string) =>
       return data;
     },
   });
+
+export const recentReviewsQuery = () =>
+  queryOptions({
+    queryKey: ["reviews", "recent"],
+    queryFn: async () => {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/reviews/recent`);
+
+      if (!res.ok)
+        throw new Error("Erreur réseau : impossible de récupérer les avis récents.");
+
+      const data = await res.json();
+
+      return data;
+    },
+  });

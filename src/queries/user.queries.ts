@@ -42,3 +42,16 @@ export const userFollowingQuery = (user_id: string) =>
       return data;
     },
   });
+
+export const userFeedQuery = () =>
+  queryOptions({
+    queryKey: ["user", "feed"],
+    queryFn: async () => {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/user/feed`, {
+        credentials: "include",
+      });
+      if (!res.ok) throw new Error("Erreur de récupération du flux d'activité");
+      const data = await res.json();
+      return data;
+    },
+  });
