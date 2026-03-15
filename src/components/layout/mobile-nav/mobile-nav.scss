@@ -21,7 +21,8 @@
     align-items: center;
     list-style: none;
     margin: 0;
-    padding: v.$space-md 0;
+    padding-top: v.$space-sm;
+    padding-bottom: v.$space-md;
 
     li {
       flex: 1;
