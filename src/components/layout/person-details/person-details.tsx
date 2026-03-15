@@ -135,7 +135,7 @@ export default function PersonDetails() {
                 src={getCloudinarySrc(personDetails.profile_path, "persons")}
                 layout="fullWidth"
                 aspectRatio={2 / 3}
-                alt={personDetails.name}
+                alt={`Image de ${personDetails.name}`}
                 background="auto"
                 priority
                 className="poster-img"

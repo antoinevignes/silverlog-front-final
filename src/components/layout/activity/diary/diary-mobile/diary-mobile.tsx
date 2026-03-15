@@ -24,7 +24,7 @@ export default function DiaryMobile({ movies }: { movies: Array<MovieType> }) {
                   layout="constrained"
                   width={60}
                   aspectRatio={2 / 3}
-                  alt={movie.title}
+                  alt={`Affiche du film ${movie.title}`}
                   background="auto"
                   priority
                   className="poster"

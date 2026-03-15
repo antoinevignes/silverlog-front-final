@@ -122,7 +122,7 @@ export default function UserHome() {
                           layout="constrained"
                           width={32}
                           height={32}
-                          alt={activity.username}
+                          alt={`Avatar de ${activity.username}`}
                           background="auto"
                           className="avatar"
                         />
@@ -155,7 +155,7 @@ export default function UserHome() {
                       src={getCloudinarySrc(activity.poster_path, "posters")}
                       background="auto"
                       layout="fullWidth"
-                      alt={activity.title}
+                      alt={`Affiche du film ${activity.title}`}
                       className="feed-movie-poster"
                     />
                   </Link>

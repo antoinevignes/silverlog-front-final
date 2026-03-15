@@ -110,7 +110,7 @@ export default function ListDetails() {
 
       <Image
         src={getCloudinarySrc(movies[0].backdrop_path, "backdrops")}
-        alt="Backdrop de la liste"
+        alt={`Bannière de la liste ${listData.title}`}
         layout="fullWidth"
         aspectRatio={16 / 9}
         background="auto"
@@ -125,7 +125,7 @@ export default function ListDetails() {
               layout="constrained"
               width={44}
               height={44}
-              alt={user.username}
+              alt={`Avatar de ${user.username}`}
               background="auto"
               priority
               className="avatar"

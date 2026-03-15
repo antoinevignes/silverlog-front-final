@@ -147,7 +147,7 @@ export default function VisitorHome() {
                     layout="constrained"
                     width={100}
                     height={150}
-                    alt={review.title}
+                    alt={`Affiche du film ${review.title}`}
                   />
                 </div>
 

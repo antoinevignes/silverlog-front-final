@@ -44,7 +44,7 @@ export default function MobileNav() {
                     src={getCloudinarySrc(user.avatar_path, "avatars")}
                     layout="fullWidth"
                     aspectRatio={1 / 1}
-                    alt={user.username}
+                    alt={`Avatar de ${user.username}`}
                     background="auto"
                     priority
                     className="avatar"

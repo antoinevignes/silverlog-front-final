@@ -48,7 +48,7 @@ export default function FriendsActivity() {
                       layout="constrained"
                       width={60}
                       height={60}
-                      alt={activity.username}
+                      alt={`Avatar de${activity.username}`}
                       background="auto"
                       className="avatar"
                     />
@@ -100,7 +100,7 @@ export default function FriendsActivity() {
                         layout="constrained"
                         width={44}
                         height={44}
-                        alt={selectedActivity.username}
+                        alt={`Avatar de ${selectedActivity.username}`}
                         background="auto"
                         className="avatar"
                       />

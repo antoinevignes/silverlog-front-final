@@ -71,7 +71,7 @@ function RouteComponent() {
                   layout="constrained"
                   width={80}
                   aspectRatio={2 / 3}
-                  alt={movie.title}
+                  alt={`Affiche du film ${movie.title}`}
                   background="auto"
                   className="poster"
                 />

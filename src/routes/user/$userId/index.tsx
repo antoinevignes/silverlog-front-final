@@ -85,7 +85,7 @@ function RouteComponent() {
                   src={getCloudinarySrc(userData.avatar_path, "avatars")}
                   layout="fullWidth"
                   aspectRatio={1 / 1}
-                  alt={userData.username}
+                  alt={`Avatar de ${userData.username}`}
                   background="auto"
                   priority
                   className="avatar"

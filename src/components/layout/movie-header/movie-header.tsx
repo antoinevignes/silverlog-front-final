@@ -82,7 +82,7 @@ export default function MovieHeader() {
                   src={posterSrc}
                   layout="fullWidth"
                   aspectRatio={2 / 3}
-                  alt={movie.title}
+                  alt={`Affiche du film ${movie.title}`}
                   background="auto"
                   priority
                   className="poster"

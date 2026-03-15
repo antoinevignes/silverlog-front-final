@@ -244,7 +244,7 @@ function RouteComponent() {
                   layout="constrained"
                   width={40}
                   height={40}
-                  alt={user.username}
+                  alt={`Avatar de ${user.username}`}
                   background="auto"
                   priority
                   className="avatar"
@@ -334,7 +334,7 @@ function RouteComponent() {
                   layout="constrained"
                   width={160}
                   height={90}
-                  alt={user.username}
+                  alt={`Bannière de ${user.username}`}
                   background="auto"
                   priority
                   className="banner-img"

@@ -72,7 +72,7 @@ export default function FollowModal({
                         layout="constrained"
                         width={40}
                         height={40}
-                        alt={u.username}
+                        alt={`Avatar de ${u.username}`}
                         background="auto"
                         className="follow-user-avatar"
                       />

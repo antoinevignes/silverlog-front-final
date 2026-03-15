@@ -12,7 +12,7 @@ export default function Footer() {
           <Link to="/" className="brand-logo">
             <Image
               src="/logo.svg"
-              alt="Silverlog Logo"
+              alt="Logo de Silverlog"
               className="logo"
               layout="constrained"
               width={40}

@@ -38,7 +38,7 @@ export default function ListCard({ list }: { list: ListType }) {
               layout="constrained"
               width={20}
               height={20}
-              alt={user.username}
+              alt={`Avatar de ${user.username}`}
               background="auto"
               priority
               className="avatar"
