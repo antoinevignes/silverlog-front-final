@@ -10,8 +10,8 @@ import {
   useDeleteAvatar,
   useUploadBanner,
   useDeleteBanner,
-} from "@/queries/user.mutations";
-import Title from "@/components/layout/title/title";
+} from "@/features/user/api/user.mutations";
+import Title from "@/components/ui/title/title";
 import "./settings.scss";
 import { useAppForm } from "@/utils/useAppForm";
 import z from "zod";

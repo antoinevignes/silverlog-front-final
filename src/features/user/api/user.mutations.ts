@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import { useAuth } from "@/auth";
 import { useNavigate } from "@tanstack/react-router";
 import { apiClient } from "@/utils/api-client";
-import type { UserType } from "@/utils/types/user";
+import type { UserType } from "@/features/user/types/user";
 
 // MISE A JOUR DU PSEUDO UTILISATEUR
 export function useUpdateUsername() {
