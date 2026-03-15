@@ -3,9 +3,9 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
 import { format } from "date-fns";
 import { Star } from "lucide-react";
-import type { MovieType } from "@/utils/types/movie";
+import type { MovieType } from "@/features/movie/types/movie";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
-import { listDataQuery } from "@/queries/list.queries";
+import { listDataQuery } from "@/features/list/api/list.queries";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 import { useAuth } from "@/auth";
 import "./top-list.scss";
@@ -28,7 +28,7 @@ function RouteComponent() {
   );
 
   const topListMoviesDetailsResults = useQueries({
-    queries: (topListData ?? []).map((item: any) => ({
+    queries: ((topListData as any)?.movies ?? topListData ?? []).map((item: any) => ({
       queryKey: ["movie", item.movie_id, "details", item.added_at],
       queryFn: () =>
         apiClient<any>(`/tmdb/movie/${item.movie_id}`, {
