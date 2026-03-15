@@ -2,11 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import "./index.scss";
 import { Suspense } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import type { ListType } from "@/utils/types/list";
-import { publicListsQuery } from "@/queries/list.queries";
-import ListCard from "@/components/layout/lists/list-card/list-card";
+import type { ListType } from "@/features/list/types/list";
+import { publicListsQuery } from "@/features/list/api/list.queries";
+import ListCard from "@/features/list/components/list-card/list-card";
 import Skeleton from "@/components/ui/skeleton/skeleton";
-import Title from "@/components/layout/title/title";
+import Title from "@/components/ui/title/title";
 
 export const Route = createFileRoute("/lists/")({
   loader: ({ context: { queryClient } }) => {

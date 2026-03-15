@@ -1,3 +1,5 @@
+import type { MovieType } from "@/features/movie/types/movie";
+
 export type ListType = {
   id: number;
   title: string;
@@ -5,10 +7,7 @@ export type ListType = {
   list_type: string;
   username?: string;
   saved_count: number;
-  movies: Array<{
-    id: number;
-    movie_id: number;
-    poster_path: string;
-    added_at: string;
-  }>;
+  updated_at?: string;
+  is_saved?: boolean;
+  movies: Array<MovieType>;
 };

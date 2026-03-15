@@ -2,7 +2,7 @@ import { Image } from "@unpic/react";
 import { Bookmark, Film, UserCircle } from "lucide-react";
 import "./list-card.scss";
 import { Link } from "@tanstack/react-router";
-import type { ListType } from "@/utils/types/list";
+import type { ListType } from "@/features/list/types/list";
 import Badge from "@/components/ui/badge/badge";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import { formatCompactNumber } from "@/utils/format-compact-number";
