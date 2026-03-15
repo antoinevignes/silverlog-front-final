@@ -3,7 +3,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { useAuth } from "@/auth";
 import { apiClient } from "@/utils/api-client";
-import type { ListType } from "@/utils/types/list";
+import type { ListType } from "@/features/list/types/list";
 
 const LIST_CONFIG: Record<
   "top" | "watchlist",

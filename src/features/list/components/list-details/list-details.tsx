@@ -6,19 +6,19 @@ import { useMemo, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
 import "./list-details.scss";
-import MovieCard from "../../movie-card/movie-card";
-import Title from "../../title/title";
-import type { MovieType } from "@/utils/types/movie";
+import MovieCard from "@/features/movie/components/movie-card/movie-card";
+import Title from "@/components/ui/title/title";
+import type { MovieType } from "@/features/movie/types/movie";
 import Badge from "@/components/ui/badge/badge";
 import {
   DropdownContent,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu/dropdown-menu";
 import { useAuth } from "@/auth";
-import { useSaveList } from "@/queries/list.mutations";
-import { listDataQuery } from "@/queries/list.queries";
+import { useSaveList } from "@/features/list/api/list.mutations";
+import { listDataQuery } from "@/features/list/api/list.queries";
 import { formatCompactNumber } from "@/utils/format-compact-number";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 
@@ -144,7 +144,7 @@ export default function ListDetails() {
 
             <span className="updated-date">
               Mis à jour il y a{" "}
-              {formatDistanceToNow(new Date(listData.updated_at), {
+              {formatDistanceToNow(new Date(listData.updated_at || listData.description || new Date()), {
                 locale: fr,
               })}
             </span>

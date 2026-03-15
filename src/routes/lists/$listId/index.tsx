@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { listDataQuery } from "@/queries/list.queries";
-import ListDetails from "@/components/layout/lists/list-details/list-details";
-import ListSkeleton from "@/components/layout/lists/list-details/list-skeleton/list-skeleton";
+import { listDataQuery } from "@/features/list/api/list.queries";
+import ListDetails from "@/features/list/components/list-details/list-details";
+import ListSkeleton from "@/features/list/components/list-details/list-skeleton/list-skeleton";
 import { Suspense } from "react";
 
 export const Route = createFileRoute("/lists/$listId/")({
