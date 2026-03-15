@@ -4,15 +4,19 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
-import type { MovieType } from "@/utils/types/movie";
-import type { PersonType } from "@/utils/types/person";
+import type { MovieType } from "@/features/movie/types/movie";
+import type { PersonType } from "@/features/movie/types/person";
 import { useAppForm } from "@/utils/useAppForm";
 import "./search-bar.scss";
-import { movieSearchQuery } from "@/queries/movie.queries";
-import { Card } from "@/components/ui/card";
+import { movieSearchQuery } from "@/features/movie/api/movie.queries";
+import { Card } from "@/components/ui/card/card";
 import Skeleton from "@/components/ui/skeleton/skeleton";
-import { personSearchQuery } from "@/queries/person.queries";
+import { personSearchQuery } from "@/features/movie/api/person.queries";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
+
+type SearchResultItem =
+  | (MovieType & { type: "movie" })
+  | (PersonType & { type: "person" });
 
 export default function SearchBar() {
   const navigate = useNavigate();
@@ -27,15 +31,15 @@ export default function SearchBar() {
     personSearchQuery(searchQuery),
   );
 
-  const allResults = useMemo(() => {
+  const allResults = useMemo((): SearchResultItem[] => {
     const m = movies?.results || [];
     const p = persons?.results || [];
 
     return [
-      ...m.map((i: MovieType) => ({ ...i, type: "movie" })),
-      ...p.map((i: PersonType) => ({ ...i, type: "person" })),
+      ...m.map((i: MovieType) => ({ ...i, type: "movie" as const })),
+      ...p.map((i: PersonType) => ({ ...i, type: "person" as const })),
     ]
-      .sort((a, b) => (b.popularity || 0) - (a.popularity || 0))
+      .sort((a, b) => ((b as any).popularity || 0) - ((a as any).popularity || 0))
       .slice(0, 15);
   }, [movies, persons]);
 
@@ -138,8 +142,9 @@ export default function SearchBar() {
           ) : (
             <ul className="movie-results" ref={scrollRef}>
               {allResults.map((item, index) => {
+                const anyItem = item as any;
                 const posterSrc = getCloudinarySrc(
-                  item?.poster_path || item?.profile_path,
+                  anyItem?.poster_path || anyItem?.profile_path,
                   "posters",
                 );
 
@@ -159,7 +164,7 @@ export default function SearchBar() {
                       className={`movie-result ${index === activeIndex ? "active" : ""}`}
                       onClick={() => setSearchQuery("")}
                     >
-                      {!item.poster_path && !item.profile_path ? (
+                      {!anyItem.poster_path && !anyItem.profile_path ? (
                         <div className="search-poster-fallback text-secondary">
                           <Film />
                         </div>
@@ -168,14 +173,14 @@ export default function SearchBar() {
                           src={posterSrc}
                           width={45}
                           aspectRatio={2 / 3}
-                          alt={item.title || item.name}
+                          alt={anyItem.title || anyItem.name}
                           background="auto"
                           className="search-poster"
                         />
                       )}
                       <div className="movie-info">
                         <h2 className="font-sentient">
-                          {item.title || item.name}
+                          {anyItem.title || anyItem.name}
                         </h2>
                         {item.type === "movie" && (
                           <p className="text-secondary">

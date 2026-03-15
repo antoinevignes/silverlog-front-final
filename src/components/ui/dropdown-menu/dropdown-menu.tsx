@@ -1,94 +1,12 @@
-import styled, { css, keyframes } from "styled-components";
+import "./dropdown-menu.scss";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 
-// TYPES
 type DropdownContextType = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   ref: React.RefObject<HTMLDivElement | null>;
 };
 
-// FADE
-const fadeInScale = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(-4px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-`;
-
-// STYLES
-export const StyledMenu = styled.div`
-  position: relative;
-  display: inline-block;
-`;
-
-export const StyledTrigger = styled.button`
-  all: unset;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-
-  &:focus-visible {
-    outline: 1px solid #8e8984; // $c-muted
-    outline-offset: 2px;
-    border-radius: 0.25rem;
-  }
-`;
-
-export const StyledContent = styled.div<{
-  $open: boolean;
-  $align?: "left" | "right";
-}>`
-  position: absolute;
-  top: calc(100% + 0.5rem);
-  ${({ $align }) => ($align === "left" ? "left: 0;" : "right: 0;")}
-
-  min-width: 180px;
-  padding: 0.5rem;
-  background: #1a1918; // $c-surface
-  color: #c8c1b8; // $c-text
-  border-radius: 0.5rem;
-  border: 1px solid #2c2a28; // $c-border
-
-  box-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.4),
-    0 2px 8px rgba(0, 0, 0, 0.8);
-
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-
-  transform-origin: ${({ $align }) =>
-    $align === "left" ? "top left" : "top right"};
-
-  animation: ${({ $open }) =>
-    $open &&
-    css`
-      ${fadeInScale} 150ms ease-in-out
-    `};
-
-  z-index: 50;
-`;
-
-export const StyledItem = styled.button`
-  all: unset;
-  cursor: pointer;
-
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.5rem;
-  font-size: 0.875rem;
-
-  &:hover,
-  &:focus-visible {
-    background-color: #2c2a28; // $c-border
-  }
-`;
-
-// CONTEXTE
 const DropdownContext = createContext<DropdownContextType | null>(null);
 
 function useDropdownContext() {
@@ -99,7 +17,6 @@ function useDropdownContext() {
   return ctx;
 }
 
-// COMPONENTS
 export function DropdownMenu({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -128,7 +45,9 @@ export function DropdownMenu({ children }: { children: React.ReactNode }) {
 
   return (
     <DropdownContext.Provider value={{ open, setOpen, ref }}>
-      <StyledMenu ref={ref}>{children}</StyledMenu>
+      <div className="dropdown-menu" ref={ref}>
+        {children}
+      </div>
     </DropdownContext.Provider>
   );
 }
@@ -137,14 +56,16 @@ export function DropdownTrigger({ children }: { children: React.ReactNode }) {
   const { open, setOpen } = useDropdownContext();
 
   return (
-    <StyledTrigger
+    <button
+      className="dropdown-trigger"
+      type="button"
       aria-haspopup="menu"
       aria-expanded={open}
-      aria-controls="dropdown-menu"
+      aria-controls="dropdown-content"
       onClick={() => setOpen((prev) => !prev)}
     >
       {children}
-    </StyledTrigger>
+    </button>
   );
 }
 
@@ -160,9 +81,13 @@ export function DropdownContent({
   if (!open) return null;
 
   return (
-    <StyledContent id="dropdown-menu" role="menu" $open $align={align}>
+    <div
+      id="dropdown-content"
+      role="menu"
+      className={`dropdown-content dropdown-align-${align}`}
+    >
       {children}
-    </StyledContent>
+    </div>
   );
 }
 
@@ -174,8 +99,8 @@ export function DropdownItem({
   onClick?: () => void;
 }) {
   return (
-    <StyledItem onClick={onClick} role="menuitem">
+    <button className="dropdown-item" onClick={onClick} role="menuitem" type="button">
       {children}
-    </StyledItem>
+    </button>
   );
 }

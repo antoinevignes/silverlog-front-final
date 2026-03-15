@@ -3,13 +3,13 @@ import { BookOpen, LogOut, Search, Settings, X } from "lucide-react";
 import "./desktop-nav.scss";
 import { useState } from "react";
 import { useAuth } from "@/auth";
-import SearchBar from "@/components/layout/search-bar/search-bar";
+import SearchBar from "@/features/movie/components/search-bar/search-bar";
 import {
   DropdownContent,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu/dropdown-menu";
 import Button from "@/components/ui/button/button";
 import { Image } from "@unpic/react";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
