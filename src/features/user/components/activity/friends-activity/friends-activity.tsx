@@ -22,7 +22,7 @@ export default function FriendsActivity() {
   const [selectedActivity, setSelectedActivity] = useState<any>(null);
 
   if (!activities || activities.length === 0) {
-    return;
+    return null;
   }
 
   return (
