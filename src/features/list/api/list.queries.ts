@@ -1,6 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 import { apiClient } from "@/utils/api-client";
-import type { ListType } from "@/utils/types/list";
+import type { ListType } from "@/features/list/types/list";
 
 // DETAILS D'UNE LISTE
 export const listDataQuery = (listId: string) =>

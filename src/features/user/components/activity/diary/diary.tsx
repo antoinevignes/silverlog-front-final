@@ -5,8 +5,8 @@ import { useMemo } from "react";
 import DiaryMobile from "./diary-mobile/diary-mobile";
 import DiaryDesktop from "./diary-desktop/diary-desktop";
 import "./diary.scss";
-import type { MovieType } from "@/utils/types/movie";
-import { seenMoviesQuery } from "@/queries/user-movie.queries";
+import type { MovieType } from "@/features/movie/types/movie";
+import { seenMoviesQuery } from "@/features/user/api/user-movie.queries";
 import { useAuth } from "@/auth";
 
 interface DiaryGroup {

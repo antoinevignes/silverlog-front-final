@@ -2,15 +2,15 @@ import "./watchlist.scss";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { ArrowDownUp, ChevronDown } from "lucide-react";
-import MovieCard from "../../movie-card/movie-card";
+import MovieCard from "@/features/movie/components/movie-card/movie-card";
 import { useAuth } from "@/auth";
-import { listDataQuery } from "@/queries/list.queries";
+import { listDataQuery } from "@/features/list/api/list.queries";
 import {
   DropdownContent,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu/dropdown-menu";
 import Badge from "@/components/ui/badge/badge";
 
 export default function Watchlist() {
@@ -73,8 +73,8 @@ export default function Watchlist() {
     }
 
     result.sort((a, b) => {
-      const dateA = new Date(a.added_at).getTime();
-      const dateB = new Date(b.added_at).getTime();
+      const dateA = new Date(a.added_at || "").getTime();
+      const dateB = new Date(b.added_at || "").getTime();
       return sortOrder === "desc" ? dateB - dateA : dateA - dateB;
     });
 

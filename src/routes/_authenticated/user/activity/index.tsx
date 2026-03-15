@@ -1,12 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense, useState } from "react";
-import Diary from "@/components/layout/activity/diary/diary";
-import Watchlist from "@/components/layout/activity/watchlist/watchlist";
+import Diary from "@/features/user/components/activity/diary/diary";
+import Watchlist from "@/features/user/components/activity/watchlist/watchlist";
 import Tabs from "@/components/ui/tabs/tabs";
-import { listDataQuery } from "@/queries/list.queries";
-import { seenMoviesQuery } from "@/queries/user-movie.queries";
-import DiarySkeleton from "@/components/layout/activity/diary/diary-skeleton/diary-skeleton";
-import WatchlistSkeleton from "@/components/layout/activity/watchlist/watchlist-skeleton/watchlist-skeleton";
+import { listDataQuery } from "@/features/list/api/list.queries";
+import { seenMoviesQuery } from "@/features/user/api/user-movie.queries";
+import DiarySkeleton from "@/features/user/components/activity/diary/diary-skeleton/diary-skeleton";
+import WatchlistSkeleton from "@/features/user/components/activity/watchlist/watchlist-skeleton/watchlist-skeleton";
 import "./index.scss";
 
 const tabs = [
