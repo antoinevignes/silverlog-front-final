@@ -3,7 +3,7 @@ import "./auth.scss";
 import { Link, createFileRoute, redirect } from "@tanstack/react-router";
 import { Lock, Mail } from "lucide-react";
 import z from "zod";
-import { Label } from "@/components/ui/label";
+import { Label } from "@/components/ui/label/label";
 import { FieldInfo, useAppForm } from "@/utils/useAppForm";
 import { Image } from "@unpic/react";
 
