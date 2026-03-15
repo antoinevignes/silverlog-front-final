@@ -3,21 +3,20 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Edit, MapPin, Star, TextAlignStart, Film } from "lucide-react";
 import { Suspense, useState } from "react";
-import type { MovieType } from "@/utils/types/movie";
-import { userQuery } from "@/queries/user.queries";
+import { userQuery } from "@/features/user/api/user.queries";
 import Button from "@/components/ui/button/button";
-import MovieCard from "@/components/layout/movie-card/movie-card";
-import Title from "@/components/layout/title/title";
-import HorizontalScroller from "@/components/layout/horizontal-scroller/horizontal-scroller";
+import MovieCard from "@/features/movie/components/movie-card/movie-card";
+import Title from "@/components/ui/title/title";
+import HorizontalScroller from "@/components/ui/horizontal-scroller/horizontal-scroller";
 import Tabs from "@/components/ui/tabs/tabs";
-import Watchlist from "@/components/layout/user/watchlist/watchlist";
-import Lists from "@/components/layout/user/lists/lists";
+import Watchlist from "@/features/user/components/profile-watchlist/profile-watchlist";
+import Lists from "@/features/user/components/lists/lists";
 import { useAuth } from "@/auth";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 import { Image } from "@unpic/react";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
-import FollowModal from "@/components/layout/user/follow-modal/follow-modal";
-import { useFollowUser, useUnfollowUser } from "@/queries/user.mutations";
+import FollowModal from "@/features/user/components/follow-modal/follow-modal";
+import { useFollowUser, useUnfollowUser } from "@/features/user/api/user.mutations";
 
 export const Route = createFileRoute("/user/$userId/")({
   loader: async ({ context: { queryClient }, params: { userId } }) => {
@@ -227,7 +226,7 @@ function RouteComponent() {
                 <Title title="Top 6" id="top-movies-title" />
 
                 <ul className="top-movies-grid" role="list">
-                  {userData.top_movies.map((movie: MovieType) => (
+                  {(userData.top_movies ?? []).map((movie: any) => (
                     <>
                       <li key={movie.id} className="card-mobile">
                         <MovieCard movie={movie} size="sm" />
@@ -247,7 +246,7 @@ function RouteComponent() {
                 <Title title="Activité récente" id="recent-activity-title" />
 
                 <HorizontalScroller className="recent-activity-scroller">
-                  {userData.recent_activity.map((movie: any) => (
+                  {(userData.recent_activity ?? []).map((movie: any) => (
                     <li key={movie.id} className="activity-item">
                       <MovieCard movie={movie} size="sm" />
 

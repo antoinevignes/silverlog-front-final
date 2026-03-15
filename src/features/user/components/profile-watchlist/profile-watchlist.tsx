@@ -1,9 +1,9 @@
-import type { MovieType } from "@/utils/types/movie";
-import MovieCard from "../../movie-card/movie-card";
+import type { MovieType } from "@/features/movie/types/movie";
+import MovieCard from "@/features/movie/components/movie-card/movie-card";
 import "./watchlist.scss";
 import { useAuth } from "@/auth";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { listDataQuery } from "@/queries/list.queries";
+import { listDataQuery } from "@/features/list/api/list.queries";
 
 export default function Watchlist() {
   const { user } = useAuth();

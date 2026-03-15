@@ -3,8 +3,8 @@ import { getRouteApi } from "@tanstack/react-router";
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
 
-import ListCard from "../../lists/list-card/list-card";
-import type { ListType } from "@/utils/types/list";
+import ListCard from "@/features/list/components/list-card/list-card";
+import type { ListType } from "@/features/list/types/list";
 import { useAuth } from "@/auth";
 import Button from "@/components/ui/button/button";
 import {
@@ -12,8 +12,8 @@ import {
   DialogContent,
   DialogFooter,
 } from "@/components/ui/dialog/dialog";
-import { useDeleteList } from "@/queries/list.mutations";
-import { personalListsQuery } from "@/queries/list.queries";
+import { useDeleteList } from "@/features/list/api/list.mutations";
+import { personalListsQuery } from "@/features/list/api/list.queries";
 import "./lists.scss";
 
 export default function Lists() {

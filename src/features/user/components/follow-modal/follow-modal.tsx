@@ -1,6 +1,6 @@
 import { Dialog, DialogContent } from "@/components/ui/dialog/dialog";
 import { useQuery } from "@tanstack/react-query";
-import { userFollowersQuery, userFollowingQuery } from "@/queries/user.queries";
+import { userFollowersQuery, userFollowingQuery } from "@/features/user/api/user.queries";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 import { Link } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
