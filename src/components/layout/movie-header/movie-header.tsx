@@ -1,12 +1,11 @@
 import "./movie-header.scss";
 import { Link, getRouteApi } from "@tanstack/react-router";
-import { Dot, Film, Star } from "lucide-react";
+import { Dot, Film } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Image } from "@unpic/react";
 import MovieActions from "../dialogs/movie-actions/movie-actions";
 import Title from "../title/title";
-import type { MovieType } from "@/utils/types/movie";
 import Tabs from "@/components/ui/tabs/tabs";
 import {
   movieCreditsQuery,
@@ -21,40 +20,13 @@ import {
   getCloudinaryPlaceholder,
   getCloudinarySrc,
 } from "@/utils/cloudinary-handler";
+import RatingBadge from "../rating-badge/rating-badge";
 
 const tabs = [
   { id: "details", label: "Détails" },
   { id: "cast", label: "Distribution" },
   { id: "crew", label: "Équipe technique" },
 ];
-
-function RatingBadge({
-  movie,
-  voteAvg,
-  className,
-}: {
-  movie: MovieType;
-  voteAvg: number;
-  className?: string;
-}) {
-  return (
-    <p
-      className={`grade ${className || ""}`}
-      aria-label={`Note de ${movie.vote_average} sur 10`}
-    >
-      <Star className="star-icon" aria-hidden color="#F1DA51" fill="#F1DA51" />
-
-      <strong className="rating">
-        <data value={movie.vote_average}>{Math.round(voteAvg * 10) / 10}</data>
-        /10
-      </strong>
-
-      <span className="text-secondary rating-count">
-        ({(Number(voteAvg) + Number(movie.vote_count)).toLocaleString()})
-      </span>
-    </p>
-  );
-}
 
 export default function MovieHeader() {
   const routeApi = getRouteApi("/movies/$movieId/");
@@ -80,10 +52,11 @@ export default function MovieHeader() {
   const backdropSrc = getCloudinarySrc(movie.backdrop_path, "backdrops");
   const posterSrc = getCloudinarySrc(movie.poster_path, "posters");
 
+  const voteCount = Number(movieData.rating_count) + Number(movie.vote_count);
   const voteAvg =
     (Number(movieData.movie_avg) * Number(movieData.rating_count) +
       Number(movie.vote_average) * Number(movie.vote_count)) /
-    (Number(movieData.rating_count) + Number(movie.vote_count));
+    voteCount;
 
   return (
     <>
@@ -132,6 +105,7 @@ export default function MovieHeader() {
               <RatingBadge
                 movie={movie}
                 voteAvg={voteAvg}
+                voteCount={voteCount}
                 className="grade-mobile"
               />
             </div>
@@ -166,6 +140,7 @@ export default function MovieHeader() {
             <RatingBadge
               movie={movie}
               voteAvg={voteAvg}
+              voteCount={voteCount}
               className="grade-desktop"
             />
 
