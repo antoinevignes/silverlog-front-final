@@ -7,20 +7,20 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { TrophyIcon as TrophySolid } from "@heroicons/react/24/solid";
 import { TrophyIcon } from "@heroicons/react/24/outline";
 import { Image } from "@unpic/react";
-import DiaryDialog from "../diary-dialog/diary-dialog";
-import ReviewDialog from "../review-dialog/review-dialog";
-import CustomList from "../custom-list/custom-list";
-import CreateList from "../create-list/create-list";
-import type { MovieType } from "@/utils/types/movie";
-import { movieStateQuery } from "@/queries/user-movie.queries";
-import { useToggleMovieList } from "@/queries/list.mutations";
+import DiaryDialog from "@/features/user/components/dialogs/diary-dialog/diary-dialog";
+import ReviewDialog from "@/features/review/components/dialogs/review-dialog/review-dialog";
+import CustomList from "@/features/list/components/dialogs/custom-list/custom-list";
+import CreateList from "@/features/list/components/dialogs/create-list/create-list";
+import type { MovieType } from "@/features/movie/types/movie";
+import { movieStateQuery } from "@/features/user/api/user-movie.queries";
+import { useToggleMovieList } from "@/features/list/api/list.mutations";
 import {
   Dialog,
   DialogContent,
   DialogTrigger,
 } from "@/components/ui/dialog/dialog";
 import Button from "@/components/ui/button/button";
-import Rating from "@/components/layout/rating/rating";
+import Rating from "@/features/movie/components/rating/rating";
 import { useAuth } from "@/auth";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 
@@ -44,10 +44,10 @@ export default function MovieActions({
   const { data: movieState } = useSuspenseQuery(movieStateQuery(movieId));
   const { mutate: toggleList, isPending } = useToggleMovieList(movieId);
 
-  const isInTop = movieState.lists.some(
+  const isInTop = (movieState.lists ?? []).some(
     (list: { list_type: string }) => list.list_type === "top",
   );
-  const isInWatchlist = movieState.lists.some(
+  const isInWatchlist = (movieState.lists ?? []).some(
     (list: { list_type: string }) => list.list_type === "watchlist",
   );
 

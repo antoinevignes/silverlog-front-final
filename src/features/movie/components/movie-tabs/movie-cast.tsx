@@ -2,9 +2,9 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link, getRouteApi } from "@tanstack/react-router";
 import { CircleUser } from "lucide-react";
 import { Image } from "@unpic/react";
-import HorizontalScroller from "../horizontal-scroller/horizontal-scroller";
-import type { CastType } from "@/utils/types/cast";
-import { movieCreditsQuery } from "@/queries/movie.queries";
+import HorizontalScroller from "@/components/ui/horizontal-scroller/horizontal-scroller";
+import type { CastType } from "@/features/movie/types/cast";
+import { movieCreditsQuery } from "@/features/movie/api/movie.queries";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 
 export default function MovieCast() {

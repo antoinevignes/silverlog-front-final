@@ -4,13 +4,13 @@ import z from "zod";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
-import { Label } from "@/components/ui/label";
-import Rating from "@/components/layout/rating/rating";
+import { Label } from "@/components/ui/label/label";
+import Rating from "@/features/movie/components/rating/rating";
 import Button from "@/components/ui/button/button";
 import { useAppForm } from "@/utils/useAppForm";
-import { useDeleteReview, useUpsertReview } from "@/queries/review.mutations";
-import { movieStateQuery } from "@/queries/user-movie.queries";
-import { movieReviewQuery } from "@/queries/review.query";
+import { useDeleteReview, useUpsertReview } from "@/features/review/api/review.mutations";
+import { movieStateQuery } from "@/features/user/api/user-movie.queries";
+import { movieReviewQuery } from "@/features/review/api/review.query";
 import { useAuth } from "@/auth";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 
@@ -68,7 +68,7 @@ export default function ReviewDialog({
 
   const [isConfirming, setIsConfirming] = useState(false);
   const { mutate: deleteReview, isPending: isDeleting } = useDeleteReview(
-    review?.id,
+    review?.id ?? "",
     movieId,
   );
 

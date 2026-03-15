@@ -9,19 +9,10 @@ import {
   CardRating,
   CardTitle,
   CardTitleRow,
-} from "@/components/ui/card";
-import { movieReviewsQuery } from "@/queries/review.query";
-import { useLikeReview } from "@/queries/review.mutations";
+} from "@/components/ui/card/card";
+import { movieReviewsQuery } from "@/features/review/api/review.query";
+import { useLikeReview } from "@/features/review/api/review.mutations";
 
-type ReviewType = {
-  id: string;
-  username: string;
-  rating: number;
-  content: string;
-  is_liked_by_user: boolean;
-  like_count: number;
-  created_at: string;
-};
 
 export default function Reviews() {
   const routeApi = getRouteApi("/movies/$movieId/");
@@ -39,7 +30,7 @@ export default function Reviews() {
       )}
 
       <ul className="review-list">
-        {reviews.map((review: ReviewType) => (
+        {reviews.map((review: any) => (
           <li key={review.id}>
             <Card className="review-card">
               <CardHeader>

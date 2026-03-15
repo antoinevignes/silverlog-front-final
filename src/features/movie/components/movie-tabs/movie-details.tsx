@@ -1,8 +1,8 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
-import type { MovieType } from "@/utils/types/movie";
+import type { MovieType } from "@/features/movie/types/movie";
 import Badge from "@/components/ui/badge/badge";
-import { movieDetailsQuery } from "@/queries/movie.queries";
+import { movieDetailsQuery } from "@/features/movie/api/movie.queries";
 import "./movie-tabs.scss";
 
 const displayCountry = new Intl.DisplayNames(["fr"], {

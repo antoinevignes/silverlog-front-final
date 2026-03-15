@@ -3,11 +3,11 @@ import { Link, getRouteApi } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { CircleUser } from "lucide-react";
 import { Image } from "@unpic/react";
-import HorizontalScroller from "../horizontal-scroller/horizontal-scroller";
-import type { CrewType } from "@/utils/types/crew";
+import HorizontalScroller from "@/components/ui/horizontal-scroller/horizontal-scroller";
+import type { CrewType } from "@/features/movie/types/crew";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import translateJob from "@/utils/translate-job";
-import { movieCreditsQuery } from "@/queries/movie.queries";
+import { movieCreditsQuery } from "@/features/movie/api/movie.queries";
 
 const MAJOR_JOBS = [
   "Director",

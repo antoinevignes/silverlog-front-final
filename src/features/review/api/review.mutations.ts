@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@/auth";
 import { apiClient } from "@/utils/api-client";
-import type { ReviewType } from "@/utils/types/review";
+import type { ReviewType } from "@/features/review/types/review";
 
 export function useUpsertReview(movieId: string) {
   const { user } = useAuth();

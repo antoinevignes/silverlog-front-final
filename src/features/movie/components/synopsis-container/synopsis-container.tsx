@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { MovieType } from "@/utils/types/movie";
+import type { MovieType } from "@/features/movie/types/movie";
 import Badge from "@/components/ui/badge/badge";
 import "./synopsis-container.scss";
 

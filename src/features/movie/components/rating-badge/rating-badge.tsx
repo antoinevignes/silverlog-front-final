@@ -1,5 +1,5 @@
 import Badge from "@/components/ui/badge/badge";
-import type { MovieType } from "@/utils/types/movie";
+import type { MovieType } from "@/features/movie/types/movie";
 import { Star } from "lucide-react";
 import "./rating-badge.scss";
 

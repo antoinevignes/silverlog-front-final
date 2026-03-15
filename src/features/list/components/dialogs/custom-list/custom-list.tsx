@@ -1,11 +1,11 @@
 import "./custom-list.scss";
 import { ArrowLeft, Check, Loader2, Plus } from "lucide-react";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
-import type { MovieType } from "@/utils/types/movie";
+import type { MovieType } from "@/features/movie/types/movie";
 import { useAuth } from "@/auth";
-import { movieStateQuery } from "@/queries/user-movie.queries";
-import { customListsQuery } from "@/queries/list.queries";
-import { useToggleCustomList } from "@/queries/list.mutations";
+import { movieStateQuery } from "@/features/user/api/user-movie.queries";
+import { customListsQuery } from "@/features/list/api/list.queries";
+import { useToggleCustomList } from "@/features/list/api/list.mutations";
 
 interface CustomListContentProps {
   onBack: () => void;
@@ -27,7 +27,7 @@ export default function CustomList({
   const { mutate: addToList, isPending } = useToggleCustomList(movieId);
 
   const isMovieInList = (listId: number) =>
-    movieState.lists.some((l: { id: number }) => l.id === listId);
+    (movieState.lists ?? []).some((l: { id: number }) => l.id === listId);
 
   return (
     <>

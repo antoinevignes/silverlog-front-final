@@ -1,23 +1,23 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
-import MovieHeader from "../../../components/layout/movie-header/movie-header";
-import type { MovieType } from "@/utils/types/movie";
-import HorizontalScroller from "@/components/layout/horizontal-scroller/horizontal-scroller";
-import MovieCard from "@/components/layout/movie-card/movie-card";
+import MovieHeader from "@/features/movie/components/movie-header/movie-header";
+import type { MovieType } from "@/features/movie/types/movie";
+import HorizontalScroller from "@/components/ui/horizontal-scroller/horizontal-scroller";
+import MovieCard from "@/features/movie/components/movie-card/movie-card";
 import {
   movieCreditsQuery,
   movieDetailsQuery,
   movieFriendsActivityQuery,
   similarMoviesQuery,
-} from "@/queries/movie.queries";
+} from "@/features/movie/api/movie.queries";
 import Skeleton from "@/components/ui/skeleton/skeleton";
-import { movieStateQuery } from "@/queries/user-movie.queries";
-import Reviews from "@/components/layout/reviews/reviews";
-import MovieHeaderSkeleton from "@/components/layout/movie-header/movie-header-skeleton";
-import Title from "@/components/layout/title/title";
+import { movieStateQuery } from "@/features/user/api/user-movie.queries";
+import Reviews from "@/features/review/components/reviews/reviews";
+import MovieHeaderSkeleton from "@/features/movie/components/movie-header/movie-header-skeleton";
+import Title from "@/components/ui/title/title";
 import "./index.scss";
-import FriendsActivity from "@/components/layout/activity/friends-activity/friends-activity";
+import FriendsActivity from "@/features/user/components/activity/friends-activity/friends-activity";
 
 export const Route = createFileRoute("/movies/$movieId/")({
   loader: ({ context: { queryClient }, params: { movieId } }) => {

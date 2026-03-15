@@ -4,20 +4,20 @@ import { Dot, Film } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Image } from "@unpic/react";
-import MovieActions from "../dialogs/movie-actions/movie-actions";
-import Title from "../title/title";
+import MovieActions from "@/features/movie/components/dialogs/movie-actions/movie-actions";
+import Title from "@/components/ui/title/title";
 import Tabs from "@/components/ui/tabs/tabs";
 import {
   movieCreditsQuery,
   movieDataQuery,
   movieDetailsQuery,
-} from "@/queries/movie.queries";
-import MovieDetails from "@/components/layout/movie-tabs/movie-details";
-import MovieCast from "@/components/layout/movie-tabs/movie-cast";
-import MovieCrew from "@/components/layout/movie-tabs/movie-crew";
-import SynopsisContainer from "@/components/layout/synopsis-container/synopsis-container";
+} from "@/features/movie/api/movie.queries";
+import MovieDetails from "@/features/movie/components/movie-tabs/movie-details";
+import MovieCast from "@/features/movie/components/movie-tabs/movie-cast";
+import MovieCrew from "@/features/movie/components/movie-tabs/movie-crew";
+import SynopsisContainer from "@/features/movie/components/synopsis-container/synopsis-container";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
-import RatingBadge from "../rating-badge/rating-badge";
+import RatingBadge from "@/features/movie/components/rating-badge/rating-badge";
 
 const tabs = [
   { id: "details", label: "Détails" },

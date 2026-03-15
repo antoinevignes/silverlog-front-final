@@ -1,12 +1,12 @@
 import { DayPicker } from "react-day-picker";
 import { fr } from "react-day-picker/locale";
-import "../../../ui/date-picker/date-picker.scss";
+import "@/components/ui/date-picker/date-picker.scss";
 import "./diary-dalog.scss";
 import z from "zod";
 import { ArrowLeft } from "lucide-react";
-import type { MovieType } from "@/utils/types/movie";
+import type { MovieType } from "@/features/movie/types/movie";
 import { useAppForm } from "@/utils/useAppForm";
-import { useUpdateSeenDate } from "@/queries/user-movie.mutations";
+import { useUpdateSeenDate } from "@/features/user/api/user-movie.mutations";
 import Button from "@/components/ui/button/button";
 
 interface ReviewContentProps {
