@@ -1,6 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 import { apiClient } from "@/utils/api-client";
-import type { PersonType } from "@/utils/types/person";
+import type { PersonType } from "@/features/movie/types/person";
 
 export const personDetailsQuery = (personId: string) =>
   queryOptions({

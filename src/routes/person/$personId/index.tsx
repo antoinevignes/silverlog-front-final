@@ -4,9 +4,9 @@ import {
   personCreditsQuery,
   personDetailsQuery,
   personDetailsQueryUS,
-} from "@/queries/person.queries";
-import PersonDetails from "@/components/layout/person-details/person-details";
-import PersonDetailsSkeleton from "@/components/layout/person-details/person-details-skeleton";
+} from "@/features/movie/api/person.queries";
+import PersonDetails from "@/features/movie/components/person-details/person-details";
+import PersonDetailsSkeleton from "@/features/movie/components/person-details/person-details-skeleton";
 
 export const Route = createFileRoute("/person/$personId/")({
   loader: ({ context: { queryClient }, params: { personId } }) => {

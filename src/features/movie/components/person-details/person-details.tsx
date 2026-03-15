@@ -5,16 +5,16 @@ import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { Cake, CircleUser, Clapperboard, MapPin } from "lucide-react";
 import { useMemo, useState } from "react";
-import BiographyContainer from "../biography-container/biography-container";
-import MovieCard from "../movie-card/movie-card";
-import Title from "../title/title";
-import type { MovieType } from "@/utils/types/movie";
+import BiographyContainer from "@/features/movie/components/biography-container/biography-container";
+import MovieCard from "@/features/movie/components/movie-card/movie-card";
+import Title from "@/components/ui/title/title";
+import type { MovieType } from "@/features/movie/types/movie";
 import Tabs from "@/components/ui/tabs/tabs";
 import {
   personCreditsQuery,
   personDetailsQuery,
   personDetailsQueryUS,
-} from "@/queries/person.queries";
+} from "@/features/movie/api/person.queries";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import { getDynamicTabs } from "@/utils/dynamic-tabs";
 import "./person-details.scss";
