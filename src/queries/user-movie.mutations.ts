@@ -3,6 +3,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { seenMoviesQuery } from "./user-movie.queries";
 import { useAuth } from "@/auth";
+import { apiClient } from "@/utils/api-client";
 
 export function useUpdateMovieRating(movieId: string) {
   const { user } = useAuth();
@@ -10,14 +11,7 @@ export function useUpdateMovieRating(movieId: string) {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: async ({
-      value,
-      title,
-      posterPath,
-      backdropPath,
-      releaseDate,
-      genres,
-    }: {
+    mutationFn: (payload: {
       value: number;
       title: string;
       posterPath: string | null;
@@ -25,34 +19,19 @@ export function useUpdateMovieRating(movieId: string) {
       releaseDate: string | null;
       genres: Array<{ id: number; name: string }>;
     }) => {
-      if (!user) {
-        throw new Error("Unauthenticated");
-      }
+      if (!user) throw new Error("Unauthenticated");
 
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/user_movie/${movieId}/rate`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            rating: value * 2,
-            title,
-            poster_path: posterPath?.trim() === "" ? null : posterPath,
-            backdrop_path: backdropPath?.trim() === "" ? null : backdropPath,
-            release_date: releaseDate?.trim() === "" ? null : releaseDate,
-            genres: genres.length > 0 ? genres : null,
-          }),
-        },
-      );
-
-      if (!res.ok) {
-        throw new Error("Une erreur est survenue");
-      }
-
-      return await res.json();
+      return apiClient<any>(`/user_movie/${movieId}/rate`, {
+        method: "POST",
+        body: JSON.stringify({
+          rating: payload.value * 2,
+          title: payload.title,
+          poster_path: payload.posterPath?.trim() === "" ? null : payload.posterPath,
+          backdrop_path: payload.backdropPath?.trim() === "" ? null : payload.backdropPath,
+          release_date: payload.releaseDate?.trim() === "" ? null : payload.releaseDate,
+          genres: payload.genres.length > 0 ? payload.genres : null,
+        }),
+      });
     },
     onSuccess: () => {
       toast.success("Note mise à jour !");
@@ -92,24 +71,12 @@ export function useDeleteMovieRating(movieId: string) {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: async () => {
-      if (!user) {
-        throw new Error("Unauthenticated");
-      }
+    mutationFn: () => {
+      if (!user) throw new Error("Unauthenticated");
 
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/user_movie/${movieId}`,
-        {
-          method: "DELETE",
-          credentials: "include",
-        },
-      );
-
-      if (!res.ok) {
-        throw new Error("Une erreur est survenue");
-      }
-
-      return await res.json();
+      return apiClient<any>(`/user_movie/${movieId}`, {
+        method: "DELETE",
+      });
     },
 
     onSuccess: () => {
@@ -140,14 +107,7 @@ export function useUpdateSeenDate(movieId: string) {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: async ({
-      seenDate,
-      title,
-      posterPath,
-      backdropPath,
-      releaseDate,
-      genres,
-    }: {
+    mutationFn: (payload: {
       seenDate: Date;
       title: string;
       posterPath: string | null;
@@ -155,34 +115,19 @@ export function useUpdateSeenDate(movieId: string) {
       releaseDate: string | null;
       genres: Array<{ id: number; name: string }>;
     }) => {
-      if (!user) {
-        throw new Error("Unauthenticated");
-      }
+      if (!user) throw new Error("Unauthenticated");
 
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/user_movie/${movieId}/seen-date`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            date: seenDate,
-            title,
-            poster_path: posterPath?.trim() === "" ? null : posterPath,
-            backdrop_path: backdropPath?.trim() === "" ? null : backdropPath,
-            release_date: releaseDate?.trim() === "" ? null : releaseDate,
-            genres: genres.length > 0 ? genres : null,
-          }),
-        },
-      );
-
-      if (!res.ok) {
-        throw new Error("Une erreur est survenue");
-      }
-
-      return await res.json();
+      return apiClient<any>(`/user_movie/${movieId}/seen-date`, {
+        method: "POST",
+        body: JSON.stringify({
+          date: payload.seenDate,
+          title: payload.title,
+          poster_path: payload.posterPath?.trim() === "" ? null : payload.posterPath,
+          backdrop_path: payload.backdropPath?.trim() === "" ? null : payload.backdropPath,
+          release_date: payload.releaseDate?.trim() === "" ? null : payload.releaseDate,
+          genres: payload.genres.length > 0 ? payload.genres : null,
+        }),
+      });
     },
 
     onSuccess: () => {

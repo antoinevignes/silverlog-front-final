@@ -10,6 +10,7 @@ import Skeleton from "@/components/ui/skeleton/skeleton";
 import { useAuth } from "@/auth";
 import "./top-list.scss";
 import Badge from "@/components/ui/badge/badge";
+import { apiClient } from "@/utils/api-client";
 
 export const Route = createFileRoute("/_authenticated/user/top/")({
   loader: ({ context }) => {
@@ -29,14 +30,10 @@ function RouteComponent() {
   const topListMoviesDetailsResults = useQueries({
     queries: (topListData ?? []).map((item: any) => ({
       queryKey: ["movie", item.movie_id, "details", item.added_at],
-      queryFn: async () => {
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/tmdb/movie/${item.movie_id}?language=fr-FR`,
-        );
-        const details = await res.json();
-
-        return details;
-      },
+      queryFn: () =>
+        apiClient<any>(`/tmdb/movie/${item.movie_id}`, {
+          params: { language: "fr-FR" },
+        }),
       staleTime: 1000 * 60 * 60 * 24,
     })),
   });

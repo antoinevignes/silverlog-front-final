@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useAuth } from "@/auth";
 import { useNavigate } from "@tanstack/react-router";
+import { apiClient } from "@/utils/api-client";
 
 // MISE A JOUR DU PSEUDO UTILISATEUR
 export function useUpdateUsername() {
@@ -10,23 +11,13 @@ export function useUpdateUsername() {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: async (username: string) => {
+    mutationFn: (username: string) => {
       if (!user) throw new Error("Unauthenticated");
 
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/user/username`, {
+      return apiClient<any>("/user/username", {
         method: "PATCH",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username }),
       });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message);
-      }
-
-      return data;
     },
 
     onSuccess: () => {
@@ -56,23 +47,13 @@ export function useUpdateLocation() {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: async (location: string) => {
+    mutationFn: (location: string) => {
       if (!user) throw new Error("Unauthenticated");
 
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/user/location`, {
+      return apiClient<any>("/user/location", {
         method: "PATCH",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ location }),
       });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message);
-      }
-
-      return data;
     },
 
     onSuccess: () => {
@@ -101,25 +82,17 @@ export function useUploadAvatar() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (file: File) => {
+    mutationFn: (file: File) => {
       if (!user) throw new Error("Unauthenticated");
 
       const formData = new FormData();
       formData.append("avatar", file);
 
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/user/avatar`, {
+      return apiClient<any>("/user/avatar", {
         method: "PATCH",
-        credentials: "include",
         body: formData,
+        headers: {}, // Let browser set Content-Type for FormData
       });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message ?? "Une erreur est survenue");
-      }
-
-      return data;
     },
 
     onSuccess: () => {
@@ -140,25 +113,17 @@ export function useUploadBanner() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (file: File) => {
+    mutationFn: (file: File) => {
       if (!user) throw new Error("Unauthenticated");
 
       const formData = new FormData();
       formData.append("banner", file);
 
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/user/banner`, {
+      return apiClient<any>("/user/banner", {
         method: "PATCH",
-        credentials: "include",
         body: formData,
+        headers: {}, // Let browser set Content-Type for FormData
       });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message ?? "Une erreur est survenue");
-      }
-
-      return data;
     },
 
     onSuccess: () => {
@@ -179,20 +144,10 @@ export function useDeleteAccount() {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: async () => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/user/delete`, {
+    mutationFn: () =>
+      apiClient<any>("/user/delete", {
         method: "DELETE",
-        credentials: "include",
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message ?? "Une erreur est survenue");
-      }
-
-      return data;
-    },
+      }),
 
     onSuccess: () => {
       queryClient.setQueryData(["session"], {
@@ -216,21 +171,12 @@ export function useDeleteAvatar() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async () => {
+    mutationFn: () => {
       if (!user) throw new Error("Unauthenticated");
 
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/user/avatar`, {
+      return apiClient<any>("/user/avatar", {
         method: "DELETE",
-        credentials: "include",
       });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message ?? "Une erreur est survenue");
-      }
-
-      return data;
     },
 
     onSuccess: () => {
@@ -251,21 +197,12 @@ export function useDeleteBanner() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async () => {
+    mutationFn: () => {
       if (!user) throw new Error("Unauthenticated");
 
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/user/banner`, {
+      return apiClient<any>("/user/banner", {
         method: "DELETE",
-        credentials: "include",
       });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message ?? "Une erreur est survenue");
-      }
-
-      return data;
     },
 
     onSuccess: () => {
@@ -286,24 +223,12 @@ export function useFollowUser(userId: string) {
   const { user } = useAuth();
 
   return useMutation({
-    mutationFn: async () => {
+    mutationFn: () => {
       if (!user) throw new Error("Unauthenticated");
 
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/user/${userId}/follow`,
-        {
-          method: "POST",
-          credentials: "include",
-        },
-      );
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message ?? "Une erreur est survenue");
-      }
-
-      return data;
+      return apiClient<any>(`/user/${userId}/follow`, {
+        method: "POST",
+      });
     },
 
     onSuccess: () => {
@@ -326,24 +251,12 @@ export function useUnfollowUser(userId: string) {
   const { user } = useAuth();
 
   return useMutation({
-    mutationFn: async () => {
+    mutationFn: () => {
       if (!user) throw new Error("Unauthenticated");
 
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/user/${userId}/follow`,
-        {
-          method: "DELETE",
-          credentials: "include",
-        },
-      );
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message ?? "Une erreur est survenue");
-      }
-
-      return data;
+      return apiClient<any>(`/user/${userId}/follow`, {
+        method: "DELETE",
+      });
     },
 
     onSuccess: () => {

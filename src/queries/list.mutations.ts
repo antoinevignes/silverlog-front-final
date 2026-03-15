@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { useAuth } from "@/auth";
+import { apiClient } from "@/utils/api-client";
 
 const LIST_CONFIG: Record<
   "top" | "watchlist",
@@ -52,14 +53,10 @@ export function useToggleMovieList(movieId: string) {
 
       const listId = user[LIST_CONFIG[type].idKey];
 
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/lists/${listId}/movies/toggle`,
+      const data = await apiClient<any>(
+        `/lists/${listId}/movies/toggle`,
         {
-          credentials: "include",
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
           body: JSON.stringify({
             movie_id: payloadMovieId,
             title,
@@ -68,14 +65,9 @@ export function useToggleMovieList(movieId: string) {
             release_date: releaseDate?.trim() === "" ? null : releaseDate,
             genres: genres.length > 0 ? genres : null,
           }),
-        },
+        }
       );
 
-      if (!res.ok) {
-        throw new Error("Une erreur est survenue");
-      }
-
-      const data = await res.json();
       return { data, type };
     },
 
@@ -111,14 +103,7 @@ export function useToggleCustomList(movieId: string) {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: async ({
-      listId,
-      title,
-      posterPath,
-      backdropPath,
-      releaseDate,
-      genres,
-    }: {
+    mutationFn: (payload: {
       listId: number;
       title: string;
       posterPath: string | null;
@@ -126,35 +111,19 @@ export function useToggleCustomList(movieId: string) {
       releaseDate: string | null;
       genres: Array<{ id: number; name: string }>;
     }) => {
-      if (!user) {
-        throw new Error("Unauthenticated");
-      }
+      if (!user) throw new Error("Unauthenticated");
 
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/lists/${listId}/movies/toggle`,
-        {
-          credentials: "include",
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            movie_id: movieId,
-            title,
-            poster_path: posterPath?.trim() === "" ? null : posterPath,
-            backdrop_path: backdropPath?.trim() === "" ? null : backdropPath,
-            release_date: releaseDate?.trim() === "" ? null : releaseDate,
-            genres: genres.length > 0 ? genres : null,
-          }),
-        },
-      );
-
-      if (!res.ok) {
-        throw new Error("Une erreur est survenue");
-      }
-
-      const data = await res.json();
-      return data;
+      return apiClient<any>(`/lists/${payload.listId}/movies/toggle`, {
+        method: "POST",
+        body: JSON.stringify({
+          movie_id: movieId,
+          title: payload.title,
+          poster_path: payload.posterPath?.trim() === "" ? null : payload.posterPath,
+          backdrop_path: payload.backdropPath?.trim() === "" ? null : payload.backdropPath,
+          release_date: payload.releaseDate?.trim() === "" ? null : payload.releaseDate,
+          genres: payload.genres.length > 0 ? payload.genres : null,
+        }),
+      });
     },
 
     onSuccess: () => {
@@ -188,32 +157,17 @@ export const useCreateList = () => {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: async ({
-      title,
-      description,
-      is_public,
-    }: {
+    mutationFn: (payload: {
       title: string;
       description: string;
       is_public: boolean;
     }) => {
-      if (!user) {
-        throw new Error("Unauthenticated");
-      }
+      if (!user) throw new Error("Unauthenticated");
 
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/lists`, {
+      return apiClient<any>("/lists", {
         method: "POST",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, description, is_public }),
+        body: JSON.stringify(payload),
       });
-
-      if (!res.ok) {
-        throw new Error("Une erreur est survenue");
-      }
-
-      const data = await res.json();
-      return data;
     },
 
     onSuccess: () => {
@@ -245,25 +199,12 @@ export const useSaveList = (listId: string) => {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: async () => {
-      if (!user) {
-        throw new Error("Unauthenticated");
-      }
+    mutationFn: () => {
+      if (!user) throw new Error("Unauthenticated");
 
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/lists/${listId}/toggle`,
-        {
-          method: "POST",
-          credentials: "include",
-        },
-      );
-
-      if (!res.ok) {
-        throw new Error("Une erreur est survenue");
-      }
-
-      const data = await res.json();
-      return data;
+      return apiClient<any>(`/lists/${listId}/toggle`, {
+        method: "POST",
+      });
     },
 
     onSuccess: (data) => {
@@ -300,24 +241,12 @@ export const useDeleteList = () => {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: async (listId: number) => {
-      if (!user) {
-        throw new Error("Unauthenticated");
-      }
+    mutationFn: (listId: number) => {
+      if (!user) throw new Error("Unauthenticated");
 
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/lists/${listId}`,
-        {
-          method: "DELETE",
-          credentials: "include",
-        },
-      );
-
-      if (!res.ok) {
-        throw new Error("Une erreur est survenue");
-      }
-
-      return res;
+      return apiClient<any>(`/lists/${listId}`, {
+        method: "DELETE",
+      });
     },
 
     onSuccess: () => {

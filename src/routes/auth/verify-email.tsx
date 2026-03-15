@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { apiClient } from "@/utils/api-client";
 
 export const Route = createFileRoute("/auth/verify-email")({
   validateSearch: (search) =>
@@ -12,17 +13,13 @@ export const Route = createFileRoute("/auth/verify-email")({
     }
 
     try {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/auth/verify-email?token=${token}`,
-      );
-
-      const data = await res.json();
-
-      return data;
-    } catch (error) {
+      return await apiClient<any>("/auth/verify-email", {
+        params: { token },
+      });
+    } catch (error: any) {
       return {
         success: false,
-        message: error || "Erreur de vérification",
+        message: error.message || "Erreur de vérification",
       };
     }
   },

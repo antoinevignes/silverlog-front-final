@@ -1,57 +1,21 @@
 import { queryOptions } from "@tanstack/react-query";
+import { apiClient } from "@/utils/api-client";
 
 export const movieReviewQuery = (user: unknown, movieId: string) =>
   queryOptions({
     queryKey: ["review", movieId],
-    queryFn: async () => {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/reviews/${movieId}`,
-        {
-          credentials: "include",
-        },
-      );
-
-      if (!res.ok)
-        throw new Error("Erreur réseau : impossible de récupérer l'avis.");
-
-      const data = await res.json();
-
-      return data;
-    },
+    queryFn: () => apiClient<any>(`/reviews/${movieId}`),
     enabled: !!user,
   });
 
 export const movieReviewsQuery = (movieId: string) =>
   queryOptions({
     queryKey: ["reviews", movieId],
-    queryFn: async () => {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/reviews/${movieId}/all`,
-        {
-          credentials: "include",
-        },
-      );
-
-      if (!res.ok)
-        throw new Error("Erreur réseau : impossible de récupérer les avis.");
-
-      const data = await res.json();
-
-      return data;
-    },
+    queryFn: () => apiClient<any[]>(`/reviews/${movieId}/all`),
   });
 
 export const recentReviewsQuery = () =>
   queryOptions({
     queryKey: ["reviews", "recent"],
-    queryFn: async () => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/reviews/recent`);
-
-      if (!res.ok)
-        throw new Error("Erreur réseau : impossible de récupérer les avis récents.");
-
-      const data = await res.json();
-
-      return data;
-    },
+    queryFn: () => apiClient<any[]>("/reviews/recent"),
   });

@@ -1,139 +1,72 @@
 import { queryOptions } from "@tanstack/react-query";
+import { apiClient } from "@/utils/api-client";
+import type { MovieType } from "@/utils/types/movie";
 
 export const movieDataQuery = (movieId: string) =>
   queryOptions({
     queryKey: ["movie", movieId, "data"],
-    queryFn: async () => {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/movies/${movieId}`,
-      );
-
-      if (!res.ok)
-        throw new Error("Erreur réseau : impossible de récupérer le film.");
-
-      return await res.json();
-    },
+    queryFn: () => apiClient<MovieType>(`/movies/${movieId}`),
   });
 
 export const movieDetailsQuery = (movieId: string) =>
   queryOptions({
     queryKey: ["movie", movieId],
-    queryFn: async () => {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/tmdb/movie/${movieId}?language=fr-FR`,
-      );
-
-      if (!res.ok)
-        throw new Error(
-          "Erreur réseau : impossible de récupérer les détails du film.",
-        );
-
-      return await res.json();
-    },
+    queryFn: () =>
+      apiClient<MovieType>(`/tmdb/movie/${movieId}`, {
+        params: { language: "fr-FR" },
+      }),
   });
 
 export const movieCreditsQuery = (movieId: string) =>
   queryOptions({
     queryKey: ["movie", movieId, "credits"],
-    queryFn: async () => {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/tmdb/movie/${movieId}/credits?language=fr-FR`,
-      );
-
-      if (!res.ok)
-        throw new Error(
-          "Erreur réseau : impossible de récupérer le casting du film.",
-        );
-
-      return await res.json();
-    },
+    queryFn: () =>
+      apiClient<any>(`/tmdb/movie/${movieId}/credits`, {
+        params: { language: "fr-FR" },
+      }),
   });
 
 export const similarMoviesQuery = (movieId: string) =>
   queryOptions({
     queryKey: ["movie", movieId, "similar"],
-    queryFn: async () => {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/tmdb/movie/${movieId}/similar?language=fr-FR`,
-      );
-
-      if (!res.ok)
-        throw new Error(
-          "Erreur réseau : impossible de récupérer les films similaires.",
-        );
-
-      return await res.json();
-    },
+    queryFn: () =>
+      apiClient<any>(`/tmdb/movie/${movieId}/similar`, {
+        params: { language: "fr-FR" },
+      }),
   });
 
 export const movieSearchQuery = (query: string) =>
   queryOptions({
     queryKey: ["movie", "search", query],
-    queryFn: async () => {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/tmdb/search/movie?query=${query}&include_adult=false&language=fr-FR&page=1`,
-      );
-
-      if (!res.ok)
-        throw new Error(
-          "Erreur réseau : erreur lors de la recherche de films.",
-        );
-
-      return await res.json();
-    },
+    queryFn: () =>
+      apiClient<any>("/tmdb/search/movie", {
+        params: {
+          query,
+          include_adult: "false",
+          language: "fr-FR",
+          page: 1,
+        },
+      }),
     enabled: !!query,
   });
 
 export const popularMoviesQuery = () =>
   queryOptions({
     queryKey: ["movie", "popular"],
-    queryFn: async () => {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/tmdb/trending/movie/week?language=fr-FR`,
-      );
-
-      if (!res.ok)
-        throw new Error(
-          "Erreur réseau : impossible de récupérer les films populaires.",
-        );
-
-      return await res.json();
-    },
+    queryFn: () =>
+      apiClient<any>("/tmdb/trending/movie/week", {
+        params: { language: "fr-FR" },
+      }),
   });
 
 export const crewPicksQuery = () =>
   queryOptions({
     queryKey: ["movies", "crew-picks"],
-    queryFn: async () => {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/movies/crew-picks`,
-      );
-
-      if (!res.ok)
-        throw new Error(
-          "Erreur réseau : impossible de récupérer la sélection de la rédaction.",
-        );
-
-      return await res.json();
-    },
+    queryFn: () => apiClient<MovieType[]>("/movies/crew-picks"),
   });
 
 export const movieFriendsActivityQuery = (movieId: string) =>
   queryOptions({
     queryKey: ["movies", movieId, "friends-activity"],
-    queryFn: async () => {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/movies/${movieId}/friends`,
-        {
-          credentials: "include",
-        },
-      );
-
-      if (!res.ok)
-        throw new Error(
-          "Erreur réseau : impossible de récupérer l'activité des amis.",
-        );
-
-      return await res.json();
-    },
+    queryFn: () => apiClient<any>(`/movies/${movieId}/friends`),
   });

@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { createContext, useContext } from "react";
 import { toast } from "sonner";
+import { apiClient } from "@/utils/api-client";
 
 interface User {
   id: string;
@@ -27,39 +28,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { data: authData, isPending } = useQuery({
     queryKey: ["session"],
     queryFn: async () => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/session`, {
-        credentials: "include",
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) return { user: null, isAuthenticated: false };
-
-      return data;
+      try {
+        return await apiClient<any>("/auth/session");
+      } catch (error) {
+        return { user: null, isAuthenticated: false };
+      }
     },
     staleTime: Infinity,
     retry: false,
   });
 
   const loginMutation = useMutation({
-    mutationFn: async (values: { email: string; password: string }) => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/sign-in`, {
+    mutationFn: (values: { email: string; password: string }) =>
+      apiClient<any>("/auth/sign-in", {
         method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify(values),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Une erreur est survenue");
-      }
-
-      return data;
-    },
+      }),
     onSuccess: (data) => {
       queryClient.setQueryData(["session"], {
         user: data,
@@ -77,10 +61,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       user: null,
       isAuthenticated: false,
     });
-    fetch(`${import.meta.env.VITE_API_URL}/auth/sign-out`, {
-      method: "POST",
-      credentials: "include",
-    });
+    apiClient("/auth/sign-out", { method: "POST" });
   };
 
   if (isPending) return <></>;

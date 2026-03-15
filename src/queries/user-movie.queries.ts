@@ -1,41 +1,14 @@
 import { queryOptions } from "@tanstack/react-query";
+import { apiClient } from "@/utils/api-client";
 
 export const movieStateQuery = (movieId: string) =>
   queryOptions({
     queryKey: ["movie", movieId, "state"],
-    queryFn: async () => {
-      const data = await fetch(
-        `${import.meta.env.VITE_API_URL}/user_movie/${movieId}`,
-        {
-          credentials: "include",
-        },
-      );
-
-      if (!data.ok)
-        throw new Error(
-          "Erreur réseau : impossible de récupérer l'état du film.",
-        );
-
-      return await data.json();
-    },
+    queryFn: () => apiClient<any>(`/user_movie/${movieId}`),
   });
 
 export const seenMoviesQuery = (userId: string) =>
   queryOptions({
     queryKey: ["user", userId, "seen-movies"],
-    queryFn: async () => {
-      const data = await fetch(
-        `${import.meta.env.VITE_API_URL}/user_movie/seen`,
-        {
-          credentials: "include",
-        },
-      );
-
-      if (!data.ok)
-        throw new Error(
-          "Erreur réseau : impossible de récupérer les films vus.",
-        );
-
-      return await data.json();
-    },
+    queryFn: () => apiClient<any[]>("/user_movie/seen"),
   });

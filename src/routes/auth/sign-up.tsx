@@ -8,6 +8,7 @@ import { FieldInfo, useAppForm } from "@/utils/useAppForm";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Image } from "@unpic/react";
+import { apiClient } from "@/utils/api-client";
 
 export const Route = createFileRoute("/auth/sign-up")({
   component: RouteComponent,
@@ -17,27 +18,15 @@ function RouteComponent() {
   const navigate = useNavigate();
 
   const signUpMutation = useMutation({
-    mutationFn: async (values: {
+    mutationFn: (values: {
       username: string;
       email: string;
       password: string;
-    }) => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/sign-up`, {
+    }) =>
+      apiClient<any>("/auth/sign-up", {
         method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify(values),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Une erreur est survenue");
-      }
-      return data;
-    },
+      }),
     onSuccess: (data) => {
       if (data.success) toast.success(data.success);
       navigate({ to: "/auth/sign-in", search: { redirect: "/" } });

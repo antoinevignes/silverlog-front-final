@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@/auth";
+import { apiClient } from "@/utils/api-client";
 
 export function useUpsertReview(movieId: string) {
   const { user } = useAuth();
@@ -9,28 +10,16 @@ export function useUpsertReview(movieId: string) {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (content: string) => {
-      if (!user) {
-        throw new Error("Unauthenticated");
-      }
+    mutationFn: (content: string) => {
+      if (!user) throw new Error("Unauthenticated");
 
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/reviews`, {
+      return apiClient<any>("/reviews", {
         method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify({
           movie_id: movieId,
           content,
         }),
       });
-
-      if (!res.ok) {
-        throw new Error("Une erreur est survenue");
-      }
-
-      return await res.json();
     },
 
     onSuccess: () => {
@@ -62,24 +51,12 @@ export function useLikeReview(movie_id: string) {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (reviewId: string) => {
-      if (!user) {
-        throw new Error("Unauthenticated");
-      }
+    mutationFn: (reviewId: string) => {
+      if (!user) throw new Error("Unauthenticated");
 
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/reviews/${reviewId}/like`,
-        {
-          method: "POST",
-          credentials: "include",
-        },
-      );
-
-      if (!res.ok) {
-        throw new Error("Une erreur est survenue");
-      }
-
-      return await res.json();
+      return apiClient<any>(`/reviews/${reviewId}/like`, {
+        method: "POST",
+      });
     },
 
     onSuccess: () => {
@@ -109,24 +86,12 @@ export function useDeleteReview(reviewId: string, movieId: string) {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async () => {
-      if (!user) {
-        throw new Error("Unauthenticated");
-      }
+    mutationFn: () => {
+      if (!user) throw new Error("Unauthenticated");
 
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/reviews/${reviewId}`,
-        {
-          method: "DELETE",
-          credentials: "include",
-        },
-      );
-
-      if (!res.ok) {
-        throw new Error("Une erreur est survenue");
-      }
-
-      return await res.json();
+      return apiClient<any>(`/reviews/${reviewId}`, {
+        method: "DELETE",
+      });
     },
 
     onSuccess: () => {
