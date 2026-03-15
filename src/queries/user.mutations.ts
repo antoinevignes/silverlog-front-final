@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import { useAuth } from "@/auth";
 import { useNavigate } from "@tanstack/react-router";
 import { apiClient } from "@/utils/api-client";
+import type { UserType } from "@/utils/types/user";
 
 // MISE A JOUR DU PSEUDO UTILISATEUR
 export function useUpdateUsername() {
@@ -14,7 +15,7 @@ export function useUpdateUsername() {
     mutationFn: (username: string) => {
       if (!user) throw new Error("Unauthenticated");
 
-      return apiClient<any>("/user/username", {
+      return apiClient<UserType>("/user/username", {
         method: "PATCH",
         body: JSON.stringify({ username }),
       });
@@ -50,7 +51,7 @@ export function useUpdateLocation() {
     mutationFn: (location: string) => {
       if (!user) throw new Error("Unauthenticated");
 
-      return apiClient<any>("/user/location", {
+      return apiClient<UserType>("/user/location", {
         method: "PATCH",
         body: JSON.stringify({ location }),
       });
@@ -88,7 +89,7 @@ export function useUploadAvatar() {
       const formData = new FormData();
       formData.append("avatar", file);
 
-      return apiClient<any>("/user/avatar", {
+      return apiClient<UserType>("/user/avatar", {
         method: "PATCH",
         body: formData,
         headers: {}, // Let browser set Content-Type for FormData
@@ -119,7 +120,7 @@ export function useUploadBanner() {
       const formData = new FormData();
       formData.append("banner", file);
 
-      return apiClient<any>("/user/banner", {
+      return apiClient<UserType>("/user/banner", {
         method: "PATCH",
         body: formData,
         headers: {}, // Let browser set Content-Type for FormData
@@ -145,7 +146,7 @@ export function useDeleteAccount() {
 
   return useMutation({
     mutationFn: () =>
-      apiClient<any>("/user/delete", {
+      apiClient<{ success: string }>("/user/delete", {
         method: "DELETE",
       }),
 
@@ -174,7 +175,7 @@ export function useDeleteAvatar() {
     mutationFn: () => {
       if (!user) throw new Error("Unauthenticated");
 
-      return apiClient<any>("/user/avatar", {
+      return apiClient<UserType>("/user/avatar", {
         method: "DELETE",
       });
     },
@@ -200,7 +201,7 @@ export function useDeleteBanner() {
     mutationFn: () => {
       if (!user) throw new Error("Unauthenticated");
 
-      return apiClient<any>("/user/banner", {
+      return apiClient<UserType>("/user/banner", {
         method: "DELETE",
       });
     },
@@ -226,7 +227,7 @@ export function useFollowUser(userId: string) {
     mutationFn: () => {
       if (!user) throw new Error("Unauthenticated");
 
-      return apiClient<any>(`/user/${userId}/follow`, {
+      return apiClient<{ success: string }>(`/user/${userId}/follow`, {
         method: "POST",
       });
     },
@@ -254,7 +255,7 @@ export function useUnfollowUser(userId: string) {
     mutationFn: () => {
       if (!user) throw new Error("Unauthenticated");
 
-      return apiClient<any>(`/user/${userId}/follow`, {
+      return apiClient<{ success: string }>(`/user/${userId}/follow`, {
         method: "DELETE",
       });
     },

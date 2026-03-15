@@ -3,6 +3,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { useAuth } from "@/auth";
 import { apiClient } from "@/utils/api-client";
+import type { ListType } from "@/utils/types/list";
 
 const LIST_CONFIG: Record<
   "top" | "watchlist",
@@ -53,7 +54,7 @@ export function useToggleMovieList(movieId: string) {
 
       const listId = user[LIST_CONFIG[type].idKey];
 
-      const data = await apiClient<any>(
+      const data = await apiClient<{ action: string }>(
         `/lists/${listId}/movies/toggle`,
         {
           method: "POST",
@@ -65,13 +66,13 @@ export function useToggleMovieList(movieId: string) {
             release_date: releaseDate?.trim() === "" ? null : releaseDate,
             genres: genres.length > 0 ? genres : null,
           }),
-        }
+        },
       );
 
       return { data, type };
     },
 
-    onSuccess: ({ data, type }) => {
+    onSuccess: ({ data, type }: { data: { action: string }; type: string }) => {
       if (data.action === "full" && type === "top") {
         toast.error(LIST_CONFIG.top.fullMessage);
       }
@@ -113,7 +114,7 @@ export function useToggleCustomList(movieId: string) {
     }) => {
       if (!user) throw new Error("Unauthenticated");
 
-      return apiClient<any>(`/lists/${payload.listId}/movies/toggle`, {
+      return apiClient<{ success: string }>(`/lists/${payload.listId}/movies/toggle`, {
         method: "POST",
         body: JSON.stringify({
           movie_id: movieId,
@@ -164,7 +165,7 @@ export const useCreateList = () => {
     }) => {
       if (!user) throw new Error("Unauthenticated");
 
-      return apiClient<any>("/lists", {
+      return apiClient<ListType>("/lists", {
         method: "POST",
         body: JSON.stringify(payload),
       });
@@ -202,12 +203,12 @@ export const useSaveList = (listId: string) => {
     mutationFn: () => {
       if (!user) throw new Error("Unauthenticated");
 
-      return apiClient<any>(`/lists/${listId}/toggle`, {
+      return apiClient<{ action: string }>(`/lists/${listId}/toggle`, {
         method: "POST",
       });
     },
 
-    onSuccess: (data) => {
+    onSuccess: (data: { action: string }) => {
       queryClient.invalidateQueries({
         queryKey: ["list", listId, "data"],
       });
@@ -244,7 +245,7 @@ export const useDeleteList = () => {
     mutationFn: (listId: number) => {
       if (!user) throw new Error("Unauthenticated");
 
-      return apiClient<any>(`/lists/${listId}`, {
+      return apiClient<{ success: string }>(`/lists/${listId}`, {
         method: "DELETE",
       });
     },

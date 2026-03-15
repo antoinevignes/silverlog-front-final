@@ -2,20 +2,11 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { createContext, useContext } from "react";
 import { toast } from "sonner";
 import { apiClient } from "@/utils/api-client";
-
-interface User {
-  id: string;
-  username: string;
-  email: string;
-  top_list_id: string;
-  watchlist_id: string;
-  avatar_path: string | null;
-  banner_path: string | null;
-}
+import type { UserType } from "@/utils/types/user";
 
 export interface AuthState {
   isAuthenticated: boolean;
-  user: User | null;
+  user: UserType | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }

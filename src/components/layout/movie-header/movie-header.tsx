@@ -105,16 +105,18 @@ export default function MovieHeader() {
           <div className="movie-details">
             <Title title={movie.title} size="xl" variant="h1" />
 
-            <p className="director-wrapper">
-              Réal. par{" "}
-              <Link
-                to="/person/$personId"
-                params={{ personId: String(director.id) }}
-                className="underline-link"
-              >
-                {director.name}
-              </Link>
-            </p>
+            {director && (
+              <p className="director-wrapper">
+                Réal. par{" "}
+                <Link
+                  to="/person/$personId"
+                  params={{ personId: String(director.id) }}
+                  className="underline-link"
+                >
+                  {director.name}
+                </Link>
+              </p>
+            )}
 
             <p
               className="movie-meta"

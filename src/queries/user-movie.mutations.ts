@@ -21,7 +21,7 @@ export function useUpdateMovieRating(movieId: string) {
     }) => {
       if (!user) throw new Error("Unauthenticated");
 
-      return apiClient<any>(`/user_movie/${movieId}/rate`, {
+      return apiClient<{ success: string }>(`/user_movie/${movieId}/rate`, {
         method: "POST",
         body: JSON.stringify({
           rating: payload.value * 2,
@@ -74,7 +74,7 @@ export function useDeleteMovieRating(movieId: string) {
     mutationFn: () => {
       if (!user) throw new Error("Unauthenticated");
 
-      return apiClient<any>(`/user_movie/${movieId}`, {
+      return apiClient<{ success: string }>(`/user_movie/${movieId}`, {
         method: "DELETE",
       });
     },
@@ -117,7 +117,7 @@ export function useUpdateSeenDate(movieId: string) {
     }) => {
       if (!user) throw new Error("Unauthenticated");
 
-      return apiClient<any>(`/user_movie/${movieId}/seen-date`, {
+      return apiClient<{ success: string }>(`/user_movie/${movieId}/seen-date`, {
         method: "POST",
         body: JSON.stringify({
           date: payload.seenDate,

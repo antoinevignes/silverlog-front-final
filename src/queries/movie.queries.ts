@@ -1,6 +1,9 @@
 import { queryOptions } from "@tanstack/react-query";
 import { apiClient } from "@/utils/api-client";
 import type { MovieType } from "@/utils/types/movie";
+import type { CastType } from "@/utils/types/cast";
+import type { CrewType } from "@/utils/types/crew";
+import type { UserType } from "@/utils/types/user";
 
 export const movieDataQuery = (movieId: string) =>
   queryOptions({
@@ -21,7 +24,9 @@ export const movieCreditsQuery = (movieId: string) =>
   queryOptions({
     queryKey: ["movie", movieId, "credits"],
     queryFn: () =>
-      apiClient<any>(`/tmdb/movie/${movieId}/credits`, {
+      apiClient<{ id: number; cast: CastType[]; crew: CrewType[] }>(
+        `/tmdb/movie/${movieId}/credits`,
+        {
         params: { language: "fr-FR" },
       }),
   });
@@ -30,7 +35,7 @@ export const similarMoviesQuery = (movieId: string) =>
   queryOptions({
     queryKey: ["movie", movieId, "similar"],
     queryFn: () =>
-      apiClient<any>(`/tmdb/movie/${movieId}/similar`, {
+      apiClient<{ results: MovieType[] }>(`/tmdb/movie/${movieId}/similar`, {
         params: { language: "fr-FR" },
       }),
   });
@@ -39,7 +44,7 @@ export const movieSearchQuery = (query: string) =>
   queryOptions({
     queryKey: ["movie", "search", query],
     queryFn: () =>
-      apiClient<any>("/tmdb/search/movie", {
+      apiClient<{ results: MovieType[] }>("/tmdb/search/movie", {
         params: {
           query,
           include_adult: "false",
@@ -54,7 +59,7 @@ export const popularMoviesQuery = () =>
   queryOptions({
     queryKey: ["movie", "popular"],
     queryFn: () =>
-      apiClient<any>("/tmdb/trending/movie/week", {
+      apiClient<{ results: MovieType[] }>("/tmdb/trending/movie/week", {
         params: { language: "fr-FR" },
       }),
   });
@@ -68,5 +73,5 @@ export const crewPicksQuery = () =>
 export const movieFriendsActivityQuery = (movieId: string) =>
   queryOptions({
     queryKey: ["movies", movieId, "friends-activity"],
-    queryFn: () => apiClient<any>(`/movies/${movieId}/friends`),
+    queryFn: () => apiClient<UserType[]>(`/movies/${movieId}/friends`),
   });

@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@/auth";
 import { apiClient } from "@/utils/api-client";
+import type { ReviewType } from "@/utils/types/review";
 
 export function useUpsertReview(movieId: string) {
   const { user } = useAuth();
@@ -13,7 +14,7 @@ export function useUpsertReview(movieId: string) {
     mutationFn: (content: string) => {
       if (!user) throw new Error("Unauthenticated");
 
-      return apiClient<any>("/reviews", {
+      return apiClient<ReviewType>("/reviews", {
         method: "POST",
         body: JSON.stringify({
           movie_id: movieId,
@@ -54,7 +55,7 @@ export function useLikeReview(movie_id: string) {
     mutationFn: (reviewId: string) => {
       if (!user) throw new Error("Unauthenticated");
 
-      return apiClient<any>(`/reviews/${reviewId}/like`, {
+      return apiClient<{ success: string }>(`/reviews/${reviewId}/like`, {
         method: "POST",
       });
     },
@@ -89,7 +90,7 @@ export function useDeleteReview(reviewId: string, movieId: string) {
     mutationFn: () => {
       if (!user) throw new Error("Unauthenticated");
 
-      return apiClient<any>(`/reviews/${reviewId}`, {
+      return apiClient<{ success: string }>(`/reviews/${reviewId}`, {
         method: "DELETE",
       });
     },
