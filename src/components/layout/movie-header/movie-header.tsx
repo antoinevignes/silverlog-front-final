@@ -49,11 +49,11 @@ export default function MovieHeader() {
   const backdropSrc = getCloudinarySrc(movie.backdrop_path, "backdrops");
   const posterSrc = getCloudinarySrc(movie.poster_path, "posters");
 
-  const voteCount = Number(movieData.rating_count) + Number(movie.vote_count);
+  const voteCount = Number(movieData.rating_count ?? 0) + Number(movie.vote_count);
   const voteAvg =
-    (Number(movieData.movie_avg) * Number(movieData.rating_count) +
+    (Number(movieData.movie_avg ?? 0) * Number(movieData.rating_count ?? 0) +
       Number(movie.vote_average) * Number(movie.vote_count)) /
-    voteCount;
+    (voteCount || 1);
 
   return (
     <>

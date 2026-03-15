@@ -16,4 +16,6 @@ export type MovieType = {
   popularity: number;
   seen_at: string;
   personal_rating: number;
+  rating_count?: number;
+  movie_avg?: number;
 };
