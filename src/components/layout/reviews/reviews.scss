@@ -5,6 +5,10 @@
   flex-direction: column;
   gap: 1rem;
 
+  .review-card {
+    background-color: v.$c-surface;
+  }
+
   .card-footer {
     @include m.flex-between;
   }
