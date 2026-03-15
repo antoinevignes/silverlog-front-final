@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { Clock, Star, BookmarkPlus } from "lucide-react";
 import Button from "@/components/ui/button/button";
-import MovieCard from "@/components/layout/movie-card/movie-card";
-import HorizontalScroller from "@/components/layout/horizontal-scroller/horizontal-scroller";
+import MovieCard from "@/features/movie/components/movie-card/movie-card";
+import HorizontalScroller from "@/components/ui/horizontal-scroller/horizontal-scroller";
 import { useAuth } from "@/auth";
 import "./user-home.scss";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -10,11 +10,11 @@ import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
 import { Image } from "@unpic/react";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
-import { crewPicksQuery, popularMoviesQuery } from "@/queries/movie.queries";
-import { userFeedQuery } from "@/queries/user.queries";
-import type { MovieType } from "@/utils/types/movie";
+import { crewPicksQuery, popularMoviesQuery } from "@/features/movie/api/movie.queries";
+import { userFeedQuery } from "@/features/user/api/user.queries";
+import type { MovieType } from "@/features/movie/types/movie";
 import Badge from "@/components/ui/badge/badge";
-import Title from "../title/title";
+import Title from "@/components/ui/title/title";
 
 export default function UserHome() {
   const { user } = useAuth();

@@ -1,16 +1,16 @@
 import { Link } from "@tanstack/react-router";
 import { BookText, Star, Users } from "lucide-react";
 import Button from "@/components/ui/button/button";
-import MovieCard from "@/components/layout/movie-card/movie-card";
+import MovieCard from "@/features/movie/components/movie-card/movie-card";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { recentReviewsQuery } from "@/queries/review.query";
-import { crewPicksQuery } from "@/queries/movie.queries";
+import { recentReviewsQuery } from "@/features/review/api/review.query";
+import { crewPicksQuery } from "@/features/movie/api/movie.queries";
 import "./visitor-home.scss";
 import { Image } from "@unpic/react";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
-import Title from "../title/title";
-import type { MovieType } from "@/utils/types/movie";
-import { Card } from "@/components/ui/card";
+import Title from "@/components/ui/title/title";
+import type { MovieType } from "@/features/movie/types/movie";
+import { Card } from "@/components/ui/card/card";
 
 export default function VisitorHome() {
   const { data: recentReviews } = useSuspenseQuery(recentReviewsQuery());

@@ -1,6 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 import { apiClient } from "@/utils/api-client";
-import type { ReviewType } from "@/utils/types/review";
+import type { ReviewType } from "@/features/review/types/review";
 
 export const movieReviewQuery = (user: unknown, movieId: string) =>
   queryOptions({

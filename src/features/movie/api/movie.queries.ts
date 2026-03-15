@@ -1,9 +1,9 @@
 import { queryOptions } from "@tanstack/react-query";
 import { apiClient } from "@/utils/api-client";
-import type { MovieType } from "@/utils/types/movie";
-import type { CastType } from "@/utils/types/cast";
-import type { CrewType } from "@/utils/types/crew";
-import type { UserType } from "@/utils/types/user";
+import type { MovieType } from "@/features/movie/types/movie";
+import type { CastType } from "@/features/movie/types/cast";
+import type { CrewType } from "@/features/movie/types/crew";
+import type { UserType } from "@/features/user/types/user";
 
 export const movieDataQuery = (movieId: string) =>
   queryOptions({

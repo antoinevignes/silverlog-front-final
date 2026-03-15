@@ -1,6 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 import { apiClient } from "@/utils/api-client";
-import type { UserType, FeedActivityType } from "@/utils/types/user";
+import type { UserType, FeedActivityType } from "@/features/user/types/user";
 
 export const userQuery = (user_id: string) =>
   queryOptions({

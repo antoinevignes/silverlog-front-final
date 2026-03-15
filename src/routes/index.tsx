@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useAuth } from "@/auth";
-import VisitorHome from "@/components/layout/home/visitor-home";
-import UserHome from "@/components/layout/home/user-home";
-import { popularMoviesQuery, crewPicksQuery } from "@/queries/movie.queries";
-import { recentReviewsQuery } from "@/queries/review.query";
+import VisitorHome from "@/features/movie/components/visitor-home";
+import UserHome from "@/features/user/components/user-home";
+import { popularMoviesQuery, crewPicksQuery } from "@/features/movie/api/movie.queries";
+import { recentReviewsQuery } from "@/features/review/api/review.query";
 
 export const Route = createFileRoute("/")({
   loader: ({ context: { queryClient } }) => {

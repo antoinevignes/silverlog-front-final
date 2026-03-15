@@ -1,7 +1,7 @@
 import { Image } from "@unpic/react";
 import { Film } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import type { MovieType } from "@/utils/types/movie";
+import type { MovieType } from "@/features/movie/types/movie";
 import "./movie-card.scss";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 

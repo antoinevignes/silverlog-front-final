@@ -18,4 +18,7 @@ export type MovieType = {
   personal_rating: number;
   rating_count?: number;
   movie_avg?: number;
+  rating?: number;
+  added_at?: string;
+  lists?: Array<{ id: number; title: string; list_type: string }>;
 };
