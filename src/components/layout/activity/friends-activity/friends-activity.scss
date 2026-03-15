@@ -1,0 +1,188 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.friends-activity {
+  margin-top: v.$space-lg;
+}
+
+.friends-avatars-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: v.$space-lg;
+
+  .friend-avatar-item {
+    .friend-card-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: v.$space-xs;
+
+      &:hover {
+        .avatar-wrapper {
+          border-color: v.$c-heading;
+          transform: translateY(-2px);
+        }
+      }
+    }
+
+    .friend-link {
+      text-decoration: none;
+      transition: transform 0.2s ease;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      padding: 2px;
+      transition: all 0.2s ease;
+
+      .avatar {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .avatar-init {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-color: v.$c-border;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1.25rem;
+        color: v.$c-text;
+      }
+    }
+
+    .review-indicator {
+      position: absolute;
+      bottom: 20px;
+      right: -8px;
+      background-color: v.$c-bg;
+      border: 1px solid v.$c-border;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: v.$c-heading;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      padding: 0;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background-color: v.$c-border;
+        transform: scale(1.1);
+      }
+    }
+  }
+}
+
+.review-modal-content {
+  .modal-header {
+    margin-bottom: v.$space-lg;
+
+    .modal-user-info {
+      display: flex;
+      align-items: center;
+      gap: v.$space-md;
+
+      .modal-avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        overflow: hidden;
+        background-color: v.$c-border;
+
+        .avatar {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .avatar-init {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 700;
+          color: v.$c-text;
+        }
+      }
+
+      .modal-user-meta {
+        .modal-username {
+          font-size: 1.25rem;
+          margin-bottom: 2px;
+        }
+
+        .modal-time {
+          font-size: 0.85rem;
+        }
+      }
+    }
+  }
+
+  .modal-review-body {
+    .modal-rating {
+      display: flex;
+      align-items: center;
+      gap: v.$space-sm;
+      margin-bottom: v.$space-md;
+
+      .stars {
+        display: flex;
+        gap: 2px;
+      }
+
+      .rating-value {
+        font-weight: 700;
+        font-size: 1rem;
+        color: v.$c-heading;
+      }
+    }
+
+    .review-text {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: v.$c-text;
+      font-style: italic;
+      padding: v.$space-lg;
+      background-color: v.$c-bg;
+      border-radius: v.$radius;
+      border-left: 3px solid v.$c-border;
+    }
+  }
+
+  .modal-footer {
+    margin-top: v.$space-xl;
+    display: flex;
+    justify-content: flex-end;
+
+    .modal-close-btn {
+      background-color: v.$c-surface;
+      border: 1px solid v.$c-border;
+      color: v.$c-text;
+      padding: v.$space-xs v.$space-lg;
+      border-radius: v.$radius;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background-color: v.$c-border;
+        border-color: v.$c-border-h;
+      }
+    }
+  }
+}

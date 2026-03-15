@@ -8,6 +8,7 @@ import MovieCard from "@/components/layout/movie-card/movie-card";
 import {
   movieCreditsQuery,
   movieDetailsQuery,
+  movieFriendsActivityQuery,
   similarMoviesQuery,
 } from "@/queries/movie.queries";
 import Skeleton from "@/components/ui/skeleton/skeleton";
@@ -16,6 +17,7 @@ import Reviews from "@/components/layout/reviews/reviews";
 import MovieHeaderSkeleton from "@/components/layout/movie-header/movie-header-skeleton";
 import Title from "@/components/layout/title/title";
 import "./index.scss";
+import FriendsActivity from "@/components/layout/activity/friends-activity/friends-activity";
 
 export const Route = createFileRoute("/movies/$movieId/")({
   loader: ({ context: { queryClient }, params: { movieId } }) => {
@@ -23,6 +25,7 @@ export const Route = createFileRoute("/movies/$movieId/")({
     queryClient.prefetchQuery(movieCreditsQuery(movieId));
     queryClient.prefetchQuery(movieStateQuery(movieId));
     queryClient.prefetchQuery(similarMoviesQuery(movieId));
+    queryClient.prefetchQuery(movieFriendsActivityQuery(movieId));
   },
   component: RouteComponent,
 });
@@ -33,6 +36,12 @@ function RouteComponent() {
       <Suspense fallback={<MovieHeaderSkeleton />}>
         <MovieHeader />
       </Suspense>
+
+      <section className="friends-activity container">
+        <Suspense fallback={<Skeleton width="100%" height="150px" />}>
+          <FriendsActivity />
+        </Suspense>
+      </section>
 
       <section className="reviews container">
         <Title title="Avis de la communauté" />

@@ -41,7 +41,7 @@ export default function Reviews() {
       <ul className="review-list">
         {reviews.map((review: ReviewType) => (
           <li key={review.id}>
-            <Card>
+            <Card className="review-card">
               <CardHeader>
                 <CardTitleRow>
                   <CardTitle>{review.username}</CardTitle>
@@ -62,7 +62,9 @@ export default function Reviews() {
                       size={16}
                       aria-hidden
                       fill={review.is_liked_by_user ? "#ef4444" : "none"}
-                      stroke={review.is_liked_by_user ? "#ef4444" : "currentColor"}
+                      stroke={
+                        review.is_liked_by_user ? "#ef4444" : "currentColor"
+                      }
                     />
                     {review.like_count}
                   </button>

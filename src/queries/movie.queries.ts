@@ -105,11 +105,33 @@ export const crewPicksQuery = () =>
   queryOptions({
     queryKey: ["movies", "crew-picks"],
     queryFn: async () => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/movies/crew-picks`);
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/movies/crew-picks`,
+      );
 
       if (!res.ok)
         throw new Error(
           "Erreur réseau : impossible de récupérer la sélection de la rédaction.",
+        );
+
+      return await res.json();
+    },
+  });
+
+export const movieFriendsActivityQuery = (movieId: string) =>
+  queryOptions({
+    queryKey: ["movies", movieId, "friends-activity"],
+    queryFn: async () => {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/movies/${movieId}/friends`,
+        {
+          credentials: "include",
+        },
+      );
+
+      if (!res.ok)
+        throw new Error(
+          "Erreur réseau : impossible de récupérer l'activité des amis.",
         );
 
       return await res.json();
