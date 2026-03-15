@@ -1,8 +1,11 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
 .reviews {
-  margin-bottom: 1.5rem;
+  margin-top: v.$space-lg;
 }
 
 .suggestions {
-  margin-top: 3rem;
-  margin-bottom: 3rem;
+  margin-top: v.$space-lg;
+  margin-bottom: v.$space-lg;
 }
