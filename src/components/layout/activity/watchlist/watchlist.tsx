@@ -82,7 +82,7 @@ export default function Watchlist() {
   }, [movies, selectedYear, selectedGenre, sortOrder]);
 
   return (
-    <main className="container watchlist-page">
+    <section className="watchlist-page">
       {movies.length > 0 ? (
         <>
           <header className="watchlist-filters">
@@ -165,6 +165,6 @@ export default function Watchlist() {
       ) : (
         <p className="empty-state">Votre watchlist est vide pour le moment.</p>
       )}
-    </main>
+    </section>
   );
 }

@@ -2,11 +2,9 @@
 @use "@/styles/abstracts/mixins" as m;
 
 .settings-page {
-  padding-top: v.$space-xl;
-  padding-bottom: v.$space-2xl;
+  margin-top: v.$space-2xl;
 
   .settings-header {
-    margin-bottom: v.$space-xl;
     border-bottom: 1px solid v.$c-border;
     padding-bottom: v.$space-lg;
 
@@ -187,16 +185,16 @@
   font-size: 1.25rem;
   font-weight: 700;
   color: v.$c-heading;
-  margin-bottom: 0.5rem;
+  margin-bottom: v.$space-sm;
 }
 
 .delete-dialog-desc {
-  margin-bottom: 1.5rem;
+  margin-bottom: v.$space-xl;
 }
 
 .delete-dialog-footer {
   display: flex;
-  gap: 0.5rem;
+  gap: v.$space-sm;
   justify-content: flex-end;
   width: 100%;
 }

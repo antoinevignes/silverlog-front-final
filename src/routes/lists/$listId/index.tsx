@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { listDataQuery } from "@/queries/list.queries";
 import ListDetails from "@/components/layout/lists/list-details/list-details";
 import ListSkeleton from "@/components/layout/lists/list-details/list-skeleton/list-skeleton";
+import { Suspense } from "react";
 
 export const Route = createFileRoute("/lists/$listId/")({
   loader: ({ context: { queryClient }, params }) => {
@@ -12,5 +13,9 @@ export const Route = createFileRoute("/lists/$listId/")({
 });
 
 function ListDetailsPage() {
-  return <ListDetails />;
+  return (
+    <Suspense fallback={<ListSkeleton />}>
+      <ListDetails />
+    </Suspense>
+  );
 }

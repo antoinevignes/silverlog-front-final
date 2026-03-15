@@ -7,6 +7,7 @@ import { listDataQuery } from "@/queries/list.queries";
 import { seenMoviesQuery } from "@/queries/user-movie.queries";
 import DiarySkeleton from "@/components/layout/activity/diary/diary-skeleton/diary-skeleton";
 import WatchlistSkeleton from "@/components/layout/activity/watchlist/watchlist-skeleton/watchlist-skeleton";
+import "./index.scss";
 
 const tabs = [
   { id: "watchlist", label: "Watchlist" },
@@ -27,7 +28,7 @@ function RouteComponent() {
   const [selected, setSelected] = useState<string>("watchlist");
 
   return (
-    <>
+    <main className="container activity-page">
       <Tabs
         selected={selected}
         setSelected={setSelected}
@@ -46,6 +47,6 @@ function RouteComponent() {
           <Diary />
         </Suspense>
       )}
-    </>
+    </main>
   );
 }

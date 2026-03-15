@@ -2,17 +2,17 @@
 @use "@/styles/abstracts/mixins" as m;
 
 .list-skeleton-page {
-  margin: 2rem auto;
+  margin: v.$space-2xl auto;
 
   .skeleton-backdrop {
     aspect-ratio: 16 / 9;
     border-radius: 0.5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: v.$space-lg;
   }
 
   .skeleton-author-section {
     @include m.flex-between;
-    margin-bottom: 2rem;
+    margin-bottom: v.$space-lg;
 
     .author-info {
       display: flex;
@@ -28,7 +28,7 @@
   }
 
   .skeleton-description {
-    margin-bottom: 2rem;
+    margin-bottom: v.$space-lg;
 
     .skeleton-desc-line {
       margin-bottom: 0.25rem;
@@ -42,21 +42,21 @@
   }
 
   .skeleton-stats {
-    margin-bottom: 1.5rem;
+    margin-bottom: v.$space-lg;
   }
 
   .skeleton-meta-row {
-    margin-bottom: 1.5rem;
+    margin-bottom: v.$space-lg;
   }
 
   .skeleton-filters {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1.25rem;
+    margin-bottom: v.$space-lg;
 
     .left-filters {
       display: flex;
-      gap: 0.5rem;
+      gap: v.$space-md;
     }
 
     .skeleton-badge {
@@ -67,7 +67,7 @@
   .skeleton-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 1rem;
+    gap: v.$space-lg;
 
     .skeleton-poster {
       aspect-ratio: 2 / 3;

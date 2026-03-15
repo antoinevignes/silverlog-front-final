@@ -2,26 +2,27 @@
 @use "@/styles/abstracts/mixins" as m;
 
 .list-details-page {
-  margin: 1rem auto;
+  margin-top: v.$space-2xl;
+  margin-bottom: v.$space-xl;
 
   .list-title {
-    margin-bottom: 1.25rem;
+    margin-bottom: v.$space-lg;
   }
 
   .list-backdrop {
-    margin-bottom: 1.5rem;
+    margin-bottom: v.$space-lg;
     border-radius: 0.5rem;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
   }
 
   .author-section {
     @include m.flex-between;
-    margin-bottom: 1.5rem;
+    margin-bottom: v.$space-lg;
 
     .author-info {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: v.$space-md;
 
       .avatar {
         width: 44px;
@@ -37,7 +38,7 @@
 
       .author-details {
         display: flex;
-        gap: 0.25rem;
+        gap: v.$space-xs;
         flex-direction: column;
 
         .author-name {
@@ -45,7 +46,7 @@
           color: v.$c-heading;
           display: flex;
           align-items: center;
-          gap: 0.25rem;
+          gap: v.$space-xs;
         }
 
         .updated-date {

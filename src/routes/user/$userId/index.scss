@@ -4,6 +4,7 @@
 .user-profile {
   position: relative;
   min-height: 100vh;
+  margin-bottom: v.$space-lg;
 }
 
 .profile-banner {
@@ -238,11 +239,16 @@
   display: flex;
   flex-direction: column;
   gap: v.$space-md;
-  margin-top: v.$space-sm;
+  margin-top: v.$space-md;
 
   .content-section {
     display: flex;
     flex-direction: column;
+
+    #top-movies-title,
+    #recent-activity-title {
+      margin-bottom: v.$space-md;
+    }
 
     .top-movies-grid {
       display: grid;

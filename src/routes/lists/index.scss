@@ -2,20 +2,20 @@
 @use "@/styles/abstracts/mixins" as m;
 
 .public-lists-page {
-  margin: 1rem auto;
+  margin: v.$space-2xl auto;
 
   .page-header {
-    margin-bottom: 1.5rem;
+    margin-bottom: v.$space-lg;
   }
 
   .lists-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.25rem;
+    gap: v.$space-lg;
 
     @include m.responsive(v.$bp-md) {
       grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-      gap: 1.5rem;
+      gap: v.$space-xl;
     }
   }
 }
@@ -23,10 +23,10 @@
 .list-skeleton {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.25rem;
+  gap: v.$space-lg;
 
   @include m.responsive(v.$bp-md) {
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 1.5rem;
+    gap: v.$space-xl;
   }
 }
