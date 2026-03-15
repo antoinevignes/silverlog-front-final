@@ -4,7 +4,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: v.$space-md;
 
   .back-button {
     position: relative;
@@ -36,13 +36,13 @@
   flex-direction: column;
 
   .rating-section {
-    margin-top: 1rem;
+    margin-top: v.$space-md;
 
     label {
       font-weight: 600;
       color: v.$c-text;
       display: block;
-      margin-bottom: 0.5rem;
+      margin-bottom: v.$space-sm;
     }
   }
 
@@ -58,9 +58,9 @@
 
     textarea {
       min-height: 6rem;
-      border-radius: 0.75rem;
+      border-radius: v.$radius;
       border: 1px solid v.$c-border-h;
-      padding: 0.75rem;
+      padding: v.$space-sm;
       font-size: 1rem;
       color: v.$c-text;
       resize: none;
@@ -79,7 +79,7 @@
       text-align: right;
       font-size: 0.875rem;
       color: v.$c-muted;
-      margin-top: -0.25rem;
+      margin-top: -(v.$space-xs);
 
       &.error {
         color: #ef4444;
@@ -94,12 +94,12 @@
 
       .footer-actions {
         display: flex;
-        gap: 0.5rem;
+        gap: v.$space-sm;
         margin-left: auto;
       }
 
       .delete-button {
-        padding: 0.5rem;
+        padding: v.$space-sm;
         color: v.$destructive;
         &:hover {
           background-color: rgba(v.$destructive, 0.1);

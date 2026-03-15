@@ -3,11 +3,11 @@
 
 .dialog-header {
   @include m.flex-between;
-  margin-bottom: 1.5rem;
+  margin-bottom: v.$space-lg;
 
   .dialog-movie-description {
     display: flex;
-    gap: 1rem;
+    gap: v.$space-md;
     align-items: center;
 
     h2 {
@@ -15,12 +15,12 @@
       font-size: 1.25rem;
       color: v.$c-heading;
       line-height: 1.2;
-      margin-bottom: 0.25rem;
+      margin-bottom: v.$space-xs;
     }
 
     .dialog-image {
       object-fit: cover;
-      border-radius: 0.5rem;
+      border-radius: v.$radius;
       width: 45px;
       height: 68px;
       margin: 0;
@@ -46,17 +46,17 @@
 .dialog-buttons {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: v.$space-sm;
 
   .action-card {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: v.$space-sm;
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: v.$space-sm v.$space-md;
     background: v.$c-bg;
     border: 1px solid v.$c-border;
-    border-radius: 0.625rem;
+    border-radius: v.$radius;
     color: v.$c-heading;
     font-weight: 600;
     font-size: 0.9375rem;

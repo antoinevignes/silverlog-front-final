@@ -1,10 +1,10 @@
 @use "@/styles/abstracts/variables" as v;
 
 .movie-details-tab {
-  margin-top: 1rem;
+  margin-top: v.$space-md;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: v.$space-md;
 
   li {
     display: flex;
@@ -20,7 +20,7 @@
 }
 
 .cast-scroller {
-  margin-top: 1rem;
+  margin-top: v.$space-md;
 
   .actor-crew-card {
     width: 6.5rem;
@@ -28,7 +28,7 @@
     .actor-crew-image {
       aspect-ratio: 2 / 3;
       overflow: hidden;
-      border-radius: 0.5rem;
+      border-radius: v.$radius;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 
       .actor-poster-fallback {
@@ -36,7 +36,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        border-radius: 0.5rem;
+        border-radius: v.$radius;
         height: 100%;
         border: 1px solid v.$c-border;
         box-sizing: border-box;
@@ -55,7 +55,7 @@
 
     .actor-crew-details {
       max-width: 6.5rem;
-      margin-top: 0.5rem;
+      margin-top: v.$space-sm;
       font-size: 0.875rem;
     }
   }

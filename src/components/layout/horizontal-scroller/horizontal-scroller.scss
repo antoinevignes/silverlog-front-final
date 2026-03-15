@@ -5,17 +5,17 @@
   position: relative;
 
   h3 {
-    padding: 0.25rem 0;
+    padding: v.$space-xs 0;
   }
 }
 
 .horizontal-scroll {
   display: flex;
-  gap: 1rem;
+  gap: v.$space-md;
   overflow-x: auto;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
-  padding-bottom: 0.5rem;
+  padding-bottom: v.$space-sm;
 
   // masquer scrollbar
   scrollbar-width: none;
@@ -36,8 +36,8 @@
   z-index: 2;
   border-radius: 100%;
 
-  width: 2rem;
-  height: 2rem;
+  width: v.$space-xl;
+  height: v.$space-xl;
   background: rgba(0, 0, 0, 0.6);
   color: v.$c-bg;
   border: none;
@@ -47,11 +47,11 @@
   transition: opacity 0.2s ease;
 
   &.left {
-    left: -0.5rem;
+    left: -(v.$space-sm);
   }
 
   &.right {
-    right: -0.5rem;
+    right: -(v.$space-sm);
   }
 }
 

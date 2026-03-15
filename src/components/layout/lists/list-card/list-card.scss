@@ -5,7 +5,7 @@
   flex-direction: row;
   background: v.$c-bg;
   border: 1px solid v.$c-border;
-  border-radius: 0.5rem;
+  border-radius: v.$radius;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.2, 1, 0.3, 1);
@@ -21,10 +21,10 @@
 
   .list-info-block {
     flex: 1;
-    padding: 1rem;
+    padding: v.$space-md;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: v.$space-sm;
     z-index: 2;
     min-width: 50%;
 
@@ -45,14 +45,14 @@
       font-size: 0.85rem;
       color: v.$c-text;
       line-height: 1.4;
-      margin: 0.25rem 0;
+      margin: v.$space-xs 0;
       flex-grow: 1;
     }
 
     .stat-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.25rem;
+      gap: v.$space-xs;
       font-size: 0.8rem;
       font-weight: 600;
       color: v.$c-muted;
@@ -68,7 +68,7 @@
     .list-author {
       display: flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: v.$space-sm;
       font-size: 0.75rem;
       color: v.$c-muted;
       font-weight: 500;
@@ -96,11 +96,11 @@
       border-radius: 0.5rem;
 
       &.depth-0 {
-        right: 2rem;
+      right: v.$space-xl;
         z-index: 3;
       }
       &.depth-1 {
-        right: 1rem;
+        right: v.$space-md;
         z-index: 2;
       }
       &.depth-2 {

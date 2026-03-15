@@ -2,15 +2,15 @@
 @use "@/styles/abstracts/mixins" as m;
 
 .month-grid-section {
-  margin-bottom: 3rem;
+  margin-bottom: v.$space-2xl;
 
   .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 0.5rem;
+    gap: v.$space-sm;
 
     .weekday-label {
-      padding: 0.5rem 0;
+      padding: v.$space-sm 0;
       text-align: center;
       font-size: 0.75rem;
       letter-spacing: 0.1em;

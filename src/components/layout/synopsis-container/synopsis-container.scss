@@ -10,22 +10,22 @@
 
 .synopsis {
   position: relative;
-  margin: 0.5rem 0;
+  margin: v.$space-sm 0;
 
   .tagline {
     font-style: italic;
-    margin-bottom: 0.5rem;
+    margin-bottom: v.$space-sm;
   }
 
   .overview-preview {
     text-overflow: ellipsis;
     line-height: 1.2;
-    margin-bottom: 0.25rem;
+    margin-bottom: v.$space-xs;
   }
 
   .overview-expanded {
     line-height: 1.2;
-    margin-bottom: 0.25rem;
+    margin-bottom: v.$space-xs;
   }
 
   .read-more-btn {
@@ -33,13 +33,13 @@
     border: none;
     font-weight: 500;
     cursor: pointer;
-    padding: 0.25rem 0;
+    padding: v.$space-xs 0;
   }
 
   .genre-badges {
     display: flex;
-    gap: 0.25rem;
-    margin-top: 1rem;
+    gap: v.$space-xs;
+    margin-top: v.$space-md;
   }
 }
 

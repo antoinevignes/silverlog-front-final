@@ -133,7 +133,7 @@
       background: none;
       border: 1.5px solid v.$c-border-h;
       border-radius: v.$radius;
-      padding: 0.4rem 0.9rem;
+      padding: v.$space-xs v.$space-md;
       cursor: pointer;
       transition: all v.$transition;
 

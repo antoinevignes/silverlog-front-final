@@ -4,8 +4,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  border-radius: 0.5rem;
+  gap: v.$space-sm;
+  border-radius: v.$radius;
   font-weight: 500;
   line-height: 1;
   white-space: nowrap;
@@ -63,23 +63,23 @@
 
   /* Sizes */
   &--sm {
-    height: 2rem;
-    padding: 0 0.75rem;
+    height: v.$space-xl;
+    padding: 0 v.$space-sm;
     font-size: 0.875rem;
   }
   &--md {
-    height: 2.5rem;
-    padding: 0 1rem;
+    height: calc(v.$space-xl + v.$space-sm);
+    padding: 0 v.$space-md;
     font-size: 0.875rem;
   }
   &--lg {
-    height: 3rem;
-    padding: 0 1.5rem;
+    height: v.$space-2xl;
+    padding: 0 v.$space-lg;
     font-size: 1rem;
   }
   &--icon {
-    height: 2.5rem;
-    width: 2.5rem;
+    height: calc(v.$space-xl + v.$space-sm);
+    width: calc(v.$space-xl + v.$space-sm);
     padding: 0;
   }
 }

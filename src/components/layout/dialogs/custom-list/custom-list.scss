@@ -5,7 +5,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: v.$space-xl;
 
   .back-button {
     position: relative;
@@ -36,15 +36,15 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 1rem;
+  gap: v.$space-md;
 
   .new-list-link {
     @include m.flex-center;
-    gap: 0.5rem;
-    padding: 1rem;
+    gap: v.$space-sm;
+    padding: v.$space-md;
     box-sizing: border-box;
     border: 2px dashed v.$c-border-h;
-    border-radius: 0.5rem;
+    border-radius: v.$radius;
     color: v.$c-text;
     font-weight: 500;
     text-decoration: none;
@@ -68,8 +68,8 @@
       all: unset;
       box-sizing: border-box;
       width: 100%;
-      padding: 0.75rem 1rem;
-      border-radius: 0.625rem;
+      padding: v.$space-sm v.$space-md;
+      border-radius: v.$radius;
       cursor: pointer;
       background: v.$c-bg;
       border: 1px solid v.$c-border;
@@ -107,7 +107,7 @@
     .loading-state,
     .empty-state {
       @include m.flex-center;
-      padding: 2rem;
+      padding: v.$space-xl;
       text-align: center;
       color: v.$c-muted;
       font-size: 0.875rem;

@@ -5,15 +5,15 @@
   position: relative;
   z-index: v.$z-dropdown;
   max-width: 400px;
-  margin: 1rem auto;
+  margin: v.$space-md auto;
 
   @include m.responsive(v.$bp-md) {
     margin: 0;
   }
 
   .search-form {
-    margin-bottom: 1rem;
-    margin-inline: 1rem;
+    margin-bottom: v.$space-md;
+    margin-inline: v.$space-md;
 
     @include m.responsive(v.$bp-md) {
       margin-bottom: 0;
@@ -32,8 +32,11 @@
 
   .search-card {
     position: absolute;
-    margin-inline: 1rem;
+    margin-inline: v.$space-md;
     background-color: v.$c-bg;
+@include m.responsive(v.$bp-md) {
+      margin-inline: 0;
+    }
     width: calc(100% - 5rem);
 
     .movie-results {
@@ -51,9 +54,9 @@
 
       .movie-result {
         display: flex;
-        gap: 1rem;
-        padding: 0.5rem;
-        border-radius: 0.5rem;
+        gap: v.$space-md;
+        padding: v.$space-sm;
+        border-radius: v.$radius;
 
         &.active {
           background-color: v.$c-border;

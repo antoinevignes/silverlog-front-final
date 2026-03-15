@@ -4,25 +4,25 @@
 .create-list-form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: v.$space-lg;
 
   .form-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: v.$space-sm;
   }
 
   .privacy-toggle-group {
     @include m.flex-between;
-    padding: 1rem;
-    border-radius: 0.5rem;
+    padding: v.$space-md;
+    border-radius: v.$radius;
     background-color: v.$c-surface;
-    margin-top: 0.5rem;
+    margin-top: v.$space-sm;
 
     .privacy-info {
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
+      gap: v.$space-xs;
 
       .privacy-label {
         font-weight: 600;

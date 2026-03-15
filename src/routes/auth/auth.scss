@@ -2,20 +2,20 @@
 
 .auth-page {
   box-sizing: border-box;
-  padding: 1rem;
+  padding: v.$space-md;
   min-height: 100vh;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: v.$space-md;
 
   .error {
     color: red;
     font-size: small;
     opacity: 0.7;
-    margin-top: 0.25rem;
+    margin-top: v.$space-xs;
     font-style: italic;
   }
 
@@ -38,16 +38,16 @@
   form {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: v.$space-md;
     width: 100%;
     max-width: 400px;
   }
 
   #auth-change {
-    padding-top: 0.5rem;
+    padding-top: v.$space-sm;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: v.$space-sm;
 
     .link {
       text-decoration: underline;

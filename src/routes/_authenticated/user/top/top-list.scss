@@ -2,28 +2,28 @@
 @use "@/styles/abstracts/mixins" as m;
 
 .top-list-page {
-  padding-bottom: 4rem;
+  padding-bottom: calc(v.$space-2xl + v.$space-md);
 
   .top-list-layout {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    margin-top: 1.5rem;
+    gap: v.$space-md;
+    margin-top: v.$space-lg;
 
     @include m.responsive(v.$bp-md) {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
+      gap: v.$space-md;
     }
   }
 
   .top-list-list-item {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    padding: 0.75rem;
+    gap: v.$space-md;
+    padding: v.$space-sm v.$space-md;
     background: v.$c-surface;
-    border-radius: 1rem;
+    border-radius: v.$radius * 2;
     transition: all 0.3s cubic-bezier(0.2, 1, 0.3, 1);
     border: 1px solid v.$c-surface;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
@@ -72,7 +72,7 @@
     .poster-container {
       flex-shrink: 0;
       width: 60px;
-      border-radius: 0.5rem;
+      border-radius: v.$radius;
       overflow: hidden;
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.7);
 
@@ -88,7 +88,7 @@
     .movie-details {
       display: flex;
       flex-direction: column;
-      gap: 0.375rem;
+      gap: v.$space-xs;
       flex-grow: 1;
 
       .movie-title {
@@ -111,7 +111,7 @@
         display: flex;
         align-items: center;
         flex-wrap: wrap;
-        gap: 0.75rem;
+        gap: v.$space-sm;
         font-size: 0.8125rem;
         color: v.$c-muted;
         font-weight: 500;
@@ -131,8 +131,8 @@
   .empty-state {
     text-align: center;
     color: v.$c-muted;
-    margin-top: 2rem;
-    padding: 3rem 1rem;
+    margin-top: v.$space-xl;
+    padding: v.$space-2xl v.$space-md;
   }
 }
 

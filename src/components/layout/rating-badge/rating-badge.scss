@@ -4,10 +4,10 @@
 .grade {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: v.$space-xs;
   background: v.$c-bg;
-  padding: 0.25rem 0.5rem;
-  border-radius: 2rem;
+  padding: v.$space-xs v.$space-sm;
+  border-radius: v.$radius * 4;
   width: fit-content;
   white-space: nowrap;
 
@@ -21,7 +21,7 @@
 
   &.grade-mobile {
     position: absolute;
-    bottom: -0.75rem;
+    bottom: -(v.$space-sm + v.$space-xs);
     left: 50%;
     transform: translateX(-50%);
     margin: 0;
@@ -35,9 +35,9 @@
   }
 
   @include m.responsive(v.$bp-md) {
-    padding: 0.25rem 0.75rem;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
+    padding: v.$space-xs v.$space-sm;
+    gap: v.$space-sm;
+    margin-bottom: v.$space-sm;
   }
 
   .star-icon {

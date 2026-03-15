@@ -65,7 +65,7 @@
   .selection-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 1rem;
+    gap: v.$space-md;
     margin-top: v.$space-lg;
     margin-bottom: v.$space-2xl;
 
@@ -184,7 +184,7 @@
           .review-stars {
             display: flex;
             align-items: center;
-            gap: 0.25rem;
+            gap: v.$space-xs;
             color: #f5c518;
             font-weight: 700;
             margin-bottom: v.$space-sm;

@@ -4,7 +4,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.25rem;
+  gap: v.$space-xs;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 
   white-space: nowrap;
@@ -13,8 +13,8 @@
   font-size: 0.75rem;
   line-height: 1;
 
-  border-radius: 1rem;
-  padding: 0.3rem 0.5rem;
+  border-radius: v.$radius * 2;
+  padding: 4px v.$space-sm;
   border: 1px solid transparent;
 
   background: v.$c-heading;
@@ -40,16 +40,16 @@
 
   &.badge-sm {
     font-size: 0.625rem;
-    padding: 0.15rem 0.3rem;
+    padding: 2px v.$space-xs;
   }
 
   &.badge-md {
     font-size: 0.75rem;
-    padding: 0.3rem 0.5rem;
+    padding: 4px v.$space-sm;
   }
 
   &.badge-lg {
     font-size: 0.875rem;
-    padding: 0.45rem 0.7rem;
+    padding: v.$space-xs v.$space-md;
   }
 }
