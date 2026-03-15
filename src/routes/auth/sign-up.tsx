@@ -5,8 +5,8 @@ import { Lock, Mail, User } from "lucide-react";
 import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
 import { FieldInfo, useAppForm } from "@/utils/useAppForm";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
+import { Label } from "@/components/ui/label/label";
+import { Separator } from "@/components/ui/separator/separator";
 import { Image } from "@unpic/react";
 import { apiClient } from "@/utils/api-client";
 
