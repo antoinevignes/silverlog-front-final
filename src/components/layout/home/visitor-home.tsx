@@ -7,10 +7,7 @@ import { recentReviewsQuery } from "@/queries/review.query";
 import { crewPicksQuery } from "@/queries/movie.queries";
 import "./visitor-home.scss";
 import { Image } from "@unpic/react";
-import {
-  getCloudinaryPlaceholder,
-  getCloudinarySrc,
-} from "@/utils/cloudinary-handler";
+import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import Title from "../title/title";
 import type { MovieType } from "@/utils/types/movie";
 import { Card } from "@/components/ui/card";
@@ -146,10 +143,7 @@ export default function VisitorHome() {
                 <div className="review-poster">
                   <Image
                     src={getCloudinarySrc(review.movie_poster_path, "posters")}
-                    background={getCloudinaryPlaceholder(
-                      review.movie_poster_path,
-                      "posters",
-                    )}
+                    background="auto"
                     layout="constrained"
                     width={100}
                     height={150}

@@ -20,10 +20,7 @@ import { useAuth } from "@/auth";
 import { useSaveList } from "@/queries/list.mutations";
 import { listDataQuery } from "@/queries/list.queries";
 import { formatCompactNumber } from "@/utils/format-compact-number";
-import {
-  getCloudinaryPlaceholder,
-  getCloudinarySrc,
-} from "@/utils/cloudinary-handler";
+import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 
 export default function ListDetails() {
   const routeApi = getRouteApi("/lists/$listId/");
@@ -116,10 +113,7 @@ export default function ListDetails() {
         alt="Backdrop de la liste"
         layout="fullWidth"
         aspectRatio={16 / 9}
-        background={getCloudinaryPlaceholder(
-          movies[0].backdrop_path,
-          "posters",
-        )}
+        background="auto"
         className="list-backdrop"
       />
 
@@ -132,7 +126,7 @@ export default function ListDetails() {
               width={44}
               height={44}
               alt={user.username}
-              background={getCloudinaryPlaceholder(user.avatar_path, "avatars")}
+              background="auto"
               priority
               className="avatar"
             />

@@ -3,10 +3,7 @@ import { Bookmark, Home, ListVideo, User } from "lucide-react";
 import "./mobile-nav.scss";
 import { useAuth } from "@/auth";
 import { Image } from "@unpic/react";
-import {
-  getCloudinaryPlaceholder,
-  getCloudinarySrc,
-} from "@/utils/cloudinary-handler";
+import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 
 export default function MobileNav() {
   const { user } = useAuth();
@@ -48,10 +45,7 @@ export default function MobileNav() {
                     layout="fullWidth"
                     aspectRatio={1 / 1}
                     alt={user.username}
-                    background={getCloudinaryPlaceholder(
-                      user.avatar_path,
-                      "avatars",
-                    )}
+                    background="auto"
                     priority
                     className="avatar"
                   />

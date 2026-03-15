@@ -12,23 +12,27 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Button from "@/components/ui/button/button";
 import { Image } from "@unpic/react";
-import {
-  getCloudinaryPlaceholder,
-  getCloudinarySrc,
-} from "@/utils/cloudinary-handler";
+import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 
 export default function DesktopNav() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-  console.log(user);
-
   return (
     <header className="desktop-top-nav">
       <div className="nav-container container">
         <Link to="/" className="brand">
-          <img src="/logo.svg" alt="Silverlog logo" className="logo" />
+          <Image
+            src="/logo.svg"
+            alt="Silverlog logo"
+            className="logo"
+            layout="constrained"
+            width={40}
+            height={40}
+            background="auto"
+            priority
+          />
           <span className="brand-name font-sentient">Silverlog</span>
         </Link>
 
@@ -84,10 +88,7 @@ export default function DesktopNav() {
                         width={40}
                         height={40}
                         alt={user.username}
-                        background={getCloudinaryPlaceholder(
-                          user.avatar_path,
-                          "avatars",
-                        )}
+                        background="auto"
                         priority
                         className="avatar"
                       />

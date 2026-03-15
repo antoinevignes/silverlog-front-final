@@ -3,10 +3,7 @@ import { Film } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import type { MovieType } from "@/utils/types/movie";
 import "./movie-card.scss";
-import {
-  getCloudinaryPlaceholder,
-  getCloudinarySrc,
-} from "@/utils/cloudinary-handler";
+import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 
 type MovieCardSize = "sm" | "md" | "lg";
 
@@ -34,7 +31,7 @@ export default function MovieCard({
           src={posterSrc}
           layout="fullWidth"
           alt={movie.title}
-          background={getCloudinaryPlaceholder(movie.poster_path, "posters")}
+          background="auto"
           className="movie-card-poster"
         />
       )}

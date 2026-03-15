@@ -12,10 +12,7 @@ import { movieSearchQuery } from "@/queries/movie.queries";
 import { Card } from "@/components/ui/card";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 import { personSearchQuery } from "@/queries/person.queries";
-import {
-  getCloudinaryPlaceholder,
-  getCloudinarySrc,
-} from "@/utils/cloudinary-handler";
+import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 
 export default function SearchBar() {
   const navigate = useNavigate();
@@ -172,10 +169,7 @@ export default function SearchBar() {
                           width={45}
                           aspectRatio={2 / 3}
                           alt={item.title || item.name}
-                          background={getCloudinaryPlaceholder(
-                            item.poster_path || item.profile_path,
-                            "posters",
-                          )}
+                          background="auto"
                           className="search-poster"
                         />
                       )}

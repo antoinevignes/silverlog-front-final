@@ -15,10 +15,7 @@ import { Link } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
 import { Plus } from "lucide-react";
 import type { MovieType } from "@/utils/types/movie";
-import {
-  getCloudinaryPlaceholder,
-  getCloudinarySrc,
-} from "@/utils/cloudinary-handler";
+import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 
 export default function DiaryDesktop({
   monthDate,
@@ -84,10 +81,7 @@ export default function DiaryDesktop({
                     layout="fullWidth"
                     aspectRatio={2 / 3}
                     alt={movie.title}
-                    background={getCloudinaryPlaceholder(
-                      movie.poster_path,
-                      "posters",
-                    )}
+                    background="auto"
                     priority
                     className="poster-img"
                   />

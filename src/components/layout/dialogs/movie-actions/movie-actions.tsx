@@ -22,10 +22,7 @@ import {
 import Button from "@/components/ui/button/button";
 import Rating from "@/components/layout/rating/rating";
 import { useAuth } from "@/auth";
-import {
-  getCloudinaryPlaceholder,
-  getCloudinarySrc,
-} from "@/utils/cloudinary-handler";
+import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 
 export default function MovieActions({
   movie,
@@ -96,10 +93,7 @@ export default function MovieActions({
                   width={45}
                   aspectRatio={2 / 3}
                   alt={movie.title}
-                  background={getCloudinaryPlaceholder(
-                    movie.poster_path,
-                    "posters",
-                  )}
+                  background="auto"
                   priority
                   className="dialog-image"
                 />

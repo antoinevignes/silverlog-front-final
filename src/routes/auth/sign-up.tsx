@@ -7,6 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import { FieldInfo, useAppForm } from "@/utils/useAppForm";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { Image } from "@unpic/react";
 
 export const Route = createFileRoute("/auth/sign-up")({
   component: RouteComponent,
@@ -78,7 +79,13 @@ function RouteComponent() {
 
   return (
     <main className="auth-page">
-      <img src="/logo.svg" alt="Logo de silverlog" />
+      <Image
+        layout="constrained"
+        width={80}
+        height={80}
+        src="/logo.svg"
+        alt="Logo de silverlog"
+      />
       <h1>Silverlog</h1>
 
       <p className="text-secondary description">

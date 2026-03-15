@@ -4,10 +4,7 @@ import { Star } from "lucide-react";
 import "./diary-mobile.scss";
 import { format } from "date-fns";
 import type { MovieType } from "@/utils/types/movie";
-import {
-  getCloudinaryPlaceholder,
-  getCloudinarySrc,
-} from "@/utils/cloudinary-handler";
+import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import Badge from "@/components/ui/badge/badge";
 
 export default function DiaryMobile({ movies }: { movies: Array<MovieType> }) {
@@ -28,10 +25,7 @@ export default function DiaryMobile({ movies }: { movies: Array<MovieType> }) {
                   width={60}
                   aspectRatio={2 / 3}
                   alt={movie.title}
-                  background={getCloudinaryPlaceholder(
-                    movie.poster_path,
-                    "posters",
-                  )}
+                  background="auto"
                   priority
                   className="poster"
                 />

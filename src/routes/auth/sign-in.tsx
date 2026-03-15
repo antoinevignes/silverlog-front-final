@@ -5,6 +5,7 @@ import { Lock, Mail } from "lucide-react";
 import z from "zod";
 import { Label } from "@/components/ui/label";
 import { FieldInfo, useAppForm } from "@/utils/useAppForm";
+import { Image } from "@unpic/react";
 
 export const Route = createFileRoute("/auth/sign-in")({
   validateSearch: (search) => ({
@@ -43,7 +44,15 @@ function RouteComponent() {
 
   return (
     <main className="auth-page">
-      <img src="/logo.svg" alt="Logo de silverlog" />
+      <Image
+        src="/logo.svg"
+        alt="Logo de silverlog"
+        layout="constrained"
+        width={80}
+        height={80}
+        background="auto"
+        priority
+      />
       <h1>Silverlog</h1>
 
       <p className="text-secondary description">

@@ -4,10 +4,7 @@ import { Image } from "@unpic/react";
 import { format } from "date-fns";
 import { Star } from "lucide-react";
 import type { MovieType } from "@/utils/types/movie";
-import {
-  getCloudinaryPlaceholder,
-  getCloudinarySrc,
-} from "@/utils/cloudinary-handler";
+import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import { listDataQuery } from "@/queries/list.queries";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 import { useAuth } from "@/auth";
@@ -75,10 +72,7 @@ function RouteComponent() {
                   width={80}
                   aspectRatio={2 / 3}
                   alt={movie.title}
-                  background={getCloudinaryPlaceholder(
-                    movie.poster_path,
-                    "posters",
-                  )}
+                  background="auto"
                   className="poster"
                 />
               </figure>

@@ -15,10 +15,7 @@ import Lists from "@/components/layout/user/lists/lists";
 import { useAuth } from "@/auth";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 import { Image } from "@unpic/react";
-import {
-  getCloudinaryPlaceholder,
-  getCloudinarySrc,
-} from "@/utils/cloudinary-handler";
+import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import FollowModal from "@/components/layout/user/follow-modal/follow-modal";
 import { useFollowUser, useUnfollowUser } from "@/queries/user.mutations";
 
@@ -67,10 +64,7 @@ function RouteComponent() {
             src={getCloudinarySrc(userData.banner_path, "banners")}
             layout="fullWidth"
             className="banner-image"
-            background={getCloudinaryPlaceholder(
-              userData.banner_path,
-              "banners",
-            )}
+            background="auto"
             alt={`Bannière de ${userData.username}`}
             priority
           />
@@ -92,10 +86,7 @@ function RouteComponent() {
                   layout="fullWidth"
                   aspectRatio={1 / 1}
                   alt={userData.username}
-                  background={getCloudinaryPlaceholder(
-                    userData.avatar_path,
-                    "avatars",
-                  )}
+                  background="auto"
                   priority
                   className="avatar"
                 />

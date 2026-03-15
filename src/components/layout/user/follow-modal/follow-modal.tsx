@@ -4,10 +4,7 @@ import { userFollowersQuery, userFollowingQuery } from "@/queries/user.queries";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 import { Link } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
-import {
-  getCloudinaryPlaceholder,
-  getCloudinarySrc,
-} from "@/utils/cloudinary-handler";
+import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import { User, X } from "lucide-react";
 import "./follow-modal.scss";
 
@@ -76,10 +73,7 @@ export default function FollowModal({
                         width={40}
                         height={40}
                         alt={u.username}
-                        background={getCloudinaryPlaceholder(
-                          u.avatar_path,
-                          "avatars",
-                        )}
+                        background="auto"
                         className="follow-user-avatar"
                       />
                     ) : (

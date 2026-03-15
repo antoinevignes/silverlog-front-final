@@ -5,10 +5,7 @@ import { Image } from "@unpic/react";
 import HorizontalScroller from "../horizontal-scroller/horizontal-scroller";
 import type { CastType } from "@/utils/types/cast";
 import { movieCreditsQuery } from "@/queries/movie.queries";
-import {
-  getCloudinaryPlaceholder,
-  getCloudinarySrc,
-} from "@/utils/cloudinary-handler";
+import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 
 export default function MovieCast() {
   const routeApi = getRouteApi("/movies/$movieId/");
@@ -39,10 +36,7 @@ export default function MovieCast() {
                   <Image
                     src={posterSrc}
                     layout="fullWidth"
-                    background={getCloudinaryPlaceholder(
-                      actor.profile_path,
-                      "persons",
-                    )}
+                    background="auto"
                     alt={`Image de ${actor.name}`}
                     className="person-image"
                   />

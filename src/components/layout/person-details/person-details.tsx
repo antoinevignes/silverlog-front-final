@@ -15,10 +15,7 @@ import {
   personDetailsQuery,
   personDetailsQueryUS,
 } from "@/queries/person.queries";
-import {
-  getCloudinaryPlaceholder,
-  getCloudinarySrc,
-} from "@/utils/cloudinary-handler";
+import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import { getDynamicTabs } from "@/utils/dynamic-tabs";
 import "./person-details.scss";
 
@@ -139,10 +136,7 @@ export default function PersonDetails() {
                 layout="fullWidth"
                 aspectRatio={2 / 3}
                 alt={personDetails.name}
-                background={getCloudinaryPlaceholder(
-                  personDetails.profile_path,
-                  "persons",
-                )}
+                background="auto"
                 priority
                 className="poster-img"
               />

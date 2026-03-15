@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import "./footer.scss";
+import { Image } from "@unpic/react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -9,7 +10,16 @@ export default function Footer() {
       <div className="container footer-content">
         <div className="footer-brand">
           <Link to="/" className="brand-logo">
-            <img src="/logo.svg" alt="Silverlog Logo" className="logo" />
+            <Image
+              src="/logo.svg"
+              alt="Silverlog Logo"
+              className="logo"
+              layout="constrained"
+              width={40}
+              height={40}
+              background="auto"
+              priority
+            />
             <span className="font-sentient brand-name">Silverlog</span>
           </Link>
           <p className="footer-description text-secondary truncate-3-lines">

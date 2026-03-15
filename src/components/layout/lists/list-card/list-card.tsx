@@ -4,10 +4,7 @@ import "./list-card.scss";
 import { Link } from "@tanstack/react-router";
 import type { ListType } from "@/utils/types/list";
 import Badge from "@/components/ui/badge/badge";
-import {
-  getCloudinaryPlaceholder,
-  getCloudinarySrc,
-} from "@/utils/cloudinary-handler";
+import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import { formatCompactNumber } from "@/utils/format-compact-number";
 import { useAuth } from "@/auth";
 
@@ -42,7 +39,7 @@ export default function ListCard({ list }: { list: ListType }) {
               width={20}
               height={20}
               alt={user.username}
-              background={getCloudinaryPlaceholder(user.avatar_path, "avatars")}
+              background="auto"
               priority
               className="avatar"
             />
@@ -63,10 +60,7 @@ export default function ListCard({ list }: { list: ListType }) {
               layout="constrained"
               width={100}
               aspectRatio={2 / 3}
-              background={getCloudinaryPlaceholder(
-                movie.poster_path,
-                "posters",
-              )}
+              background="auto"
               className={`preview-poster depth-${index}`}
             />
           );

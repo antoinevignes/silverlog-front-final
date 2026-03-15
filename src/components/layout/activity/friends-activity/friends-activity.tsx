@@ -3,10 +3,7 @@ import { getRouteApi, Link } from "@tanstack/react-router";
 import { MessageSquare, Star } from "lucide-react";
 import { movieFriendsActivityQuery } from "@/queries/movie.queries";
 import { Image } from "@unpic/react";
-import {
-  getCloudinaryPlaceholder,
-  getCloudinarySrc,
-} from "@/utils/cloudinary-handler";
+import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import { useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog/dialog";
 import { formatDistanceToNow } from "date-fns";
@@ -52,10 +49,7 @@ export default function FriendsActivity() {
                       width={60}
                       height={60}
                       alt={activity.username}
-                      background={getCloudinaryPlaceholder(
-                        activity.avatar_path,
-                        "avatars",
-                      )}
+                      background="auto"
                       className="avatar"
                     />
                   ) : (
@@ -107,6 +101,7 @@ export default function FriendsActivity() {
                         width={44}
                         height={44}
                         alt={selectedActivity.username}
+                        background="auto"
                         className="avatar"
                       />
                     ) : (

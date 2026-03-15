@@ -16,10 +16,7 @@ import MovieDetails from "@/components/layout/movie-tabs/movie-details";
 import MovieCast from "@/components/layout/movie-tabs/movie-cast";
 import MovieCrew from "@/components/layout/movie-tabs/movie-crew";
 import SynopsisContainer from "@/components/layout/synopsis-container/synopsis-container";
-import {
-  getCloudinaryPlaceholder,
-  getCloudinarySrc,
-} from "@/utils/cloudinary-handler";
+import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import RatingBadge from "../rating-badge/rating-badge";
 
 const tabs = [
@@ -66,10 +63,7 @@ export default function MovieHeader() {
           layout="fullWidth"
           aspectRatio={21 / 9}
           alt={`Affiche du film ${movie.title}`}
-          background={getCloudinaryPlaceholder(
-            movie.backdrop_path,
-            "backdrops",
-          )}
+          background="auto"
           priority
           className="backdrop"
         />
@@ -89,10 +83,7 @@ export default function MovieHeader() {
                   layout="fullWidth"
                   aspectRatio={2 / 3}
                   alt={movie.title}
-                  background={getCloudinaryPlaceholder(
-                    movie.poster_path,
-                    "posters",
-                  )}
+                  background="auto"
                   priority
                   className="poster"
                 />

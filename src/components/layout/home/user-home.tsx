@@ -9,10 +9,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
 import { Image } from "@unpic/react";
-import {
-  getCloudinaryPlaceholder,
-  getCloudinarySrc,
-} from "@/utils/cloudinary-handler";
+import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import { crewPicksQuery, popularMoviesQuery } from "@/queries/movie.queries";
 import { userFeedQuery } from "@/queries/user.queries";
 import type { MovieType } from "@/utils/types/movie";
@@ -126,10 +123,7 @@ export default function UserHome() {
                           width={32}
                           height={32}
                           alt={activity.username}
-                          background={getCloudinaryPlaceholder(
-                            activity.avatar_path,
-                            "avatars",
-                          )}
+                          background="auto"
                           className="avatar"
                         />
                       ) : (
@@ -159,10 +153,7 @@ export default function UserHome() {
                   >
                     <Image
                       src={getCloudinarySrc(activity.poster_path, "posters")}
-                      background={getCloudinaryPlaceholder(
-                        activity.poster_path,
-                        "posters",
-                      )}
+                      background="auto"
                       layout="fullWidth"
                       alt={activity.title}
                       className="feed-movie-poster"

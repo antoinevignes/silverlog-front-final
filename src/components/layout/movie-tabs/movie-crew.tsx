@@ -5,10 +5,7 @@ import { CircleUser } from "lucide-react";
 import { Image } from "@unpic/react";
 import HorizontalScroller from "../horizontal-scroller/horizontal-scroller";
 import type { CrewType } from "@/utils/types/crew";
-import {
-  getCloudinaryPlaceholder,
-  getCloudinarySrc,
-} from "@/utils/cloudinary-handler";
+import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import translateJob from "@/utils/translate-job";
 import { movieCreditsQuery } from "@/queries/movie.queries";
 
@@ -84,10 +81,7 @@ export default function MovieCrew() {
                     <Image
                       src={posterSrc}
                       layout="fullWidth"
-                      background={getCloudinaryPlaceholder(
-                        member.profile_path,
-                        "persons",
-                      )}
+                      background="auto"
                       alt={`Image de ${member.name}`}
                       className="person-image"
                     />

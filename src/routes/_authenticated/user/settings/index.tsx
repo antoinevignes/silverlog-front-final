@@ -17,10 +17,7 @@ import { useAppForm } from "@/utils/useAppForm";
 import z from "zod";
 import Button from "@/components/ui/button/button";
 import { Image } from "@unpic/react";
-import {
-  getCloudinaryPlaceholder,
-  getCloudinarySrc,
-} from "@/utils/cloudinary-handler";
+import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import {
   Dialog,
   DialogContent,
@@ -231,10 +228,15 @@ function RouteComponent() {
           >
             <div className="avatar-upload-zone">
               {previewUrl ? (
-                <img
+                <Image
                   src={previewUrl}
                   alt="Aperçu avatar"
                   className="avatar-preview-img"
+                  layout="constrained"
+                  width={40}
+                  height={40}
+                  background="auto"
+                  priority
                 />
               ) : user?.avatar_path ? (
                 <Image
@@ -243,10 +245,7 @@ function RouteComponent() {
                   width={40}
                   height={40}
                   alt={user.username}
-                  background={getCloudinaryPlaceholder(
-                    user.avatar_path,
-                    "avatars",
-                  )}
+                  background="auto"
                   priority
                   className="avatar"
                 />
@@ -319,10 +318,15 @@ function RouteComponent() {
           >
             <div className="banner-upload-zone">
               {backdropPreviewUrl ? (
-                <img
+                <Image
                   src={backdropPreviewUrl}
                   alt="Aperçu bannière"
                   className="banner-preview-img"
+                  layout="constrained"
+                  width={160}
+                  height={90}
+                  background="auto"
+                  priority
                 />
               ) : user?.banner_path ? (
                 <Image
@@ -331,10 +335,7 @@ function RouteComponent() {
                   width={160}
                   height={90}
                   alt={user.username}
-                  background={getCloudinaryPlaceholder(
-                    user.banner_path,
-                    "banners",
-                  )}
+                  background="auto"
                   priority
                   className="banner-img"
                 />
