@@ -2,11 +2,12 @@
 @use "@/styles/abstracts/mixins" as m;
 
 .user-home {
+  margin-bottom: v.$space-lg;
+
   .home-dashboard-header {
     background-color: v.$c-surface;
     border-bottom: 1px solid v.$c-border;
     padding: v.$space-xl 0;
-    margin-bottom: v.$space-xl;
 
     .header-container {
       display: flex;
@@ -59,18 +60,45 @@
   }
 
   .trending-section {
-    padding-bottom: v.$space-2xl;
+    margin-top: v.$space-lg;
+    margin-bottom: v.$space-2xl;
+  }
 
-    .trending-card-wrapper {
-      width: 130px;
-      flex-shrink: 0;
+  .selection-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1rem;
+    margin-top: v.$space-lg;
+    margin-bottom: v.$space-2xl;
 
-      @include m.responsive(v.$bp-md) {
-        width: 160px;
+    @include m.responsive(v.$bp-lg) {
+      grid-template-columns: repeat(6, 1fr);
+    }
+
+    .card-desktop {
+      display: none;
+      margin: auto;
+
+      @include m.responsive(v.$bp-lg) {
+        display: block;
+      }
+    }
+
+    .card-mobile {
+      margin: auto;
+      @include m.responsive(v.$bp-lg) {
+        display: none;
       }
     }
   }
 
+  .recent-activity-scroller {
+    .activity-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
   .feed-section {
     .activity-feed {
       display: grid;

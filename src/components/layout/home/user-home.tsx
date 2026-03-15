@@ -13,7 +13,7 @@ import {
   getCloudinaryPlaceholder,
   getCloudinarySrc,
 } from "@/utils/cloudinary-handler";
-import { popularMoviesQuery } from "@/queries/movie.queries";
+import { crewPicksQuery, popularMoviesQuery } from "@/queries/movie.queries";
 import { userFeedQuery } from "@/queries/user.queries";
 import type { MovieType } from "@/utils/types/movie";
 import Badge from "@/components/ui/badge/badge";
@@ -24,6 +24,7 @@ export default function UserHome() {
 
   const { data: popularMovies } = useSuspenseQuery(popularMoviesQuery());
   const { data: feedData } = useSuspenseQuery(userFeedQuery());
+  const { data: crewPicks } = useSuspenseQuery(crewPicksQuery());
 
   return (
     <main className="user-home">
@@ -68,11 +69,34 @@ export default function UserHome() {
 
         <HorizontalScroller>
           {popularMovies.results.map((movie: MovieType) => (
-            <li key={movie.id} className="trending-card-wrapper">
-              <MovieCard movie={movie} />
+            <li key={movie.id}>
+              <MovieCard movie={movie} size="sm" />
             </li>
           ))}
         </HorizontalScroller>
+      </section>
+
+      <section className="container selection-section">
+        <Title title="La sélection de la rédaction" className="section-title" />
+
+        <ul className="selection-grid">
+          {crewPicks && crewPicks.length > 0 ? (
+            crewPicks.map((movie: MovieType) => (
+              <>
+                <li key={movie.id} className="card-mobile">
+                  <MovieCard movie={movie} size="sm" />
+                </li>
+                <li className="card-desktop">
+                  <MovieCard movie={movie} size="md" />
+                </li>
+              </>
+            ))
+          ) : (
+            <p className="text-secondary text-center">
+              Chargement de la sélection...
+            </p>
+          )}
+        </ul>
       </section>
 
       <section className="container feed-section">

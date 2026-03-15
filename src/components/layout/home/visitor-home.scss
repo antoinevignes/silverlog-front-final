@@ -62,14 +62,33 @@
     }
   }
 
-  .selection-scroller {
-    padding-bottom: v.$space-xl;
+  .selection-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1rem;
+    margin-top: v.$space-lg;
+    margin-bottom: v.$space-2xl;
 
-    .selection-card-wrapper {
+    @include m.responsive(v.$bp-lg) {
+      grid-template-columns: repeat(6, 1fr);
+    }
+
+    .card-desktop {
+      display: none;
       margin: auto;
+
+      @include m.responsive(v.$bp-lg) {
+        display: block;
+      }
+    }
+
+    .card-mobile {
+      margin: auto;
+      @include m.responsive(v.$bp-lg) {
+        display: none;
+      }
     }
   }
-
   .features-section {
     padding: v.$space-2xl 0;
     background-color: v.$c-surface;
@@ -130,8 +149,6 @@
       display: flex;
       gap: v.$space-md;
       padding: v.$space-md;
-      border: 1px solid v.$c-border;
-      border-radius: v.$radius;
       background-color: v.$c-surface;
 
       .review-poster {
@@ -145,10 +162,14 @@
       }
 
       .review-content {
+        display: flex;
+        flex-direction: column;
+        gap: v.$space-xs;
+
         .review-header {
           display: flex;
           flex-direction: column;
-          margin-bottom: v.$space-xs;
+          gap: v.$space-xs;
 
           .review-user {
             font-weight: 700;
@@ -159,16 +180,16 @@
             font-size: 0.85rem;
             color: v.$c-muted;
           }
-        }
 
-        .review-stars {
-          display: flex;
-          align-items: center;
-          gap: 0.25rem;
-          color: #f5c518;
-          font-weight: 700;
-          margin-bottom: v.$space-sm;
-          font-size: 0.9rem;
+          .review-stars {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: #f5c518;
+            font-weight: 700;
+            margin-bottom: v.$space-sm;
+            font-size: 0.9rem;
+          }
         }
 
         .review-text {
@@ -181,6 +202,9 @@
           -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
           overflow: hidden;
+          border-left: 2px solid v.$c-border;
+          padding-left: v.$space-sm;
+          font-style: italic;
         }
       }
     }
