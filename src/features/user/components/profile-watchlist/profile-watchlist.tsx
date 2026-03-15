@@ -1,6 +1,6 @@
 import type { MovieType } from "@/features/movie/types/movie";
 import MovieCard from "@/features/movie/components/movie-card/movie-card";
-import "./watchlist.scss";
+import "./profile-watchlist.scss";
 import { useAuth } from "@/auth";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { listDataQuery } from "@/features/list/api/list.queries";
