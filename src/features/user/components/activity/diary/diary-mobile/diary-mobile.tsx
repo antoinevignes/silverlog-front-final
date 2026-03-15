@@ -3,7 +3,7 @@ import { Image } from "@unpic/react";
 import { Star } from "lucide-react";
 import "./diary-mobile.scss";
 import { format } from "date-fns";
-import type { MovieType } from "@/utils/types/movie";
+import type { MovieType } from "@/features/movie/types/movie";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import Badge from "@/components/ui/badge/badge";
 

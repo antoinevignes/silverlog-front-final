@@ -4,12 +4,12 @@ import { Star } from "lucide-react";
 import { useState } from "react";
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { movieStateQuery } from "@/queries/user-movie.queries";
+import { movieStateQuery } from "@/features/user/api/user-movie.queries";
 import {
   useDeleteMovieRating,
   useUpdateMovieRating,
-} from "@/queries/user-movie.mutations";
-import { movieReviewQuery } from "@/queries/review.query";
+} from "@/features/user/api/user-movie.mutations";
+import { movieReviewQuery } from "@/features/review/api/review.query";
 import { useAuth } from "@/auth";
 
 const MAX_STARS = 10;

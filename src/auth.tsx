@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { createContext, useContext } from "react";
 import { toast } from "sonner";
 import { apiClient } from "@/utils/api-client";
-import type { UserType } from "@/utils/types/user";
+import type { UserType } from "@/features/user/types/user";
 
 export interface AuthState {
   isAuthenticated: boolean;

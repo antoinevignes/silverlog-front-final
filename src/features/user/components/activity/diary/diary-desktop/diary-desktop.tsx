@@ -14,7 +14,7 @@ import "./diary-desktop.scss";
 import { Link } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
 import { Plus } from "lucide-react";
-import type { MovieType } from "@/utils/types/movie";
+import type { MovieType } from "@/features/movie/types/movie";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 
 export default function DiaryDesktop({

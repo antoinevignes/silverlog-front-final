@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { MessageSquare, Star } from "lucide-react";
-import { movieFriendsActivityQuery } from "@/queries/movie.queries";
+import { movieFriendsActivityQuery } from "@/features/movie/api/movie.queries";
 import { Image } from "@unpic/react";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import { useState } from "react";
@@ -10,7 +10,7 @@ import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
 import "./friends-activity.scss";
 import Badge from "@/components/ui/badge/badge";
-import Title from "../../title/title";
+import Title from "@/components/ui/title/title";
 
 export default function FriendsActivity() {
   const routeApi = getRouteApi("/movies/$movieId/");
