@@ -1,22 +1,25 @@
 import z from "zod";
-import { Film, Search, X } from "lucide-react";
+import { Film, Search, User, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
 import type { MovieType } from "@/features/movie/types/movie";
 import type { PersonType } from "@/features/movie/types/person";
+import type { UserType } from "@/features/user/types/user";
 import { useAppForm } from "@/utils/useAppForm";
 import "./search-bar.scss";
 import { movieSearchQuery } from "@/features/movie/api/movie.queries";
 import { Card } from "@/components/ui/card/card";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 import { personSearchQuery } from "@/features/movie/api/person.queries";
+import { userSearchQuery } from "@/features/user/api/user.queries";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 
 type SearchResultItem =
   | (MovieType & { type: "movie" })
-  | (PersonType & { type: "person" });
+  | (PersonType & { type: "person" })
+  | (UserType & { type: "user" });
 
 export default function SearchBar() {
   const navigate = useNavigate();
@@ -30,18 +33,27 @@ export default function SearchBar() {
   const { data: persons, isLoading: isLoadingPersons } = useQuery(
     personSearchQuery(searchQuery),
   );
+  const { data: users, isLoading: isLoadingUsers } = useQuery(
+    userSearchQuery(searchQuery),
+  );
 
   const allResults = useMemo((): SearchResultItem[] => {
     const m = movies?.results || [];
     const p = persons?.results || [];
+    const u = users || [];
 
     return [
       ...m.map((i: MovieType) => ({ ...i, type: "movie" as const })),
       ...p.map((i: PersonType) => ({ ...i, type: "person" as const })),
+      ...u.map((i: UserType) => ({ ...i, type: "user" as const })),
     ]
-      .sort((a, b) => ((b as any).popularity || 0) - ((a as any).popularity || 0))
+      .sort((a, b) => {
+        const popA = (a as any).popularity || (a as any).followers_count || 0;
+        const popB = (b as any).popularity || (b as any).followers_count || 0;
+        return popB - popA;
+      })
       .slice(0, 15);
-  }, [movies, persons]);
+  }, [movies, persons, users]);
 
   const scrollRef = useRef<HTMLUListElement>(null);
 
@@ -72,18 +84,33 @@ export default function SearchBar() {
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
       setActiveIndex((prev) => (prev > 0 ? prev - 1 : 0));
-    } else if (e.key === "Enter" && activeIndex !== -1) {
+    } else if (e.key === "Enter") {
       e.preventDefault();
-      const selected = allResults[activeIndex];
-      const path =
-        selected.type === "movie" ? "/movies/$movieId" : "/person/$personId";
-      const params =
-        selected.type === "movie"
-          ? { movieId: String(selected.id) }
-          : { personId: String(selected.id) };
+      if (activeIndex !== -1) {
+        const selected = allResults[activeIndex];
+        let path: string = "";
+        let params: any = {};
 
-      navigate({ to: path, params });
-      setSearchQuery("");
+        if (selected.type === "movie") {
+          path = "/movies/$movieId";
+          params = { movieId: String(selected.id) };
+        } else if (selected.type === "person") {
+          path = "/person/$personId";
+          params = { personId: String(selected.id) };
+        } else if (selected.type === "user") {
+          path = "/user/$userId";
+          params = { userId: String(selected.id) };
+        }
+
+        navigate({ to: path as any, params });
+        setSearchQuery("");
+      } else if (searchQuery.trim()) {
+        navigate({
+          to: "/search",
+          search: { q: searchQuery.trim() },
+        });
+        setSearchQuery("");
+      }
     }
   };
 
@@ -137,15 +164,17 @@ export default function SearchBar() {
 
       {searchQuery && (
         <Card className="search-card">
-          {isLoadingMovies || isLoadingPersons ? (
+          {isLoadingMovies || isLoadingPersons || isLoadingUsers ? (
             <SearchCardSkeleton />
           ) : (
             <ul className="movie-results" ref={scrollRef}>
               {allResults.map((item, index) => {
                 const anyItem = item as any;
                 const posterSrc = getCloudinarySrc(
-                  anyItem?.poster_path || anyItem?.profile_path,
-                  "posters",
+                  anyItem?.poster_path ||
+                    anyItem?.profile_path ||
+                    anyItem?.avatar_path,
+                  item.type === "user" ? "avatars" : "posters",
                 );
 
                 return (
@@ -154,33 +183,51 @@ export default function SearchBar() {
                       to={
                         item.type === "movie"
                           ? "/movies/$movieId"
-                          : "/person/$personId"
+                          : item.type === "person"
+                            ? "/person/$personId"
+                            : "/user/$userId"
                       }
                       params={
                         item.type === "movie"
                           ? { movieId: String(item.id) }
-                          : { personId: String(item.id) }
+                          : item.type === "person"
+                            ? { personId: String(item.id) }
+                            : { userId: String(item.id) }
                       }
                       className={`movie-result ${index === activeIndex ? "active" : ""}`}
                       onClick={() => setSearchQuery("")}
                     >
-                      {!anyItem.poster_path && !anyItem.profile_path ? (
-                        <div className="search-poster-fallback text-secondary">
-                          <Film />
+                      {!anyItem.poster_path &&
+                      !anyItem.profile_path &&
+                      !anyItem.avatar_path ? (
+                        <div
+                          className={`search-poster-fallback text-secondary ${item.type === "person" || item.type === "user" ? "is-person" : ""}`}
+                        >
+                          {item.type === "user" ? <User /> : <Film />}
                         </div>
                       ) : (
                         <Image
                           src={posterSrc}
-                          width={45}
-                          aspectRatio={2 / 3}
-                          alt={anyItem.title || anyItem.name}
+                          width={
+                            item.type === "person" || item.type === "user"
+                              ? 40
+                              : 45
+                          }
+                          aspectRatio={
+                            item.type === "person" || item.type === "user"
+                              ? 1
+                              : 2 / 3
+                          }
+                          alt={
+                            anyItem.title || anyItem.name || anyItem.username
+                          }
                           background="auto"
-                          className="search-poster"
+                          className={`search-poster ${item.type === "person" || item.type === "user" ? "is-person" : ""}`}
                         />
                       )}
                       <div className="movie-info">
                         <h2 className="font-sentient">
-                          {anyItem.title || anyItem.name}
+                          {anyItem.title || anyItem.name || anyItem.username}
                         </h2>
                         {item.type === "movie" && (
                           <p className="text-secondary">
