@@ -25,3 +25,12 @@ export const userFeedQuery = () =>
     queryKey: ["user", "feed"],
     queryFn: () => apiClient<FeedActivityType[]>("/user/feed"),
   });
+
+export const userSearchQuery = (query: string) =>
+  queryOptions({
+    queryKey: ["user", "search", query],
+    queryFn: () => apiClient<UserType[]>("/user/search", {
+      params: { q: query },
+    }),
+    enabled: !!query,
+  });

@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SearchIndexRouteImport } from './routes/search/index'
 import { Route as ListsIndexRouteImport } from './routes/lists/index'
 import { Route as AuthVerifyEmailRouteImport } from './routes/auth/verify-email'
 import { Route as AuthSignUpRouteImport } from './routes/auth/sign-up'
@@ -31,6 +32,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchIndexRoute = SearchIndexRouteImport.update({
+  id: '/search/',
+  path: '/search/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ListsIndexRoute = ListsIndexRouteImport.update({
@@ -104,6 +110,7 @@ export interface FileRoutesByFullPath {
   '/auth/sign-up': typeof AuthSignUpRoute
   '/auth/verify-email': typeof AuthVerifyEmailRoute
   '/lists/': typeof ListsIndexRoute
+  '/search/': typeof SearchIndexRoute
   '/lists/$listId/': typeof ListsListIdIndexRoute
   '/movies/$movieId/': typeof MoviesMovieIdIndexRoute
   '/person/$personId/': typeof PersonPersonIdIndexRoute
@@ -119,6 +126,7 @@ export interface FileRoutesByTo {
   '/auth/sign-up': typeof AuthSignUpRoute
   '/auth/verify-email': typeof AuthVerifyEmailRoute
   '/lists': typeof ListsIndexRoute
+  '/search': typeof SearchIndexRoute
   '/lists/$listId': typeof ListsListIdIndexRoute
   '/movies/$movieId': typeof MoviesMovieIdIndexRoute
   '/person/$personId': typeof PersonPersonIdIndexRoute
@@ -136,6 +144,7 @@ export interface FileRoutesById {
   '/auth/sign-up': typeof AuthSignUpRoute
   '/auth/verify-email': typeof AuthVerifyEmailRoute
   '/lists/': typeof ListsIndexRoute
+  '/search/': typeof SearchIndexRoute
   '/lists/$listId/': typeof ListsListIdIndexRoute
   '/movies/$movieId/': typeof MoviesMovieIdIndexRoute
   '/person/$personId/': typeof PersonPersonIdIndexRoute
@@ -153,6 +162,7 @@ export interface FileRouteTypes {
     | '/auth/sign-up'
     | '/auth/verify-email'
     | '/lists/'
+    | '/search/'
     | '/lists/$listId/'
     | '/movies/$movieId/'
     | '/person/$personId/'
@@ -168,6 +178,7 @@ export interface FileRouteTypes {
     | '/auth/sign-up'
     | '/auth/verify-email'
     | '/lists'
+    | '/search'
     | '/lists/$listId'
     | '/movies/$movieId'
     | '/person/$personId'
@@ -184,6 +195,7 @@ export interface FileRouteTypes {
     | '/auth/sign-up'
     | '/auth/verify-email'
     | '/lists/'
+    | '/search/'
     | '/lists/$listId/'
     | '/movies/$movieId/'
     | '/person/$personId/'
@@ -201,6 +213,7 @@ export interface RootRouteChildren {
   AuthSignUpRoute: typeof AuthSignUpRoute
   AuthVerifyEmailRoute: typeof AuthVerifyEmailRoute
   ListsIndexRoute: typeof ListsIndexRoute
+  SearchIndexRoute: typeof SearchIndexRoute
   ListsListIdIndexRoute: typeof ListsListIdIndexRoute
   MoviesMovieIdIndexRoute: typeof MoviesMovieIdIndexRoute
   PersonPersonIdIndexRoute: typeof PersonPersonIdIndexRoute
@@ -221,6 +234,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search/': {
+      id: '/search/'
+      path: '/search'
+      fullPath: '/search/'
+      preLoaderRoute: typeof SearchIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lists/': {
@@ -333,6 +353,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthSignUpRoute: AuthSignUpRoute,
   AuthVerifyEmailRoute: AuthVerifyEmailRoute,
   ListsIndexRoute: ListsIndexRoute,
+  SearchIndexRoute: SearchIndexRoute,
   ListsListIdIndexRoute: ListsListIdIndexRoute,
   MoviesMovieIdIndexRoute: MoviesMovieIdIndexRoute,
   PersonPersonIdIndexRoute: PersonPersonIdIndexRoute,
