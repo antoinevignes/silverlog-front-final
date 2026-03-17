@@ -47,10 +47,29 @@
   .diary-footer {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: v.$space-sm;
-    margin-left: auto;
     margin-top: v.$space-md;
     width: 100%;
-    justify-content: flex-end;
+
+    .delete-button {
+      color: v.$destructive;
+
+      &:hover {
+        background-color: v.$destructive;
+      }
+
+      &.confirm-mode {
+        min-width: 100px;
+        color: v.$c-white;
+      }
+    }
+
+    .footer-actions {
+      display: flex;
+      align-items: center;
+      gap: v.$space-sm;
+      margin-left: auto;
+    }
   }
 }

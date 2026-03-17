@@ -151,3 +151,42 @@ export function useUpdateSeenDate(movieId: string) {
     },
   });
 }
+
+export function useRemoveFromDiary(movieId: string) {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: () => {
+      if (!user) throw new Error("Unauthenticated");
+
+      return apiClient<{ success: boolean }>(`/user_movie/${movieId}/diary`, {
+        method: "DELETE",
+      });
+    },
+
+    onSuccess: () => {
+      toast.success("Film retiré du journal !");
+      queryClient.invalidateQueries({
+        queryKey: ["movie", movieId, "state"],
+      });
+      queryClient.invalidateQueries({ queryKey: ["movie", movieId, "data"] });
+      queryClient.invalidateQueries({
+        queryKey: seenMoviesQuery(String(user?.id)).queryKey,
+      });
+    },
+
+    onError: (error) => {
+      if (error.message === "Unauthenticated") {
+        toast.error("Vous devez vous connecter");
+
+        return navigate({
+          to: "/auth/sign-in",
+          search: { redirect: location.pathname },
+        });
+      }
+      toast.error("Une erreur est survenue");
+    },
+  });
+}

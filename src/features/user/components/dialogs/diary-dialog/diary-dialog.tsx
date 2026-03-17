@@ -1,12 +1,13 @@
 import { DayPicker } from "react-day-picker";
 import { fr } from "react-day-picker/locale";
 import "@/components/ui/date-picker/date-picker.scss";
-import "./diary-dalog.scss";
+import "./diary-dialog.scss";
 import z from "zod";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import type { MovieType } from "@/features/movie/types/movie";
 import { useAppForm } from "@/utils/useAppForm";
-import { useUpdateSeenDate } from "@/features/user/api/user-movie.mutations";
+import { useUpdateSeenDate, useRemoveFromDiary } from "@/features/user/api/user-movie.mutations";
 import Button from "@/components/ui/button/button";
 
 interface ReviewContentProps {
@@ -14,6 +15,7 @@ interface ReviewContentProps {
   onBack: () => void;
   movieId: string;
   movie: MovieType;
+  initialDate?: string;
 }
 
 export default function DiaryDialog({
@@ -21,12 +23,35 @@ export default function DiaryDialog({
   onBack,
   movieId,
   movie,
+  initialDate,
 }: ReviewContentProps) {
   const { mutate: updateDate, isPending } = useUpdateSeenDate(movieId);
+  const { mutate: removeFromDiary, isPending: isRemoving } = useRemoveFromDiary(movieId);
+
+  const [isConfirming, setIsConfirming] = useState(false);
+
+  useEffect(() => {
+    if (isConfirming) {
+      const timer = setTimeout(() => setIsConfirming(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [isConfirming]);
+
+  const handleDelete = () => {
+    if (!isConfirming) {
+      setIsConfirming(true);
+      return;
+    }
+    removeFromDiary(undefined, {
+      onSuccess: () => onClose(),
+    });
+  };
+
+  const hasSeen = !!initialDate;
 
   const form = useAppForm({
     defaultValues: {
-      seen_at: new Date() as Date | undefined,
+      seen_at: initialDate ? new Date(initialDate) : new Date(),
     },
     validators: {
       onChange: z.object({
@@ -79,7 +104,10 @@ export default function DiaryDialog({
             <DayPicker
               mode="single"
               selected={field.state.value}
-              onSelect={(date) => field.setValue(date)}
+              onSelect={(date) => {
+                if (date) field.setValue(date);
+              }}
+              defaultMonth={field.state.value}
               locale={fr}
               captionLayout="dropdown"
               animate
@@ -93,29 +121,43 @@ export default function DiaryDialog({
         />
 
         <div className="diary-footer">
-          <Button type="button" variant="secondary" onClick={onBack}>
-            Annuler
-          </Button>
-
-          <form.AppForm>
-            <form.Subscribe
-              selector={(state) => [
-                state.canSubmit,
-                state.isSubmitting,
-                state.isPristine,
-              ]}
-              children={([canSubmit, isSubmitting, isPristine]) => (
-                <form.Button
-                  type="submit"
-                  disabled={
-                    !canSubmit || isSubmitting || isPending || isPristine
-                  }
-                >
-                  {isPending ? "Ajout en cours..." : "Ajouter"}
-                </form.Button>
+          {hasSeen && (
+            <Button
+              type="button"
+              variant={isConfirming ? "destructive" : "ghost"}
+              className={`delete-button ${isConfirming ? "confirm-mode" : ""}`}
+              onClick={handleDelete}
+              disabled={isRemoving}
+            >
+              {isRemoving ? (
+                "..."
+              ) : isConfirming ? (
+                <>Confirmer ?</>
+              ) : (
+                <Trash2 size={18} />
               )}
-            />
-          </form.AppForm>
+            </Button>
+          )}
+
+          <div className="footer-actions">
+            <Button type="button" variant="secondary" onClick={onBack}>
+              Annuler
+            </Button>
+
+            <form.AppForm>
+              <form.Subscribe
+                selector={(state) => [state.canSubmit, state.isSubmitting]}
+                children={([canSubmit, isSubmitting]) => (
+                  <form.Button
+                    type="submit"
+                    disabled={!canSubmit || isSubmitting || isPending}
+                  >
+                    {isPending ? "Ajout en cours..." : "Ajouter"}
+                  </form.Button>
+                )}
+              />
+            </form.AppForm>
+          </div>
         </div>
       </form>
     </section>

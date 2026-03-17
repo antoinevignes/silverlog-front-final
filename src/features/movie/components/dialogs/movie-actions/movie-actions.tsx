@@ -191,6 +191,7 @@ export default function MovieActions({
             onBack={goBackToMain}
             movieId={String(movie.id)}
             movie={movie}
+            initialDate={movieState.seen_at}
           />
         )}
 
