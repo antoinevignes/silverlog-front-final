@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@/auth";
 import { apiClient } from "@/utils/api-client";
+import { handleMutationError } from "@/utils/handle-mutation-error";
 import type { ReviewType } from "@/features/review/types/review";
 
 export function useUpsertReview(movieId: string) {
@@ -31,18 +32,7 @@ export function useUpsertReview(movieId: string) {
       queryClient.invalidateQueries({ queryKey: ["reviews", movieId] });
     },
 
-    onError: (error) => {
-      if (error.message === "Unauthenticated") {
-        toast.error("Vous devez vous connecter");
-
-        return navigate({
-          to: "/auth/sign-in",
-          search: { redirect: location.pathname },
-        });
-      }
-
-      toast.error("Une erreur est survenue");
-    },
+    onError: (error) => handleMutationError(error, navigate),
   });
 }
 
@@ -66,18 +56,7 @@ export function useLikeReview(movie_id: string) {
       });
     },
 
-    onError: (error) => {
-      if (error.message === "Unauthenticated") {
-        toast.error("Vous devez vous connecter");
-
-        return navigate({
-          to: "/auth/sign-in",
-          search: { redirect: location.pathname },
-        });
-      }
-
-      toast.error("Une erreur est survenue");
-    },
+    onError: (error) => handleMutationError(error, navigate),
   });
 }
 
@@ -103,17 +82,6 @@ export function useDeleteReview(reviewId: string, movieId: string) {
       queryClient.invalidateQueries({ queryKey: ["reviews", movieId] });
     },
 
-    onError: (error) => {
-      if (error.message === "Unauthenticated") {
-        toast.error("Vous devez vous connecter");
-
-        return navigate({
-          to: "/auth/sign-in",
-          search: { redirect: location.pathname },
-        });
-      }
-
-      toast.error("Une erreur est survenue");
-    },
+    onError: (error) => handleMutationError(error, navigate),
   });
 }

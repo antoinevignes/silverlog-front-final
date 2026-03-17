@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Camera, MapPin, Trash2, User, Image as ImageIcon } from "lucide-react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useAuth } from "@/auth";
 import {
   useUpdateLocation,
@@ -16,13 +16,12 @@ import "./settings.scss";
 import { useAppForm } from "@/utils/useAppForm";
 import z from "zod";
 import Button from "@/components/ui/button/button";
-import { Image } from "@unpic/react";
-import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import {
   Dialog,
   DialogContent,
   DialogFooter,
 } from "@/components/ui/dialog/dialog";
+import ImageUploadSection from "@/components/ui/image-upload-section/image-upload-section";
 
 export const Route = createFileRoute("/_authenticated/user/settings/")({
   component: RouteComponent,
@@ -39,6 +38,18 @@ function RouteComponent() {
     useUpdateUsername();
   const { mutate: updateLocation, isPending: isUpdatingLocation } =
     useUpdateLocation();
+
+  // MAJ AVATAR
+  const { mutate: uploadAvatar, isPending: isUploadingAvatar } =
+    useUploadAvatar();
+  const { mutate: deleteAvatar, isPending: isDeletingAvatar } =
+    useDeleteAvatar();
+
+  // MAJ BACKDROP
+  const { mutate: uploadBackdrop, isPending: isUploadingBackdrop } =
+    useUploadBanner();
+  const { mutate: deleteBackdrop, isPending: isDeletingBackdrop } =
+    useDeleteBanner();
 
   // MAJ PSEUDO
   const usernameForm = useAppForm({
@@ -69,52 +80,6 @@ function RouteComponent() {
       updateLocation(value.location);
     },
   });
-
-  // MAJ AVATAR
-  const avatarFileRef = useRef<HTMLInputElement>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [avatarFile, setAvatarFile] = useState<File | null>(null);
-  const { mutate: uploadAvatar, isPending: isUploadingAvatar } =
-    useUploadAvatar();
-  const { mutate: deleteAvatar, isPending: isDeletingAvatar } =
-    useDeleteAvatar();
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setAvatarFile(file);
-    setPreviewUrl(URL.createObjectURL(file));
-  };
-
-  const handleUploadAvatar = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!avatarFile) return;
-    uploadAvatar(avatarFile);
-  };
-
-  // MAJ BACKDROP
-  const backdropFileRef = useRef<HTMLInputElement>(null);
-  const [backdropPreviewUrl, setBackdropPreviewUrl] = useState<string | null>(
-    null,
-  );
-  const [backdropFile, setBackdropFile] = useState<File | null>(null);
-  const { mutate: uploadBackdrop, isPending: isUploadingBackdrop } =
-    useUploadBanner();
-  const { mutate: deleteBackdrop, isPending: isDeletingBackdrop } =
-    useDeleteBanner();
-
-  const handleBackdropFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setBackdropFile(file);
-    setBackdropPreviewUrl(URL.createObjectURL(file));
-  };
-
-  const handleUploadBackdrop = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!backdropFile) return;
-    uploadBackdrop(backdropFile);
-  };
 
   return (
     <main className="settings-page container">
@@ -222,88 +187,28 @@ function RouteComponent() {
           title="Avatar"
           description="Photo de profil affichée sur votre page et dans vos commentaires."
         >
-          <form
-            onSubmit={handleUploadAvatar}
-            className="setting-form avatar-form"
-          >
-            <div className="avatar-upload-zone">
-              {previewUrl ? (
-                <Image
-                  src={previewUrl}
-                  alt="Aperçu avatar"
-                  className="avatar-preview-img"
-                  layout="constrained"
-                  width={40}
-                  height={40}
-                  background="auto"
-                  priority
-                />
-              ) : user?.avatar_path ? (
-                <Image
-                  src={getCloudinarySrc(user.avatar_path, "avatars")}
-                  layout="constrained"
-                  width={40}
-                  height={40}
-                  alt={`Avatar de ${user.username}`}
-                  background="auto"
-                  priority
-                  className="avatar"
-                />
-              ) : (
-                <span className="avatar-placeholder">
-                  <User size={28} aria-hidden />
-                </span>
-              )}
-
-              <Button
-                type="button"
-                size="sm"
-                variant="outline"
-                onClick={() => avatarFileRef.current?.click()}
-              >
-                Choisir une image
-              </Button>
-
-              <input
-                ref={avatarFileRef}
-                type="file"
-                accept="image/*"
-                hidden
-                onChange={handleFileChange}
-                aria-label="Choisir une photo de profil"
-              />
-            </div>
-
-            <Button
-              type="submit"
-              size="sm"
-              disabled={isUploadingAvatar || !avatarFile}
-            >
-              {isUploadingAvatar ? "Upload..." : "Enregistrer"}
-            </Button>
-            <Button
-              type="button"
-              size="icon"
-              variant="destructive"
-              disabled={
-                isUploadingAvatar ||
-                isDeletingAvatar ||
-                (!previewUrl && !avatarFile && !user?.avatar_path)
-              }
-              onClick={() => {
-                if (previewUrl || avatarFile) {
-                  setPreviewUrl(null);
-                  setAvatarFile(null);
-                  if (avatarFileRef.current) avatarFileRef.current.value = "";
-                } else if (user?.avatar_path) {
-                  deleteAvatar();
-                }
-              }}
-              aria-label="Supprimer la photo de profil"
-            >
-              <Trash2 size={20} />
-            </Button>
-          </form>
+          <ImageUploadSection
+            currentPath={user?.avatar_path ?? null}
+            folder="avatars"
+            altText={`Avatar de ${user?.username}`}
+            placeholder={
+              <span className="avatar-placeholder">
+                <User size={28} aria-hidden />
+              </span>
+            }
+            uploadZoneClassName="avatar-upload-zone"
+            formClassName="setting-form avatar-form"
+            previewClassName="avatar-preview-img"
+            currentClassName="avatar"
+            onUpload={uploadAvatar}
+            isUploading={isUploadingAvatar}
+            onDelete={deleteAvatar}
+            isDeleting={isDeletingAvatar}
+            previewWidth={40}
+            previewHeight={40}
+            inputAriaLabel="Choisir une photo de profil"
+            deleteAriaLabel="Supprimer la photo de profil"
+          />
         </SettingSection>
 
         {/* BACKDROP */}
@@ -312,89 +217,28 @@ function RouteComponent() {
           title="Bannière"
           description="Image de fond affichée sur votre page de profil."
         >
-          <form
-            onSubmit={handleUploadBackdrop}
-            className="setting-form banner-form"
-          >
-            <div className="banner-upload-zone">
-              {backdropPreviewUrl ? (
-                <Image
-                  src={backdropPreviewUrl}
-                  alt="Aperçu bannière"
-                  className="banner-preview-img"
-                  layout="constrained"
-                  width={160}
-                  height={90}
-                  background="auto"
-                  priority
-                />
-              ) : user?.banner_path ? (
-                <Image
-                  src={getCloudinarySrc(user.banner_path, "banners")}
-                  layout="constrained"
-                  width={160}
-                  height={90}
-                  alt={`Bannière de ${user.username}`}
-                  background="auto"
-                  priority
-                  className="banner-img"
-                />
-              ) : (
-                <span className="banner-placeholder">
-                  <ImageIcon size={28} aria-hidden />
-                </span>
-              )}
-
-              <Button
-                type="button"
-                size="sm"
-                variant="outline"
-                onClick={() => backdropFileRef.current?.click()}
-              >
-                Choisir une image
-              </Button>
-
-              <input
-                ref={backdropFileRef}
-                type="file"
-                accept="image/*"
-                hidden
-                onChange={handleBackdropFileChange}
-                aria-label="Choisir une bannière"
-              />
-            </div>
-
-            <Button
-              type="submit"
-              size="sm"
-              disabled={isUploadingBackdrop || !backdropFile}
-            >
-              {isUploadingBackdrop ? "Upload..." : "Enregistrer"}
-            </Button>
-            <Button
-              type="button"
-              size="icon"
-              variant="destructive"
-              disabled={
-                isUploadingBackdrop ||
-                isDeletingBackdrop ||
-                (!backdropPreviewUrl && !backdropFile && !user?.banner_path)
-              }
-              onClick={() => {
-                if (backdropPreviewUrl || backdropFile) {
-                  setBackdropPreviewUrl(null);
-                  setBackdropFile(null);
-                  if (backdropFileRef.current)
-                    backdropFileRef.current.value = "";
-                } else if (user?.banner_path) {
-                  deleteBackdrop();
-                }
-              }}
-              aria-label="Supprimer la bannière"
-            >
-              <Trash2 size={20} />
-            </Button>
-          </form>
+          <ImageUploadSection
+            currentPath={user?.banner_path ?? null}
+            folder="banners"
+            altText={`Bannière de ${user?.username}`}
+            placeholder={
+              <span className="banner-placeholder">
+                <ImageIcon size={28} aria-hidden />
+              </span>
+            }
+            uploadZoneClassName="banner-upload-zone"
+            formClassName="setting-form banner-form"
+            previewClassName="banner-preview-img"
+            currentClassName="banner-img"
+            onUpload={uploadBackdrop}
+            isUploading={isUploadingBackdrop}
+            onDelete={deleteBackdrop}
+            isDeleting={isDeletingBackdrop}
+            previewWidth={160}
+            previewHeight={90}
+            inputAriaLabel="Choisir une bannière"
+            deleteAriaLabel="Supprimer la bannière"
+          />
         </SettingSection>
 
         {/* SUPPRIMER LE COMPTE */}

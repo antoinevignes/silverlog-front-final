@@ -4,6 +4,11 @@ import { toast } from "sonner";
 import { seenMoviesQuery } from "./user-movie.queries";
 import { useAuth } from "@/auth";
 import { apiClient } from "@/utils/api-client";
+import { handleMutationError } from "@/utils/handle-mutation-error";
+import {
+  sanitizeMoviePayload,
+  type MoviePayload,
+} from "@/utils/movie-payload";
 
 export function useUpdateMovieRating(movieId: string) {
   const { user } = useAuth();
@@ -11,25 +16,14 @@ export function useUpdateMovieRating(movieId: string) {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: (payload: {
-      value: number;
-      title: string;
-      posterPath: string | null;
-      backdropPath: string | null;
-      releaseDate: string | null;
-      genres: Array<{ id: number; name: string }>;
-    }) => {
+    mutationFn: (payload: MoviePayload & { value: number }) => {
       if (!user) throw new Error("Unauthenticated");
 
       return apiClient<{ success: string }>(`/user_movie/${movieId}/rate`, {
         method: "POST",
         body: JSON.stringify({
           rating: payload.value * 2,
-          title: payload.title,
-          poster_path: payload.posterPath?.trim() === "" ? null : payload.posterPath,
-          backdrop_path: payload.backdropPath?.trim() === "" ? null : payload.backdropPath,
-          release_date: payload.releaseDate?.trim() === "" ? null : payload.releaseDate,
-          genres: payload.genres.length > 0 ? payload.genres : null,
+          ...sanitizeMoviePayload(payload),
         }),
       });
     },
@@ -49,18 +43,7 @@ export function useUpdateMovieRating(movieId: string) {
       });
     },
 
-    onError: (error) => {
-      if (error.message === "Unauthenticated") {
-        toast.error("Vous devez vous connecter");
-
-        return navigate({
-          to: "/auth/sign-in",
-          search: { redirect: location.pathname },
-        });
-      }
-
-      toast.error("Une erreur est survenue");
-    },
+    onError: (error) => handleMutationError(error, navigate),
   });
 }
 
@@ -86,17 +69,7 @@ export function useDeleteMovieRating(movieId: string) {
       queryClient.invalidateQueries({ queryKey: ["movie", movieId, "data"] });
     },
 
-    onError: (error) => {
-      if (error.message === "Unauthenticated") {
-        toast.error("Vous devez vous connecter");
-
-        return navigate({
-          to: "/auth/sign-in",
-          search: { redirect: location.pathname },
-        });
-      }
-      toast.error("Une erreur est survenue");
-    },
+    onError: (error) => handleMutationError(error, navigate),
   });
 }
 
@@ -106,25 +79,14 @@ export function useUpdateSeenDate(movieId: string) {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: (payload: {
-      seenDate: Date;
-      title: string;
-      posterPath: string | null;
-      backdropPath: string | null;
-      releaseDate: string | null;
-      genres: Array<{ id: number; name: string }>;
-    }) => {
+    mutationFn: (payload: MoviePayload & { seenDate: Date }) => {
       if (!user) throw new Error("Unauthenticated");
 
       return apiClient<{ success: string }>(`/user_movie/${movieId}/seen-date`, {
         method: "POST",
         body: JSON.stringify({
           date: payload.seenDate,
-          title: payload.title,
-          poster_path: payload.posterPath?.trim() === "" ? null : payload.posterPath,
-          backdrop_path: payload.backdropPath?.trim() === "" ? null : payload.backdropPath,
-          release_date: payload.releaseDate?.trim() === "" ? null : payload.releaseDate,
-          genres: payload.genres.length > 0 ? payload.genres : null,
+          ...sanitizeMoviePayload(payload),
         }),
       });
     },
@@ -137,17 +99,7 @@ export function useUpdateSeenDate(movieId: string) {
       queryClient.invalidateQueries({ queryKey: ["movie", movieId, "data"] });
     },
 
-    onError: (error) => {
-      if (error.message === "Unauthenticated") {
-        toast.error("Vous devez vous connecter");
-
-        return navigate({
-          to: "/auth/sign-in",
-          search: { redirect: location.pathname },
-        });
-      }
-      toast.error("Une erreur est survenue");
-    },
+    onError: (error) => handleMutationError(error, navigate),
   });
 }
 
@@ -176,16 +128,6 @@ export function useRemoveFromDiary(movieId: string) {
       });
     },
 
-    onError: (error) => {
-      if (error.message === "Unauthenticated") {
-        toast.error("Vous devez vous connecter");
-
-        return navigate({
-          to: "/auth/sign-in",
-          search: { redirect: location.pathname },
-        });
-      }
-      toast.error("Une erreur est survenue");
-    },
+    onError: (error) => handleMutationError(error, navigate),
   });
 }

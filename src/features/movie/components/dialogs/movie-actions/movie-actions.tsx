@@ -24,6 +24,8 @@ import Rating from "@/features/movie/components/rating/rating";
 import { useAuth } from "@/auth";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 
+type DialogView = "main" | "review" | "diary" | "custom-list" | "create-list";
+
 export default function MovieActions({
   movie,
   movieYear,
@@ -39,7 +41,7 @@ export default function MovieActions({
   const { movieId } = routeApi.useParams();
 
   const [open, setOpen] = useState(false);
-  const [currentView, setCurrentView] = useState<string>("main");
+  const [currentView, setCurrentView] = useState<DialogView>("main");
 
   const { data: movieState } = useSuspenseQuery(movieStateQuery(movieId));
   const { mutate: toggleList, isPending } = useToggleMovieList(movieId);

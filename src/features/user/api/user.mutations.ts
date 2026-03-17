@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import { useAuth } from "@/auth";
 import { useNavigate } from "@tanstack/react-router";
 import { apiClient } from "@/utils/api-client";
+import { handleMutationError } from "@/utils/handle-mutation-error";
 import type { UserType } from "@/features/user/types/user";
 
 // MISE A JOUR DU PSEUDO UTILISATEUR
@@ -27,17 +28,7 @@ export function useUpdateUsername() {
       toast.success("Profil mis à jour !");
     },
 
-    onError: (error) => {
-      if (error.message === "Unauthenticated") {
-        toast.error("Vous devez vous connecter");
-
-        return navigate({
-          to: "/auth/sign-in",
-          search: { redirect: location.pathname },
-        });
-      }
-      toast.error(error.message);
-    },
+    onError: (error) => handleMutationError(error, navigate),
   });
 }
 
@@ -63,17 +54,7 @@ export function useUpdateLocation() {
       toast.success("Localisation mise à jour !");
     },
 
-    onError: (error) => {
-      if (error.message === "Unauthenticated") {
-        toast.error("Vous devez vous connecter");
-
-        return navigate({
-          to: "/auth/sign-in",
-          search: { redirect: location.pathname },
-        });
-      }
-      toast.error("Une erreur est survenue");
-    },
+    onError: (error) => handleMutationError(error, navigate),
   });
 }
 
@@ -123,7 +104,7 @@ export function useUploadBanner() {
       return apiClient<UserType>("/user/banner", {
         method: "PATCH",
         body: formData,
-        headers: {}, // Let browser set Content-Type for FormData
+        headers: {},
       });
     },
 
@@ -269,7 +250,9 @@ export function useUnfollowUser(userId: string) {
     },
 
     onError: (error) => {
-      toast.error(error.message ?? "Impossible d'arrêter de suivre cet utilisateur");
+      toast.error(
+        error.message ?? "Impossible d'arrêter de suivre cet utilisateur",
+      );
     },
   });
 }
