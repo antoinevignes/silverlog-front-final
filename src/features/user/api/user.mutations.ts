@@ -4,6 +4,7 @@ import { useAuth } from "@/auth";
 import { useNavigate } from "@tanstack/react-router";
 import { apiClient } from "@/utils/api-client";
 import { handleMutationError } from "@/utils/handle-mutation-error";
+import { userKeys } from "@/utils/query-keys";
 import type { UserType } from "@/features/user/types/user";
 
 // MISE A JOUR DU PSEUDO UTILISATEUR
@@ -23,8 +24,8 @@ export function useUpdateUsername() {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["session"] });
-      queryClient.invalidateQueries({ queryKey: ["user", user?.id] });
+      queryClient.invalidateQueries({ queryKey: userKeys.session() });
+      queryClient.invalidateQueries({ queryKey: userKeys.detail(String(user?.id)) });
       toast.success("Profil mis à jour !");
     },
 
@@ -49,8 +50,8 @@ export function useUpdateLocation() {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["session"] });
-      queryClient.invalidateQueries({ queryKey: ["user", user?.id] });
+      queryClient.invalidateQueries({ queryKey: userKeys.session() });
+      queryClient.invalidateQueries({ queryKey: userKeys.detail(String(user?.id)) });
       toast.success("Localisation mise à jour !");
     },
 
@@ -78,8 +79,8 @@ export function useUploadAvatar() {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["session"] });
-      queryClient.invalidateQueries({ queryKey: ["user", user?.id] });
+      queryClient.invalidateQueries({ queryKey: userKeys.session() });
+      queryClient.invalidateQueries({ queryKey: userKeys.detail(String(user?.id)) });
       toast.success("Avatar mis à jour !");
     },
 
@@ -109,8 +110,8 @@ export function useUploadBanner() {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["session"] });
-      queryClient.invalidateQueries({ queryKey: ["user", user?.id] });
+      queryClient.invalidateQueries({ queryKey: userKeys.session() });
+      queryClient.invalidateQueries({ queryKey: userKeys.detail(String(user?.id)) });
       toast.success("Bannière mise à jour !");
     },
 
@@ -132,7 +133,7 @@ export function useDeleteAccount() {
       }),
 
     onSuccess: () => {
-      queryClient.setQueryData(["session"], {
+      queryClient.setQueryData(userKeys.session(), {
         user: null,
         isAuthenticated: false,
       });
@@ -162,8 +163,8 @@ export function useDeleteAvatar() {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["session"] });
-      queryClient.invalidateQueries({ queryKey: ["user", user?.id] });
+      queryClient.invalidateQueries({ queryKey: userKeys.session() });
+      queryClient.invalidateQueries({ queryKey: userKeys.detail(String(user?.id)) });
       toast.success("Avatar supprimé avec succès !");
     },
 
@@ -188,8 +189,8 @@ export function useDeleteBanner() {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["session"] });
-      queryClient.invalidateQueries({ queryKey: ["user", user?.id] });
+      queryClient.invalidateQueries({ queryKey: userKeys.session() });
+      queryClient.invalidateQueries({ queryKey: userKeys.detail(String(user?.id)) });
       toast.success("Bannière supprimée avec succès !");
     },
 
@@ -214,10 +215,10 @@ export function useFollowUser(userId: string) {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["user", userId] });
-      queryClient.invalidateQueries({ queryKey: ["user", user?.id] });
-      queryClient.invalidateQueries({ queryKey: ["followers", userId] });
-      queryClient.invalidateQueries({ queryKey: ["following", user?.id] });
+      queryClient.invalidateQueries({ queryKey: userKeys.detail(userId) });
+      queryClient.invalidateQueries({ queryKey: userKeys.detail(String(user?.id)) });
+      queryClient.invalidateQueries({ queryKey: userKeys.followers(userId) });
+      queryClient.invalidateQueries({ queryKey: userKeys.following(String(user?.id)) });
       toast.success("Vous suivez maintenant cet utilisateur");
     },
 
@@ -242,10 +243,10 @@ export function useUnfollowUser(userId: string) {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["user", userId] });
-      queryClient.invalidateQueries({ queryKey: ["user", user?.id] });
-      queryClient.invalidateQueries({ queryKey: ["followers", userId] });
-      queryClient.invalidateQueries({ queryKey: ["following", user?.id] });
+      queryClient.invalidateQueries({ queryKey: userKeys.detail(userId) });
+      queryClient.invalidateQueries({ queryKey: userKeys.detail(String(user?.id)) });
+      queryClient.invalidateQueries({ queryKey: userKeys.followers(userId) });
+      queryClient.invalidateQueries({ queryKey: userKeys.following(String(user?.id)) });
       toast.success("Vous ne suivez plus cet utilisateur");
     },
 

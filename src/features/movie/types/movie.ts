@@ -1,4 +1,5 @@
-export type MovieType = {
+// Données provenant de l'API TMDB
+export type TMDBMovieData = {
   id: number;
   title: string;
   release_date: string;
@@ -14,6 +15,10 @@ export type MovieType = {
   production_companies: Array<{ name: string }>;
   tagline: string;
   popularity: number;
+};
+
+// Données internes (liées au user ou à l'app)
+export type UserMovieData = {
   seen_at: string;
   personal_rating: number;
   rating_count?: number;
@@ -22,3 +27,6 @@ export type MovieType = {
   added_at?: string;
   lists?: Array<{ id: number; title: string; list_type: string }>;
 };
+
+// Type complet = TMDB + données internes
+export type MovieType = TMDBMovieData & UserMovieData;

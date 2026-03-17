@@ -8,6 +8,7 @@ import {
   sanitizeMoviePayload,
   type MoviePayload,
 } from "@/utils/movie-payload";
+import { movieKeys, listKeys } from "@/utils/query-keys";
 import type { ListType } from "@/features/list/types/list";
 
 const LIST_CONFIG: Record<
@@ -65,9 +66,7 @@ export function useToggleMovieList(movieId: string) {
         toast.error(LIST_CONFIG.top.fullMessage);
       }
 
-      queryClient.invalidateQueries({
-        queryKey: ["movie", movieId, "state"],
-      });
+      queryClient.invalidateQueries({ queryKey: movieKeys.state(movieId) });
     },
 
     onError: (error) => handleMutationError(error, navigate),
@@ -97,12 +96,8 @@ export function useToggleCustomList(movieId: string) {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["movie", movieId, "state"],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["custom-lists", user?.id],
-      });
+      queryClient.invalidateQueries({ queryKey: movieKeys.state(movieId) });
+      queryClient.invalidateQueries({ queryKey: listKeys.custom(user?.id ?? "") });
     },
 
     onError: (error) =>
@@ -131,9 +126,7 @@ export const useCreateList = () => {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["custom-lists", user?.id],
-      });
+      queryClient.invalidateQueries({ queryKey: listKeys.custom(user?.id ?? "") });
       toast.success("Liste créée avec succès");
     },
 
@@ -158,9 +151,7 @@ export const useSaveList = (listId: string) => {
     },
 
     onSuccess: (data: { action: string }) => {
-      queryClient.invalidateQueries({
-        queryKey: ["list", listId, "data"],
-      });
+      queryClient.invalidateQueries({ queryKey: listKeys.detail(listId) });
 
       if (data.action === "un-saved") {
         toast.success("Liste retirée avec succès");
@@ -190,12 +181,8 @@ export const useDeleteList = () => {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["custom-lists", user?.id],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["personal-lists", user?.id?.toString()],
-      });
+      queryClient.invalidateQueries({ queryKey: listKeys.custom(user?.id ?? "") });
+      queryClient.invalidateQueries({ queryKey: listKeys.personal(user?.id?.toString() ?? "") });
       toast.success("Liste supprimée avec succès");
     },
 
@@ -225,12 +212,8 @@ export const useUpdateList = (listId: string) => {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["list", listId, "data"],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["custom-lists", user?.id],
-      });
+      queryClient.invalidateQueries({ queryKey: listKeys.detail(listId) });
+      queryClient.invalidateQueries({ queryKey: listKeys.custom(user?.id ?? "") });
       toast.success("Liste mise à jour avec succès");
     },
 
@@ -254,9 +237,7 @@ export const useRemoveMovieFromList = (listId: string) => {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["list", listId, "data"],
-      });
+      queryClient.invalidateQueries({ queryKey: listKeys.detail(listId) });
       toast.success("Film retiré de la liste");
     },
 

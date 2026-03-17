@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { createContext, useContext } from "react";
 import { toast } from "sonner";
 import { apiClient } from "@/utils/api-client";
+import { userKeys } from "@/utils/query-keys";
 import type { UserType } from "@/features/user/types/user";
 
 export interface AuthState {
@@ -17,7 +18,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const queryClient = useQueryClient();
 
   const { data: authData, isPending } = useQuery({
-    queryKey: ["session"],
+    queryKey: userKeys.session(),
     queryFn: async () => {
       try {
         return await apiClient<{ user: UserType | null; isAuthenticated: boolean }>("/auth/session");
@@ -36,7 +37,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         body: JSON.stringify(values),
       }),
     onSuccess: (data) => {
-      queryClient.setQueryData(["session"], {
+      queryClient.setQueryData(userKeys.session(), {
         user: data,
         isAuthenticated: true,
       });
@@ -48,7 +49,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   });
 
   const logout = () => {
-    queryClient.setQueryData(["session"], {
+    queryClient.setQueryData(userKeys.session(), {
       user: null,
       isAuthenticated: false,
     });

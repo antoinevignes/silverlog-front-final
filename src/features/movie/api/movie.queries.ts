@@ -1,5 +1,6 @@
 import { queryOptions } from "@tanstack/react-query";
 import { apiClient } from "@/utils/api-client";
+import { movieKeys } from "@/utils/query-keys";
 import type { MovieType } from "@/features/movie/types/movie";
 import type { CastType } from "@/features/movie/types/cast";
 import type { CrewType } from "@/features/movie/types/crew";
@@ -7,13 +8,13 @@ import type { UserType } from "@/features/user/types/user";
 
 export const movieDataQuery = (movieId: string) =>
   queryOptions({
-    queryKey: ["movie", movieId, "data"],
+    queryKey: movieKeys.data(movieId),
     queryFn: () => apiClient<MovieType>(`/movies/${movieId}`),
   });
 
 export const movieDetailsQuery = (movieId: string) =>
   queryOptions({
-    queryKey: ["movie", movieId],
+    queryKey: movieKeys.detail(movieId),
     queryFn: () =>
       apiClient<MovieType>(`/tmdb/movie/${movieId}`, {
         params: { language: "fr-FR" },
@@ -22,7 +23,7 @@ export const movieDetailsQuery = (movieId: string) =>
 
 export const movieCreditsQuery = (movieId: string) =>
   queryOptions({
-    queryKey: ["movie", movieId, "credits"],
+    queryKey: movieKeys.credits(movieId),
     queryFn: () =>
       apiClient<{ id: number; cast: CastType[]; crew: CrewType[] }>(
         `/tmdb/movie/${movieId}/credits`,
@@ -33,7 +34,7 @@ export const movieCreditsQuery = (movieId: string) =>
 
 export const similarMoviesQuery = (movieId: string) =>
   queryOptions({
-    queryKey: ["movie", movieId, "similar"],
+    queryKey: movieKeys.similar(movieId),
     queryFn: () =>
       apiClient<{ results: MovieType[] }>(`/tmdb/movie/${movieId}/similar`, {
         params: { language: "fr-FR" },
@@ -42,7 +43,7 @@ export const similarMoviesQuery = (movieId: string) =>
 
 export const movieSearchQuery = (query: string) =>
   queryOptions({
-    queryKey: ["movie", "search", query],
+    queryKey: movieKeys.search(query),
     queryFn: () =>
       apiClient<{ results: MovieType[] }>("/tmdb/search/movie", {
         params: {
@@ -57,7 +58,7 @@ export const movieSearchQuery = (query: string) =>
 
 export const popularMoviesQuery = () =>
   queryOptions({
-    queryKey: ["movie", "popular"],
+    queryKey: movieKeys.popular(),
     queryFn: () =>
       apiClient<{ results: MovieType[] }>("/tmdb/trending/movie/week", {
         params: { language: "fr-FR" },
@@ -66,12 +67,12 @@ export const popularMoviesQuery = () =>
 
 export const crewPicksQuery = () =>
   queryOptions({
-    queryKey: ["movies", "crew-picks"],
+    queryKey: movieKeys.crewPicks(),
     queryFn: () => apiClient<MovieType[]>("/movies/crew-picks"),
   });
 
 export const movieFriendsActivityQuery = (movieId: string) =>
   queryOptions({
-    queryKey: ["movies", movieId, "friends-activity"],
+    queryKey: movieKeys.friendsActivity(movieId),
     queryFn: () => apiClient<UserType[]>(`/movies/${movieId}/friends`),
   });

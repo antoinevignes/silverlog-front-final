@@ -1,34 +1,35 @@
 import { queryOptions } from "@tanstack/react-query";
 import { apiClient } from "@/utils/api-client";
+import { userKeys } from "@/utils/query-keys";
 import type { UserType, FeedActivityType } from "@/features/user/types/user";
 
 export const userQuery = (user_id: string) =>
   queryOptions({
-    queryKey: ["user", user_id],
+    queryKey: userKeys.detail(user_id),
     queryFn: () => apiClient<UserType>(`/user/${user_id}`),
   });
 
 export const userFollowersQuery = (user_id: string) =>
   queryOptions({
-    queryKey: ["followers", user_id],
+    queryKey: userKeys.followers(user_id),
     queryFn: () => apiClient<UserType[]>(`/user/${user_id}/followers`),
   });
 
 export const userFollowingQuery = (user_id: string) =>
   queryOptions({
-    queryKey: ["following", user_id],
+    queryKey: userKeys.following(user_id),
     queryFn: () => apiClient<UserType[]>(`/user/${user_id}/following`),
   });
 
 export const userFeedQuery = () =>
   queryOptions({
-    queryKey: ["user", "feed"],
+    queryKey: userKeys.feed(),
     queryFn: () => apiClient<FeedActivityType[]>("/user/feed"),
   });
 
 export const userSearchQuery = (query: string) =>
   queryOptions({
-    queryKey: ["user", "search", query],
+    queryKey: userKeys.search(query),
     queryFn: () => apiClient<UserType[]>("/user/search", {
       params: { q: query },
     }),

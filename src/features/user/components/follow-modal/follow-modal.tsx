@@ -23,11 +23,16 @@ export default function FollowModal({
   type,
   title,
 }: FollowModalProps) {
-  const query =
-    type === "followers"
-      ? userFollowersQuery(userId)
-      : userFollowingQuery(userId);
-  const { data: users, isLoading } = useQuery(query);
+  const followersQuery = useQuery({
+    ...userFollowersQuery(userId),
+    enabled: type === "followers",
+  });
+  const followingQuery = useQuery({
+    ...userFollowingQuery(userId),
+    enabled: type === "following",
+  });
+  const { data: users, isLoading } =
+    type === "followers" ? followersQuery : followingQuery;
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>

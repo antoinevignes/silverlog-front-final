@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
-import { seenMoviesQuery } from "./user-movie.queries";
 import { useAuth } from "@/auth";
 import { apiClient } from "@/utils/api-client";
 import { handleMutationError } from "@/utils/handle-mutation-error";
@@ -9,6 +8,7 @@ import {
   sanitizeMoviePayload,
   type MoviePayload,
 } from "@/utils/movie-payload";
+import { movieKeys, reviewKeys, userKeys } from "@/utils/query-keys";
 
 export function useUpdateMovieRating(movieId: string) {
   const { user } = useAuth();
@@ -29,18 +29,12 @@ export function useUpdateMovieRating(movieId: string) {
     },
     onSuccess: () => {
       toast.success("Note mise à jour !");
-      queryClient.invalidateQueries({
-        queryKey: ["movie", movieId, "state"],
-      });
-      queryClient.invalidateQueries({ queryKey: ["reviews", movieId] });
-      queryClient.invalidateQueries({ queryKey: ["movie", movieId, "data"] });
-      queryClient.invalidateQueries({ queryKey: ["movie", movieId] });
-      queryClient.invalidateQueries({
-        queryKey: seenMoviesQuery(String(user?.id)).queryKey,
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["movie", movieId, "details"],
-      });
+      queryClient.invalidateQueries({ queryKey: movieKeys.state(movieId) });
+      queryClient.invalidateQueries({ queryKey: reviewKeys.byMovie(movieId) });
+      queryClient.invalidateQueries({ queryKey: movieKeys.data(movieId) });
+      queryClient.invalidateQueries({ queryKey: movieKeys.detail(movieId) });
+      queryClient.invalidateQueries({ queryKey: userKeys.seenMovies(String(user?.id)) });
+      queryClient.invalidateQueries({ queryKey: movieKeys.details(movieId) });
     },
 
     onError: (error) => handleMutationError(error, navigate),
@@ -63,10 +57,8 @@ export function useDeleteMovieRating(movieId: string) {
 
     onSuccess: () => {
       toast.success("Note supprimée !");
-      queryClient.invalidateQueries({
-        queryKey: ["movie", movieId, "state"],
-      });
-      queryClient.invalidateQueries({ queryKey: ["movie", movieId, "data"] });
+      queryClient.invalidateQueries({ queryKey: movieKeys.state(movieId) });
+      queryClient.invalidateQueries({ queryKey: movieKeys.data(movieId) });
     },
 
     onError: (error) => handleMutationError(error, navigate),
@@ -93,10 +85,8 @@ export function useUpdateSeenDate(movieId: string) {
 
     onSuccess: () => {
       toast.success("Film ajouté au journal !");
-      queryClient.invalidateQueries({
-        queryKey: ["movie", movieId, "state"],
-      });
-      queryClient.invalidateQueries({ queryKey: ["movie", movieId, "data"] });
+      queryClient.invalidateQueries({ queryKey: movieKeys.state(movieId) });
+      queryClient.invalidateQueries({ queryKey: movieKeys.data(movieId) });
     },
 
     onError: (error) => handleMutationError(error, navigate),
@@ -119,13 +109,9 @@ export function useRemoveFromDiary(movieId: string) {
 
     onSuccess: () => {
       toast.success("Film retiré du journal !");
-      queryClient.invalidateQueries({
-        queryKey: ["movie", movieId, "state"],
-      });
-      queryClient.invalidateQueries({ queryKey: ["movie", movieId, "data"] });
-      queryClient.invalidateQueries({
-        queryKey: seenMoviesQuery(String(user?.id)).queryKey,
-      });
+      queryClient.invalidateQueries({ queryKey: movieKeys.state(movieId) });
+      queryClient.invalidateQueries({ queryKey: movieKeys.data(movieId) });
+      queryClient.invalidateQueries({ queryKey: userKeys.seenMovies(String(user?.id)) });
     },
 
     onError: (error) => handleMutationError(error, navigate),

@@ -1,10 +1,11 @@
 import { queryOptions } from "@tanstack/react-query";
 import { apiClient } from "@/utils/api-client";
+import { personKeys } from "@/utils/query-keys";
 import type { PersonType } from "@/features/movie/types/person";
 
 export const personDetailsQuery = (personId: string) =>
   queryOptions({
-    queryKey: ["person", "details", personId],
+    queryKey: personKeys.details(personId),
     queryFn: () =>
       apiClient<PersonType>(`/tmdb/person/${personId}`, {
         params: { language: "fr-FR" },
@@ -13,7 +14,7 @@ export const personDetailsQuery = (personId: string) =>
 
 export const personDetailsQueryUS = (personId: string) =>
   queryOptions({
-    queryKey: ["person", "detailsUS", personId],
+    queryKey: personKeys.detailsUS(personId),
     queryFn: () =>
       apiClient<PersonType>(`/tmdb/person/${personId}`, {
         params: { language: "en-US" },
@@ -22,7 +23,7 @@ export const personDetailsQueryUS = (personId: string) =>
 
 export const personCreditsQuery = (personId: string) =>
   queryOptions({
-    queryKey: ["person", "credits", personId],
+    queryKey: personKeys.credits(personId),
     queryFn: () =>
       apiClient<{ id: number; cast: any[]; crew: any[] }>(
         `/tmdb/person/${personId}/movie_credits`,
@@ -33,7 +34,7 @@ export const personCreditsQuery = (personId: string) =>
 
 export const personSearchQuery = (query: string) =>
   queryOptions({
-    queryKey: ["person", "search", query],
+    queryKey: personKeys.search(query),
     queryFn: () =>
       apiClient<{ results: PersonType[] }>("/tmdb/search/person", {
         params: {
