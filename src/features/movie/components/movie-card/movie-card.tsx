@@ -1,5 +1,5 @@
 import { Image } from "@unpic/react";
-import { Film } from "lucide-react";
+import { Film, X } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import type { MovieType } from "@/features/movie/types/movie";
 import "./movie-card.scss";
@@ -10,9 +10,11 @@ type MovieCardSize = "sm" | "md" | "lg";
 export default function MovieCard({
   movie,
   size = "md",
+  onRemove,
 }: {
   movie: MovieType;
   size?: MovieCardSize;
+  onRemove?: () => void;
 }) {
   const posterSrc = getCloudinarySrc(movie.poster_path, "posters");
 
@@ -34,6 +36,19 @@ export default function MovieCard({
           background="auto"
           className="movie-card-poster"
         />
+      )}
+      {onRemove && (
+        <button
+          className="remove-movie-button"
+          aria-label="Retirer de la liste"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onRemove();
+          }}
+        >
+          <X size={14} />
+        </button>
       )}
       <p className="movie-title" aria-hidden>
         {movie.title}
