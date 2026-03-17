@@ -28,10 +28,10 @@ function RouteComponent() {
   );
 
   const topListMoviesDetailsResults = useQueries({
-    queries: ((topListData as any)?.movies ?? topListData ?? []).map((item: any) => ({
+    queries: ((topListData?.movies as unknown as Array<{ movie_id: number; added_at?: string }>) ?? []).map((item) => ({
       queryKey: ["movie", item.movie_id, "details", item.added_at],
       queryFn: () =>
-        apiClient<any>(`/tmdb/movie/${item.movie_id}`, {
+        apiClient<MovieType>(`/tmdb/movie/${item.movie_id}`, {
           params: { language: "fr-FR" },
         }),
       staleTime: 1000 * 60 * 60 * 24,
@@ -84,10 +84,10 @@ function RouteComponent() {
                     </span>
                   )}
 
-                  {(movie as any).vote_average > 0 && (
+                  {movie.vote_average > 0 && (
                     <Badge variant="outline" className="tmdb-rating">
                       <Star size={14} fill="#F2C265" stroke="#F2C265" />
-                      {(movie as any).vote_average.toFixed(1)}
+                      {movie.vote_average.toFixed(1)}
                     </Badge>
                   )}
                 </div>

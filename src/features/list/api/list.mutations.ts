@@ -320,8 +320,6 @@ export const useUpdateList = (listId: string) => {
         });
       }
 
-      toast.error("Une erreur est survenue lors de la suppression de la liste");
-
       toast.error(
         error.message || "Une erreur est survenue lors de la mise à jour",
       );

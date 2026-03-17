@@ -20,7 +20,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     queryKey: ["session"],
     queryFn: async () => {
       try {
-        return await apiClient<any>("/auth/session");
+        return await apiClient<{ user: UserType | null; isAuthenticated: boolean }>("/auth/session");
       } catch (error) {
         return { user: null, isAuthenticated: false };
       }
@@ -31,7 +31,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const loginMutation = useMutation({
     mutationFn: (values: { email: string; password: string }) =>
-      apiClient<any>("/auth/sign-in", {
+      apiClient<UserType>("/auth/sign-in", {
         method: "POST",
         body: JSON.stringify(values),
       }),
@@ -60,10 +60,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   return (
     <AuthContext.Provider
       value={{
-        user: authData?.user,
-        isAuthenticated: authData?.isAuthenticated,
-        login: (email, password) =>
-          loginMutation.mutateAsync({ email, password }),
+        user: authData?.user ?? null,
+        isAuthenticated: authData?.isAuthenticated ?? false,
+        login: async (email, password) => {
+          await loginMutation.mutateAsync({ email, password });
+        },
         logout,
       }}
     >

@@ -13,13 +13,13 @@ export const Route = createFileRoute("/auth/verify-email")({
     }
 
     try {
-      return await apiClient<any>("/auth/verify-email", {
+      return await apiClient<{ success: boolean; message: string }>("/auth/verify-email", {
         params: { token },
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       return {
         success: false,
-        message: error.message || "Erreur de vérification",
+        message: error instanceof Error ? error.message : "Erreur de vérification",
       };
     }
   },
