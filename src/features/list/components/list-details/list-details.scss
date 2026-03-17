@@ -56,7 +56,8 @@
       }
     }
 
-    .save-button {
+    .save-button,
+    .edit-button {
       background-color: v.$c-heading;
       color: v.$c-bg;
       border: none;

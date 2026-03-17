@@ -1,7 +1,7 @@
 import { Image } from "@unpic/react";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
-import { Bookmark, ChevronDown, Film, TrendingUp } from "lucide-react";
+import { Bookmark, ChevronDown, Film, Pencil, TrendingUp } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
@@ -21,6 +21,9 @@ import { useSaveList } from "@/features/list/api/list.mutations";
 import { listDataQuery } from "@/features/list/api/list.queries";
 import { formatCompactNumber } from "@/utils/format-compact-number";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
+import { useRemoveMovieFromList } from "@/features/list/api/list.mutations";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog/dialog";
+import EditList from "../dialogs/edit-list/edit-list";
 
 export default function ListDetails() {
   const routeApi = getRouteApi("/lists/$listId/");
@@ -39,6 +42,11 @@ export default function ListDetails() {
 
   const { data: listData } = useSuspenseQuery(listDataQuery(listId));
   const { mutate: saveList } = useSaveList(listId);
+  const { mutate: removeMovie } = useRemoveMovieFromList(listId);
+
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+
+  const isOwner = user?.username === listData.username;
 
   const movies = listData.movies;
 
@@ -151,16 +159,39 @@ export default function ListDetails() {
           </div>
         </div>
 
-        <button
-          className="save-button"
-          aria-label="Sauvegarder la liste"
-          onClick={() => saveList()}
-        >
-          <Bookmark
-            size={20}
-            fill={listData.is_saved ? "currentColor" : "none"}
-          />
-        </button>
+        {isOwner ? (
+          <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+            <DialogTrigger asChild>
+              <button
+                className="edit-button"
+                aria-label="Modifier la liste"
+              >
+                <Pencil size={20} />
+              </button>
+            </DialogTrigger>
+            <DialogContent>
+              <EditList
+                listId={listId}
+                initialTitle={listData.title}
+                initialDescription={listData.description}
+                initialIsPublic={listData.is_public}
+                onSuccess={() => setIsEditDialogOpen(false)}
+                onBack={() => setIsEditDialogOpen(false)}
+              />
+            </DialogContent>
+          </Dialog>
+        ) : (
+          <button
+            className="save-button"
+            aria-label="Sauvegarder la liste"
+            onClick={() => saveList()}
+          >
+            <Bookmark
+              size={20}
+              fill={listData.is_saved ? "currentColor" : "none"}
+            />
+          </button>
+        )}
       </section>
 
       <section className="description-section">
@@ -318,7 +349,12 @@ export default function ListDetails() {
             </p>
           ) : (
             filteredMovies.map((movie: MovieType) => (
-              <MovieCard key={movie.id} movie={movie} size="sm" />
+              <MovieCard
+                key={movie.id}
+                movie={movie}
+                size="sm"
+                onRemove={isOwner ? () => removeMovie(movie.id) : undefined}
+              />
             ))
           )}
         </section>

@@ -114,17 +114,23 @@ export function useToggleCustomList(movieId: string) {
     }) => {
       if (!user) throw new Error("Unauthenticated");
 
-      return apiClient<{ success: string }>(`/lists/${payload.listId}/movies/toggle`, {
-        method: "POST",
-        body: JSON.stringify({
-          movie_id: movieId,
-          title: payload.title,
-          poster_path: payload.posterPath?.trim() === "" ? null : payload.posterPath,
-          backdrop_path: payload.backdropPath?.trim() === "" ? null : payload.backdropPath,
-          release_date: payload.releaseDate?.trim() === "" ? null : payload.releaseDate,
-          genres: payload.genres.length > 0 ? payload.genres : null,
-        }),
-      });
+      return apiClient<{ success: string }>(
+        `/lists/${payload.listId}/movies/toggle`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            movie_id: movieId,
+            title: payload.title,
+            poster_path:
+              payload.posterPath?.trim() === "" ? null : payload.posterPath,
+            backdrop_path:
+              payload.backdropPath?.trim() === "" ? null : payload.backdropPath,
+            release_date:
+              payload.releaseDate?.trim() === "" ? null : payload.releaseDate,
+            genres: payload.genres.length > 0 ? payload.genres : null,
+          }),
+        },
+      );
     },
 
     onSuccess: () => {
@@ -271,6 +277,81 @@ export const useDeleteList = () => {
       }
 
       toast.error("Une erreur est survenue lors de la suppression de la liste");
+    },
+  });
+};
+// METTRE A JOUR UNE LISTE
+export const useUpdateList = (listId: string) => {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: (payload: {
+      title: string;
+      description: string;
+      is_public: boolean;
+    }) => {
+      if (!user) throw new Error("Unauthenticated");
+
+      return apiClient<ListType>(`/lists/${listId}`, {
+        method: "PATCH",
+        body: JSON.stringify(payload),
+      });
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["list", listId, "data"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["custom-lists", user?.id],
+      });
+      toast.success("Liste mise à jour avec succès");
+    },
+
+    onError: (error) => {
+      if (error.message === "Unauthenticated") {
+        toast.error("Vous devez vous connecter");
+
+        return navigate({
+          to: "/auth/sign-in",
+          search: { redirect: location.pathname },
+        });
+      }
+
+      toast.error("Une erreur est survenue lors de la suppression de la liste");
+
+      toast.error(
+        error.message || "Une erreur est survenue lors de la mise à jour",
+      );
+    },
+  });
+};
+
+// SUPPRIMER UN FILM D'UNE LISTE
+export const useRemoveMovieFromList = (listId: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (movieId: number) => {
+      return apiClient<{ success: string }>(
+        `/lists/${listId}/movies/${movieId}`,
+        {
+          method: "DELETE",
+        },
+      );
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["list", listId, "data"],
+      });
+      toast.success("Film retiré de la liste");
+    },
+
+    onError: () => {
+      toast.error("Impossible de retirer le film");
     },
   });
 };

@@ -9,5 +9,6 @@ export type ListType = {
   saved_count: number;
   updated_at?: string;
   is_saved?: boolean;
+  is_public: boolean;
   movies: Array<MovieType>;
 };

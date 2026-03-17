@@ -60,4 +60,30 @@
       opacity: 1;
     }
   }
+
+  .remove-movie-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: rgba(v.$c-bg, 0.8);
+    backdrop-filter: blur(4px);
+    border: 1px solid v.$c-border;
+    color: v.$c-heading;
+    @include m.flex-center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all v.$transition;
+    opacity: 0.8;
+
+    &:hover {
+      opacity: 1;
+      background: v.$destructive;
+      border-color: v.$destructive-hover;
+      color: white;
+      transform: scale(1.1);
+    }
+  }
 }
