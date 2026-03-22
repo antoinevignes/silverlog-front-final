@@ -105,13 +105,11 @@ export default function Rating({
           return (
             <StarWrapper
               key={index}
+              className={isPending ? "rating-pending" : ""}
               onMouseMove={(e) =>
                 !isPending && setHoverValue(getStarValue(index, e))
               }
               onClick={(e) => handleClick(getStarValue(index, e))}
-              style={{
-                opacity: isPending ? 0.7 : 1,
-              }}
             >
               <Star
                 size={24}
@@ -125,10 +123,7 @@ export default function Rating({
                   size={24}
                   stroke="#F2C265"
                   fill="#F2C265"
-                  className="star-foreground"
-                  style={{
-                    clipPath: isHalf ? "inset(0 50% 0 0)" : undefined,
-                  }}
+                  className={`star-foreground ${isHalf ? "star-half" : ""}`}
                 />
               )}
             </StarWrapper>

@@ -9,7 +9,8 @@
   background-color: v.$c-bg;
   border-top: 1px solid v.$c-border;
   padding-bottom: env(safe-area-inset-bottom);
-  z-index: v.$z-nav;
+  z-index: 999;
+  transform: translate3d(0, 0, 0);
 
   @include m.responsive(v.$bp-md) {
     display: none;

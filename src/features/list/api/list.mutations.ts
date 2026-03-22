@@ -8,7 +8,7 @@ import {
   sanitizeMoviePayload,
   type MoviePayload,
 } from "@/utils/movie-payload";
-import { movieKeys, listKeys } from "@/utils/query-keys";
+import { movieKeys, listKeys, userKeys } from "@/utils/query-keys";
 import type { ListType } from "@/features/list/types/list";
 
 const LIST_CONFIG: Record<
@@ -244,5 +244,32 @@ export const useRemoveMovieFromList = (listId: string) => {
     onError: () => {
       toast.error("Impossible de retirer le film");
     },
+  });
+};
+
+// REORGANISER UNE LISTE
+export const useReorderList = (listId: string) => {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: (movieIds: number[]) => {
+      if (!user) throw new Error("Unauthenticated");
+
+      return apiClient<{ success: boolean }>(`/lists/${listId}/reorder`, {
+        method: "PUT",
+        body: JSON.stringify({ movie_ids: movieIds }),
+      });
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: userKeys.detail(String(user?.id)) });
+      queryClient.invalidateQueries({ queryKey: listKeys.detail(listId) });
+      toast.success("Top mis à jour avec succès");
+    },
+
+    onError: (error) =>
+      handleMutationError(error, navigate, "Une erreur est survenue lors de l'enregistrement de l'ordre"),
   });
 };

@@ -16,6 +16,7 @@
     "check": "prettier --write . && eslint --fix"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^18.0.1",
     "@heroicons/react": "^2.2.0",
     "@tanstack/react-devtools": "^0.7.0",
     "@tanstack/react-form": "^1.27.7",

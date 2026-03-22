@@ -5,7 +5,7 @@ export default function ListSkeleton() {
   return (
     <main className="list-skeleton-page container">
       {/* Title */}
-      <div style={{ marginBottom: "1rem" }}>
+      <div className="skeleton-title">
         <Skeleton width="60%" height={32} />
       </div>
 
@@ -36,7 +36,7 @@ export default function ListSkeleton() {
 
       {/* Stats */}
       <section className="skeleton-stats">
-        <div style={{ display: "flex", gap: "1rem" }}>
+        <div className="skeleton-stats-row">
           <Skeleton width={80} height={24} />
           <Skeleton width={80} height={24} />
         </div>

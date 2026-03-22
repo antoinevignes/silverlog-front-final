@@ -256,9 +256,7 @@ function SearchCardSkeleton() {
         <li className="movie-result">
           <Skeleton className="search-poster-fallback" />
 
-          <div
-            style={{ display: "flex", flexDirection: "column", gap: ".25rem" }}
-          >
+          <div className="movie-info">
             <Skeleton
               key={index}
               width="10rem"

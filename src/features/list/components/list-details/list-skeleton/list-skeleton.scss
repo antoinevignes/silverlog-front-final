@@ -4,6 +4,10 @@
 .list-skeleton-page {
   margin: v.$space-2xl auto;
 
+  .skeleton-title {
+    margin-bottom: 1rem;
+  }
+
   .skeleton-backdrop {
     aspect-ratio: 16 / 9;
     border-radius: 0.5rem;
@@ -43,6 +47,11 @@
 
   .skeleton-stats {
     margin-bottom: v.$space-lg;
+
+    .skeleton-stats-row {
+      display: flex;
+      gap: 1rem;
+    }
   }
 
   .skeleton-meta-row {

@@ -226,6 +226,7 @@
     gap: v.$space-md;
     font-size: 0.875rem;
     color: v.$c-muted;
+    font-style: normal;
 
     .meta-item {
       display: flex;
@@ -245,6 +246,18 @@
     display: flex;
     flex-direction: column;
 
+    .top-movies-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: v.$space-md;
+
+      .top-movies-actions {
+        display: flex;
+        gap: 8px;
+      }
+    }
+
     #top-movies-title,
     #recent-activity-title {
       margin-bottom: v.$space-md;
@@ -259,19 +272,71 @@
         grid-template-columns: repeat(6, 1fr);
       }
 
-      .card-desktop {
-        display: none;
+      .top-list-item {
+        list-style: none;
 
-        @include m.responsive(v.$bp-lg) {
-          display: block;
-          margin: auto;
+        &.is-dragging {
+          z-index: 10 !important;
         }
-      }
 
-      .card-mobile {
-        @include m.responsive(v.$bp-lg) {
+        .draggable-card-wrapper {
+          position: relative;
+          width: 100%;
+          height: 100%;
+
+          .rank-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            z-index: 5;
+            background: rgba(v.$c-bg, 0.85);
+            backdrop-filter: blur(4px);
+            color: v.$c-heading;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 800;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            pointer-events: none;
+            border: 1px solid v.$c-border;
+          }
+
+          .drag-handle {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            z-index: 20;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            padding: 4px;
+            cursor: grab;
+            display: flex;
+          }
+        }
+
+        .card-desktop {
           display: none;
-          margin: auto;
+
+          @include m.responsive(v.$bp-lg) {
+            display: block;
+            margin: auto;
+          }
+        }
+
+        .card-mobile {
+          @include m.responsive(v.$bp-lg) {
+            display: none;
+            margin: auto;
+          }
+        }
+
+        .editing-mode {
+          opacity: 0.8;
+          pointer-events: none;
         }
       }
     }

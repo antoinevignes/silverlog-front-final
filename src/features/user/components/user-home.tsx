@@ -169,7 +169,6 @@ export default function UserHome() {
                       <div className="feed-review">
                         <div
                           className="feed-review-header text-secondary"
-                          style={{ fontSize: "0.85rem", marginBottom: "4px" }}
                         >
                           {activity.review_content
                             ? "a noté et critiqué le film "
@@ -182,7 +181,7 @@ export default function UserHome() {
                                 size={12}
                                 fill="currentColor"
                                 color="#f5c518"
-                                style={{ marginLeft: "2px" }}
+                                className="star-icon"
                               />
                             </span>
                           )}

@@ -156,7 +156,7 @@ export default function Watchlist() {
                 <MovieCard movie={movie} size="sm" key={movie.id} />
               ))
             ) : (
-              <p className="empty-state" style={{ gridColumn: "1 / -1" }}>
+              <p className="empty-state empty-filter-state">
                 Aucun film ne correspond à vos filtres.
               </p>
             )}

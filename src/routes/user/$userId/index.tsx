@@ -1,8 +1,10 @@
 import "./index.scss";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import type { DropResult } from "@hello-pangea/dnd";
 import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Edit, MapPin, Star, TextAlignStart, Film } from "lucide-react";
-import { Suspense, useState } from "react";
+import { Edit, MapPin, Star, TextAlignStart, Film, GripVertical } from "lucide-react";
+import { Suspense, useEffect, useState } from "react";
 import { userQuery } from "@/features/user/api/user.queries";
 import Button from "@/components/ui/button/button";
 import MovieCard from "@/features/movie/components/movie-card/movie-card";
@@ -12,6 +14,7 @@ import Tabs from "@/components/ui/tabs/tabs";
 import Watchlist from "@/features/user/components/profile-watchlist/profile-watchlist";
 import Lists from "@/features/user/components/lists/lists";
 import { useAuth } from "@/auth";
+import { useReorderList } from "@/features/list/api/list.mutations";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 import { Image } from "@unpic/react";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
@@ -44,6 +47,36 @@ function RouteComponent() {
   const openFollowModal = (type: "followers" | "following") => {
     setFollowModalType(type);
     setIsFollowModalOpen(true);
+  };
+
+  const { mutate: reorderList, isPending: isReordering } = useReorderList(
+    String(user?.top_list_id),
+  );
+
+  const [isEditingTop, setIsEditingTop] = useState(false);
+  const [topMovies, setTopMovies] = useState<any[]>(userData.top_movies ?? []);
+
+  useEffect(() => {
+    if (!isEditingTop) {
+      setTopMovies(userData.top_movies ?? []);
+    }
+  }, [userData.top_movies, isEditingTop]);
+
+  const onDragEnd = (result: DropResult) => {
+    if (!result.destination) return;
+    const items = Array.from(topMovies);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+    setTopMovies(items);
+  };
+
+  const handleSaveTopOrder = () => {
+    const movieIds = topMovies.map((m: any) => m.id);
+    reorderList(movieIds, {
+      onSuccess: () => {
+        setIsEditingTop(false);
+      },
+    });
   };
 
   const tabs = [
@@ -196,7 +229,7 @@ function RouteComponent() {
               </span>
             </div>
 
-            <address className="user-meta" style={{ fontStyle: "normal" }}>
+            <address className="user-meta">
               {userData.location && (
                 <span className="meta-item">
                   <MapPin size={14} aria-hidden />
@@ -223,20 +256,103 @@ function RouteComponent() {
                 className="content-section"
                 aria-labelledby="top-movies-title"
               >
-                <Title title="Top 6" id="top-movies-title" />
+                <div className="top-movies-header">
+                  <div className="title-wrapper">
+                    <Title
+                      title="Top 6"
+                      id="top-movies-title"
+                    />
+                  </div>
+                  {Number(user?.id) === Number(userId) && (
+                    <div className="top-movies-actions">
+                      {isEditingTop ? (
+                        <>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => setIsEditingTop(false)}
+                            disabled={isReordering}
+                          >
+                            Annuler
+                          </Button>
+                          <Button
+                            size="sm"
+                            onClick={handleSaveTopOrder}
+                            disabled={isReordering}
+                          >
+                            Enregistrer
+                          </Button>
+                        </>
+                      ) : (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => setIsEditingTop(true)}
+                        >
+                          Réorganiser
+                        </Button>
+                      )}
+                    </div>
+                  )}
+                </div>
 
-                <ul className="top-movies-grid" role="list">
-                  {(userData.top_movies ?? []).map((movie: any) => (
-                    <>
-                      <li key={movie.id} className="card-mobile">
-                        <MovieCard movie={movie} size="sm" />
-                      </li>
-                      <li className="card-desktop">
-                        <MovieCard movie={movie} size="md" />
-                      </li>
-                    </>
-                  ))}
-                </ul>
+                <DragDropContext onDragEnd={onDragEnd}>
+                  <Droppable droppableId="top-movies" direction="horizontal">
+                    {(provided) => (
+                      <ul
+                        className="top-movies-grid"
+                        role="list"
+                        {...provided.droppableProps}
+                        ref={provided.innerRef}
+                      >
+                        {topMovies.map((movie: any, index: number) => (
+                          <Draggable
+                            key={String(movie.id)}
+                            draggableId={String(movie.id)}
+                            index={index}
+                            isDragDisabled={!isEditingTop}
+                          >
+                            {(provided, snapshot) => (
+                              <li
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                className={`top-list-item ${snapshot.isDragging ? "is-dragging" : ""}`}
+                                style={{
+                                  ...provided.draggableProps.style,
+                                }}
+                              >
+                                <div className="draggable-card-wrapper">
+                                  <div className="rank-badge font-sentient">
+                                    {index + 1}
+                                  </div>
+                                  {isEditingTop && (
+                                    <div
+                                      {...provided.dragHandleProps}
+                                      className="drag-handle"
+                                    >
+                                      <GripVertical size={16} color="white" />
+                                    </div>
+                                  )}
+                                  <div
+                                    className={`card-mobile ${isEditingTop ? "editing-mode" : ""}`}
+                                  >
+                                    <MovieCard movie={movie} size="sm" />
+                                  </div>
+                                  <div
+                                    className={`card-desktop ${isEditingTop ? "editing-mode" : ""}`}
+                                  >
+                                    <MovieCard movie={movie} size="md" />
+                                  </div>
+                                </div>
+                              </li>
+                            )}
+                          </Draggable>
+                        ))}
+                        {provided.placeholder}
+                      </ul>
+                    )}
+                  </Droppable>
+                </DragDropContext>
               </section>
 
               <section
