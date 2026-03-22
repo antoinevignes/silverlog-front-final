@@ -322,9 +322,11 @@ function RouteComponent() {
                                 }}
                               >
                                 <div className="draggable-card-wrapper">
-                                  <div className="rank-badge font-sentient">
-                                    {index + 1}
-                                  </div>
+                                  {!isEditingTop && (
+                                    <div className="rank-badge font-sentient">
+                                      {index + 1}
+                                    </div>
+                                  )}
                                   {isEditingTop && (
                                     <div
                                       {...provided.dragHandleProps}

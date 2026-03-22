@@ -2,6 +2,7 @@ export type UserType = {
   id: string;
   username: string;
   email: string;
+  role: "user" | "admin";
   top_list_id: string;
   watchlist_id: string;
   avatar_path: string | null;
