@@ -13,6 +13,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SearchIndexRouteImport } from './routes/search/index'
 import { Route as ListsIndexRouteImport } from './routes/lists/index'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AuthVerifyEmailRouteImport } from './routes/auth/verify-email'
 import { Route as AuthSignUpRouteImport } from './routes/auth/sign-up'
 import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
@@ -42,6 +43,11 @@ const SearchIndexRoute = SearchIndexRouteImport.update({
 const ListsIndexRoute = ListsIndexRouteImport.update({
   id: '/lists/',
   path: '/lists/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthVerifyEmailRoute = AuthVerifyEmailRouteImport.update({
@@ -109,6 +115,7 @@ export interface FileRoutesByFullPath {
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/auth/verify-email': typeof AuthVerifyEmailRoute
+  '/admin/': typeof AdminIndexRoute
   '/lists/': typeof ListsIndexRoute
   '/search/': typeof SearchIndexRoute
   '/lists/$listId/': typeof ListsListIdIndexRoute
@@ -125,6 +132,7 @@ export interface FileRoutesByTo {
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/auth/verify-email': typeof AuthVerifyEmailRoute
+  '/admin': typeof AdminIndexRoute
   '/lists': typeof ListsIndexRoute
   '/search': typeof SearchIndexRoute
   '/lists/$listId': typeof ListsListIdIndexRoute
@@ -143,6 +151,7 @@ export interface FileRoutesById {
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/auth/verify-email': typeof AuthVerifyEmailRoute
+  '/admin/': typeof AdminIndexRoute
   '/lists/': typeof ListsIndexRoute
   '/search/': typeof SearchIndexRoute
   '/lists/$listId/': typeof ListsListIdIndexRoute
@@ -161,6 +170,7 @@ export interface FileRouteTypes {
     | '/auth/sign-in'
     | '/auth/sign-up'
     | '/auth/verify-email'
+    | '/admin/'
     | '/lists/'
     | '/search/'
     | '/lists/$listId/'
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
     | '/auth/sign-in'
     | '/auth/sign-up'
     | '/auth/verify-email'
+    | '/admin'
     | '/lists'
     | '/search'
     | '/lists/$listId'
@@ -194,6 +205,7 @@ export interface FileRouteTypes {
     | '/auth/sign-in'
     | '/auth/sign-up'
     | '/auth/verify-email'
+    | '/admin/'
     | '/lists/'
     | '/search/'
     | '/lists/$listId/'
@@ -212,6 +224,7 @@ export interface RootRouteChildren {
   AuthSignInRoute: typeof AuthSignInRoute
   AuthSignUpRoute: typeof AuthSignUpRoute
   AuthVerifyEmailRoute: typeof AuthVerifyEmailRoute
+  AdminIndexRoute: typeof AdminIndexRoute
   ListsIndexRoute: typeof ListsIndexRoute
   SearchIndexRoute: typeof SearchIndexRoute
   ListsListIdIndexRoute: typeof ListsListIdIndexRoute
@@ -248,6 +261,13 @@ declare module '@tanstack/react-router' {
       path: '/lists'
       fullPath: '/lists/'
       preLoaderRoute: typeof ListsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/verify-email': {
@@ -352,6 +372,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthSignInRoute: AuthSignInRoute,
   AuthSignUpRoute: AuthSignUpRoute,
   AuthVerifyEmailRoute: AuthVerifyEmailRoute,
+  AdminIndexRoute: AdminIndexRoute,
   ListsIndexRoute: ListsIndexRoute,
   SearchIndexRoute: SearchIndexRoute,
   ListsListIdIndexRoute: ListsListIdIndexRoute,

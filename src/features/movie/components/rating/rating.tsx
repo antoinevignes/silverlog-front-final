@@ -16,10 +16,11 @@ const MAX_STARS = 10;
 
 function StarWrapper({
   children,
+  className = "",
   ...props
 }: React.HTMLAttributes<HTMLSpanElement>) {
   return (
-    <span className="star-wrapper" {...props}>
+    <span className={`star-wrapper ${className}`} {...props}>
       {children}
     </span>
   );

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { BookOpen, LogOut, Search, Settings, X } from "lucide-react";
+import { BookOpen, LogOut, Search, Settings, Shield, X } from "lucide-react";
 import "./desktop-nav.scss";
 import { useState } from "react";
 import { useAuth } from "@/auth";
@@ -129,6 +129,12 @@ export default function DesktopNav() {
                     Paramètres
                   </DropdownItem>
                   <hr className="dropdown-divider" />
+                  {user.role === "admin" && (
+                    <DropdownItem onClick={() => navigate({ to: "/admin" })}>
+                      <Shield size={16} />
+                      Administration
+                    </DropdownItem>
+                  )}
                   <DropdownItem onClick={logout}>
                     <LogOut size={16} />
                     Se déconnecter

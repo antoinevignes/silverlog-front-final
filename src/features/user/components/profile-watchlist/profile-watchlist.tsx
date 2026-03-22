@@ -1,14 +1,19 @@
 import type { MovieType } from "@/features/movie/types/movie";
 import MovieCard from "@/features/movie/components/movie-card/movie-card";
 import "./profile-watchlist.scss";
-import { useAuth } from "@/auth";
+import { getRouteApi } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { listDataQuery } from "@/features/list/api/list.queries";
+import { userQuery } from "@/features/user/api/user.queries";
 
 export default function Watchlist() {
-  const { user } = useAuth();
+  const routeApi = getRouteApi("/user/$userId/");
+  const { userId } = routeApi.useParams();
+  
+  const { data: userData } = useSuspenseQuery(userQuery(userId));
+  
   const { data: listData } = useSuspenseQuery(
-    listDataQuery(user!.watchlist_id),
+    listDataQuery(userData.watchlist_id),
   );
 
   const movies = listData.movies;

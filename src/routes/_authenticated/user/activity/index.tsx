@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Diary from "@/features/user/components/activity/diary/diary";
 import Watchlist from "@/features/user/components/activity/watchlist/watchlist";
 import Tabs from "@/components/ui/tabs/tabs";
@@ -26,15 +26,25 @@ export const Route = createFileRoute("/_authenticated/user/activity/")({
 
 function RouteComponent() {
   const [selected, setSelected] = useState<string>("watchlist");
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    setIsDesktop(window.innerWidth >= 768);
+    const handleResize = () => setIsDesktop(window.innerWidth >= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <main className="container activity-page">
-      <Tabs
-        selected={selected}
-        setSelected={setSelected}
-        tabs={tabs}
-        variant="header"
-      />
+      <div className="activity-tabs-container">
+        <Tabs
+          selected={selected}
+          setSelected={setSelected}
+          tabs={tabs}
+          variant={isDesktop ? "transparent" : "header"}
+        />
+      </div>
 
       {selected === "watchlist" && (
         <Suspense fallback={<WatchlistSkeleton />}>
