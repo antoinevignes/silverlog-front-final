@@ -20,20 +20,20 @@
     break-inside: avoid;
     margin-bottom: v.$space-md;
     padding: v.$space-lg;
-    border-radius: 1rem;
+    border-radius: v.$radius * 2;
     display: flex;
     flex-direction: column;
     gap: v.$space-sm;
     background: v.$c-surface;
     border: 1px solid v.$c-border;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    box-shadow: v.$shadow-sm;
     transition:
       transform v.$transition,
       box-shadow v.$transition;
 
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+      box-shadow: v.$shadow-lg;
     }
 
     @include m.responsive(v.$bp-md) {

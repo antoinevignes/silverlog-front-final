@@ -22,7 +22,6 @@ import { Route as UserUserIdIndexRouteImport } from './routes/user/$userId/index
 import { Route as PersonPersonIdIndexRouteImport } from './routes/person/$personId/index'
 import { Route as MoviesMovieIdIndexRouteImport } from './routes/movies/$movieId/index'
 import { Route as ListsListIdIndexRouteImport } from './routes/lists/$listId/index'
-import { Route as AuthenticatedUserTopIndexRouteImport } from './routes/_authenticated/user/top/index'
 import { Route as AuthenticatedUserSettingsIndexRouteImport } from './routes/_authenticated/user/settings/index'
 import { Route as AuthenticatedUserActivityIndexRouteImport } from './routes/_authenticated/user/activity/index'
 
@@ -90,12 +89,6 @@ const ListsListIdIndexRoute = ListsListIdIndexRouteImport.update({
   path: '/lists/$listId/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedUserTopIndexRoute =
-  AuthenticatedUserTopIndexRouteImport.update({
-    id: '/user/top/',
-    path: '/user/top/',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
 const AuthenticatedUserSettingsIndexRoute =
   AuthenticatedUserSettingsIndexRouteImport.update({
     id: '/user/settings/',
@@ -124,7 +117,6 @@ export interface FileRoutesByFullPath {
   '/user/$userId/': typeof UserUserIdIndexRoute
   '/user/activity/': typeof AuthenticatedUserActivityIndexRoute
   '/user/settings/': typeof AuthenticatedUserSettingsIndexRoute
-  '/user/top/': typeof AuthenticatedUserTopIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -141,7 +133,6 @@ export interface FileRoutesByTo {
   '/user/$userId': typeof UserUserIdIndexRoute
   '/user/activity': typeof AuthenticatedUserActivityIndexRoute
   '/user/settings': typeof AuthenticatedUserSettingsIndexRoute
-  '/user/top': typeof AuthenticatedUserTopIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -160,7 +151,6 @@ export interface FileRoutesById {
   '/user/$userId/': typeof UserUserIdIndexRoute
   '/_authenticated/user/activity/': typeof AuthenticatedUserActivityIndexRoute
   '/_authenticated/user/settings/': typeof AuthenticatedUserSettingsIndexRoute
-  '/_authenticated/user/top/': typeof AuthenticatedUserTopIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -179,7 +169,6 @@ export interface FileRouteTypes {
     | '/user/$userId/'
     | '/user/activity/'
     | '/user/settings/'
-    | '/user/top/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -196,7 +185,6 @@ export interface FileRouteTypes {
     | '/user/$userId'
     | '/user/activity'
     | '/user/settings'
-    | '/user/top'
   id:
     | '__root__'
     | '/'
@@ -214,7 +202,6 @@ export interface FileRouteTypes {
     | '/user/$userId/'
     | '/_authenticated/user/activity/'
     | '/_authenticated/user/settings/'
-    | '/_authenticated/user/top/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -326,13 +313,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ListsListIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/user/top/': {
-      id: '/_authenticated/user/top/'
-      path: '/user/top'
-      fullPath: '/user/top/'
-      preLoaderRoute: typeof AuthenticatedUserTopIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/user/settings/': {
       id: '/_authenticated/user/settings/'
       path: '/user/settings'
@@ -353,13 +333,11 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedUserActivityIndexRoute: typeof AuthenticatedUserActivityIndexRoute
   AuthenticatedUserSettingsIndexRoute: typeof AuthenticatedUserSettingsIndexRoute
-  AuthenticatedUserTopIndexRoute: typeof AuthenticatedUserTopIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedUserActivityIndexRoute: AuthenticatedUserActivityIndexRoute,
   AuthenticatedUserSettingsIndexRoute: AuthenticatedUserSettingsIndexRoute,
-  AuthenticatedUserTopIndexRoute: AuthenticatedUserTopIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

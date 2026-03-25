@@ -29,16 +29,16 @@
   &.default {
     background-color: v.$c-border;
     padding: 0.3rem;
-    border-radius: 0.5rem;
+    border-radius: v.$radius;
     gap: 0.5rem;
 
     button {
-      border-radius: 0.5rem;
+      border-radius: v.$radius;
       background-color: v.$c-border;
 
       &.active {
         background-color: v.$c-bg;
-        box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
+        box-shadow: v.$shadow-md;
       }
     }
   }
@@ -82,7 +82,7 @@
       &.active {
         background-color: v.$c-bg;
         color: v.$c-heading;
-        box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
+        box-shadow: v.$shadow-md;
       }
     }
   }

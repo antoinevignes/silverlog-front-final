@@ -27,30 +27,30 @@
       align-items: center;
       gap: 1rem;
       background: v.$c-surface;
-      border-radius: 0.75rem;
+      border-radius: v.$radius * 1.5;
       padding: 0.75rem;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+      box-shadow: v.$shadow-sm;
 
       .skeleton-poster {
-        border-radius: 0.5rem;
+        border-radius: v.$radius;
       }
 
       .skeleton-info {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: v.$space-sm;
         flex: 1;
 
         .skeleton-title {
-          border-radius: 0.25rem;
+          border-radius: v.$radius * 0.5;
         }
 
         .skeleton-year {
-          border-radius: 0.25rem;
+          border-radius: v.$radius * 0.5;
         }
 
         .skeleton-rating {
-          border-radius: 1rem;
+          border-radius: v.$radius * 2;
           margin-top: 0.25rem;
         }
       }
@@ -67,29 +67,29 @@
     .calendar-grid-skeleton {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      gap: 0.5rem;
+      gap: v.$space-sm;
 
       .weekday-label-skeleton {
         height: 2rem;
         margin: 0.5rem 0;
-        border-radius: 0.25rem;
+        border-radius: v.$radius * 0.5;
       }
 
       .calendar-day-skeleton {
         aspect-ratio: 2 / 3;
-        border-radius: 0.5rem;
+        border-radius: v.$radius;
         background: v.$c-bg;
 
         &.filled {
           background: v.$c-surface;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+          box-shadow: v.$shadow-md;
           position: relative;
           overflow: hidden;
 
           .poster-placeholder {
             width: 100%;
             height: 100%;
-            border-radius: 0.5rem;
+            border-radius: v.$radius;
           }
         }
       }
@@ -113,7 +113,7 @@
 
     .card-title-skeleton {
       margin-bottom: 1.5rem;
-      border-radius: 0.25rem;
+      border-radius: v.$radius * 0.5;
       height: 1.5rem;
       width: 60%;
     }
@@ -126,12 +126,12 @@
       .stat-label-skeleton {
         height: 1rem;
         width: 40%;
-        border-radius: 0.25rem;
+        border-radius: v.$radius * 0.5;
       }
       .stat-value-skeleton {
         height: 1.5rem;
         width: 20%;
-        border-radius: 1rem;
+        border-radius: v.$radius * 2;
       }
     }
 
@@ -140,7 +140,7 @@
       width: 50%;
       margin-bottom: 0.75rem;
       margin-left: 1.5rem;
-      border-radius: 0.25rem;
+      border-radius: v.$radius * 0.5;
     }
   }
 }

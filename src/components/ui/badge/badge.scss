@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: center;
   gap: v.$space-xs;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: v.$shadow-sm;
 
   white-space: nowrap;
 
@@ -23,14 +23,14 @@
   &.badge-secondary {
     background: v.$c-surface;
     color: v.$c-heading;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: v.$shadow-xs;
   }
 
   &.badge-outline {
     background: transparent;
     border-color: v.$c-border;
     color: v.$c-heading;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: v.$shadow-xs;
   }
 
   &.badge-destructive {

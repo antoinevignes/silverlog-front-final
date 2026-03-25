@@ -80,3 +80,11 @@
     @content;
   }
 }
+
+// EMPTY STATE
+@mixin empty-state {
+  text-align: center;
+  color: v.$c-muted;
+  margin-top: v.$space-xl;
+  padding: v.$space-2xl v.$space-md;
+}

@@ -12,7 +12,7 @@
   gap: v.$space-md;
 
   .error {
-    color: red;
+    color: v.$destructive;
     font-size: small;
     opacity: 0.7;
     margin-top: v.$space-xs;

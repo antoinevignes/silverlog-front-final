@@ -63,9 +63,6 @@
   }
 
   .empty-state {
-    text-align: center;
-    color: v.$c-muted;
-    margin-top: 2rem;
-    padding: 3rem 1rem;
+    @include m.empty-state;
   }
 }

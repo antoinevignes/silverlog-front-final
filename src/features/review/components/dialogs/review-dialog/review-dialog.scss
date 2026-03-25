@@ -82,7 +82,7 @@
       margin-top: -(v.$space-xs);
 
       &.error {
-        color: #ef4444;
+        color: v.$destructive;
         font-weight: 600;
       }
     }
