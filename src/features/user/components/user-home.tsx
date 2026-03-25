@@ -11,7 +11,7 @@ import { fr } from "date-fns/locale";
 import { Image } from "@unpic/react";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import { crewPicksQuery, popularMoviesQuery } from "@/features/movie/api/movie.queries";
-import { userFeedQuery } from "@/features/user/api/user.queries";
+import { userFeedQuery, userQuery } from "@/features/user/api/user.queries";
 import type { MovieType } from "@/features/movie/types/movie";
 import Badge from "@/components/ui/badge/badge";
 import Title from "@/components/ui/title/title";
@@ -22,6 +22,7 @@ export default function UserHome() {
   const { data: popularMovies } = useSuspenseQuery(popularMoviesQuery());
   const { data: feedData } = useSuspenseQuery(userFeedQuery());
   const { data: crewPicks } = useSuspenseQuery(crewPicksQuery());
+  const { data: userData } = useSuspenseQuery(userQuery(user!.id));
 
   return (
     <main className="user-home">
@@ -41,14 +42,14 @@ export default function UserHome() {
             <Badge variant="outline" size="lg">
               <Clock size={16} className="stat-icon" />
               <span>
-                <strong>12</strong> films vus ce mois
+                <strong>{userData?.viewed_movies_this_month_count ?? 0}</strong> films vus ce mois
               </span>
             </Badge>
 
             <Badge variant="outline" size="lg">
               <BookmarkPlus size={16} className="stat-icon" />
               <span>
-                <strong>4</strong> envies récentes
+                <strong>{userData?.recent_watchlist_count ?? 0}</strong> envies récentes
               </span>
             </Badge>
           </div>

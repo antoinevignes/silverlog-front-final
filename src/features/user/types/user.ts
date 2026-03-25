@@ -16,9 +16,14 @@ export type UserType = {
   is_following?: boolean;
   watchlist_total?: number;
   custom_lists_total?: number;
+  viewed_movies?: number;
   viewed_movies_count?: number;
+  viewed_movies_this_month?: number;
+  viewed_movies_this_month_count?: number;
+  viewed_movies_this_year?: number;
   viewed_movies_this_year_count?: number;
   avg_rating?: number;
+  recent_watchlist_count?: number;
   top_movies?: Array<{
     id: number;
     movie_id: number;
