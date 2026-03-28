@@ -2,7 +2,6 @@ import { Link } from "@tanstack/react-router";
 import { Clock, Star, BookmarkPlus } from "lucide-react";
 import Button from "@/components/ui/button/button";
 import MovieCard from "@/features/movie/components/movie-card/movie-card";
-import HorizontalScroller from "@/components/ui/horizontal-scroller/horizontal-scroller";
 import { useAuth } from "@/auth";
 import "./user-home.scss";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -10,11 +9,15 @@ import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
 import { Image } from "@unpic/react";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
-import { crewPicksQuery, popularMoviesQuery } from "@/features/movie/api/movie.queries";
+import {
+  crewPicksQuery,
+  popularMoviesQuery,
+} from "@/features/movie/api/movie.queries";
 import { userFeedQuery, userQuery } from "@/features/user/api/user.queries";
 import type { MovieType } from "@/features/movie/types/movie";
 import Badge from "@/components/ui/badge/badge";
 import Title from "@/components/ui/title/title";
+import MovieSwiper from "@/components/ui/movie-swiper/movie-swiper";
 
 export default function UserHome() {
   const { user } = useAuth();
@@ -42,14 +45,16 @@ export default function UserHome() {
             <Badge variant="outline" size="lg">
               <Clock size={16} className="stat-icon" />
               <span>
-                <strong>{userData?.viewed_movies_this_month_count ?? 0}</strong> films vus ce mois
+                <strong>{userData?.viewed_movies_this_month_count ?? 0}</strong>{" "}
+                films vus ce mois
               </span>
             </Badge>
 
             <Badge variant="outline" size="lg">
               <BookmarkPlus size={16} className="stat-icon" />
               <span>
-                <strong>{userData?.recent_watchlist_count ?? 0}</strong> envies récentes
+                <strong>{userData?.recent_watchlist_count ?? 0}</strong> envies
+                récentes
               </span>
             </Badge>
           </div>
@@ -65,13 +70,7 @@ export default function UserHome() {
           </Button>
         </header>
 
-        <HorizontalScroller>
-          {popularMovies.results.map((movie: MovieType) => (
-            <li key={movie.id}>
-              <MovieCard movie={movie} size="sm" />
-            </li>
-          ))}
-        </HorizontalScroller>
+        <MovieSwiper movies={popularMovies.results} />
       </section>
 
       <section className="container selection-section">
@@ -168,9 +167,7 @@ export default function UserHome() {
 
                     {activity.type === "rating" && (
                       <div className="feed-review">
-                        <div
-                          className="feed-review-header text-secondary"
-                        >
+                        <div className="feed-review-header text-secondary">
                           {activity.review_content
                             ? "a noté et critiqué le film "
                             : "a noté ce film "}

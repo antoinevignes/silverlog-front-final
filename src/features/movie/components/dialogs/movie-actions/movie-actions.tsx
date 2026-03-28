@@ -1,6 +1,6 @@
 import "./movie-actions.scss";
 import { getRouteApi, useNavigate } from "@tanstack/react-router";
-import { Bookmark, Check, ListPlus, PenLine, Plus } from "lucide-react";
+import { Bookmark, Calendar, ListPlus, PenLine, Plus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -137,7 +137,7 @@ export default function MovieActions({
 
             <section className="dialog-buttons">
               <button className="action-card" onClick={goToDiary}>
-                <Check size={18} /> Ajouter au journal
+                <Calendar size={18} /> Ajouter au journal
               </button>
 
               <button className="action-card" onClick={goToReview}>

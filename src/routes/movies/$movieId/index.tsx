@@ -2,9 +2,6 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
 import MovieHeader from "@/features/movie/components/movie-header/movie-header";
-import type { MovieType } from "@/features/movie/types/movie";
-import HorizontalScroller from "@/components/ui/horizontal-scroller/horizontal-scroller";
-import MovieCard from "@/features/movie/components/movie-card/movie-card";
 import {
   movieCreditsQuery,
   movieDetailsQuery,
@@ -18,6 +15,7 @@ import MovieHeaderSkeleton from "@/features/movie/components/movie-header/movie-
 import Title from "@/components/ui/title/title";
 import "./index.scss";
 import FriendsActivity from "@/features/user/components/activity/friends-activity/friends-activity";
+import MovieSwiper from "@/components/ui/movie-swiper/movie-swiper";
 
 export const Route = createFileRoute("/movies/$movieId/")({
   loader: ({ context: { queryClient }, params: { movieId } }) => {
@@ -31,6 +29,9 @@ export const Route = createFileRoute("/movies/$movieId/")({
 });
 
 function RouteComponent() {
+  const { movieId } = Route.useParams();
+  const { data: similar } = useSuspenseQuery(similarMoviesQuery(movieId));
+
   return (
     <main>
       <Suspense fallback={<MovieHeaderSkeleton />}>
@@ -65,35 +66,15 @@ function RouteComponent() {
         <Title title="Films similaires" />
 
         <Suspense
-          fallback={
-            <HorizontalScroller className="movie-scroller">
-              {Array.from({ length: 9 }).map((_, index) => (
-                <li key={`skeleton-${index}`}>
-                  <Skeleton width="6.5rem" height="9.75rem" />
-                </li>
-              ))}
-            </HorizontalScroller>
-          }
+          fallback={Array.from({ length: 9 }).map((_, index) => (
+            <li key={`skeleton-${index}`}>
+              <Skeleton width="6.5rem" height="9.75rem" />
+            </li>
+          ))}
         >
-          <SimilarMovies />
+          <MovieSwiper movies={similar.results} />
         </Suspense>
       </section>
     </main>
-  );
-}
-
-function SimilarMovies() {
-  const { movieId } = Route.useParams();
-
-  const { data: similar } = useSuspenseQuery(similarMoviesQuery(movieId));
-
-  return (
-    <HorizontalScroller className="movie-scroller">
-      {similar.results.map((movie: MovieType) => (
-        <li key={movie.id}>
-          <MovieCard movie={movie} size="sm" />
-        </li>
-      ))}
-    </HorizontalScroller>
   );
 }

@@ -26,7 +26,7 @@ export default function MobileNav() {
         <li>
           <Link to="/user/activity" className="nav-link">
             <Bookmark size={24} />
-            <span>Watchlist</span>
+            <span>Activité</span>
           </Link>
         </li>
 

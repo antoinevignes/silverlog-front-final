@@ -49,6 +49,7 @@
     button {
       color: v.$c-text;
       background-color: transparent;
+      padding-bottom: v.$space-xs;
 
       &.active {
         color: v.$c-heading;

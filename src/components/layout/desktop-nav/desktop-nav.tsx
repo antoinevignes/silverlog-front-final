@@ -42,14 +42,9 @@ export default function DesktopNav() {
               <Link to="/lists">Découvrir</Link>
             </li>
             {user && (
-              <>
-                <li>
-                  <Link to="/user/activity">Watchlist</Link>
-                </li>
-                <li>
-                  <Link to="/user/activity">Journal</Link>
-                </li>
-              </>
+              <li>
+                <Link to="/user/activity">Activité</Link>
+              </li>
             )}
           </ul>
         </nav>
