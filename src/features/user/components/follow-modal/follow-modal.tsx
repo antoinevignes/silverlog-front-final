@@ -1,11 +1,13 @@
 import { Dialog, DialogContent } from "@/components/ui/dialog/dialog";
 import { useQuery } from "@tanstack/react-query";
-import { userFollowersQuery, userFollowingQuery } from "@/features/user/api/user.queries";
+import {
+  userFollowersQuery,
+  userFollowingQuery,
+} from "@/features/user/api/user.queries";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 import { Link } from "@tanstack/react-router";
-import { Image } from "@unpic/react";
-import { getCloudinarySrc } from "@/utils/cloudinary-handler";
-import { User, X } from "lucide-react";
+import { Avatar } from "@/components/ui/avatar/avatar";
+import { X } from "lucide-react";
 import "./follow-modal.scss";
 
 type FollowModalProps = {
@@ -71,21 +73,11 @@ export default function FollowModal({
                     className="follow-user-link"
                     onClick={() => onClose(false)}
                   >
-                    {u.avatar_path ? (
-                      <Image
-                        src={getCloudinarySrc(u.avatar_path, "avatars")}
-                        layout="constrained"
-                        width={40}
-                        height={40}
-                        alt={`Avatar de ${u.username}`}
-                        background="auto"
-                        className="follow-user-avatar"
-                      />
-                    ) : (
-                      <div className="follow-user-avatar-placeholder">
-                        <User size={20} />
-                      </div>
-                    )}
+                    <Avatar
+                      username={u.username}
+                      src={u.avatar_path}
+                      size="md"
+                    />
                     <span className="follow-user-name">{u.username}</span>
                   </Link>
                 </li>

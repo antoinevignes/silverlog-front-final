@@ -6,6 +6,7 @@ import MovieCard from "@/features/movie/components/movie-card/movie-card";
 import { Link } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
+import { Avatar } from "@/components/ui/avatar/avatar";
 import { User } from "lucide-react";
 import "./search-results.scss";
 import Title from "@/components/ui/title/title";
@@ -40,42 +41,24 @@ export default function SearchResults({ query }: SearchResultsProps) {
           <Title title="Utilisateurs" className="section-title font-sentient" />
 
           <ul className="users-grid">
-            {users.map((user: any) => {
-              const avatarSrc = user.avatar_path
-                ? getCloudinarySrc(user.avatar_path, "avatars")
-                : "";
-              return (
-                <li>
-                  <Link
-                    key={`user-${user.id}`}
-                    to="/user/$userId"
-                    params={{ userId: String(user.id) }}
-                    className="person-result-card"
-                  >
-                    <div className="person-avatar-wrapper">
-                      {user.avatar_path ? (
-                        <Image
-                          src={avatarSrc}
-                          width={64}
-                          height={64}
-                          alt={user.username}
-                          className="person-avatar"
-                          background="auto"
-                        />
-                      ) : (
-                        <div className="person-avatar-placeholder">
-                          <User size={36} />
-                        </div>
-                      )}
-                    </div>
+            {users.map((user: any) => (
+              <li key={`user-${user.id}`}>
+                <Link
+                  to="/user/$userId"
+                  params={{ userId: String(user.id) }}
+                  className="person-result-card"
+                >
+                  <Avatar
+                    username={user.username}
+                    src={user.avatar_path ?? null}
+                    size="lg"
+                    className="person-avatar-wrapper"
+                  />
 
-                    <h3 className="person-name font-sentient">
-                      {user.username}
-                    </h3>
-                  </Link>
-                </li>
-              );
-            })}
+                  <h3 className="person-name font-sentient">{user.username}</h3>
+                </Link>
+              </li>
+            ))}
           </ul>
         </section>
       )}

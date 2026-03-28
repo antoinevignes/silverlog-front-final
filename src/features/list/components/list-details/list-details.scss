@@ -24,18 +24,6 @@
       align-items: center;
       gap: v.$space-md;
 
-      .avatar {
-        width: 44px;
-        height: 44px;
-        margin: 0 auto;
-        border-radius: 50%;
-        background-color: v.$c-heading;
-        color: v.$c-bg;
-        @include m.flex-center;
-        font-size: 1rem;
-        font-weight: 700;
-      }
-
       .author-details {
         display: flex;
         gap: v.$space-xs;

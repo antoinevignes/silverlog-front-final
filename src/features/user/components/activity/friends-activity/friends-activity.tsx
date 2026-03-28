@@ -2,8 +2,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { MessageSquare, Star } from "lucide-react";
 import { movieFriendsActivityQuery } from "@/features/movie/api/movie.queries";
-import { Image } from "@unpic/react";
-import { getCloudinarySrc } from "@/utils/cloudinary-handler";
+import { Avatar } from "@/components/ui/avatar/avatar";
 import { useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog/dialog";
 import { formatDistanceToNow } from "date-fns";
@@ -41,23 +40,12 @@ export default function FriendsActivity() {
                 params={{ userId: activity.user_id.toString() }}
                 className="friend-link"
               >
-                <div className="avatar-wrapper">
-                  {activity.avatar_path ? (
-                    <Image
-                      src={getCloudinarySrc(activity.avatar_path, "avatars")}
-                      layout="constrained"
-                      width={60}
-                      height={60}
-                      alt={`Avatar de${activity.username}`}
-                      background="auto"
-                      className="avatar"
-                    />
-                  ) : (
-                    <div className="avatar-init">
-                      {activity.username.charAt(0).toUpperCase()}
-                    </div>
-                  )}
-                </div>
+                <Avatar
+                  username={activity.username}
+                  src={activity.avatar_path}
+                  size="lg"
+                  className="avatar-wrapper"
+                />
               </Link>
 
               {activity.review_content && (
@@ -90,26 +78,12 @@ export default function FriendsActivity() {
             <div className="review-modal-content">
               <header className="modal-header">
                 <div className="modal-user-info">
-                  <div className="modal-avatar">
-                    {selectedActivity.avatar_path ? (
-                      <Image
-                        src={getCloudinarySrc(
-                          selectedActivity.avatar_path,
-                          "avatars",
-                        )}
-                        layout="constrained"
-                        width={44}
-                        height={44}
-                        alt={`Avatar de ${selectedActivity.username}`}
-                        background="auto"
-                        className="avatar"
-                      />
-                    ) : (
-                      <div className="avatar-init">
-                        {selectedActivity.username.charAt(0).toUpperCase()}
-                      </div>
-                    )}
-                  </div>
+                  <Avatar
+                    username={selectedActivity.username}
+                    src={selectedActivity.avatar_path}
+                    size="lg"
+                    className="modal-avatar"
+                  />
                   <div className="modal-user-meta">
                     <h3 className="modal-username font-sentient">
                       {selectedActivity.username}

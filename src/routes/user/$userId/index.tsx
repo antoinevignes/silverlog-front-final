@@ -36,6 +36,7 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "@/components/ui/movie-swiper/movie-swiper.scss";
+import { Avatar } from "@/components/ui/avatar/avatar";
 
 export const Route = createFileRoute("/user/$userId/")({
   loader: async ({ context: { queryClient }, params: { userId } }) => {
@@ -111,6 +112,7 @@ function RouteComponent() {
           <Image
             src={getCloudinarySrc(userData.banner_path, "banners")}
             layout="fullWidth"
+            aspectRatio={21 / 9}
             className="banner-image"
             background="auto"
             alt={`Bannière de ${userData.username}`}
@@ -128,26 +130,11 @@ function RouteComponent() {
         <header className="profile-header">
           <div className="avatar-stats-row">
             <figure className="avatar-container">
-              {userData.avatar_path ? (
-                <Image
-                  src={getCloudinarySrc(userData.avatar_path, "avatars")}
-                  layout="fullWidth"
-                  aspectRatio={1 / 1}
-                  alt={`Avatar de ${userData.username}`}
-                  background="auto"
-                  priority
-                  className="avatar"
-                />
-              ) : (
-                <div
-                  className="avatar font-sentient"
-                  aria-label={`Initiale de ${userData.username}`}
-                >
-                  {userData.username
-                    ? userData.username.charAt(0).toUpperCase()
-                    : "U"}
-                </div>
-              )}
+              <Avatar
+                username={userData.username}
+                src={userData.avatar_path}
+                size="2xl"
+              />
             </figure>
 
             <ul className="stats-container" role="list">

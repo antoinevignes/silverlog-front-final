@@ -1,0 +1,78 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: v.$c-surface;
+  border: 2px solid v.$c-border;
+}
+
+.avatar-img-wrapper {
+  .avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.avatar-initial {
+  font-weight: 700;
+  color: v.$c-text;
+  text-transform: uppercase;
+}
+
+.avatar-2xl {
+  width: 6rem;
+  height: 6rem;
+  font-size: 2rem;
+
+  @include m.responsive(v.$bp-md) {
+    width: 9.5rem;
+    height: 9.5rem;
+    font-size: 3.5rem;
+    border-width: 6px;
+  }
+}
+
+.avatar-skeleton {
+  background: linear-gradient(
+    90deg,
+    v.$c-surface 25%,
+    v.$c-border 50%,
+    v.$c-surface 75%
+  );
+  background-size: 200% 100%;
+  animation: avatar-shimmer 1.5s infinite;
+
+  .avatar-skeleton-inner {
+    width: 60%;
+    height: 60%;
+    border-radius: 50%;
+    background: v.$c-border;
+    animation: avatar-pulse 1.5s infinite;
+  }
+}
+
+@keyframes avatar-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes avatar-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}

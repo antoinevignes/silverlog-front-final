@@ -8,6 +8,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
 import { Image } from "@unpic/react";
+import { Avatar } from "@/components/ui/avatar/avatar";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import {
   crewPicksQuery,
@@ -112,24 +113,12 @@ export default function UserHome() {
                     params={{ userId: activity.user_id.toString() }}
                     className="user-link"
                   >
-                    <div className="avatar-placeholder">
-                      {activity.avatar_path ? (
-                        <Image
-                          src={getCloudinarySrc(
-                            activity.avatar_path,
-                            "avatars",
-                          )}
-                          layout="constrained"
-                          width={32}
-                          height={32}
-                          alt={`Avatar de ${activity.username}`}
-                          background="auto"
-                          className="avatar"
-                        />
-                      ) : (
-                        activity.username.charAt(0).toUpperCase()
-                      )}
-                    </div>
+                    <Avatar
+                      username={activity.username}
+                      src={activity.avatar_path}
+                      size="sm"
+                      className="avatar-placeholder"
+                    />
 
                     <strong>{activity.username}</strong>
                   </Link>
@@ -155,6 +144,7 @@ export default function UserHome() {
                       src={getCloudinarySrc(activity.poster_path, "posters")}
                       background="auto"
                       layout="fullWidth"
+                      aspectRatio={2 / 3}
                       alt={`Affiche du film ${activity.title}`}
                       className="feed-movie-poster"
                     />

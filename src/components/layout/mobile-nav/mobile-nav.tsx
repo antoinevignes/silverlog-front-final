@@ -2,8 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Bookmark, Home, ListVideo, User, Shield } from "lucide-react";
 import "./mobile-nav.scss";
 import { useAuth } from "@/auth";
-import { Image } from "@unpic/react";
-import { getCloudinarySrc } from "@/utils/cloudinary-handler";
+import { Avatar } from "@/components/ui/avatar/avatar";
 
 export default function MobileNav() {
   const { user } = useAuth();
@@ -48,26 +47,11 @@ export default function MobileNav() {
               aria-label="Profil"
             >
               <div className="avatar-icon-wrapper">
-                {user.avatar_path ? (
-                  <Image
-                    src={getCloudinarySrc(user.avatar_path, "avatars")}
-                    layout="fullWidth"
-                    aspectRatio={1 / 1}
-                    alt={`Avatar de ${user.username}`}
-                    background="auto"
-                    priority
-                    className="avatar"
-                  />
-                ) : (
-                  <div
-                    className="font-sentient"
-                    aria-label={`Initiale de ${user.username}`}
-                  >
-                    {user.username
-                      ? user.username.charAt(0).toUpperCase()
-                      : "U"}
-                  </div>
-                )}
+                <Avatar
+                  username={user.username}
+                  src={user.avatar_path}
+                  size="xs"
+                />
               </div>
               <span>Profil</span>
             </Link>

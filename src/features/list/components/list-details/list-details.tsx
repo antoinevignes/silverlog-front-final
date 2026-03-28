@@ -18,11 +18,16 @@ import {
 } from "@/components/ui/dropdown-menu/dropdown-menu";
 import { useAuth } from "@/auth";
 import { useSaveList } from "@/features/list/api/list.mutations";
+import { Avatar } from "@/components/ui/avatar/avatar";
 import { listDataQuery } from "@/features/list/api/list.queries";
 import { formatCompactNumber } from "@/utils/format-compact-number";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import { useRemoveMovieFromList } from "@/features/list/api/list.mutations";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog/dialog";
 import EditList from "../dialogs/edit-list/edit-list";
 
 export default function ListDetails() {
@@ -127,34 +132,25 @@ export default function ListDetails() {
 
       <section className="author-section">
         <div className="author-info">
-          {user?.avatar_path ? (
-            <Image
-              src={getCloudinarySrc(user.avatar_path, "avatars")}
-              layout="constrained"
-              width={44}
-              height={44}
-              alt={`Avatar de ${user.username}`}
-              background="auto"
-              priority
-              className="avatar"
-            />
-          ) : (
-            <div
-              className="avatar font-sentient"
-              aria-label={`Initiale de ${user?.username}`}
-            >
-              {user?.username ? user.username.charAt(0).toUpperCase() : "U"}
-            </div>
-          )}
+          <Avatar
+            username={user?.username || ""}
+            src={user?.avatar_path}
+            size="lg"
+          />
 
           <div className="author-details">
             <span className="author-name">{listData.username}</span>
 
             <span className="updated-date">
               Mis à jour il y a{" "}
-              {formatDistanceToNow(new Date(listData.updated_at || listData.description || new Date()), {
-                locale: fr,
-              })}
+              {formatDistanceToNow(
+                new Date(
+                  listData.updated_at || listData.description || new Date(),
+                ),
+                {
+                  locale: fr,
+                },
+              )}
             </span>
           </div>
         </div>
@@ -162,10 +158,7 @@ export default function ListDetails() {
         {isOwner ? (
           <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
             <DialogTrigger asChild>
-              <button
-                className="edit-button"
-                aria-label="Modifier la liste"
-              >
+              <button className="edit-button" aria-label="Modifier la liste">
                 <Pencil size={20} />
               </button>
             </DialogTrigger>
