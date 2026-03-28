@@ -3,13 +3,21 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import type { DropResult } from "@hello-pangea/dnd";
 import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Edit, MapPin, Star, TextAlignStart, Film, GripVertical } from "lucide-react";
+import {
+  Edit,
+  MapPin,
+  Star,
+  TextAlignStart,
+  Film,
+  GripVertical,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { Suspense, useEffect, useState } from "react";
 import { userQuery } from "@/features/user/api/user.queries";
 import Button from "@/components/ui/button/button";
 import MovieCard from "@/features/movie/components/movie-card/movie-card";
 import Title from "@/components/ui/title/title";
-import HorizontalScroller from "@/components/ui/horizontal-scroller/horizontal-scroller";
 import Tabs from "@/components/ui/tabs/tabs";
 import Watchlist from "@/features/user/components/profile-watchlist/profile-watchlist";
 import Lists from "@/features/user/components/lists/lists";
@@ -19,7 +27,15 @@ import Skeleton from "@/components/ui/skeleton/skeleton";
 import { Image } from "@unpic/react";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import FollowModal from "@/features/user/components/follow-modal/follow-modal";
-import { useFollowUser, useUnfollowUser } from "@/features/user/api/user.mutations";
+import {
+  useFollowUser,
+  useUnfollowUser,
+} from "@/features/user/api/user.mutations";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "@/components/ui/movie-swiper/movie-swiper.scss";
 
 export const Route = createFileRoute("/user/$userId/")({
   loader: async ({ context: { queryClient }, params: { userId } }) => {
@@ -258,10 +274,7 @@ function RouteComponent() {
               >
                 <div className="top-movies-header">
                   <div className="title-wrapper">
-                    <Title
-                      title="Top 6"
-                      id="top-movies-title"
-                    />
+                    <Title title="Top 6" id="top-movies-title" />
                   </div>
                   {Number(user?.id) === Number(userId) && (
                     <div className="top-movies-actions">
@@ -358,14 +371,40 @@ function RouteComponent() {
               </section>
 
               <section
-                className="content-section"
+                className="content-section movie-swiper-container"
                 aria-labelledby="recent-activity-title"
               >
                 <Title title="Activité récente" id="recent-activity-title" />
 
-                <HorizontalScroller className="recent-activity-scroller">
+                <Swiper
+                  modules={[Navigation]}
+                  navigation={{
+                    prevEl: ".prev-btn",
+                    nextEl: ".next-btn",
+                  }}
+                  className="mySwiper"
+                  breakpoints={{
+                    0: {
+                      slidesPerView: 3.2,
+                      slidesPerGroup: 3,
+                      spaceBetween: 10,
+                    },
+                    768: {
+                      slidesPerView: 7.1,
+                      slidesPerGroup: 4,
+                      spaceBetween: 60,
+                      slidesOffsetAfter: 60,
+                    },
+                    1024: {
+                      slidesPerView: 8.4,
+                      slidesPerGroup: 4,
+                      spaceBetween: 20,
+                      slidesOffsetAfter: 10,
+                    },
+                  }}
+                >
                   {(userData.recent_activity ?? []).map((movie: any) => (
-                    <li key={movie.id} className="activity-item">
+                    <SwiperSlide key={movie.id} className="activity-item">
                       <MovieCard movie={movie} size="sm" />
 
                       <div className="activity-meta">
@@ -395,9 +434,25 @@ function RouteComponent() {
                           </span>
                         )}
                       </div>
-                    </li>
+                    </SwiperSlide>
                   ))}
-                </HorizontalScroller>
+                </Swiper>
+
+                <Button
+                  className="nav-btn prev-btn"
+                  variant="ghost"
+                  size="icon"
+                >
+                  <ChevronLeft size={32} />
+                </Button>
+
+                <Button
+                  className="nav-btn next-btn"
+                  variant="ghost"
+                  size="icon"
+                >
+                  <ChevronRight size={32} />
+                </Button>
               </section>
             </>
           )}
