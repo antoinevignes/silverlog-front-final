@@ -32,6 +32,7 @@ export default function MovieCard({
         <Image
           src={posterSrc}
           layout="fullWidth"
+          aspectRatio={2 / 3}
           alt={`Affiche du film ${movie.title}`}
           background="auto"
           className="movie-card-poster"

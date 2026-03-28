@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Camera, MapPin, Trash2, User, Image as ImageIcon } from "lucide-react";
+import { Camera, MapPin, Trash2, User, Image as ImageIcon, Lock } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/auth";
 import {
@@ -10,7 +10,10 @@ import {
   useDeleteAvatar,
   useUploadBanner,
   useDeleteBanner,
+  useUpdatePassword,
 } from "@/features/user/api/user.mutations";
+import { FieldInfo } from "@/utils/useAppForm";
+import { Label } from "@/components/ui/label/label";
 import Title from "@/components/ui/title/title";
 import "./settings.scss";
 import { useAppForm } from "@/utils/useAppForm";
@@ -78,6 +81,67 @@ function RouteComponent() {
     },
     onSubmit: ({ value }) => {
       updateLocation(value.location);
+    },
+  });
+
+  // MAJ MOT DE PASSE
+  const { mutate: updatePassword, isPending: isUpdatingPassword } =
+    useUpdatePassword();
+
+  const passwordForm = useAppForm({
+    defaultValues: {
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    },
+    validators: {
+      onChange: z
+        .object({
+          currentPassword: z
+            .string()
+            .trim()
+            .min(12, "Mot de passe trop court")
+            .max(128, "Mot de passe trop long")
+            .regex(/[A-Z]/, "Doit contenir au moins une majuscule")
+            .regex(/[a-z]/, "Doit contenir au moins une minuscule")
+            .regex(/\d/, "Doit contenir au moins un chiffre")
+            .regex(
+              new RegExp("[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?~`]"),
+              "Doit contenir un caractère spécial",
+            )
+            .refine(
+              (val) => !/\s/.test(val),
+              "Ne doit pas contenir d'espace",
+            ),
+          newPassword: z
+            .string()
+            .trim()
+            .min(12, "Mot de passe trop court")
+            .max(128, "Mot de passe trop long")
+            .regex(/[A-Z]/, "Doit contenir au moins une majuscule")
+            .regex(/[a-z]/, "Doit contenir au moins une minuscule")
+            .regex(/\d/, "Doit contenir au moins un chiffre")
+            .regex(
+              new RegExp("[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?~`]"),
+              "Doit contenir un caractère spécial",
+            )
+            .refine(
+              (val) => !/\s/.test(val),
+              "Ne doit pas contenir d'espace",
+            ),
+          confirmPassword: z.string().trim(),
+        })
+        .refine(
+          (data) => data.newPassword === data.confirmPassword,
+          {
+            message: "Les mots de passe ne correspondent pas",
+            path: ["confirmPassword"],
+          },
+        ),
+    },
+    onSubmit: ({ value }) => {
+      updatePassword(value);
+      passwordForm.reset();
     },
   });
 
@@ -239,6 +303,101 @@ function RouteComponent() {
             inputAriaLabel="Choisir une bannière"
             deleteAriaLabel="Supprimer la bannière"
           />
+        </SettingSection>
+
+        {/* MOT DE PASSE */}
+        <SettingSection
+          icon={<Lock size={20} />}
+          title="Mot de passe"
+          description="Modifiez votre mot de passe."
+        >
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              passwordForm.handleSubmit();
+            }}
+            className="setting-form password-form"
+          >
+            <div className="password-fields">
+              <div className="password-field">
+                <Label htmlFor="currentPassword">Mot de passe actuel</Label>
+                <passwordForm.AppField
+                  name="currentPassword"
+                  children={(field) => (
+                    <>
+                      <field.Input
+                        id="currentPassword"
+                        type="password"
+                        placeholder="********"
+                        leftIcon={<Lock />}
+                      />
+                      <FieldInfo field={field} />
+                    </>
+                  )}
+                />
+              </div>
+
+              <div className="password-field">
+                <Label htmlFor="newPassword">Nouveau mot de passe</Label>
+                <passwordForm.AppField
+                  name="newPassword"
+                  children={(field) => (
+                    <>
+                      <field.Input
+                        id="newPassword"
+                        type="password"
+                        placeholder="********"
+                        leftIcon={<Lock />}
+                      />
+                      <FieldInfo field={field} />
+                    </>
+                  )}
+                />
+              </div>
+
+              <div className="password-field">
+                <Label htmlFor="confirmPassword">Confirmer le mot de passe</Label>
+                <passwordForm.AppField
+                  name="confirmPassword"
+                  children={(field) => (
+                    <>
+                      <field.Input
+                        id="confirmPassword"
+                        type="password"
+                        placeholder="********"
+                        leftIcon={<Lock />}
+                      />
+                      <FieldInfo field={field} />
+                    </>
+                  )}
+                />
+              </div>
+            </div>
+
+            <passwordForm.AppForm>
+              <passwordForm.Subscribe
+                selector={(state) => [
+                  state.canSubmit,
+                  state.isSubmitting,
+                  state.isPristine,
+                ]}
+                children={([canSubmit, isSubmitting, isPristine]) => (
+                  <passwordForm.Button
+                    type="submit"
+                    size="sm"
+                    disabled={
+                      !canSubmit ||
+                      isSubmitting ||
+                      isUpdatingPassword ||
+                      isPristine
+                    }
+                  >
+                    {isUpdatingPassword ? "Mise à jour..." : "Mettre à jour"}
+                  </passwordForm.Button>
+                )}
+              />
+            </passwordForm.AppForm>
+          </form>
         </SettingSection>
 
         {/* SUPPRIMER LE COMPTE */}

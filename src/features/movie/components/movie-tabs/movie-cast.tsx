@@ -68,6 +68,7 @@ export default function MovieCast() {
                     <Image
                       src={posterSrc}
                       layout="fullWidth"
+                      aspectRatio={2 / 3}
                       background="auto"
                       alt={`Image de ${actor.name}`}
                       className="person-image"
