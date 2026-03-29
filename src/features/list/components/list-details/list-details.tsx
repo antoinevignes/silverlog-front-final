@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
 import "./list-details.scss";
+import { useToggle } from "@/hooks/use-toggle";
 import MovieCard from "@/features/movie/components/movie-card/movie-card";
 import Title from "@/components/ui/title/title";
 import type { MovieType } from "@/features/movie/types/movie";
@@ -36,7 +37,8 @@ export default function ListDetails() {
 
   const { user } = useAuth();
 
-  const [isExpanded, setIsExpanded] = useState(false);
+  const { value: isExpanded, toggle: toggleExpanded } = useToggle();
+  const { value: isEditDialogOpen, setValue: setIsEditDialogOpen } = useToggle();
   const [filterType, setFilterType] = useState<"all" | "watched" | "unwatched">(
     "all",
   );
@@ -48,8 +50,6 @@ export default function ListDetails() {
   const { data: listData } = useSuspenseQuery(listDataQuery(listId));
   const { mutate: saveList } = useSaveList(listId);
   const { mutate: removeMovie } = useRemoveMovieFromList(listId);
-
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
   const isOwner = user?.username === listData.username;
 
@@ -196,7 +196,7 @@ export default function ListDetails() {
         <button
           className={`expand-button ${isExpanded ? "is-expanded" : ""}`}
           aria-label={isExpanded ? "Réduire la description" : "Lire la suite"}
-          onClick={() => setIsExpanded(!isExpanded)}
+          onClick={toggleExpanded}
         >
           ...
         </button>
