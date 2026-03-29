@@ -5,6 +5,7 @@ import MovieCard from "@/features/movie/components/movie-card/movie-card";
 import { useAuth } from "@/auth";
 import "./user-home.scss";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import React from "react";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
 import { Image } from "@unpic/react";
@@ -80,14 +81,14 @@ export default function UserHome() {
         <ul className="selection-grid">
           {crewPicks && crewPicks.length > 0 ? (
             crewPicks.map((movie: MovieType) => (
-              <>
-                <li key={movie.id} className="card-mobile">
+              <React.Fragment key={movie.id}>
+                <li className="card-mobile">
                   <MovieCard movie={movie} size="sm" />
                 </li>
                 <li className="card-desktop">
                   <MovieCard movie={movie} size="md" />
                 </li>
-              </>
+              </React.Fragment>
             ))
           ) : (
             <p className="text-secondary text-center">

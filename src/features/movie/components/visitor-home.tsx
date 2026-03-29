@@ -11,6 +11,7 @@ import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import Title from "@/components/ui/title/title";
 import type { MovieType } from "@/features/movie/types/movie";
 import { Card } from "@/components/ui/card/card";
+import React from "react";
 
 export default function VisitorHome() {
   const { data: recentReviews } = useSuspenseQuery(recentReviewsQuery());
@@ -51,14 +52,14 @@ export default function VisitorHome() {
         <ul className="selection-grid">
           {crewPicks && crewPicks.length > 0 ? (
             crewPicks.map((movie: MovieType) => (
-              <>
-                <li key={movie.id} className="card-mobile">
+              <React.Fragment key={movie.id}>
+                <li className="card-mobile">
                   <MovieCard movie={movie} size="sm" />
                 </li>
                 <li className="card-desktop">
                   <MovieCard movie={movie} size="md" />
                 </li>
-              </>
+              </React.Fragment>
             ))
           ) : (
             <p className="text-secondary text-center">
