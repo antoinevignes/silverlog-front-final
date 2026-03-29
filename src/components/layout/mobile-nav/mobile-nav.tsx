@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Bookmark, Home, ListVideo, User, Shield } from "lucide-react";
+import { Bookmark, Home, ListVideo, User, Film } from "lucide-react";
 import "./mobile-nav.scss";
 import { useAuth } from "@/auth";
 import { Avatar } from "@/components/ui/avatar/avatar";
@@ -17,6 +17,12 @@ export default function MobileNav() {
           </Link>
         </li>
         <li>
+          <Link to="/movies" className="nav-link">
+            <Film size={24} />
+            <span>Films</span>
+          </Link>
+        </li>
+        <li>
           <Link to="/lists" className="nav-link">
             <ListVideo size={24} />
             <span>Listes</span>
@@ -28,15 +34,6 @@ export default function MobileNav() {
             <span>Activité</span>
           </Link>
         </li>
-
-        {user?.role === "admin" && (
-          <li>
-            <Link to="/admin" className="nav-link">
-              <Shield size={24} />
-              <span>Admin</span>
-            </Link>
-          </li>
-        )}
 
         {user ? (
           <li>
