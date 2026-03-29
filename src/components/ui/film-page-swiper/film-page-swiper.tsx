@@ -11,7 +11,10 @@ type FilmPageSwiperProps = {
   id?: string;
 };
 
-export default function FilmPageSwiper({ movies, id = "default" }: FilmPageSwiperProps) {
+export default function FilmPageSwiper({
+  movies,
+  id = "default",
+}: FilmPageSwiperProps) {
   const prevClass = `film-page-swiper-prev-btn-${id}`;
   const nextClass = `film-page-swiper-next-btn-${id}`;
 
@@ -31,7 +34,7 @@ export default function FilmPageSwiper({ movies, id = "default" }: FilmPageSwipe
             spaceBetween: 10,
           },
           768: {
-            slidesPerView: 4.1,
+            slidesPerView: 6.7,
             slidesPerGroup: 3,
             spaceBetween: 60,
             slidesOffsetAfter: 60,
@@ -51,19 +54,11 @@ export default function FilmPageSwiper({ movies, id = "default" }: FilmPageSwipe
         ))}
       </Swiper>
 
-      <Button
-        className={`nav-btn ${prevClass}`}
-        variant="ghost"
-        size="icon"
-      >
+      <Button className={`nav-btn ${prevClass}`} variant="ghost" size="icon">
         <ChevronLeft size={32} />
       </Button>
 
-      <Button
-        className={`nav-btn ${nextClass}`}
-        variant="ghost"
-        size="icon"
-      >
+      <Button className={`nav-btn ${nextClass}`} variant="ghost" size="icon">
         <ChevronRight size={32} />
       </Button>
     </div>
