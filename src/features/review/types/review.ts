@@ -5,11 +5,13 @@ export type ReviewType = {
   user_id: string;
   movie_id: string;
   content: string;
-  rating: number;
+  rating: number | null;
   created_at: string;
   updated_at: string;
-  likes_count: number;
+  like_count: number;
   user?: UserType;
   username?: string;
-  avatar_path?: string;
+  avatar_path?: string | null;
+  movie_title?: string;
+  movie_poster_path?: string | null;
 };
