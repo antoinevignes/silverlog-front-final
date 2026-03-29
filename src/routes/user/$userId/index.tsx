@@ -483,7 +483,7 @@ function RouteComponent() {
                 </div>
               }
             >
-              <Lists />
+              <Lists userId={userId} />
             </Suspense>
           )}
         </section>

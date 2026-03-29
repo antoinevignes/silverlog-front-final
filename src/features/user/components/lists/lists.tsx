@@ -1,5 +1,4 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getRouteApi } from "@tanstack/react-router";
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
 
@@ -16,10 +15,8 @@ import { useDeleteList } from "@/features/list/api/list.mutations";
 import { personalListsQuery } from "@/features/list/api/list.queries";
 import "./lists.scss";
 
-export default function Lists() {
+export default function Lists({ userId }: { userId: string }) {
   const { user } = useAuth();
-  const routeApi = getRouteApi("/user/$userId/");
-  const { userId } = routeApi.useParams();
 
   const [deleteTargetId, setDeleteTargetId] = useState<number | null>(null);
 

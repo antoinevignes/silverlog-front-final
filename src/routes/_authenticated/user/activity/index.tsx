@@ -8,10 +8,14 @@ import { seenMoviesQuery } from "@/features/user/api/user-movie.queries";
 import DiarySkeleton from "@/features/user/components/activity/diary/diary-skeleton/diary-skeleton";
 import WatchlistSkeleton from "@/features/user/components/activity/watchlist/watchlist-skeleton/watchlist-skeleton";
 import "./index.scss";
+import Skeleton from "@/components/ui/skeleton/skeleton";
+import Lists from "@/features/user/components/lists/lists";
+import { useAuth } from "@/auth";
 
 const tabs = [
   { id: "watchlist", label: "Watchlist" },
   { id: "diary", label: "Journal" },
+  { id: "lists", label: "Listes" },
 ];
 
 export const Route = createFileRoute("/_authenticated/user/activity/")({
@@ -25,6 +29,8 @@ export const Route = createFileRoute("/_authenticated/user/activity/")({
 });
 
 function RouteComponent() {
+  const { user } = useAuth();
+
   const [selected, setSelected] = useState<string>("watchlist");
   const [isDesktop, setIsDesktop] = useState(false);
 
@@ -55,6 +61,33 @@ function RouteComponent() {
       {selected === "diary" && (
         <Suspense fallback={<DiarySkeleton />}>
           <Diary />
+        </Suspense>
+      )}
+
+      {selected === "lists" && (
+        <Suspense
+          fallback={
+            <div className="lists-skeleton-grid">
+              {Array.from({ length: 4 }).map((_, index) => (
+                <div key={index} className="list-card-skeleton">
+                  <div className="skeleton-info">
+                    <Skeleton height={20} width="80%" />
+                    <Skeleton height={24} width="30%" />
+                    <Skeleton height={14} width="90%" />
+                    <Skeleton height={14} width="60%" />
+                    <Skeleton height={14} width="40%" />
+                  </div>
+                  <div className="skeleton-posters">
+                    <Skeleton className="poster depth-2" />
+                    <Skeleton className="poster depth-1" />
+                    <Skeleton className="poster depth-0" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          }
+        >
+          <Lists userId={user!.id} />
         </Suspense>
       )}
     </main>
