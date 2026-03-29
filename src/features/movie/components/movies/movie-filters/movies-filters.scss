@@ -4,7 +4,7 @@
 .filters-toggle-btn {
   position: relative;
 
-  @include m.responsive(v.$bp-md) {
+  @include m.responsive(v.$bp-lg) {
     display: none;
   }
 
@@ -23,7 +23,7 @@
 .movies-filters-sidebar {
   display: none;
 
-  @include m.responsive(v.$bp-md) {
+  @include m.responsive(v.$bp-lg) {
     display: flex;
     flex-direction: column;
     background: v.$c-surface;
