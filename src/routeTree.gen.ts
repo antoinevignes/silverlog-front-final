@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SearchIndexRouteImport } from './routes/search/index'
+import { Route as MoviesIndexRouteImport } from './routes/movies/index'
 import { Route as ListsIndexRouteImport } from './routes/lists/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AuthVerifyEmailRouteImport } from './routes/auth/verify-email'
@@ -37,6 +38,11 @@ const IndexRoute = IndexRouteImport.update({
 const SearchIndexRoute = SearchIndexRouteImport.update({
   id: '/search/',
   path: '/search/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MoviesIndexRoute = MoviesIndexRouteImport.update({
+  id: '/movies/',
+  path: '/movies/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ListsIndexRoute = ListsIndexRouteImport.update({
@@ -110,6 +116,7 @@ export interface FileRoutesByFullPath {
   '/auth/verify-email': typeof AuthVerifyEmailRoute
   '/admin/': typeof AdminIndexRoute
   '/lists/': typeof ListsIndexRoute
+  '/movies/': typeof MoviesIndexRoute
   '/search/': typeof SearchIndexRoute
   '/lists/$listId/': typeof ListsListIdIndexRoute
   '/movies/$movieId/': typeof MoviesMovieIdIndexRoute
@@ -126,6 +133,7 @@ export interface FileRoutesByTo {
   '/auth/verify-email': typeof AuthVerifyEmailRoute
   '/admin': typeof AdminIndexRoute
   '/lists': typeof ListsIndexRoute
+  '/movies': typeof MoviesIndexRoute
   '/search': typeof SearchIndexRoute
   '/lists/$listId': typeof ListsListIdIndexRoute
   '/movies/$movieId': typeof MoviesMovieIdIndexRoute
@@ -144,6 +152,7 @@ export interface FileRoutesById {
   '/auth/verify-email': typeof AuthVerifyEmailRoute
   '/admin/': typeof AdminIndexRoute
   '/lists/': typeof ListsIndexRoute
+  '/movies/': typeof MoviesIndexRoute
   '/search/': typeof SearchIndexRoute
   '/lists/$listId/': typeof ListsListIdIndexRoute
   '/movies/$movieId/': typeof MoviesMovieIdIndexRoute
@@ -162,6 +171,7 @@ export interface FileRouteTypes {
     | '/auth/verify-email'
     | '/admin/'
     | '/lists/'
+    | '/movies/'
     | '/search/'
     | '/lists/$listId/'
     | '/movies/$movieId/'
@@ -178,6 +188,7 @@ export interface FileRouteTypes {
     | '/auth/verify-email'
     | '/admin'
     | '/lists'
+    | '/movies'
     | '/search'
     | '/lists/$listId'
     | '/movies/$movieId'
@@ -195,6 +206,7 @@ export interface FileRouteTypes {
     | '/auth/verify-email'
     | '/admin/'
     | '/lists/'
+    | '/movies/'
     | '/search/'
     | '/lists/$listId/'
     | '/movies/$movieId/'
@@ -213,6 +225,7 @@ export interface RootRouteChildren {
   AuthVerifyEmailRoute: typeof AuthVerifyEmailRoute
   AdminIndexRoute: typeof AdminIndexRoute
   ListsIndexRoute: typeof ListsIndexRoute
+  MoviesIndexRoute: typeof MoviesIndexRoute
   SearchIndexRoute: typeof SearchIndexRoute
   ListsListIdIndexRoute: typeof ListsListIdIndexRoute
   MoviesMovieIdIndexRoute: typeof MoviesMovieIdIndexRoute
@@ -241,6 +254,13 @@ declare module '@tanstack/react-router' {
       path: '/search'
       fullPath: '/search/'
       preLoaderRoute: typeof SearchIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/movies/': {
+      id: '/movies/'
+      path: '/movies'
+      fullPath: '/movies/'
+      preLoaderRoute: typeof MoviesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lists/': {
@@ -352,6 +372,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthVerifyEmailRoute: AuthVerifyEmailRoute,
   AdminIndexRoute: AdminIndexRoute,
   ListsIndexRoute: ListsIndexRoute,
+  MoviesIndexRoute: MoviesIndexRoute,
   SearchIndexRoute: SearchIndexRoute,
   ListsListIdIndexRoute: ListsListIdIndexRoute,
   MoviesMovieIdIndexRoute: MoviesMovieIdIndexRoute,

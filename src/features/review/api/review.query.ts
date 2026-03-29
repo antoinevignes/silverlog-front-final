@@ -21,3 +21,12 @@ export const recentReviewsQuery = () =>
     queryKey: reviewKeys.recent(),
     queryFn: () => apiClient<ReviewType[]>("/reviews/recent"),
   });
+
+export const popularReviewsQuery = (limit: number = 10) =>
+  queryOptions({
+    queryKey: reviewKeys.popular(limit),
+    queryFn: () =>
+      apiClient<ReviewType[]>("/reviews/popular", {
+        params: { limit },
+      }),
+  });
