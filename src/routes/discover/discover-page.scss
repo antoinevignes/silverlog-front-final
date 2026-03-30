@@ -17,14 +17,11 @@
   }
 
   .users-reviews-container {
-    display: flex;
-    flex-direction: column;
-    gap: v.$space-xl;
-    margin-bottom: v.$space-2xl;
-
     @include m.responsive(v.$bp-lg) {
+      display: flex;
       flex-direction: row;
       align-items: flex-start;
+      gap: v.$space-xl;
     }
   }
 

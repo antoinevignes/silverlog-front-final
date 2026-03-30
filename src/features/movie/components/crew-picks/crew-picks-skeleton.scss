@@ -1,0 +1,24 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.selection-grid-skeleton {
+  &__mobile {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: v.$space-lg;
+
+    @include m.responsive(v.$bp-lg) {
+      display: none;
+    }
+  }
+
+  &__desktop {
+    display: none;
+    grid-template-columns: repeat(6, 1fr);
+    gap: v.$space-lg;
+
+    @include m.responsive(v.$bp-lg) {
+      display: grid;
+    }
+  }
+}
