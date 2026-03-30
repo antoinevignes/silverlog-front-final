@@ -1,7 +1,11 @@
 import { queryOptions } from "@tanstack/react-query";
 import { apiClient } from "@/utils/api-client";
 import { userKeys } from "@/utils/query-keys";
-import type { UserType, FeedActivityType } from "@/features/user/types/user";
+import type {
+  UserType,
+  FeedActivityType,
+  ActiveUser,
+} from "@/features/user/types/user";
 
 export const userQuery = (user_id: string) =>
   queryOptions({
@@ -30,8 +34,15 @@ export const userFeedQuery = () =>
 export const userSearchQuery = (query: string) =>
   queryOptions({
     queryKey: userKeys.search(query),
-    queryFn: () => apiClient<UserType[]>("/user/search", {
-      params: { q: query },
-    }),
+    queryFn: () =>
+      apiClient<UserType[]>("/user/search", {
+        params: { q: query },
+      }),
     enabled: !!query,
+  });
+
+export const activeUsersQuery = () =>
+  queryOptions({
+    queryKey: userKeys.active(),
+    queryFn: () => apiClient<ActiveUser[]>("/user/active"),
   });

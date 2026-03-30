@@ -42,7 +42,7 @@ export default function DesktopNav() {
               <Link to="/movies">Films</Link>
             </li>
             <li>
-              <Link to="/lists">Découvrir</Link>
+              <Link to="/discover">Découvrir</Link>
             </li>
 
             {user && (
@@ -59,19 +59,25 @@ export default function DesktopNav() {
               <SearchBar />
             </div>
             {isSearchOpen ? (
-              <button
+              <Button
                 className="close-search"
                 onClick={() => setIsSearchOpen(false)}
+                variant="ghost"
+                size="icon"
+                aria-label="Fermer la barre de recherche"
               >
                 <X size={20} />
-              </button>
+              </Button>
             ) : (
-              <button
+              <Button
                 className="open-search"
                 onClick={() => setIsSearchOpen(true)}
+                variant="ghost"
+                size="icon"
+                aria-label="Ouvrir la barre de recherche"
               >
                 <Search size={20} />
-              </button>
+              </Button>
             )}
           </div>
 

@@ -64,34 +64,6 @@
     margin-bottom: v.$space-2xl;
   }
 
-  .selection-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: v.$space-md;
-    margin-top: v.$space-lg;
-    margin-bottom: v.$space-2xl;
-
-    @include m.responsive(v.$bp-lg) {
-      grid-template-columns: repeat(6, 1fr);
-    }
-
-    .card-desktop {
-      display: none;
-      margin: auto;
-
-      @include m.responsive(v.$bp-lg) {
-        display: block;
-      }
-    }
-
-    .card-mobile {
-      margin: auto;
-      @include m.responsive(v.$bp-lg) {
-        display: none;
-      }
-    }
-  }
-
   .recent-activity-scroller {
     .activity-meta {
       display: flex;

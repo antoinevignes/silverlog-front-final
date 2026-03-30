@@ -39,8 +39,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/lists" className="link">
-                  Listes Publiques
+                <Link to="/discover" className="link">
+                  Découvrir
                 </Link>
               </li>
               <li>
