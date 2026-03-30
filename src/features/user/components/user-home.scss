@@ -4,48 +4,6 @@
 .user-home {
   margin-bottom: v.$space-lg;
 
-  .home-dashboard-header {
-    background-color: v.$c-surface;
-    border-top: 1px solid v.$c-border;
-    border-bottom: 1px solid v.$c-border;
-    padding: v.$space-xl 0;
-
-    .header-container {
-      display: flex;
-      flex-direction: column;
-      gap: v.$space-lg;
-
-      @include m.responsive(v.$bp-md) {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-      }
-    }
-
-    .welcome-title {
-      font-size: 1.5rem;
-      margin-bottom: v.$space-xs;
-
-      @include m.responsive(v.$bp-md) {
-        font-size: 2rem;
-      }
-
-      .highlight-user {
-        color: v.$c-heading;
-      }
-    }
-
-    .welcome-subtitle {
-      font-size: 0.95rem;
-      margin: 0;
-    }
-
-    .quick-stats-row {
-      display: flex;
-      gap: v.$space-md;
-    }
-  }
-
   .recent-activity-scroller {
     .activity-meta {
       display: flex;

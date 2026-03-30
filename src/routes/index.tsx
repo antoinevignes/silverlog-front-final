@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Suspense } from "react";
 import { useAuth } from "@/auth";
 import VisitorHome from "@/features/movie/components/visitor-home";
 import UserHome from "@/features/user/components/user-home";
@@ -8,18 +7,22 @@ import {
   crewPicksQuery,
 } from "@/features/movie/api/movie.queries";
 import { recentReviewsQuery } from "@/features/review/api/review.query";
-import { userQuery } from "@/features/user/api/user.queries";
-import VisitorHomeSkeleton from "@/features/movie/components/visitor-home-skeleton";
-import UserHomeSkeleton from "@/features/user/components/user-home-skeleton";
+import { userFeedQuery, userQuery } from "@/features/user/api/user.queries";
 import MobileHomeHeader from "@/components/layout/mobile-home-header/mobile-home-header";
+import UserHomeHeader from "@/features/user/components/user-home-header/user-home-header";
+import { SuspenseSection } from "@/components/ui/suspense-section/suspense-section";
+import PopularMoviesLg from "@/features/movie/components/movies/popular-movies/popular-movies-lg";
+import { Suspense } from "react";
 
 export const Route = createFileRoute("/")({
   loader: async ({ context: { queryClient, auth } }) => {
     queryClient.prefetchQuery(popularMoviesQuery());
-    queryClient.prefetchQuery(recentReviewsQuery());
     queryClient.prefetchQuery(crewPicksQuery());
+    queryClient.prefetchQuery(recentReviewsQuery());
+
     if (auth.isAuthenticated && auth.user?.id) {
-      await queryClient.prefetchQuery(userQuery(String(auth.user.id)));
+      queryClient.prefetchQuery(userQuery(String(auth.user.id)));
+      queryClient.prefetchQuery(userFeedQuery());
     }
   },
   component: App,
@@ -28,14 +31,28 @@ export const Route = createFileRoute("/")({
 function App() {
   const { user } = useAuth();
 
+  if (!user) {
+    return <VisitorHome />;
+  }
+
   return (
     <>
       <MobileHomeHeader />
-      <Suspense
-        fallback={user ? <UserHomeSkeleton /> : <VisitorHomeSkeleton />}
-      >
-        {user ? <UserHome /> : <VisitorHome />}
-      </Suspense>
+
+      <main className="user-home">
+        <Suspense fallback={<div>CHARGEMENT</div>}>
+          <UserHomeHeader />
+        </Suspense>
+
+        <SuspenseSection
+          title="Populaire cette semaine"
+          fallback={<>CHARGEMENT</>}
+        >
+          <PopularMoviesLg />
+        </SuspenseSection>
+
+        <UserHome />
+      </main>
     </>
   );
 }
