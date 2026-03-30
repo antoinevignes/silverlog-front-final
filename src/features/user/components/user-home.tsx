@@ -1,27 +1,23 @@
 import { Link } from "@tanstack/react-router";
 import { Clock, Star, BookmarkPlus } from "lucide-react";
-import Button from "@/components/ui/button/button";
-import MovieCard from "@/features/movie/components/movie-card/movie-card";
-import HorizontalScroller from "@/components/ui/horizontal-scroller/horizontal-scroller";
 import { useAuth } from "@/auth";
 import "./user-home.scss";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
 import { Image } from "@unpic/react";
+import { Avatar } from "@/components/ui/avatar/avatar";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
-import { crewPicksQuery, popularMoviesQuery } from "@/features/movie/api/movie.queries";
 import { userFeedQuery, userQuery } from "@/features/user/api/user.queries";
-import type { MovieType } from "@/features/movie/types/movie";
 import Badge from "@/components/ui/badge/badge";
 import Title from "@/components/ui/title/title";
+import CrewPicks from "@/features/movie/components/crew-picks/crew-picks";
+import PopularMoviesLg from "@/features/movie/components/movies/popular-movies/popular-movies-lg";
 
 export default function UserHome() {
   const { user } = useAuth();
 
-  const { data: popularMovies } = useSuspenseQuery(popularMoviesQuery());
   const { data: feedData } = useSuspenseQuery(userFeedQuery());
-  const { data: crewPicks } = useSuspenseQuery(crewPicksQuery());
   const { data: userData } = useSuspenseQuery(userQuery(user!.id));
 
   return (
@@ -29,10 +25,11 @@ export default function UserHome() {
       <header className="home-dashboard-header">
         <div className="container header-container">
           <div className="welcome-section">
-            <h1 className="welcome-title font-sentient">
-              Bon retour,{" "}
-              <span className="highlight-user">{user?.username}</span> !
-            </h1>
+            <Title
+              title={`Bon retour, ${user?.username} !`}
+              className="welcome-title font-sentient"
+              size="lg"
+            />
             <p className="welcome-subtitle text-secondary">
               Voici ce qu'il s'est passé depuis votre dernière visite.
             </p>
@@ -42,60 +39,25 @@ export default function UserHome() {
             <Badge variant="outline" size="lg">
               <Clock size={16} className="stat-icon" />
               <span>
-                <strong>{userData?.viewed_movies_this_month_count ?? 0}</strong> films vus ce mois
+                <strong>{userData?.viewed_movies_this_month_count ?? 0}</strong>{" "}
+                films vus ce mois
               </span>
             </Badge>
 
             <Badge variant="outline" size="lg">
               <BookmarkPlus size={16} className="stat-icon" />
               <span>
-                <strong>{userData?.recent_watchlist_count ?? 0}</strong> envies récentes
+                <strong>{userData?.recent_watchlist_count ?? 0}</strong> envies
+                récentes
               </span>
             </Badge>
           </div>
         </div>
       </header>
 
-      <section className="container trending-section">
-        <header className="section-header">
-          <Title title="Populaire cette semaine" />
+      <PopularMoviesLg />
 
-          <Button variant="ghost" size="sm" className="hidden-mobile">
-            Voir plus
-          </Button>
-        </header>
-
-        <HorizontalScroller>
-          {popularMovies.results.map((movie: MovieType) => (
-            <li key={movie.id}>
-              <MovieCard movie={movie} size="sm" />
-            </li>
-          ))}
-        </HorizontalScroller>
-      </section>
-
-      <section className="container selection-section">
-        <Title title="La sélection de la rédaction" className="section-title" />
-
-        <ul className="selection-grid">
-          {crewPicks && crewPicks.length > 0 ? (
-            crewPicks.map((movie: MovieType) => (
-              <>
-                <li key={movie.id} className="card-mobile">
-                  <MovieCard movie={movie} size="sm" />
-                </li>
-                <li className="card-desktop">
-                  <MovieCard movie={movie} size="md" />
-                </li>
-              </>
-            ))
-          ) : (
-            <p className="text-secondary text-center">
-              Chargement de la sélection...
-            </p>
-          )}
-        </ul>
-      </section>
+      <CrewPicks />
 
       <section className="container feed-section">
         <Title title="Activité de vos abonnements" />
@@ -113,24 +75,12 @@ export default function UserHome() {
                     params={{ userId: activity.user_id.toString() }}
                     className="user-link"
                   >
-                    <div className="avatar-placeholder">
-                      {activity.avatar_path ? (
-                        <Image
-                          src={getCloudinarySrc(
-                            activity.avatar_path,
-                            "avatars",
-                          )}
-                          layout="constrained"
-                          width={32}
-                          height={32}
-                          alt={`Avatar de ${activity.username}`}
-                          background="auto"
-                          className="avatar"
-                        />
-                      ) : (
-                        activity.username.charAt(0).toUpperCase()
-                      )}
-                    </div>
+                    <Avatar
+                      username={activity.username}
+                      src={activity.avatar_path}
+                      size="sm"
+                      className="avatar-placeholder"
+                    />
 
                     <strong>{activity.username}</strong>
                   </Link>
@@ -156,6 +106,7 @@ export default function UserHome() {
                       src={getCloudinarySrc(activity.poster_path, "posters")}
                       background="auto"
                       layout="fullWidth"
+                      aspectRatio={2 / 3}
                       alt={`Affiche du film ${activity.title}`}
                       className="feed-movie-poster"
                     />
@@ -168,9 +119,7 @@ export default function UserHome() {
 
                     {activity.type === "rating" && (
                       <div className="feed-review">
-                        <div
-                          className="feed-review-header text-secondary"
-                        >
+                        <div className="feed-review-header text-secondary">
                           {activity.review_content
                             ? "a noté et critiqué le film "
                             : "a noté ce film "}

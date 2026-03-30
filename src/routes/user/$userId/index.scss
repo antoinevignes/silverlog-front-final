@@ -80,26 +80,6 @@
 
   .avatar-container {
     flex-shrink: 0;
-
-    .avatar {
-      width: 6rem;
-      height: 6rem;
-      border-radius: 50%;
-      background-color: v.$c-heading;
-      color: white;
-      outline: 4px solid white;
-      @include m.flex-center;
-      font-size: 2rem;
-      font-weight: 700;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-
-      @include m.responsive(v.$bp-md) {
-        width: 9.5rem;
-        height: 9.5rem;
-        font-size: 3.5rem;
-        border-width: 6px;
-      }
-    }
   }
 
   .stats-container {

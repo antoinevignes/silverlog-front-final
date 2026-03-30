@@ -1,5 +1,5 @@
 import "./biography-container.scss";
-import { useState } from "react";
+import { useToggle } from "@/hooks/use-toggle";
 import type { PersonType } from "@/features/movie/types/person";
 
 export default function BiographyContainer({
@@ -9,7 +9,7 @@ export default function BiographyContainer({
   personDetails: PersonType;
   personDetailsUS: PersonType;
 }) {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const { value: isExpanded, setTrue: expand, setFalse: collapse } = useToggle();
 
   const biography =
     personDetails.biography !== ""
@@ -36,7 +36,7 @@ export default function BiographyContainer({
       {shouldShowReadMore && (
         <button
           className="read-more-btn underline-link"
-          onClick={() => setIsExpanded(true)}
+          onClick={expand}
           aria-expanded={isExpanded}
         >
           Voir plus
@@ -46,7 +46,7 @@ export default function BiographyContainer({
       {isExpanded && biography.length > overviewPreviewLength && (
         <button
           className="read-more-btn underline-link"
-          onClick={() => setIsExpanded(false)}
+          onClick={collapse}
           aria-expanded={isExpanded}
         >
           Voir moins

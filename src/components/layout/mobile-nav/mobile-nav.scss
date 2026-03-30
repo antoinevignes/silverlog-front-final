@@ -55,15 +55,8 @@
         }
 
         .avatar-icon-wrapper {
-          width: 24px;
-          height: 24px;
           margin: 0 auto;
           border-radius: 50%;
-          background-color: v.$c-heading;
-          color: v.$c-bg;
-          @include m.flex-center;
-          font-size: 0.65rem;
-          font-weight: 700;
           overflow: hidden;
         }
       }

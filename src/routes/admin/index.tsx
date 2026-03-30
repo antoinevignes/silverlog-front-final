@@ -15,6 +15,7 @@ import Button from "@/components/ui/button/button";
 import MovieCard from "@/features/movie/components/movie-card/movie-card";
 import { useEffect, useState } from "react";
 import { useUpdateCrewPicks } from "@/features/movie/api/movie.mutations";
+import { useToggle } from "@/hooks/use-toggle";
 import { z } from "zod";
 import AdminStats from "../../features/admin/components/admin-stats";
 import AdminUsers from "../../features/admin/components/admin-users";
@@ -80,7 +81,7 @@ function Page() {
 function CrewPicksEditor() {
   const { data: initialPicks } = useSuspenseQuery(crewPicksQuery());
   const [picks, setPicks] = useState(initialPicks || []);
-  const [isEditing, setIsEditing] = useState(false);
+  const { value: isEditing, toggle: toggleEditing, setFalse: stopEditing } = useToggle();
   const { mutate, isPending } = useUpdateCrewPicks();
 
   useEffect(() => {
@@ -107,7 +108,7 @@ function CrewPicksEditor() {
     mutate(
       picks.map((m: any) => m.id || m.movie_id),
       {
-        onSuccess: () => setIsEditing(false),
+        onSuccess: () => stopEditing(),
       },
     );
   };
@@ -122,7 +123,7 @@ function CrewPicksEditor() {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => setIsEditing(false)}
+                onClick={stopEditing}
               >
                 Annuler
               </Button>
@@ -131,7 +132,7 @@ function CrewPicksEditor() {
               </Button>
             </>
           ) : (
-            <Button size="sm" onClick={() => setIsEditing(true)}>
+            <Button size="sm" onClick={toggleEditing}>
               Modifier la sélection
             </Button>
           )}

@@ -1,9 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { Bookmark, Home, ListVideo, User, Shield } from "lucide-react";
+import { Bookmark, Home, User, Film, Compass } from "lucide-react";
 import "./mobile-nav.scss";
 import { useAuth } from "@/auth";
-import { Image } from "@unpic/react";
-import { getCloudinarySrc } from "@/utils/cloudinary-handler";
+import { Avatar } from "@/components/ui/avatar/avatar";
 
 export default function MobileNav() {
   const { user } = useAuth();
@@ -18,26 +17,23 @@ export default function MobileNav() {
           </Link>
         </li>
         <li>
-          <Link to="/lists" className="nav-link">
-            <ListVideo size={24} />
-            <span>Listes</span>
+          <Link to="/movies" className="nav-link">
+            <Film size={24} />
+            <span>Films</span>
+          </Link>
+        </li>
+        <li>
+          <Link to="/discover" className="nav-link">
+            <Compass size={24} />
+            <span>Découvrir</span>
           </Link>
         </li>
         <li>
           <Link to="/user/activity" className="nav-link">
             <Bookmark size={24} />
-            <span>Watchlist</span>
+            <span>Activité</span>
           </Link>
         </li>
-
-        {user?.role === "admin" && (
-          <li>
-            <Link to="/admin" className="nav-link">
-              <Shield size={24} />
-              <span>Admin</span>
-            </Link>
-          </li>
-        )}
 
         {user ? (
           <li>
@@ -48,26 +44,11 @@ export default function MobileNav() {
               aria-label="Profil"
             >
               <div className="avatar-icon-wrapper">
-                {user.avatar_path ? (
-                  <Image
-                    src={getCloudinarySrc(user.avatar_path, "avatars")}
-                    layout="fullWidth"
-                    aspectRatio={1 / 1}
-                    alt={`Avatar de ${user.username}`}
-                    background="auto"
-                    priority
-                    className="avatar"
-                  />
-                ) : (
-                  <div
-                    className="font-sentient"
-                    aria-label={`Initiale de ${user.username}`}
-                  >
-                    {user.username
-                      ? user.username.charAt(0).toUpperCase()
-                      : "U"}
-                  </div>
-                )}
+                <Avatar
+                  username={user.username}
+                  src={user.avatar_path}
+                  size="xs"
+                />
               </div>
               <span>Profil</span>
             </Link>

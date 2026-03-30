@@ -76,3 +76,31 @@ export const movieFriendsActivityQuery = (movieId: string) =>
     queryKey: movieKeys.friendsActivity(movieId),
     queryFn: () => apiClient<UserType[]>(`/movies/${movieId}/friends`),
   });
+
+export const topRatedMoviesQuery = (page: number = 1) =>
+  queryOptions({
+    queryKey: movieKeys.topRated(page),
+    queryFn: () =>
+      apiClient<{
+        results: MovieType[];
+        page: number;
+        total_pages: number;
+        total_results: number;
+      }>("/movies/top-rated", {
+        params: { page, language: "fr-FR" },
+      }),
+  });
+
+export const discoverMoviesQuery = (params: Record<string, string | number>) =>
+  queryOptions({
+    queryKey: ["discover", "movies", params],
+    queryFn: () =>
+      apiClient<{
+        results: MovieType[];
+        page: number;
+        total_pages: number;
+        total_results: number;
+      }>("/tmdb/discover/movie", {
+        params: { ...params, language: "fr-FR" },
+      }),
+  });

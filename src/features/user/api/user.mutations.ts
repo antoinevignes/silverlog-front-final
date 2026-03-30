@@ -257,3 +257,27 @@ export function useUnfollowUser(userId: string) {
     },
   });
 }
+
+// MISE A JOUR DU MOT DE PASSE
+export function useUpdatePassword() {
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: (data: {
+      currentPassword: string;
+      newPassword: string;
+      confirmPassword: string;
+    }) => {
+      return apiClient<{ success: boolean }>("/user/password", {
+        method: "PATCH",
+        body: JSON.stringify(data),
+      });
+    },
+
+    onSuccess: () => {
+      toast.success("Mot de passe mis à jour !");
+    },
+
+    onError: (error) => handleMutationError(error, navigate),
+  });
+}

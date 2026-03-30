@@ -1,20 +1,17 @@
 import { Link } from "@tanstack/react-router";
 import { BookText, Star, Users } from "lucide-react";
 import Button from "@/components/ui/button/button";
-import MovieCard from "@/features/movie/components/movie-card/movie-card";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { recentReviewsQuery } from "@/features/review/api/review.query";
-import { crewPicksQuery } from "@/features/movie/api/movie.queries";
 import "./visitor-home.scss";
 import { Image } from "@unpic/react";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import Title from "@/components/ui/title/title";
-import type { MovieType } from "@/features/movie/types/movie";
 import { Card } from "@/components/ui/card/card";
+import CrewPicks from "./crew-picks/crew-picks";
 
 export default function VisitorHome() {
   const { data: recentReviews } = useSuspenseQuery(recentReviewsQuery());
-  const { data: crewPicks } = useSuspenseQuery(crewPicksQuery());
 
   return (
     <main className="visitor-home">
@@ -45,28 +42,7 @@ export default function VisitorHome() {
         </div>
       </section>
 
-      <section className="container selection-section">
-        <Title title="La sélection de la rédaction" className="section-title" />
-
-        <ul className="selection-grid">
-          {crewPicks && crewPicks.length > 0 ? (
-            crewPicks.map((movie: MovieType) => (
-              <>
-                <li key={movie.id} className="card-mobile">
-                  <MovieCard movie={movie} size="sm" />
-                </li>
-                <li className="card-desktop">
-                  <MovieCard movie={movie} size="md" />
-                </li>
-              </>
-            ))
-          ) : (
-            <p className="text-secondary text-center">
-              Chargement de la sélection...
-            </p>
-          )}
-        </ul>
-      </section>
+      <CrewPicks />
 
       <section className="features-section">
         <div className="container">

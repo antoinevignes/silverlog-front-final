@@ -203,3 +203,25 @@
   width: fit-content;
   margin-left: auto;
 }
+
+.password-form {
+  flex-direction: column;
+  align-items: flex-start;
+
+  .password-fields {
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-md;
+    width: 100%;
+
+    @include m.responsive(v.$bp-md) {
+      max-width: 400px;
+    }
+  }
+
+  .password-field {
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-xs;
+  }
+}

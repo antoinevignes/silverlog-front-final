@@ -1,5 +1,5 @@
 import { Image } from "@unpic/react";
-import { Bookmark, Film, UserCircle } from "lucide-react";
+import { Bookmark, Film } from "lucide-react";
 import "./list-card.scss";
 import { Link } from "@tanstack/react-router";
 import type { ListType } from "@/features/list/types/list";
@@ -7,6 +7,7 @@ import Badge from "@/components/ui/badge/badge";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import { formatCompactNumber } from "@/utils/format-compact-number";
 import { useAuth } from "@/auth";
+import { Avatar } from "@/components/ui/avatar/avatar";
 
 export default function ListCard({ list }: { list: ListType }) {
   const { user } = useAuth();
@@ -32,20 +33,11 @@ export default function ListCard({ list }: { list: ListType }) {
         </p>
 
         <div className="list-author">
-          {user?.avatar_path ? (
-            <Image
-              src={getCloudinarySrc(user.avatar_path, "avatars")}
-              layout="constrained"
-              width={20}
-              height={20}
-              alt={`Avatar de ${user.username}`}
-              background="auto"
-              priority
-              className="avatar"
-            />
-          ) : (
-            <UserCircle size={16} />
-          )}
+          <Avatar
+            username={list.username}
+            src={user?.avatar_path ?? null}
+            size="xs"
+          />
 
           <span>{list.username}</span>
         </div>

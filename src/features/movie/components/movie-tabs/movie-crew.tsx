@@ -1,13 +1,15 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link, getRouteApi } from "@tanstack/react-router";
 import { useMemo } from "react";
-import { CircleUser } from "lucide-react";
+import { ChevronLeft, ChevronRight, CircleUser } from "lucide-react";
 import { Image } from "@unpic/react";
-import HorizontalScroller from "@/components/ui/horizontal-scroller/horizontal-scroller";
 import type { CrewType } from "@/features/movie/types/crew";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import translateJob from "@/utils/translate-job";
 import { movieCreditsQuery } from "@/features/movie/api/movie.queries";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import Button from "@/components/ui/button/button";
 
 const MAJOR_JOBS = [
   "Director",
@@ -61,13 +63,42 @@ export default function MovieCrew() {
   }, [crew]);
 
   return (
-    <>
-      <HorizontalScroller className="cast-scroller">
+    <div className="movie-swiper-container cast-scroller">
+      <Swiper
+        modules={[Navigation]}
+        navigation={{
+          prevEl: ".prev-btn",
+          nextEl: ".next-btn",
+        }}
+        className="mySwiper"
+        breakpoints={{
+          0: {
+            slidesPerView: 3.2,
+            slidesPerGroup: 3,
+            spaceBetween: 10,
+          },
+          768: {
+            slidesPerView: 7.1,
+            slidesPerGroup: 4,
+            spaceBetween: 60,
+            slidesOffsetAfter: 60,
+          },
+          1024: {
+            slidesPerView: 8.4,
+            slidesPerGroup: 4,
+            spaceBetween: 20,
+            slidesOffsetAfter: 10,
+          },
+        }}
+      >
         {filteredCrew.map((member) => {
           const posterSrc = getCloudinarySrc(member.profile_path, "persons");
 
           return (
-            <li key={`${member.id}-${member.job}`} className="actor-crew-card">
+            <SwiperSlide
+              key={`${member.id}-${member.job}`}
+              className="actor-crew-card"
+            >
               <Link
                 to="/person/$personId"
                 params={{ personId: String(member.id) }}
@@ -81,6 +112,7 @@ export default function MovieCrew() {
                     <Image
                       src={posterSrc}
                       layout="fullWidth"
+                      aspectRatio={2 / 3}
                       background="auto"
                       alt={`Image de ${member.name}`}
                       className="person-image"
@@ -92,10 +124,18 @@ export default function MovieCrew() {
                   {member.name} ({translateJob(member.job)})
                 </p>
               </Link>
-            </li>
+            </SwiperSlide>
           );
         })}
-      </HorizontalScroller>
-    </>
+      </Swiper>
+
+      <Button className="nav-btn prev-btn" variant="ghost" size="icon">
+        <ChevronLeft size={32} />
+      </Button>
+
+      <Button className="nav-btn next-btn" variant="ghost" size="icon">
+        <ChevronRight size={32} />
+      </Button>
+    </div>
   );
 }

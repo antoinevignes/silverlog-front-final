@@ -6,6 +6,7 @@ import type { AuthState } from "@/auth";
 import MobileNav from "@/components/layout/mobile-nav/mobile-nav";
 import DesktopNav from "@/components/layout/desktop-nav/desktop-nav";
 import Footer from "@/components/layout/footer/footer";
+import { ErrorBoundary } from "@/components/error-boundary/error-boundary";
 
 interface MyRouterContext {
   auth: AuthState;
@@ -14,14 +15,16 @@ interface MyRouterContext {
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: () => (
-    <div className="app-root-container">
-      <DesktopNav />
-      <div className="main-content">
-        <Outlet />
+    <ErrorBoundary>
+      <div className="app-root-container">
+        <DesktopNav />
+        <div className="main-content">
+          <Outlet />
+        </div>
+        <Footer />
+        <MobileNav />
+        <Toaster richColors />
       </div>
-      <Footer />
-      <MobileNav />
-      <Toaster richColors />
-    </div>
+    </ErrorBoundary>
   ),
 });

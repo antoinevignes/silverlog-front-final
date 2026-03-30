@@ -1,0 +1,121 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.discover-page {
+  padding-top: v.$space-xl;
+  padding-bottom: v.$space-lg;
+
+  .discover-header {
+    margin-bottom: v.$space-xl;
+    border-bottom: 1px solid v.$c-border;
+    padding-bottom: v.$space-lg;
+
+    .discover-tagline {
+      margin-top: v.$space-sm;
+      font-size: 1rem;
+    }
+  }
+
+  .section-header {
+    margin-bottom: v.$space-lg;
+  }
+
+  .crew-picks-section,
+  .popular-section {
+    margin-bottom: v.$space-2xl;
+  }
+
+  .crew-picks-loading {
+    display: flex;
+    gap: v.$space-md;
+  }
+
+  .reviews-and-users {
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-xl;
+    margin-bottom: v.$space-2xl;
+
+    @include m.responsive(v.$bp-lg) {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  }
+
+  .reviews-column {
+    flex: 1;
+    min-width: 0;
+
+    .reviews-grid {
+      display: flex;
+      flex-direction: column;
+      gap: v.$space-md;
+    }
+  }
+
+  .users-sidebar {
+    @include m.responsive(v.$bp-lg) {
+      width: 300px;
+      flex-shrink: 0;
+    }
+  }
+
+  .public-lists-section .discover-lists-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: v.$space-md;
+
+    @include m.responsive(v.$bp-md) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}
+
+.crew-picks-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: v.$space-md;
+
+  @include m.responsive(v.$bp-sm) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include m.responsive(v.$bp-md) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @include m.responsive(v.$bp-lg) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+.discover-reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: v.$space-md;
+
+  @include m.responsive(v.$bp-sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include m.responsive(v.$bp-md) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include m.responsive(v.$bp-lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.swiper-loading {
+  display: flex;
+  gap: v.$space-md;
+}
+
+.reviews-loading,
+.users-loading,
+.lists-loading {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-md;
+}

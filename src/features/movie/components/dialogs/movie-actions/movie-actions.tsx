@@ -24,6 +24,7 @@ import Rating from "@/features/movie/components/rating/rating";
 import { useAuth } from "@/auth";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import RecommendDialog from "../recommend-dialog/recommend-dialog";
+import { useToggle } from "@/hooks/use-toggle";
 
 type DialogView =
   | "main"
@@ -47,7 +48,7 @@ export default function MovieActions({
   const routeApi = getRouteApi("/movies/$movieId/");
   const { movieId } = routeApi.useParams();
 
-  const [open, setOpen] = useState(false);
+  const { value: open, setValue: setOpen } = useToggle();
   const [currentView, setCurrentView] = useState<DialogView>("main");
 
   const { data: movieState } = useSuspenseQuery(movieStateQuery(movieId));
@@ -145,7 +146,7 @@ export default function MovieActions({
 
             <section className="dialog-buttons">
               <button className="action-card" onClick={goToDiary}>
-                <Check size={18} /> Ajouter au journal
+                <Calendar size={18} /> Ajouter au journal
               </button>
 
               <button className="action-card" onClick={goToReview}>

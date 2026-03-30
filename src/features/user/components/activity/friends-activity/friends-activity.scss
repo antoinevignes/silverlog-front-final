@@ -33,32 +33,9 @@
 
     .avatar-wrapper {
       position: relative;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
       border: 2px solid transparent;
       padding: 2px;
       transition: all 0.2s ease;
-
-      .avatar {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        object-fit: cover;
-      }
-
-      .avatar-init {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        background-color: v.$c-border;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 700;
-        font-size: 1.25rem;
-        color: v.$c-text;
-      }
     }
 
     .review-indicator {
@@ -97,27 +74,7 @@
       gap: v.$space-md;
 
       .modal-avatar {
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        overflow: hidden;
-        background-color: v.$c-border;
-
-        .avatar {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-
-        .avatar-init {
-          width: 100%;
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-weight: 700;
-          color: v.$c-text;
-        }
+        flex-shrink: 0;
       }
 
       .modal-user-meta {

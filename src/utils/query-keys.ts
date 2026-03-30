@@ -8,6 +8,7 @@ export const movieKeys = {
   details: (id: string) => [...movieKeys.detail(id), "details"] as const,
   search: (query: string) => [...movieKeys.all, "search", query] as const,
   popular: () => [...movieKeys.all, "popular"] as const,
+  topRated: (page: number) => [...movieKeys.all, "top-rated", page] as const,
   crewPicks: () => ["movies", "crew-picks"] as const,
   friendsActivity: (id: string) => ["movies", id, "friends-activity"] as const,
 };
@@ -17,6 +18,7 @@ export const reviewKeys = {
   byMovie: (movieId: string) => [...reviewKeys.all, movieId] as const,
   userReview: (movieId: string) => ["review", movieId] as const,
   recent: () => [...reviewKeys.all, "recent"] as const,
+  popular: (limit: number) => [...reviewKeys.all, "popular", limit] as const,
 };
 
 export const listKeys = {
@@ -34,6 +36,7 @@ export const userKeys = {
   search: (query: string) => ["user", "search", query] as const,
   seenMovies: (userId: string) => ["user", userId, "seen-movies"] as const,
   session: () => ["session"] as const,
+  active: () => ["user", "active"] as const,
 };
 
 export const personKeys = {

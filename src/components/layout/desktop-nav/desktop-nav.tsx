@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { BookOpen, LogOut, Search, Settings, Shield, X } from "lucide-react";
 import "./desktop-nav.scss";
-import { useState } from "react";
 import { useAuth } from "@/auth";
+import { useToggle } from "@/hooks/use-toggle";
 import SearchBar from "@/features/movie/components/search-bar/search-bar";
 import NotificationBell from "@/features/notification/components/notification-bell";
 import {
@@ -12,13 +12,17 @@ import {
   DropdownTrigger,
 } from "@/components/ui/dropdown-menu/dropdown-menu";
 import Button from "@/components/ui/button/button";
+import { Avatar } from "@/components/ui/avatar/avatar";
 import { Image } from "@unpic/react";
-import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 
 export default function DesktopNav() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const {
+    value: isSearchOpen,
+    toggle: toggleSearch,
+    setFalse: closeSearch,
+  } = useToggle();
 
   return (
     <header className="desktop-top-nav">
@@ -40,17 +44,16 @@ export default function DesktopNav() {
         <nav className="main-nav">
           <ul>
             <li>
-              <Link to="/lists">Découvrir</Link>
+              <Link to="/movies">Films</Link>
             </li>
+            <li>
+              <Link to="/discover">Découvrir</Link>
+            </li>
+
             {user && (
-              <>
-                <li>
-                  <Link to="/user/activity">Watchlist</Link>
-                </li>
-                <li>
-                  <Link to="/user/activity">Journal</Link>
-                </li>
-              </>
+              <li>
+                <Link to="/user/activity">Activité</Link>
+              </li>
             )}
           </ul>
         </nav>
@@ -63,17 +66,21 @@ export default function DesktopNav() {
 
             {isSearchOpen ? (
               <Button
-                size="icon"
+                className="close-search"
+                onClick={closeSearch}
                 variant="ghost"
-                onClick={() => setIsSearchOpen(false)}
+                size="icon"
+                aria-label="Fermer la barre de recherche"
               >
                 <X size={20} />
               </Button>
             ) : (
               <Button
-                size="icon"
+                className="open-search"
+                onClick={toggleSearch}
                 variant="ghost"
-                onClick={() => setIsSearchOpen(true)}
+                size="icon"
+                aria-label="Ouvrir la barre de recherche"
               >
                 <Search size={20} />
               </Button>
@@ -87,27 +94,11 @@ export default function DesktopNav() {
               <DropdownMenu>
                 <DropdownTrigger>
                   <div className="avatar-trigger">
-                    {user.avatar_path ? (
-                      <Image
-                        src={getCloudinarySrc(user.avatar_path, "avatars")}
-                        layout="constrained"
-                        width={40}
-                        height={40}
-                        alt={`Avatar de ${user.username}`}
-                        background="auto"
-                        priority
-                        className="avatar"
-                      />
-                    ) : (
-                      <div
-                        className="font-sentient"
-                        aria-label={`Initiale de ${user.username}`}
-                      >
-                        {user.username
-                          ? user.username.charAt(0).toUpperCase()
-                          : "U"}
-                      </div>
-                    )}
+                    <Avatar
+                      username={user.username}
+                      src={user.avatar_path}
+                      size="md"
+                    />
                   </div>
                 </DropdownTrigger>
 

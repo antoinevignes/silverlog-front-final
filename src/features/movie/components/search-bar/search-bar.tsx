@@ -145,6 +145,7 @@ export default function SearchBar() {
             <field.Input
               onKeyDown={handleKeyDown}
               placeholder="Rechercher un film..."
+              aria-label="Barre de recherche"
               leftIcon={<Search />}
               rightIcon={
                 searchQuery && (

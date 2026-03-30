@@ -1,0 +1,96 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.movies-page {
+  padding-top: v.$space-xl;
+  padding-bottom: v.$space-2xl;
+
+  .movies-header {
+    margin-bottom: v.$space-lg;
+    border-bottom: 1px solid v.$c-border;
+    padding-bottom: v.$space-lg;
+  }
+
+  .movies-tagline {
+    margin-top: v.$space-sm;
+    font-size: 1rem;
+  }
+}
+
+.movies-layout {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-lg;
+
+  @include m.responsive(v.$bp-lg) {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: v.$space-xl;
+  }
+}
+
+.movies-sidebar {
+  @include m.responsive(v.$bp-lg) {
+    width: 280px;
+    flex-shrink: 0;
+    position: sticky;
+    top: calc(v.$space-xl + 60px);
+    max-height: calc(100vh - v.$space-xl - 120px);
+    overflow-y: auto;
+  }
+}
+
+.movies-content {
+  flex: 1;
+  min-width: 0;
+
+  .results-loading {
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-md;
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: v.$space-md;
+    }
+  }
+}
+
+.default-sections {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-2xl;
+
+  .section-header {
+    margin-bottom: v.$space-lg;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: v.$c-heading;
+  }
+
+  .swiper-loading {
+    display: flex;
+    align-items: center;
+    gap: v.$space-sm;
+  }
+
+  .reviews-loading {
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-md;
+
+    @include m.responsive(v.$bp-md) {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: v.$space-md;
+    }
+
+    @include m.responsive(v.$bp-lg) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: v.$space-md;
+    }
+  }
+}
