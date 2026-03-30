@@ -1,10 +1,9 @@
+import MovieSwiper from "@/components/ui/movie-swiper/movie-swiper";
+import { popularMoviesQuery } from "@/features/movie/api/movie.queries";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { popularMoviesQuery } from "../../../api/movie.queries";
-import FilmPageSwiper from "@/components/ui/film-page-swiper/film-page-swiper";
 
-export default function PopularMovies() {
-  const { data } = useSuspenseQuery(popularMoviesQuery());
-  const movies = data?.results || [];
+export default function PopularMoviesLg() {
+  const { data: popularMovies } = useSuspenseQuery(popularMoviesQuery());
 
-  return <FilmPageSwiper movies={movies} id="popular" />;
+  return <MovieSwiper movies={popularMovies.results} />;
 }

@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useAuth } from "@/auth";
 import VisitorHome from "@/features/movie/components/visitor-home";
-import UserHome from "@/features/user/components/user-home";
 import {
   popularMoviesQuery,
   crewPicksQuery,
@@ -11,8 +10,11 @@ import { userFeedQuery, userQuery } from "@/features/user/api/user.queries";
 import MobileHomeHeader from "@/components/layout/mobile-home-header/mobile-home-header";
 import UserHomeHeader from "@/features/user/components/user-home-header/user-home-header";
 import { SuspenseSection } from "@/components/ui/suspense-section/suspense-section";
-import PopularMoviesLg from "@/features/movie/components/movies/popular-movies/popular-movies-lg";
+import PopularMoviesLg from "@/features/movie/components/movies/popular-movies/popular-movies";
 import { Suspense } from "react";
+import CrewPicks from "@/features/movie/components/crew-picks/crew-picks";
+import FriendsFeed from "@/features/user/components/friends-feed/friends-feed";
+import PopularMoviesLgSkeletons from "@/features/movie/components/movies/popular-movies/popular-movies-skeleton";
 
 export const Route = createFileRoute("/")({
   loader: async ({ context: { queryClient, auth } }) => {
@@ -46,12 +48,27 @@ function App() {
 
         <SuspenseSection
           title="Populaire cette semaine"
-          fallback={<>CHARGEMENT</>}
+          fallback={<PopularMoviesLgSkeletons />}
+          className="container"
         >
           <PopularMoviesLg />
         </SuspenseSection>
 
-        <UserHome />
+        <SuspenseSection
+          title="La sélection de la rédaction"
+          fallback={<>CHARGEMENT</>}
+          className="container"
+        >
+          <CrewPicks />
+        </SuspenseSection>
+
+        <SuspenseSection
+          title="Activité de vos abonnements"
+          fallback={<>CHARGEMENT</>}
+          className="container"
+        >
+          <FriendsFeed />
+        </SuspenseSection>
       </main>
     </>
   );
