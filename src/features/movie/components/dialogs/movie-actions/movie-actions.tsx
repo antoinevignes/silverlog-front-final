@@ -1,6 +1,13 @@
 import "./movie-actions.scss";
 import { getRouteApi, useNavigate } from "@tanstack/react-router";
-import { Bookmark, Check, ListPlus, PenLine, Plus, Send } from "lucide-react";
+import {
+  Bookmark,
+  Calendar,
+  ListPlus,
+  PenLine,
+  Plus,
+  Send,
+} from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useSuspenseQuery } from "@tanstack/react-query";
