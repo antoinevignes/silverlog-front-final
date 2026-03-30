@@ -9,7 +9,7 @@ import { routeTree } from "./routeTree.gen";
 
 import reportWebVitals from "./reportWebVitals.ts";
 import { AuthProvider, useAuth } from "./auth.tsx";
-import { SocketProvider } from "./providers/socket-provider.tsx";
+import { SocketProvider } from "./utils/socket-provider.tsx";
 
 // Create a new router instance
 
