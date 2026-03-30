@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { useToggle } from "@/hooks/use-toggle";
 import {
   popularMoviesQuery,
@@ -15,7 +15,10 @@ import Title from "@/components/ui/title/title";
 import "./movies-page.scss";
 import PopularMovies from "@/features/movie/components/movies/film-page-popular-movies/film-page-popular-movies";
 import FilteredResults from "@/features/movie/components/movies/filtered-results/filtered-results";
-import Skeleton from "@/components/ui/skeleton/skeleton";
+import { SuspenseSection } from "@/components/ui/suspense-section/suspense-section";
+import FilteredResultsSkeletons from "@/features/movie/components/movies/filtered-results/filtered-results-skeleton";
+import FilmPageSkeleton from "@/components/layout/skeletons/film-page-skeleton";
+import PopularReviewsSkeleton from "@/features/movie/components/movies/popular-reviews/popular-reviews-skeleton";
 
 export const Route = createFileRoute("/movies/")({
   loader: async ({ context: { queryClient } }) => {
@@ -59,76 +62,37 @@ function MoviesPage() {
         <div className="movies-content">
           {/* RESULTATS RECHERCHE */}
           {hasActiveFilters ? (
-            <Suspense
-              fallback={
-                <div className="results-loading">
-                  <Skeleton width="10rem" height="2rem" />
-
-                  <div className="results-grid">
-                    {Array.from({ length: 20 }).map((_, i) => (
-                      <Skeleton key={i} width="6.5rem" height="9.75rem" />
-                    ))}
-                  </div>
-                </div>
-              }
+            <SuspenseSection
+              title="Résultats de la recherche"
+              fallback={<FilteredResultsSkeletons />}
             >
               <FilteredResults filters={filters} />
-            </Suspense>
+            </SuspenseSection>
           ) : (
             <div className="default-sections">
               {/* FILMS POPULAIRES */}
-              <section className="popular-section">
-                <header className="section-header">
-                  <Title title="Populaires cette semaine" variant="h2" />
-                </header>
-                <Suspense
-                  fallback={
-                    <div className="swiper-loading">
-                      {Array.from({ length: 6 }).map((_, i) => (
-                        <Skeleton key={i} width="6.5rem" height="9.75rem" />
-                      ))}
-                    </div>
-                  }
-                >
-                  <PopularMovies />
-                </Suspense>
-              </section>
+              <SuspenseSection
+                title="Populaires cette semaine"
+                fallback={<FilmPageSkeleton />}
+              >
+                <PopularMovies />
+              </SuspenseSection>
 
               {/* LES MIEUX NOTÉS */}
-              <section className="top-rated-section">
-                <header className="section-header">
-                  <Title title="Les mieux notés" variant="h2" />
-                </header>
-                <Suspense
-                  fallback={
-                    <div className="swiper-loading">
-                      {Array.from({ length: 6 }).map((_, i) => (
-                        <Skeleton key={i} width="6.5rem" height="9.75rem" />
-                      ))}
-                    </div>
-                  }
-                >
-                  <TopRatedSection />
-                </Suspense>
-              </section>
+              <SuspenseSection
+                title="Les mieux notés"
+                fallback={<FilmPageSkeleton />}
+              >
+                <TopRatedSection />
+              </SuspenseSection>
 
               {/* COMMENTAIRES */}
-              <section className="popular-reviews-section">
-                <header className="section-header">
-                  <Title title="Commentaires populaires" variant="h2" />
-                </header>
-                <Suspense
-                  fallback={
-                    <div className="reviews-loading">
-                      {Array.from({ length: 6 }).map((_, i) => (
-                        <Skeleton key={i} width="100%" height="10.25rem" />
-                      ))}
-                    </div>
-                  }
-                >
-                  <PopularReviews />
-                </Suspense>
-              </section>
+              <SuspenseSection
+                title="Commentaires populaires"
+                fallback={<PopularReviewsSkeleton />}
+              >
+                <PopularReviews />
+              </SuspenseSection>
             </div>
           )}
         </div>
