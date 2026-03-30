@@ -1,18 +1,15 @@
 import { Link } from "@tanstack/react-router";
 import { BookText, Star, Users } from "lucide-react";
 import Button from "@/components/ui/button/button";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { recentReviewsQuery } from "@/features/review/api/review.query";
 import "./visitor-home.scss";
-import { Image } from "@unpic/react";
-import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import Title from "@/components/ui/title/title";
-import { Card } from "@/components/ui/card/card";
 import CrewPicks from "./crew-picks/crew-picks";
+import { SuspenseSection } from "@/components/ui/suspense-section/suspense-section";
+import CrewPicksSkeleton from "./crew-picks/crew-picks-skeleton";
+import CommunityReviews from "./community-reviews/community-reviews";
+import CommunityReviewsSkeleton from "./community-reviews/community-reviews-skeleton";
 
 export default function VisitorHome() {
-  const { data: recentReviews } = useSuspenseQuery(recentReviewsQuery());
-
   return (
     <main className="visitor-home">
       <section className="hero-section">
@@ -42,7 +39,13 @@ export default function VisitorHome() {
         </div>
       </section>
 
-      <CrewPicks />
+      <SuspenseSection
+        title="La sélection de la rédaction"
+        fallback={<CrewPicksSkeleton />}
+        className="container"
+      >
+        <CrewPicks />
+      </SuspenseSection>
 
       <section className="features-section">
         <div className="container">
@@ -109,49 +112,13 @@ export default function VisitorHome() {
         </div>
       </section>
 
-      <section className="container community-section">
-        <Title title="La communauté en parle" className="section-title" />
-
-        <div className="community-reviews-grid">
-          {recentReviews && recentReviews.length > 0 ? (
-            recentReviews.map((review: any) => (
-              <Card key={review.id} className="community-review-card">
-                <div className="review-poster">
-                  <Image
-                    src={getCloudinarySrc(review.movie_poster_path, "posters")}
-                    background="auto"
-                    layout="constrained"
-                    width={100}
-                    height={150}
-                    alt={`Affiche du film ${review.title}`}
-                  />
-                </div>
-
-                <div className="review-content">
-                  <header className="review-header">
-                    <span className="review-user">{review.username}</span>
-
-                    <span className="review-action">
-                      a noté <strong>{review.title}</strong>
-                    </span>
-
-                    <div className="review-stars">
-                      <Star size={14} fill="currentColor" />
-                      {review.rating / 2} / 10{" "}
-                    </div>
-                  </header>
-
-                  <p className="review-text">"{review.content}"</p>
-                </div>
-              </Card>
-            ))
-          ) : (
-            <p className="text-secondary text-center">
-              Aucune critique récente.
-            </p>
-          )}
-        </div>
-      </section>
+      <SuspenseSection
+        title="La communauté en parle"
+        className="container"
+        fallback={<CommunityReviewsSkeleton />}
+      >
+        <CommunityReviews />
+      </SuspenseSection>
     </main>
   );
 }
