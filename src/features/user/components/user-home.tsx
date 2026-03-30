@@ -3,7 +3,6 @@ import { Clock, Star, BookmarkPlus } from "lucide-react";
 import { useAuth } from "@/auth";
 import "./user-home.scss";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import React from "react";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
 import { Image } from "@unpic/react";

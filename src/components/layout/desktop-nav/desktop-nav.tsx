@@ -17,7 +17,11 @@ import { Image } from "@unpic/react";
 export default function DesktopNav() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const { value: isSearchOpen, toggle: toggleSearch, setFalse: closeSearch } = useToggle();
+  const {
+    value: isSearchOpen,
+    toggle: toggleSearch,
+    setFalse: closeSearch,
+  } = useToggle();
 
   return (
     <header className="desktop-top-nav">
@@ -61,7 +65,7 @@ export default function DesktopNav() {
             {isSearchOpen ? (
               <Button
                 className="close-search"
-                onClick={() => setIsSearchOpen(false)}
+                onClick={closeSearch}
                 variant="ghost"
                 size="icon"
                 aria-label="Fermer la barre de recherche"
@@ -71,7 +75,7 @@ export default function DesktopNav() {
             ) : (
               <Button
                 className="open-search"
-                onClick={() => setIsSearchOpen(true)}
+                onClick={toggleSearch}
                 variant="ghost"
                 size="icon"
                 aria-label="Ouvrir la barre de recherche"
