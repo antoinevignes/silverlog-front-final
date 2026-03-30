@@ -4,6 +4,7 @@ import "./desktop-nav.scss";
 import { useAuth } from "@/auth";
 import { useToggle } from "@/hooks/use-toggle";
 import SearchBar from "@/features/movie/components/search-bar/search-bar";
+import NotificationBell from "@/features/notification/components/notification-bell";
 import {
   DropdownContent,
   DropdownItem,
@@ -62,6 +63,7 @@ export default function DesktopNav() {
             <div className="search-wrapper">
               <SearchBar />
             </div>
+
             {isSearchOpen ? (
               <Button
                 className="close-search"
@@ -83,6 +85,8 @@ export default function DesktopNav() {
                 <Search size={20} />
               </Button>
             )}
+
+            {user && <NotificationBell />}
           </div>
 
           <div className="user-actions">

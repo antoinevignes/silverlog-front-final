@@ -11,6 +11,7 @@ import { recentReviewsQuery } from "@/features/review/api/review.query";
 import { userQuery } from "@/features/user/api/user.queries";
 import VisitorHomeSkeleton from "@/features/movie/components/visitor-home-skeleton";
 import UserHomeSkeleton from "@/features/user/components/user-home-skeleton";
+import MobileHomeHeader from "@/components/layout/mobile-home-header/mobile-home-header";
 
 export const Route = createFileRoute("/")({
   loader: async ({ context: { queryClient, auth } }) => {
@@ -28,8 +29,13 @@ function App() {
   const { user } = useAuth();
 
   return (
-    <Suspense fallback={user ? <UserHomeSkeleton /> : <VisitorHomeSkeleton />}>
-      {user ? <UserHome /> : <VisitorHome />}
-    </Suspense>
+    <>
+      <MobileHomeHeader />
+      <Suspense
+        fallback={user ? <UserHomeSkeleton /> : <VisitorHomeSkeleton />}
+      >
+        {user ? <UserHome /> : <VisitorHome />}
+      </Suspense>
+    </>
   );
 }
