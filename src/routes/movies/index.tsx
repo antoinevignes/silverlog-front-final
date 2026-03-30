@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense, useState } from "react";
+import { useToggle } from "@/hooks/use-toggle";
 import {
   popularMoviesQuery,
   topRatedMoviesQuery,
@@ -27,7 +28,7 @@ export const Route = createFileRoute("/movies/")({
 
 function MoviesPage() {
   const [filters, setFilters] = useState<MovieFilters>({});
-  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const { value: isFiltersOpen, setTrue: openFilters, setFalse: closeFilters } = useToggle();
 
   const hasActiveFilters = Object.keys(filters).length > 0;
 
@@ -46,8 +47,8 @@ function MoviesPage() {
             filters={filters}
             onFiltersChange={setFilters}
             isOpen={isFiltersOpen}
-            onOpen={() => setIsFiltersOpen(true)}
-            onClose={() => setIsFiltersOpen(false)}
+            onOpen={openFilters}
+            onClose={closeFilters}
           />
         </aside>
 

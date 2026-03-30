@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Camera, MapPin, Trash2, User, Image as ImageIcon, Lock } from "lucide-react";
-import { useState } from "react";
 import { useAuth } from "@/auth";
+import { useToggle } from "@/hooks/use-toggle";
 import {
   useUpdateLocation,
   useUpdateUsername,
@@ -33,7 +33,7 @@ export const Route = createFileRoute("/_authenticated/user/settings/")({
 function RouteComponent() {
   const { user } = useAuth();
 
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const { value: isDeleteDialogOpen, setValue: setIsDeleteDialogOpen } = useToggle();
 
   const { mutate: deleteAccount, isPending: isDeletingAccount } =
     useDeleteAccount();

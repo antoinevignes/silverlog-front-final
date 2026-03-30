@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { BookOpen, LogOut, Search, Settings, Shield, X } from "lucide-react";
 import "./desktop-nav.scss";
-import { useState } from "react";
 import { useAuth } from "@/auth";
+import { useToggle } from "@/hooks/use-toggle";
 import SearchBar from "@/features/movie/components/search-bar/search-bar";
 import {
   DropdownContent,
@@ -17,7 +17,7 @@ import { Image } from "@unpic/react";
 export default function DesktopNav() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const { value: isSearchOpen, toggle: toggleSearch, setFalse: closeSearch } = useToggle();
 
   return (
     <header className="desktop-top-nav">

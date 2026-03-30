@@ -14,6 +14,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { Suspense, useEffect, useState } from "react";
+import { useToggle } from "@/hooks/use-toggle";
 import { userQuery } from "@/features/user/api/user.queries";
 import Button from "@/components/ui/button/button";
 import MovieCard from "@/features/movie/components/movie-card/movie-card";
@@ -56,21 +57,21 @@ function RouteComponent() {
 
   const [selected, setSelected] = useState<string>("a-propos");
 
-  const [isFollowModalOpen, setIsFollowModalOpen] = useState(false);
+  const { value: isFollowModalOpen, setTrue: openFollowModalBase, setFalse: closeFollowModal } = useToggle();
   const [followModalType, setFollowModalType] = useState<
     "followers" | "following"
   >("followers");
 
   const openFollowModal = (type: "followers" | "following") => {
     setFollowModalType(type);
-    setIsFollowModalOpen(true);
+    openFollowModalBase();
   };
 
   const { mutate: reorderList, isPending: isReordering } = useReorderList(
     String(user?.top_list_id),
   );
 
-  const [isEditingTop, setIsEditingTop] = useState(false);
+  const { value: isEditingTop, toggle: toggleEditingTop, setFalse: stopEditingTop } = useToggle();
   const [topMovies, setTopMovies] = useState<any[]>(userData.top_movies ?? []);
 
   useEffect(() => {
@@ -91,7 +92,7 @@ function RouteComponent() {
     const movieIds = topMovies.map((m: any) => m.id);
     reorderList(movieIds, {
       onSuccess: () => {
-        setIsEditingTop(false);
+        stopEditingTop();
       },
     });
   };
@@ -270,7 +271,7 @@ function RouteComponent() {
                           <Button
                             size="sm"
                             variant="outline"
-                            onClick={() => setIsEditingTop(false)}
+                            onClick={stopEditingTop}
                             disabled={isReordering}
                           >
                             Annuler
@@ -287,7 +288,7 @@ function RouteComponent() {
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick={() => setIsEditingTop(true)}
+                          onClick={toggleEditingTop}
                         >
                           Réorganiser
                         </Button>
@@ -492,7 +493,7 @@ function RouteComponent() {
       {isFollowModalOpen && (
         <FollowModal
           isOpen={isFollowModalOpen}
-          onClose={setIsFollowModalOpen}
+          onClose={closeFollowModal}
           userId={userId}
           type={followModalType}
           title={followModalType === "followers" ? "Abonnés" : "Abonnements"}

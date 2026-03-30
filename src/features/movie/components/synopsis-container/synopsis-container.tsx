@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useToggle } from "@/hooks/use-toggle";
 import type { MovieType } from "@/features/movie/types/movie";
 import Badge from "@/components/ui/badge/badge";
 import "./synopsis-container.scss";
@@ -10,7 +10,7 @@ export default function SynopsisContainer({
   movie: MovieType;
   className: string;
 }) {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const { value: isExpanded, setTrue: expand, setFalse: collapse } = useToggle();
 
   const overviewPreviewLength = className === "synopsis-desktop" ? 300 : 150;
   const shouldShowReadMore =
@@ -33,7 +33,7 @@ export default function SynopsisContainer({
       {shouldShowReadMore && (
         <button
           className="read-more-btn underline-link"
-          onClick={() => setIsExpanded(true)}
+          onClick={expand}
           aria-expanded={isExpanded}
         >
           Voir plus
@@ -43,7 +43,7 @@ export default function SynopsisContainer({
       {isExpanded && movie.overview.length > overviewPreviewLength && (
         <button
           className="read-more-btn underline-link"
-          onClick={() => setIsExpanded(false)}
+          onClick={collapse}
           aria-expanded={isExpanded}
         >
           Voir moins
