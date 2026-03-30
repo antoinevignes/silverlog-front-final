@@ -18,6 +18,7 @@ import FilteredResults from "@/features/movie/components/movies/filtered-results
 import Skeleton from "@/components/ui/skeleton/skeleton";
 import { SuspenseSection } from "@/components/ui/suspense-section/suspense-section";
 import FilteredResultsSkeletons from "@/features/movie/components/movies/filtered-results/filtered-results-skeleton";
+import FilmPageSkeleton from "@/components/layout/skeletons/film-page-skeleton";
 
 export const Route = createFileRoute("/movies/")({
   loader: async ({ context: { queryClient } }) => {
@@ -70,40 +71,20 @@ function MoviesPage() {
           ) : (
             <div className="default-sections">
               {/* FILMS POPULAIRES */}
-              <section className="popular-section">
-                <header className="section-header">
-                  <Title title="Populaires cette semaine" variant="h2" />
-                </header>
-                <Suspense
-                  fallback={
-                    <div className="swiper-loading">
-                      {Array.from({ length: 6 }).map((_, i) => (
-                        <Skeleton key={i} width="6.5rem" height="9.75rem" />
-                      ))}
-                    </div>
-                  }
-                >
-                  <PopularMovies />
-                </Suspense>
-              </section>
+              <SuspenseSection
+                title="Populaires cette semaine"
+                fallback={<FilmPageSkeleton />}
+              >
+                <PopularMovies />
+              </SuspenseSection>
 
               {/* LES MIEUX NOTÉS */}
-              <section className="top-rated-section">
-                <header className="section-header">
-                  <Title title="Les mieux notés" variant="h2" />
-                </header>
-                <Suspense
-                  fallback={
-                    <div className="swiper-loading">
-                      {Array.from({ length: 6 }).map((_, i) => (
-                        <Skeleton key={i} width="6.5rem" height="9.75rem" />
-                      ))}
-                    </div>
-                  }
-                >
-                  <TopRatedSection />
-                </Suspense>
-              </section>
+              <SuspenseSection
+                title="Les mieux notés"
+                fallback={<FilmPageSkeleton />}
+              >
+                <TopRatedSection />
+              </SuspenseSection>
 
               {/* COMMENTAIRES */}
               <section className="popular-reviews-section">
