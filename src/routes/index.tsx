@@ -15,6 +15,9 @@ import { Suspense } from "react";
 import CrewPicks from "@/features/movie/components/crew-picks/crew-picks";
 import FriendsFeed from "@/features/user/components/friends-feed/friends-feed";
 import PopularMoviesLgSkeletons from "@/features/movie/components/movies/popular-movies/popular-movies-skeleton";
+import CrewPicksSkeleton from "@/features/movie/components/crew-picks/crew-picks-skeleton";
+import FriendsFeedSkeleton from "@/features/user/components/friends-feed/friends-feed-skeleton";
+import Skeleton from "@/components/ui/skeleton/skeleton";
 
 export const Route = createFileRoute("/")({
   loader: async ({ context: { queryClient, auth } }) => {
@@ -42,7 +45,7 @@ function App() {
       <MobileHomeHeader />
 
       <main className="user-home">
-        <Suspense fallback={<div>CHARGEMENT</div>}>
+        <Suspense fallback={<Skeleton width="100%" height={126} />}>
           <UserHomeHeader />
         </Suspense>
 
@@ -56,7 +59,7 @@ function App() {
 
         <SuspenseSection
           title="La sélection de la rédaction"
-          fallback={<>CHARGEMENT</>}
+          fallback={<CrewPicksSkeleton />}
           className="container"
         >
           <CrewPicks />
@@ -64,7 +67,7 @@ function App() {
 
         <SuspenseSection
           title="Activité de vos abonnements"
-          fallback={<>CHARGEMENT</>}
+          fallback={<FriendsFeedSkeleton />}
           className="container"
         >
           <FriendsFeed />
