@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router";
 import { Clock, Star, BookmarkPlus } from "lucide-react";
-import Button from "@/components/ui/button/button";
 import { useAuth } from "@/auth";
 import "./user-home.scss";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -9,17 +8,15 @@ import { fr } from "date-fns/locale";
 import { Image } from "@unpic/react";
 import { Avatar } from "@/components/ui/avatar/avatar";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
-import { popularMoviesQuery } from "@/features/movie/api/movie.queries";
 import { userFeedQuery, userQuery } from "@/features/user/api/user.queries";
 import Badge from "@/components/ui/badge/badge";
 import Title from "@/components/ui/title/title";
-import MovieSwiper from "@/components/ui/movie-swiper/movie-swiper";
 import CrewPicks from "@/features/movie/components/crew-picks/crew-picks";
+import PopularMoviesLg from "@/features/movie/components/movies/popular-movies/popular-movies-lg";
 
 export default function UserHome() {
   const { user } = useAuth();
 
-  const { data: popularMovies } = useSuspenseQuery(popularMoviesQuery());
   const { data: feedData } = useSuspenseQuery(userFeedQuery());
   const { data: userData } = useSuspenseQuery(userQuery(user!.id));
 
@@ -58,17 +55,7 @@ export default function UserHome() {
         </div>
       </header>
 
-      <section className="container trending-section">
-        <header className="section-header">
-          <Title title="Populaire cette semaine" />
-
-          <Button variant="ghost" size="sm" className="hidden-mobile">
-            Voir plus
-          </Button>
-        </header>
-
-        <MovieSwiper movies={popularMovies.results} />
-      </section>
+      <PopularMoviesLg />
 
       <CrewPicks />
 

@@ -45,25 +45,6 @@
     }
   }
 
-  .section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: v.$space-sm;
-
-    .hidden-mobile {
-      display: none;
-      @include m.responsive(v.$bp-md) {
-        display: inline-flex;
-      }
-    }
-  }
-
-  .trending-section {
-    margin-top: v.$space-lg;
-    margin-bottom: v.$space-2xl;
-  }
-
   .recent-activity-scroller {
     .activity-meta {
       display: flex;
