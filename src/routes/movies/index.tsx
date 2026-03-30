@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import { useToggle } from "@/hooks/use-toggle";
 import {
   popularMoviesQuery,
@@ -15,10 +15,10 @@ import Title from "@/components/ui/title/title";
 import "./movies-page.scss";
 import PopularMovies from "@/features/movie/components/movies/film-page-popular-movies/film-page-popular-movies";
 import FilteredResults from "@/features/movie/components/movies/filtered-results/filtered-results";
-import Skeleton from "@/components/ui/skeleton/skeleton";
 import { SuspenseSection } from "@/components/ui/suspense-section/suspense-section";
 import FilteredResultsSkeletons from "@/features/movie/components/movies/filtered-results/filtered-results-skeleton";
 import FilmPageSkeleton from "@/components/layout/skeletons/film-page-skeleton";
+import PopularReviewsSkeleton from "@/features/movie/components/movies/popular-reviews/popular-reviews-skeleton";
 
 export const Route = createFileRoute("/movies/")({
   loader: async ({ context: { queryClient } }) => {
@@ -87,22 +87,12 @@ function MoviesPage() {
               </SuspenseSection>
 
               {/* COMMENTAIRES */}
-              <section className="popular-reviews-section">
-                <header className="section-header">
-                  <Title title="Commentaires populaires" variant="h2" />
-                </header>
-                <Suspense
-                  fallback={
-                    <div className="reviews-loading">
-                      {Array.from({ length: 6 }).map((_, i) => (
-                        <Skeleton key={i} width="100%" height="10.25rem" />
-                      ))}
-                    </div>
-                  }
-                >
-                  <PopularReviews />
-                </Suspense>
-              </section>
+              <SuspenseSection
+                title="Commentaires populaires"
+                fallback={<PopularReviewsSkeleton />}
+              >
+                <PopularReviews />
+              </SuspenseSection>
             </div>
           )}
         </div>
