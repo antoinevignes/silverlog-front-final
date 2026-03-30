@@ -4,6 +4,7 @@ import "./desktop-nav.scss";
 import { useState } from "react";
 import { useAuth } from "@/auth";
 import SearchBar from "@/features/movie/components/search-bar/search-bar";
+import NotificationBell from "@/features/notification/components/notification-bell";
 import {
   DropdownContent,
   DropdownItem,
@@ -59,21 +60,26 @@ export default function DesktopNav() {
             <div className="search-wrapper">
               <SearchBar />
             </div>
+
             {isSearchOpen ? (
-              <button
-                className="close-search"
+              <Button
+                size="icon"
+                variant="ghost"
                 onClick={() => setIsSearchOpen(false)}
               >
                 <X size={20} />
-              </button>
+              </Button>
             ) : (
-              <button
-                className="open-search"
+              <Button
+                size="icon"
+                variant="ghost"
                 onClick={() => setIsSearchOpen(true)}
               >
                 <Search size={20} />
-              </button>
+              </Button>
             )}
+
+            {user && <NotificationBell />}
           </div>
 
           <div className="user-actions">

@@ -1,6 +1,6 @@
 import "./movie-actions.scss";
 import { getRouteApi, useNavigate } from "@tanstack/react-router";
-import { Bookmark, Check, ListPlus, PenLine, Plus } from "lucide-react";
+import { Bookmark, Check, ListPlus, PenLine, Plus, Send } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -23,8 +23,15 @@ import Button from "@/components/ui/button/button";
 import Rating from "@/features/movie/components/rating/rating";
 import { useAuth } from "@/auth";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
+import RecommendDialog from "../recommend-dialog/recommend-dialog";
 
-type DialogView = "main" | "review" | "diary" | "custom-list" | "create-list";
+type DialogView =
+  | "main"
+  | "review"
+  | "diary"
+  | "custom-list"
+  | "create-list"
+  | "recommend";
 
 export default function MovieActions({
   movie,
@@ -74,6 +81,7 @@ export default function MovieActions({
   const goToDiary = () => setCurrentView("diary");
   const goToCustomLists = () => setCurrentView("custom-list");
   const goToCreateList = () => setCurrentView("create-list");
+  const goToRecommend = () => setCurrentView("recommend");
 
   return (
     <Dialog open={open} onOpenChange={handleOpen}>
@@ -170,6 +178,10 @@ export default function MovieActions({
               <button className="action-card" onClick={goToCustomLists}>
                 <ListPlus size={18} /> Ajouter à une liste
               </button>
+
+              <button className="action-card" onClick={goToRecommend}>
+                <Send size={18} /> Recommander à un ami
+              </button>
             </section>
           </>
         )}
@@ -208,6 +220,15 @@ export default function MovieActions({
 
         {currentView === "create-list" && (
           <CreateList onBack={goToCustomLists} />
+        )}
+
+        {currentView === "recommend" && (
+          <RecommendDialog
+            movie={movie}
+            movieYear={movieYear}
+            onBack={goBackToMain}
+            onClose={() => setOpen(false)}
+          />
         )}
       </DialogContent>
     </Dialog>
