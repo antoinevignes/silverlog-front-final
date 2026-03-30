@@ -5,7 +5,6 @@ import MovieCard from "../../movie-card/movie-card";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import "./filtered-results.scss";
 import Button from "@/components/ui/button/button";
-import Title from "@/components/ui/title/title";
 
 export default function FilteredResults({
   filters,
@@ -54,14 +53,6 @@ export default function FilteredResults({
 
   return (
     <div className="filtered-results">
-      <header className="results-header">
-        <Title
-          title={`${allMovies.length} films trouvés`}
-          variant="h2"
-          size="lg"
-        />
-      </header>
-
       <div className="results-grid">
         {allMovies.map((movie) => (
           <MovieCard key={movie.id} movie={movie} size="sm" />
@@ -69,15 +60,14 @@ export default function FilteredResults({
       </div>
 
       {hasNextPage && (
-        <div className="results-pagination">
-          <Button
-            onClick={() => fetchNextPage()}
-            disabled={isFetchingNextPage}
-            variant="secondary"
-          >
-            {isFetchingNextPage ? "Chargement..." : "Charger plus"}
-          </Button>
-        </div>
+        <Button
+          onClick={() => fetchNextPage()}
+          disabled={isFetchingNextPage}
+          variant="secondary"
+          className="load-next-btn"
+        >
+          {isFetchingNextPage ? "Chargement..." : "Charger plus"}
+        </Button>
       )}
     </div>
   );

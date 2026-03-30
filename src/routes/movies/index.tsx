@@ -16,6 +16,8 @@ import "./movies-page.scss";
 import PopularMovies from "@/features/movie/components/movies/film-page-popular-movies/film-page-popular-movies";
 import FilteredResults from "@/features/movie/components/movies/filtered-results/filtered-results";
 import Skeleton from "@/components/ui/skeleton/skeleton";
+import { SuspenseSection } from "@/components/ui/suspense-section/suspense-section";
+import FilteredResultsSkeletons from "@/features/movie/components/movies/filtered-results/filtered-results-skeleton";
 
 export const Route = createFileRoute("/movies/")({
   loader: async ({ context: { queryClient } }) => {
@@ -59,21 +61,12 @@ function MoviesPage() {
         <div className="movies-content">
           {/* RESULTATS RECHERCHE */}
           {hasActiveFilters ? (
-            <Suspense
-              fallback={
-                <div className="results-loading">
-                  <Skeleton width="10rem" height="2rem" />
-
-                  <div className="results-grid">
-                    {Array.from({ length: 20 }).map((_, i) => (
-                      <Skeleton key={i} width="6.5rem" height="9.75rem" />
-                    ))}
-                  </div>
-                </div>
-              }
+            <SuspenseSection
+              title="Résultats de la recherche"
+              fallback={<FilteredResultsSkeletons />}
             >
               <FilteredResults filters={filters} />
-            </Suspense>
+            </SuspenseSection>
           ) : (
             <div className="default-sections">
               {/* FILMS POPULAIRES */}

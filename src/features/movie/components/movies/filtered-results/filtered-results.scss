@@ -18,10 +18,10 @@
     gap: v.$space-md;
   }
 
-  .results-pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: v.$space-xl;
+  .load-next-btn {
+    display: block;
+    margin-top: v.$space-lg;
+    margin-inline: auto;
   }
 }
 
