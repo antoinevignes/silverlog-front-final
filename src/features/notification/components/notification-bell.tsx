@@ -1,11 +1,11 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Bell, Star, Send } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
-import { useSocketContext } from "@/providers/socket-provider";
+import { useSocketContext } from "@/utils/socket-provider";
 import {
   notificationsQuery,
   unreadCountQuery,
@@ -18,10 +18,14 @@ import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import { User } from "lucide-react";
 import "./notification-bell.scss";
 import Button from "@/components/ui/button/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog/dialog";
 
 export default function NotificationBell() {
   const [isOpen, setIsOpen] = useState(false);
-  const panelRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -33,28 +37,6 @@ export default function NotificationBell() {
   const { mutate: markAllAsRead } = useMarkAllAsRead();
 
   const unreadCount = (unreadData?.count ?? 0) + realtimeNotifs.length;
-
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const handleClickOutside = (e: MouseEvent) => {
-      if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsOpen(false);
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("keydown", handleEscape);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("keydown", handleEscape);
-    };
-  }, [isOpen]);
 
   const handleNotificationClick = (notification: {
     id: number;
@@ -100,22 +82,23 @@ export default function NotificationBell() {
   );
 
   return (
-    <div className="notification-bell" ref={panelRef}>
-      <Button
-        onClick={() => setIsOpen(!isOpen)}
-        aria-label="Notifications"
-        variant="ghost"
-        size="icon"
-      >
-        <Bell size={20} />
-        {unreadCount > 0 && (
-          <span className="unread-badge">
-            {unreadCount > 99 ? "99+" : unreadCount}
-          </span>
-        )}
-      </Button>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>
+        <Button
+          aria-label="Notifications"
+          variant="ghost"
+          size="icon"
+        >
+          <Bell size={20} />
+          {unreadCount > 0 && (
+            <span className="unread-badge">
+              {unreadCount > 99 ? "99+" : unreadCount}
+            </span>
+          )}
+        </Button>
+      </DialogTrigger>
 
-      {isOpen && (
+      <DialogContent>
         <div className="notification-panel">
           <header className="notification-panel-header">
             <h3>Notifications</h3>
@@ -199,7 +182,7 @@ export default function NotificationBell() {
             </ul>
           )}
         </div>
-      )}
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }

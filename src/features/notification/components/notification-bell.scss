@@ -25,31 +25,10 @@
 }
 
 .notification-panel {
-  position: absolute;
-  top: calc(100% + 0.5rem);
-  right: 0;
-  width: 380px;
   max-height: 480px;
-  background: v.$c-surface;
-  border: 1px solid v.$c-border;
-  border-radius: v.$radius;
-  box-shadow: v.$shadow-xl;
-  z-index: v.$z-dropdown;
   display: flex;
   flex-direction: column;
-  animation: fadeInScale 150ms ease-in-out;
   overflow: hidden;
-
-  @media (max-width: 480px) {
-    position: fixed;
-    top: auto;
-    right: 0;
-    bottom: 56px;
-    left: 0;
-    width: 100%;
-    max-height: 60vh;
-    border-radius: 16px 16px 0 0;
-  }
 }
 
 .notification-panel-header {
