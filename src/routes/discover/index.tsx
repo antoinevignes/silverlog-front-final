@@ -15,7 +15,7 @@ import Title from "@/components/ui/title/title";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 import "./discover-page.scss";
 import CrewPicks from "@/features/movie/components/crew-picks/crew-picks";
-import PopularMoviesLg from "@/features/movie/components/movies/popular-movies/popular-movies-lg";
+import PopularMoviesLg from "@/features/movie/components/movies/popular-movies/popular-movies";
 
 export const Route = createFileRoute("/discover/")({
   loader: async ({ context: { queryClient } }) => {

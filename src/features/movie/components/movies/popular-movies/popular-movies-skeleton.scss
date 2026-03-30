@@ -1,0 +1,47 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.popular-movies-skeletons {
+  &__mobile {
+    display: flex;
+    gap: v.$space-md;
+  }
+
+  &__tablet {
+    display: none;
+  }
+
+  &__desktop {
+    display: none;
+  }
+
+  @include m.responsive(v.$bp-md) {
+    &__mobile {
+      display: none;
+    }
+
+    &__tablet {
+      display: flex;
+      gap: v.$space-sm;
+    }
+
+    &__desktop {
+      display: none;
+    }
+  }
+
+  @include m.responsive(v.$bp-lg) {
+    &__mobile {
+      display: none;
+    }
+
+    &__tablet {
+      display: none;
+    }
+
+    &__desktop {
+      display: flex;
+      gap: v.$space-md;
+    }
+  }
+}

@@ -1,0 +1,133 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.activity-feed {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: v.$space-lg;
+
+  @include m.responsive(v.$bp-md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .activity-card {
+    background: transparent;
+    border: none;
+    padding: v.$space-sm;
+
+    .activity-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: v.$space-md;
+      padding-bottom: v.$space-sm;
+      border-bottom: 1px solid v.$c-border-h;
+
+      .user-link {
+        display: flex;
+        align-items: center;
+        gap: v.$space-sm;
+        text-decoration: none;
+        color: v.$c-heading;
+        transition: opacity v.$transition;
+
+        &:hover {
+          opacity: 0.8;
+        }
+
+        .avatar-placeholder {
+          flex-shrink: 0;
+        }
+      }
+
+      .activity-time {
+        font-size: 0.8rem;
+      }
+    }
+
+    .activity-body {
+      display: flex;
+      gap: v.$space-md;
+      align-items: flex-start;
+
+      .movie-poster-link {
+        width: 70px;
+        flex-shrink: 0;
+        display: block;
+
+        @include m.responsive(v.$bp-md) {
+          width: 90px;
+        }
+
+        .feed-movie-poster {
+          width: 100%;
+          border-radius: v.$radius;
+          transition: transform v.$transition;
+
+          &:hover {
+            transform: scale(1.03);
+          }
+        }
+      }
+
+      .feed-content {
+        flex: 1;
+
+        .feed-movie-title {
+          font-size: 1.125rem;
+          font-weight: 700;
+          color: v.$c-heading;
+          margin: 0 0 v.$space-xs;
+        }
+
+        .feed-review {
+          margin-top: v.$space-xs;
+
+          .feed-review-header {
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+            margin-bottom: v.$space-xs;
+          }
+
+          .feed-rating {
+            display: inline-flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+
+            .star-icon {
+              margin-left: 2px;
+            }
+          }
+
+          .feed-text {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: v.$c-text;
+            border-left: 2px solid v.$c-border;
+            padding-left: v.$space-sm;
+            font-style: italic;
+          }
+        }
+
+        .feed-list-action {
+          display: inline-flex;
+          align-items: center;
+          gap: v.$space-xs;
+          font-size: 0.9rem;
+          font-weight: 500;
+          margin-top: v.$space-xs;
+        }
+
+        .feed-diary {
+          display: flex;
+          align-items: center;
+          gap: v.$space-md;
+        }
+      }
+    }
+  }
+}

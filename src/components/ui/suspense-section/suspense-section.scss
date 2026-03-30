@@ -1,0 +1,11 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.suspense-section {
+  margin-top: v.$space-lg;
+  margin-bottom: v.$space-2xl;
+
+  .section-title {
+    margin-bottom: v.$space-md;
+  }
+}

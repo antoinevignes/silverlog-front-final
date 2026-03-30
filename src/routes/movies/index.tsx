@@ -13,7 +13,7 @@ import MoviesFilters, {
 } from "@/features/movie/components/movies/movie-filters/movies-filters";
 import Title from "@/components/ui/title/title";
 import "./movies-page.scss";
-import PopularMovies from "@/features/movie/components/movies/popular-movies/popular-movies";
+import PopularMovies from "@/features/movie/components/movies/film-page-popular-movies/film-page-popular-movies";
 import FilteredResults from "@/features/movie/components/movies/filtered-results/filtered-results";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 
@@ -28,7 +28,11 @@ export const Route = createFileRoute("/movies/")({
 
 function MoviesPage() {
   const [filters, setFilters] = useState<MovieFilters>({});
-  const { value: isFiltersOpen, setTrue: openFilters, setFalse: closeFilters } = useToggle();
+  const {
+    value: isFiltersOpen,
+    setTrue: openFilters,
+    setFalse: closeFilters,
+  } = useToggle();
 
   const hasActiveFilters = Object.keys(filters).length > 0;
 
