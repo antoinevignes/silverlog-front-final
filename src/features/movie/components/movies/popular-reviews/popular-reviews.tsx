@@ -7,8 +7,12 @@ import { Image } from "@unpic/react";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import { Heart } from "lucide-react";
 
-export default function PopularReviews() {
-  const { data: reviews } = useSuspenseQuery(popularReviewsQuery(8));
+type PopularReviewsProps = {
+  limit?: number;
+};
+
+export default function PopularReviews({ limit = 8 }: PopularReviewsProps) {
+  const { data: reviews } = useSuspenseQuery(popularReviewsQuery(limit));
 
   if (!reviews || reviews.length === 0) {
     return null;

@@ -1,7 +1,5 @@
 import { Link } from "@tanstack/react-router";
 import { Clock, Star, BookmarkPlus } from "lucide-react";
-import Button from "@/components/ui/button/button";
-import MovieCard from "@/features/movie/components/movie-card/movie-card";
 import { useAuth } from "@/auth";
 import "./user-home.scss";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -11,22 +9,16 @@ import { fr } from "date-fns/locale";
 import { Image } from "@unpic/react";
 import { Avatar } from "@/components/ui/avatar/avatar";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
-import {
-  crewPicksQuery,
-  popularMoviesQuery,
-} from "@/features/movie/api/movie.queries";
 import { userFeedQuery, userQuery } from "@/features/user/api/user.queries";
-import type { MovieType } from "@/features/movie/types/movie";
 import Badge from "@/components/ui/badge/badge";
 import Title from "@/components/ui/title/title";
-import MovieSwiper from "@/components/ui/movie-swiper/movie-swiper";
+import CrewPicks from "@/features/movie/components/crew-picks/crew-picks";
+import PopularMoviesLg from "@/features/movie/components/movies/popular-movies/popular-movies-lg";
 
 export default function UserHome() {
   const { user } = useAuth();
 
-  const { data: popularMovies } = useSuspenseQuery(popularMoviesQuery());
   const { data: feedData } = useSuspenseQuery(userFeedQuery());
-  const { data: crewPicks } = useSuspenseQuery(crewPicksQuery());
   const { data: userData } = useSuspenseQuery(userQuery(user!.id));
 
   return (
@@ -34,10 +26,11 @@ export default function UserHome() {
       <header className="home-dashboard-header">
         <div className="container header-container">
           <div className="welcome-section">
-            <h1 className="welcome-title font-sentient">
-              Bon retour,{" "}
-              <span className="highlight-user">{user?.username}</span> !
-            </h1>
+            <Title
+              title={`Bon retour, ${user?.username} !`}
+              className="welcome-title font-sentient"
+              size="lg"
+            />
             <p className="welcome-subtitle text-secondary">
               Voici ce qu'il s'est passé depuis votre dernière visite.
             </p>
@@ -63,40 +56,9 @@ export default function UserHome() {
         </div>
       </header>
 
-      <section className="container trending-section">
-        <header className="section-header">
-          <Title title="Populaire cette semaine" />
+      <PopularMoviesLg />
 
-          <Button variant="ghost" size="sm" className="hidden-mobile">
-            Voir plus
-          </Button>
-        </header>
-
-        <MovieSwiper movies={popularMovies.results} />
-      </section>
-
-      <section className="container selection-section">
-        <Title title="La sélection de la rédaction" className="section-title" />
-
-        <ul className="selection-grid">
-          {crewPicks && crewPicks.length > 0 ? (
-            crewPicks.map((movie: MovieType) => (
-              <React.Fragment key={movie.id}>
-                <li className="card-mobile">
-                  <MovieCard movie={movie} size="sm" />
-                </li>
-                <li className="card-desktop">
-                  <MovieCard movie={movie} size="md" />
-                </li>
-              </React.Fragment>
-            ))
-          ) : (
-            <p className="text-secondary text-center">
-              Chargement de la sélection...
-            </p>
-          )}
-        </ul>
-      </section>
+      <CrewPicks />
 
       <section className="container feed-section">
         <Title title="Activité de vos abonnements" />

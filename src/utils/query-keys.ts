@@ -36,6 +36,7 @@ export const userKeys = {
   search: (query: string) => ["user", "search", query] as const,
   seenMovies: (userId: string) => ["user", userId, "seen-movies"] as const,
   session: () => ["session"] as const,
+  active: () => ["user", "active"] as const,
 };
 
 export const personKeys = {

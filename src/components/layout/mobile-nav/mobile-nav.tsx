@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Bookmark, Home, ListVideo, User, Film } from "lucide-react";
+import { Bookmark, Home, User, Film, Compass } from "lucide-react";
 import "./mobile-nav.scss";
 import { useAuth } from "@/auth";
 import { Avatar } from "@/components/ui/avatar/avatar";
@@ -23,9 +23,9 @@ export default function MobileNav() {
           </Link>
         </li>
         <li>
-          <Link to="/lists" className="nav-link">
-            <ListVideo size={24} />
-            <span>Listes</span>
+          <Link to="/discover" className="nav-link">
+            <Compass size={24} />
+            <span>Découvrir</span>
           </Link>
         </li>
         <li>

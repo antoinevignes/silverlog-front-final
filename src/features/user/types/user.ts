@@ -52,3 +52,11 @@ export type FeedActivityType = {
   rating?: number;
   review_content?: string;
 };
+
+export type ActiveUser = {
+  id: string;
+  username: string;
+  avatar_path: string | null;
+  reviews_count: number;
+  watched_count: number;
+};
