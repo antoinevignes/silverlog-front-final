@@ -200,8 +200,10 @@
 }
 
 .delete-btn {
-  width: fit-content;
-  margin-left: auto;
+  @include m.responsive(v.$bp-md) {
+    width: fit-content;
+    margin-left: auto;
+  }
 }
 
 .password-form {

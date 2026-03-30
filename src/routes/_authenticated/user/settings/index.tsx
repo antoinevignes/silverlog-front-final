@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Camera, MapPin, Trash2, User, Image as ImageIcon, Lock } from "lucide-react";
+import { Camera, MapPin, Trash2, User, Image as ImageIcon, Lock, LogOut } from "lucide-react";
 import { useAuth } from "@/auth";
+import { useState, useEffect } from "react";
 import { useToggle } from "@/hooks/use-toggle";
 import {
   useUpdateLocation,
@@ -31,7 +32,15 @@ export const Route = createFileRoute("/_authenticated/user/settings/")({
 });
 
 function RouteComponent() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    setIsDesktop(window.innerWidth >= 768);
+    const handleResize = () => setIsDesktop(window.innerWidth >= 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const { value: isDeleteDialogOpen, setValue: setIsDeleteDialogOpen } = useToggle();
 
@@ -449,6 +458,24 @@ function RouteComponent() {
             </DialogContent>
           </Dialog>
         </SettingSection>
+
+        {/* DÉCONNEXION - MOBILE ONLY */}
+        {!isDesktop && (
+          <SettingSection
+            icon={<LogOut size={20} />}
+            title="Déconnexion"
+            description="Se déconnecter de votre compte Silverlog."
+          >
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={logout}
+              className="logout-btn"
+            >
+              Se déconnecter
+            </Button>
+          </SettingSection>
+        )}
       </section>
     </main>
   );
