@@ -16,21 +16,7 @@
     }
   }
 
-  .section-header {
-    margin-bottom: v.$space-lg;
-  }
-
-  .crew-picks-section,
-  .popular-section {
-    margin-bottom: v.$space-2xl;
-  }
-
-  .crew-picks-loading {
-    display: flex;
-    gap: v.$space-md;
-  }
-
-  .reviews-and-users {
+  .users-reviews-container {
     display: flex;
     flex-direction: column;
     gap: v.$space-xl;
@@ -59,63 +45,4 @@
       flex-shrink: 0;
     }
   }
-
-  .public-lists-section .discover-lists-grid {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: v.$space-md;
-
-    @include m.responsive(v.$bp-md) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-}
-
-.crew-picks-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: v.$space-md;
-
-  @include m.responsive(v.$bp-sm) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @include m.responsive(v.$bp-md) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  @include m.responsive(v.$bp-lg) {
-    grid-template-columns: repeat(6, 1fr);
-  }
-}
-
-.discover-reviews-grid {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: v.$space-md;
-
-  @include m.responsive(v.$bp-sm) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @include m.responsive(v.$bp-md) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @include m.responsive(v.$bp-lg) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-.swiper-loading {
-  display: flex;
-  gap: v.$space-md;
-}
-
-.reviews-loading,
-.users-loading,
-.lists-loading {
-  display: flex;
-  flex-direction: column;
-  gap: v.$space-md;
 }

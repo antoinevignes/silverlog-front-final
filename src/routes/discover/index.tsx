@@ -1,6 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Suspense } from "react";
-import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   crewPicksQuery,
   popularMoviesQuery,
@@ -9,13 +7,18 @@ import { popularReviewsQuery } from "@/features/review/api/review.query";
 import { publicListsQuery } from "@/features/list/api/list.queries";
 import { activeUsersQuery } from "@/features/user/api/user.queries";
 import ActiveUsers from "@/features/user/components/discover/active-users";
-import ListCard from "@/features/list/components/list-card/list-card";
 import PopularReviews from "@/features/movie/components/movies/popular-reviews/popular-reviews";
 import Title from "@/components/ui/title/title";
-import Skeleton from "@/components/ui/skeleton/skeleton";
 import "./discover-page.scss";
 import CrewPicks from "@/features/movie/components/crew-picks/crew-picks";
 import PopularMoviesLg from "@/features/movie/components/movies/popular-movies/popular-movies";
+import { SuspenseSection } from "@/components/ui/suspense-section/suspense-section";
+import CrewPicksSkeleton from "@/features/movie/components/crew-picks/crew-picks-skeleton";
+import PopularMoviesLgSkeletons from "@/features/movie/components/movies/popular-movies/popular-movies-skeleton";
+import PublicLists from "@/features/list/components/public-lists/public-lists";
+import PopularReviewsSkeleton from "@/features/movie/components/movies/popular-reviews/popular-reviews-skeleton";
+import PublicListsSkeleton from "@/features/list/components/public-lists/public-lists-skeleton";
+import ActiveUsersSkeleton from "@/features/user/components/discover/active-users-skeleton";
 
 export const Route = createFileRoute("/discover/")({
   loader: async ({ context: { queryClient } }) => {
@@ -38,80 +41,47 @@ function DiscoverPage() {
         </p>
       </header>
 
-      <CrewPicks />
+      <SuspenseSection
+        title="La sélection de la rédaction"
+        fallback={<CrewPicksSkeleton />}
+        className="container"
+      >
+        <CrewPicks />
+      </SuspenseSection>
 
-      <PopularMoviesLg />
+      <SuspenseSection
+        title="Populaire cette semaine"
+        fallback={<PopularMoviesLgSkeletons />}
+        className="container"
+      >
+        <PopularMoviesLg />
+      </SuspenseSection>
 
-      <section className="container reviews-and-users">
-        <div className="reviews-column">
-          <header className="section-header">
-            <Title title="Commentaires populaires" variant="h2" />
-          </header>
-          <Suspense
-            fallback={
-              <div className="reviews-loading">
-                {Array.from({ length: 4 }).map((_, i) => (
-                  <Skeleton key={i} width="100%" height="10rem" />
-                ))}
-              </div>
-            }
-          >
-            <div className="popular-reviews-section">
-              <PopularReviews limit={5} />
-            </div>
-          </Suspense>
-        </div>
+      <SuspenseSection
+        title="Listes publiques"
+        className="container"
+        fallback={<PublicListsSkeleton />}
+      >
+        <PublicLists />
+      </SuspenseSection>
 
-        <aside className="users-sidebar">
-          <header className="section-header">
-            <Title title="Utilisateurs actifs" variant="h2" />
-          </header>
-          <Suspense
-            fallback={
-              <div className="users-loading">
-                {Array.from({ length: 6 }).map((_, i) => (
-                  <Skeleton key={i} width="100%" height="4rem" />
-                ))}
-              </div>
-            }
-          >
-            <ActiveUsers />
-          </Suspense>
-        </aside>
-      </section>
-
-      <section className="container public-lists-section">
-        <header className="section-header">
-          <Title title="Listes publiques" variant="h2" />
-        </header>
-        <Suspense
-          fallback={
-            <div className="lists-loading">
-              {Array.from({ length: 10 }).map((_, i) => (
-                <Skeleton key={i} width="100%" height="10rem" />
-              ))}
-            </div>
-          }
+      <div className="users-reviews-container container">
+        <SuspenseSection
+          title="Commentaires populaires"
+          className="reviews-column"
+          fallback={<PopularReviewsSkeleton />}
         >
-          <PublicLists />
-        </Suspense>
-      </section>
+          <PopularReviews limit={5} />
+        </SuspenseSection>
+
+        <SuspenseSection
+          title="Utilisateurs actifs"
+          className="users-sidebar"
+          fallback={<ActiveUsersSkeleton />}
+        >
+          <ActiveUsers />
+        </SuspenseSection>
+      </div>
     </main>
-  );
-}
-
-function PublicLists() {
-  const { data: lists } = useSuspenseQuery(publicListsQuery());
-
-  if (!lists || lists.length === 0) {
-    return null;
-  }
-
-  return (
-    <div className="discover-lists-grid">
-      {lists.slice(0, 10).map((list) => (
-        <ListCard key={list.id} list={list} />
-      ))}
-    </div>
   );
 }
