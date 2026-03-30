@@ -9,6 +9,7 @@ import { routeTree } from "./routeTree.gen";
 
 import reportWebVitals from "./reportWebVitals.ts";
 import { AuthProvider, useAuth } from "./auth.tsx";
+import { SocketProvider } from "./providers/socket-provider.tsx";
 
 // Create a new router instance
 
@@ -45,7 +46,9 @@ if (rootElement && !rootElement.innerHTML) {
     <StrictMode>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <InnerApp />
+          <SocketProvider>
+            <InnerApp />
+          </SocketProvider>
         </AuthProvider>
       </QueryClientProvider>
     </StrictMode>,
