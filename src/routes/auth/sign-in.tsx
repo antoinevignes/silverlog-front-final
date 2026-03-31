@@ -6,6 +6,7 @@ import z from "zod";
 import { Label } from "@/components/ui/label/label";
 import { FieldInfo, useAppForm } from "@/utils/useAppForm";
 import { Image } from "@unpic/react";
+import { Seo } from "@/components/seo/seo";
 
 export const Route = createFileRoute("/auth/sign-in")({
   validateSearch: (search) => ({
@@ -43,87 +44,93 @@ function RouteComponent() {
   });
 
   return (
-    <main className="auth-page">
-      <Image
-        src="/logo.svg"
-        alt="Logo de silverlog"
-        layout="constrained"
-        width={80}
-        height={80}
-        background="auto"
-        priority
-      />
-      <h1>Silverlog</h1>
+    <>
+      <Seo title="Connexion" description="Se connecter à Silverlog" noIndex />
+      <main className="auth-page">
+        <Image
+          src="/logo.svg"
+          alt="Logo de silverlog"
+          layout="constrained"
+          width={80}
+          height={80}
+          background="auto"
+          priority
+        />
+        <h1>Silverlog</h1>
 
-      <p className="text-secondary description">
-        Suivez les films que vous avez vus.
-        <br /> Sauvegardez ceux que vous voulez voir.
-        <br /> Partagez vos coups de coeur avec vos amis.
-      </p>
+        <p className="text-secondary description">
+          Suivez les films que vous avez vus.
+          <br /> Sauvegardez ceux que vous voulez voir.
+          <br /> Partagez vos coups de coeur avec vos amis.
+        </p>
 
-      <h2>Connexion</h2>
+        <h2>Connexion</h2>
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          form.handleSubmit();
-        }}
-      >
-        <div>
-          <Label htmlFor="email">Email*</Label>
-          <form.AppField
-            name="email"
-            children={(field) => (
-              <>
-                <field.Input
-                  id="email"
-                  placeholder="exemple@email.com"
-                  leftIcon={<Mail />}
-                />
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            form.handleSubmit();
+          }}
+        >
+          <div>
+            <Label htmlFor="email">Email*</Label>
+            <form.AppField
+              name="email"
+              children={(field) => (
+                <>
+                  <field.Input
+                    id="email"
+                    placeholder="exemple@email.com"
+                    leftIcon={<Mail />}
+                  />
 
-                <FieldInfo field={field} />
-              </>
-            )}
-          />
-        </div>
+                  <FieldInfo field={field} />
+                </>
+              )}
+            />
+          </div>
 
-        <div>
-          <Label htmlFor="password">Mot de passe*</Label>
-          <form.AppField
-            name="password"
-            children={(field) => (
-              <>
-                <field.Input
-                  id="password"
-                  type="password"
-                  placeholder="*********"
-                  leftIcon={<Lock />}
-                />
+          <div>
+            <Label htmlFor="password">Mot de passe*</Label>
+            <form.AppField
+              name="password"
+              children={(field) => (
+                <>
+                  <field.Input
+                    id="password"
+                    type="password"
+                    placeholder="*********"
+                    leftIcon={<Lock />}
+                  />
 
-                <FieldInfo field={field} />
-              </>
-            )}
-          />
-        </div>
+                  <FieldInfo field={field} />
+                </>
+              )}
+            />
+          </div>
 
-        <form.AppForm>
-          <form.Subscribe
-            selector={(state) => [state.canSubmit, state.isSubmitting]}
-            children={([canSubmit, isSubmitting]) => (
-              <form.Button type="submit" disabled={!canSubmit || isSubmitting}>
-                {isSubmitting ? "Connexion..." : "Se connecter"}
-              </form.Button>
-            )}
-          />
-        </form.AppForm>
-      </form>
+          <form.AppForm>
+            <form.Subscribe
+              selector={(state) => [state.canSubmit, state.isSubmitting]}
+              children={([canSubmit, isSubmitting]) => (
+                <form.Button
+                  type="submit"
+                  disabled={!canSubmit || isSubmitting}
+                >
+                  {isSubmitting ? "Connexion..." : "Se connecter"}
+                </form.Button>
+              )}
+            />
+          </form.AppForm>
+        </form>
 
-      <p id="auth-change">
-        <span className="text-secondary">Nouveau sur Silverlog ?</span>
-        <Link className="link" to="/auth/sign-up">
-          Créer un compte
-        </Link>
-      </p>
-    </main>
+        <p id="auth-change">
+          <span className="text-secondary">Nouveau sur Silverlog ?</span>
+          <Link className="link" to="/auth/sign-up">
+            Créer un compte
+          </Link>
+        </p>
+      </main>
+    </>
   );
 }

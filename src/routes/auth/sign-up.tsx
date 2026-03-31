@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label/label";
 import { Separator } from "@/components/ui/separator/separator";
 import { Image } from "@unpic/react";
 import { apiClient } from "@/utils/api-client";
+import { Seo } from "@/components/seo/seo";
 
 export const Route = createFileRoute("/auth/sign-up")({
   component: RouteComponent,
@@ -67,118 +68,125 @@ function RouteComponent() {
   });
 
   return (
-    <main className="auth-page">
-      <Image
-        layout="constrained"
-        width={80}
-        height={80}
-        src="/logo.svg"
-        alt="Logo de silverlog"
+    <>
+      <Seo
+        title="Créer un compte"
+        description="Créer un compte sur Silverlog"
+        noIndex
       />
-      <h1>Silverlog</h1>
+      <main className="auth-page">
+        <Image
+          layout="constrained"
+          width={80}
+          height={80}
+          src="/logo.svg"
+          alt="Logo de silverlog"
+        />
+        <h1>Silverlog</h1>
 
-      <p className="text-secondary description">
-        Suivez les films que vous avez vus.
-        <br /> Sauvegardez ceux que vous voulez voir.
-        <br /> Partagez vos coups de coeur avec vos amis.
-      </p>
+        <p className="text-secondary description">
+          Suivez les films que vous avez vus.
+          <br /> Sauvegardez ceux que vous voulez voir.
+          <br /> Partagez vos coups de coeur avec vos amis.
+        </p>
 
-      <Separator />
+        <Separator />
 
-      <h2>Créer un compte</h2>
+        <h2>Créer un compte</h2>
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          form.handleSubmit();
-        }}
-      >
-        <div>
-          <Label htmlFor="username">Nom d'utilisateur*</Label>
-          <form.AppField
-            name="username"
-            children={(field) => (
-              <>
-                <field.Input
-                  id="username"
-                  placeholder="Votre nom d'utilisateur"
-                  leftIcon={<User />}
-                />
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            form.handleSubmit();
+          }}
+        >
+          <div>
+            <Label htmlFor="username">Nom d'utilisateur*</Label>
+            <form.AppField
+              name="username"
+              children={(field) => (
+                <>
+                  <field.Input
+                    id="username"
+                    placeholder="Votre nom d'utilisateur"
+                    leftIcon={<User />}
+                  />
 
-                <FieldInfo field={field} />
-              </>
-            )}
-          />
-        </div>
+                  <FieldInfo field={field} />
+                </>
+              )}
+            />
+          </div>
 
-        <div>
-          <Label htmlFor="email">Email*</Label>
-          <form.AppField
-            name="email"
-            children={(field) => (
-              <>
-                <field.Input
-                  id="email"
-                  placeholder="exemple@email.com"
-                  leftIcon={<Mail />}
-                />
+          <div>
+            <Label htmlFor="email">Email*</Label>
+            <form.AppField
+              name="email"
+              children={(field) => (
+                <>
+                  <field.Input
+                    id="email"
+                    placeholder="exemple@email.com"
+                    leftIcon={<Mail />}
+                  />
 
-                <FieldInfo field={field} />
-              </>
-            )}
-          />
-        </div>
+                  <FieldInfo field={field} />
+                </>
+              )}
+            />
+          </div>
 
-        <div>
-          <Label htmlFor="password">Mot de passe*</Label>
-          <form.AppField
-            name="password"
-            children={(field) => (
-              <>
-                <field.Input
-                  id="password"
-                  type="password"
-                  placeholder="*********"
-                  leftIcon={<Lock />}
-                />
+          <div>
+            <Label htmlFor="password">Mot de passe*</Label>
+            <form.AppField
+              name="password"
+              children={(field) => (
+                <>
+                  <field.Input
+                    id="password"
+                    type="password"
+                    placeholder="*********"
+                    leftIcon={<Lock />}
+                  />
 
-                <FieldInfo field={field} />
-              </>
-            )}
-          />
-        </div>
+                  <FieldInfo field={field} />
+                </>
+              )}
+            />
+          </div>
 
-        <form.AppForm>
-          <form.Subscribe
-            selector={(state) => [state.canSubmit]}
-            children={([canSubmit]) => (
-              <form.Button
-                type="submit"
-                disabled={!canSubmit || signUpMutation.isPending}
-              >
-                {signUpMutation.isPending
-                  ? "Création du compte..."
-                  : "S'inscrire"}
-              </form.Button>
-            )}
-          />
-        </form.AppForm>
-      </form>
+          <form.AppForm>
+            <form.Subscribe
+              selector={(state) => [state.canSubmit]}
+              children={([canSubmit]) => (
+                <form.Button
+                  type="submit"
+                  disabled={!canSubmit || signUpMutation.isPending}
+                >
+                  {signUpMutation.isPending
+                    ? "Création du compte..."
+                    : "S'inscrire"}
+                </form.Button>
+              )}
+            />
+          </form.AppForm>
+        </form>
 
-      <p id="auth-change">
-        <span className="text-secondary">Vous avez déjà un compte ? </span>
-        <Link className="link" to="/auth/sign-in" search={{ redirect: "/" }}>
-          Connectez vous
-        </Link>
-      </p>
+        <p id="auth-change">
+          <span className="text-secondary">Vous avez déjà un compte ? </span>
+          <Link className="link" to="/auth/sign-in" search={{ redirect: "/" }}>
+            Connectez vous
+          </Link>
+        </p>
 
-      <p className="text-secondary">
-        Pour en savoir plus sur notre politique de confidentialité,{" "}
-        <Link to="/about/mentions-legales" className="underline-link">
-          cliquez ici
-        </Link>
-        .
-      </p>
-    </main>
+        <p className="text-secondary">
+          Pour en savoir plus sur notre politique de confidentialité,{" "}
+          <Link to="/about" className="underline-link">
+            cliquez ici
+          </Link>
+          .
+        </p>
+      </main>
+    </>
   );
 }
