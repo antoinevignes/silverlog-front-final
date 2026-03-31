@@ -2,6 +2,7 @@ import "./styles/main.scss";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
+import { HelmetProvider } from "react-helmet-async";
 
 // Import the generated route tree
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -35,7 +36,11 @@ declare module "@tanstack/react-router" {
 
 function InnerApp() {
   const auth = useAuth();
-  return <RouterProvider router={router} context={{ auth, queryClient }} />;
+  return (
+    <HelmetProvider>
+      <RouterProvider router={router} context={{ auth, queryClient }} />
+    </HelmetProvider>
+  );
 }
 
 // Render the app

@@ -18,6 +18,8 @@ import PopularMoviesLgSkeletons from "@/features/movie/components/movies/popular
 import CrewPicksSkeleton from "@/features/movie/components/crew-picks/crew-picks-skeleton";
 import FriendsFeedSkeleton from "@/features/user/components/friends-feed/friends-feed-skeleton";
 import Skeleton from "@/components/ui/skeleton/skeleton";
+import { Seo } from "@/components/seo/seo";
+import { generateWebsiteSchema } from "@/components/seo/schema-markup";
 
 export const Route = createFileRoute("/")({
   loader: async ({ context: { queryClient, auth } }) => {
@@ -37,11 +39,25 @@ function App() {
   const { user } = useAuth();
 
   if (!user) {
-    return <VisitorHome />;
+    return (
+      <>
+        <Seo
+          title="Accueil"
+          description="Votre journal de films personnalisé. Notez, critiquez et partagez vos films préférés avec la communauté Silverlog."
+          schemaMarkup={generateWebsiteSchema()}
+        />
+        <VisitorHome />
+      </>
+    );
   }
 
   return (
     <>
+      <Seo
+        title="Accueil"
+        description="Votre journal de films personnalisé. Notez, critiquez et partagez vos films préférés avec la communauté Silverlog."
+        schemaMarkup={generateWebsiteSchema()}
+      />
       <MobileHomeHeader />
 
       <main className="user-home">
