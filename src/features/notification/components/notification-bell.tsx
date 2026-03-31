@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Bell, Star, Send } from "lucide-react";
+import { Bell, Star, Send, UserPlus } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
 import { formatDistanceToNow } from "date-fns";
@@ -41,16 +41,28 @@ export default function NotificationBell() {
   const handleNotificationClick = (notification: {
     id: number;
     is_read: boolean;
-    movie_id: number;
+    type: string;
+    sender_id: number;
+    movie_id: number | null;
   }) => {
     if (!notification.is_read) {
       markAsRead(notification.id);
     }
     setIsOpen(false);
-    navigate({
-      to: "/movies/$movieId",
-      params: { movieId: String(notification.movie_id) },
-    });
+
+    if (notification.type === "follow") {
+      navigate({
+        to: "/user/$userId",
+        params: { userId: String(notification.sender_id) },
+      });
+    } else {
+      if (notification.movie_id) {
+        navigate({
+          to: "/movies/$movieId",
+          params: { movieId: String(notification.movie_id) },
+        });
+      }
+    }
   };
 
   const handleMarkAllRead = () => {
@@ -129,6 +141,8 @@ export default function NotificationBell() {
                   <div className="notification-type-icon">
                     {notif.type === "recommendation" ? (
                       <Send size={14} />
+                    ) : notif.type === "follow" ? (
+                      <UserPlus size={14} />
                     ) : (
                       <Star size={14} />
                     )}
@@ -155,9 +169,13 @@ export default function NotificationBell() {
                       <strong>{notif.sender_username}</strong>{" "}
                       {notif.type === "recommendation"
                         ? "vous recommande un film"
-                        : "a publié un avis"}
+                        : notif.type === "follow"
+                          ? "a commencé à vous suivre"
+                          : "a publié un avis"}
                     </p>
-                    <p className="notification-movie">{notif.movie_title}</p>
+                    {notif.movie_title && (
+                      <p className="notification-movie">{notif.movie_title}</p>
+                    )}
                     <p className="notification-time">
                       {formatDistanceToNow(new Date(notif.created_at), {
                         addSuffix: true,

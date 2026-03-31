@@ -1,15 +1,20 @@
 @use "@/styles/abstracts/variables" as v;
 
 .mention-legales {
-  h1 {
-    font-size: xx-large;
-  }
-
-  height: 75vh;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  gap: v.$space-md;
+  height: 100%;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 750px;
+    gap: v.$space-md;
+    border: 1px solid v.$c-border;
+    padding: v.$space-2xl;
+    border-radius: v.$radius;
+    background-color: v.$c-surface;
+  }
 }

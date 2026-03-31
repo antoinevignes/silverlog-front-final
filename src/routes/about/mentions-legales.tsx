@@ -1,6 +1,7 @@
 import "./mentions-legales.scss";
 import { createFileRoute } from "@tanstack/react-router";
 import { Separator } from "@/components/ui/separator/separator";
+import Title from "@/components/ui/title/title";
 
 export const Route = createFileRoute("/about/mentions-legales")({
   component: RouteComponent,
@@ -9,28 +10,52 @@ export const Route = createFileRoute("/about/mentions-legales")({
 function RouteComponent() {
   return (
     <main className="container mention-legales">
-      <h1>Mentions légales</h1>
+      <div className="mention-legales__content">
+        <Title title="Mentions Légales" variant="h1" size="xl" />
 
-      <Separator />
+        <Separator />
+        <p>
+          Chez Silverlog, nous considérons que la confiance est le socle de
+          notre communauté. Conformément au Règlement Général sur la Protection
+          des Données (RGPD), nous avons adopté une politique de minimisation
+          des données : nous ne collectons et ne conservons que les informations
+          strictement nécessaires au bon fonctionnement de l'application et à
+          l'amélioration de votre expérience utilisateur.
+        </p>
 
-      <p>
-        Silverlog ne collecte que les informations essentielles au service :
-        identifiants de connexion (email, mot de passe chiffré), profil public
-        (nom d'utilisateur, bio) et historique cinématographique (notes,
-        critiques).
-      </p>
-      <p>
-        Ces données sont traitées uniquement pour permettre le fonctionnement
-        social de la plateforme et ne font l'objet d'aucune revente à des tiers.
-      </p>
-      <p>
-        Chaque membre dispose d'un contrôle total sur ses données personnelles
-        via son espace personnel.Ces données sont conservées tant que vous
-        restez inscrit. Silverlog garantit une suppression effective et
-        définitive de l'ensemble des données liées à un compte (critiques,
-        notes, historique) sur simple demande ou via la fonction "Supprimer mon
-        compte".
-      </p>
+        <Title title="1. Quelles données collectons nous ?" variant="h2" />
+        <p>
+          Nous collectons uniquement les informations que vous nous transmettez
+          volontairement pour utiliser nos services : Informations de compte :
+          Votre adresse email (utilisée pour l'authentification et les
+          notifications) et votre mot de passe (stocké de manière chiffrée).
+          Données d'activité : Les films que vous notez, vos critiques, vos
+          listes personnalisées et votre watchlist. Données de profil : Votre
+          pseudo, avatar et biographie, uniquement dans le but de personnaliser
+          votre espace public. Durée : Vos données sont conservées tant que
+          votre compte est actif. En cas de suppression de votre compte, toutes
+          vos données (critiques, listes, historique) sont définitivement
+          effacées de nos serveurs.
+        </p>
+
+        <Title title=" 2. Pourquoi utilisons-nous ces données ?" />
+        <p>
+          La finalité de cette collecte est exclusivement technique et
+          fonctionnelle : Maintenir votre connexion sécurisée. Vous permettre de
+          consulter votre historique et vos statistiques cinéphiles. Faciliter
+          les interactions au sein de la communauté. Nous nous engageons
+          formellement à ne jamais vendre, louer ou partager vos données
+          personnelles avec des tiers à des fins commerciales.
+        </p>
+
+        <Title title="3. Vos droits" variant="h2" />
+        <p>
+          Vous disposez d'un contrôle total sur vos informations. À tout moment,
+          via les paramètres de votre profil, vous pouvez : Accéder à vos
+          données et les modifier. Demander la suppression définitive de votre
+          compte et de l'intégralité de vos données associées.
+        </p>
+      </div>
     </main>
   );
 }
