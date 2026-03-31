@@ -19,6 +19,7 @@ import { SuspenseSection } from "@/components/ui/suspense-section/suspense-secti
 import FilteredResultsSkeletons from "@/features/movie/components/movies/filtered-results/filtered-results-skeleton";
 import FilmPageSkeleton from "@/components/layout/skeletons/film-page-skeleton";
 import PopularReviewsSkeleton from "@/features/movie/components/movies/popular-reviews/popular-reviews-skeleton";
+import { Seo } from "@/components/seo/seo";
 
 export const Route = createFileRoute("/movies/")({
   loader: async ({ context: { queryClient } }) => {
@@ -40,6 +41,12 @@ function MoviesPage() {
   const hasActiveFilters = Object.keys(filters).length > 0;
 
   return (
+    <>
+      <Seo
+        title="Films"
+        description="Explorez les films populaires et les mieux notés. Filtrez par genre, année et plus encore sur Silverlog."
+        type="website"
+      />
     <main className="movies-page container">
       <header className="movies-header">
         <Title title="Films" variant="h1" size="lg" />
@@ -98,5 +105,6 @@ function MoviesPage() {
         </div>
       </div>
     </main>
+    </>
   );
 }
