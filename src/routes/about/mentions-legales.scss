@@ -3,18 +3,84 @@
 .mention-legales {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100%;
+  align-items: flex-start;
+  min-height: 100%;
+  padding: v.$space-md;
+
+  @media (min-width: v.$bp-md) {
+    padding: v.$space-2xl 0;
+  }
 
   &__content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    max-width: 750px;
+    max-width: 800px;
+    width: 100%;
     gap: v.$space-md;
-    border: 1px solid v.$c-border;
-    padding: v.$space-2xl;
+    padding: v.$space-lg;
     border-radius: v.$radius;
     background-color: v.$c-surface;
+    box-shadow: v.$shadow-xl;
+    border: 1px solid v.$c-border;
+
+    @media (min-width: v.$bp-md) {
+      gap: v.$space-lg;
+      padding: v.$space-2xl;
+    }
+
+    h1 {
+      text-align: center;
+      color: v.$c-heading;
+      margin-bottom: v.$space-sm;
+      font-size: 1.5rem;
+
+      @media (min-width: v.$bp-md) {
+        margin-bottom: v.$space-md;
+        font-size: 2rem;
+      }
+    }
+
+    h2 {
+      color: v.$c-heading;
+      margin-top: v.$space-md;
+      padding-bottom: v.$space-xs;
+      border-bottom: 2px solid v.$c-border;
+      font-size: 1.1rem;
+
+      @media (min-width: v.$bp-md) {
+        margin-top: v.$space-lg;
+        padding-bottom: v.$space-sm;
+        font-size: 1.25rem;
+      }
+    }
+
+    p {
+      line-height: 1.7;
+      color: v.$c-text;
+      text-align: left;
+      padding: v.$space-sm;
+      background-color: rgba(v.$c-border, 0.3);
+      border-radius: v.$radius;
+      border-left: 3px solid v.$c-border-h;
+      font-size: 0.9rem;
+
+      @media (min-width: v.$bp-md) {
+        line-height: 1.8;
+        text-align: justify;
+        padding: v.$space-md;
+        border-left: 4px solid v.$c-border-h;
+        font-size: 1rem;
+      }
+    }
+
+    > div[class*="separator"] {
+      margin: v.$space-sm 0;
+      background: linear-gradient(90deg, transparent, v.$c-border-h, transparent);
+      height: 1px;
+
+      @media (min-width: v.$bp-md) {
+        margin: v.$space-md 0;
+      }
+    }
   }
 }
