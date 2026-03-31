@@ -1,3 +1,12 @@
+# Silverlog - robots.txt
 # https://www.robotstxt.org/robotstxt.html
+
 User-agent: *
-Disallow:
+Allow: /
+
+Disallow: /auth/
+Disallow: /admin/
+Disallow: /user/settings/
+Disallow: /user/activity/
+
+Crawl-delay: 1
