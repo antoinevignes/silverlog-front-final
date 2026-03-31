@@ -19,6 +19,7 @@ import PublicLists from "@/features/list/components/public-lists/public-lists";
 import PopularReviewsSkeleton from "@/features/movie/components/movies/popular-reviews/popular-reviews-skeleton";
 import PublicListsSkeleton from "@/features/list/components/public-lists/public-lists-skeleton";
 import ActiveUsersSkeleton from "@/features/user/components/discover/active-users-skeleton";
+import { Seo } from "@/components/seo/seo";
 
 export const Route = createFileRoute("/discover/")({
   loader: async ({ context: { queryClient } }) => {
@@ -33,6 +34,12 @@ export const Route = createFileRoute("/discover/")({
 
 function DiscoverPage() {
   return (
+    <>
+      <Seo
+        title="Découvrir"
+        description="Explorez les dernières tendances cinéma, découvrez les films populaires, les listes partagées et les avis de la communauté Silverlog."
+        type="website"
+      />
     <main className="discover-page">
       <header className="container discover-header">
         <Title title="Découvrir" variant="h1" size="lg" />
@@ -83,5 +90,6 @@ function DiscoverPage() {
         </SuspenseSection>
       </div>
     </main>
+    </>
   );
 }
