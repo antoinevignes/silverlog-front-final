@@ -11,6 +11,7 @@ import "./index.scss";
 import Skeleton from "@/components/ui/skeleton/skeleton";
 import Lists from "@/features/user/components/lists/lists";
 import { useAuth } from "@/auth";
+import { Seo } from "@/components/seo/seo";
 
 const tabs = [
   { id: "watchlist", label: "Watchlist" },
@@ -42,54 +43,61 @@ function RouteComponent() {
   }, []);
 
   return (
-    <main className="container activity-page">
-      <div className="activity-tabs-container">
-        <Tabs
-          selected={selected}
-          setSelected={setSelected}
-          tabs={tabs}
-          variant={isDesktop ? "transparent" : "header"}
-        />
-      </div>
+    <>
+      <Seo
+        title="Mon activité"
+        description="Activité de l'utilisateur sur le site Silverlog"
+        noIndex
+      />
+      <main className="container activity-page">
+        <div className="activity-tabs-container">
+          <Tabs
+            selected={selected}
+            setSelected={setSelected}
+            tabs={tabs}
+            variant={isDesktop ? "transparent" : "header"}
+          />
+        </div>
 
-      {selected === "watchlist" && (
-        <Suspense fallback={<WatchlistSkeleton />}>
-          <Watchlist />
-        </Suspense>
-      )}
+        {selected === "watchlist" && (
+          <Suspense fallback={<WatchlistSkeleton />}>
+            <Watchlist />
+          </Suspense>
+        )}
 
-      {selected === "diary" && (
-        <Suspense fallback={<DiarySkeleton />}>
-          <Diary />
-        </Suspense>
-      )}
+        {selected === "diary" && (
+          <Suspense fallback={<DiarySkeleton />}>
+            <Diary />
+          </Suspense>
+        )}
 
-      {selected === "lists" && (
-        <Suspense
-          fallback={
-            <div className="lists-skeleton-grid">
-              {Array.from({ length: 4 }).map((_, index) => (
-                <div key={index} className="list-card-skeleton">
-                  <div className="skeleton-info">
-                    <Skeleton height={20} width="80%" />
-                    <Skeleton height={24} width="30%" />
-                    <Skeleton height={14} width="90%" />
-                    <Skeleton height={14} width="60%" />
-                    <Skeleton height={14} width="40%" />
+        {selected === "lists" && (
+          <Suspense
+            fallback={
+              <div className="lists-skeleton-grid">
+                {Array.from({ length: 4 }).map((_, index) => (
+                  <div key={index} className="list-card-skeleton">
+                    <div className="skeleton-info">
+                      <Skeleton height={20} width="80%" />
+                      <Skeleton height={24} width="30%" />
+                      <Skeleton height={14} width="90%" />
+                      <Skeleton height={14} width="60%" />
+                      <Skeleton height={14} width="40%" />
+                    </div>
+                    <div className="skeleton-posters">
+                      <Skeleton className="poster depth-2" />
+                      <Skeleton className="poster depth-1" />
+                      <Skeleton className="poster depth-0" />
+                    </div>
                   </div>
-                  <div className="skeleton-posters">
-                    <Skeleton className="poster depth-2" />
-                    <Skeleton className="poster depth-1" />
-                    <Skeleton className="poster depth-0" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          }
-        >
-          <Lists userId={user!.id} />
-        </Suspense>
-      )}
-    </main>
+                ))}
+              </div>
+            }
+          >
+            <Lists userId={user!.id} />
+          </Suspense>
+        )}
+      </main>
+    </>
   );
 }
