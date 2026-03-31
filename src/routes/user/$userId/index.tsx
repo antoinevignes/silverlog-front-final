@@ -38,6 +38,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "@/components/ui/movie-swiper/movie-swiper.scss";
 import { Avatar } from "@/components/ui/avatar/avatar";
+import { Seo } from "@/components/seo/seo";
+import { generateProfileSchema } from "@/components/seo/schema-markup";
 
 export const Route = createFileRoute("/user/$userId/")({
   loader: async ({ context: { queryClient }, params: { userId } }) => {
@@ -106,7 +108,19 @@ function RouteComponent() {
     { id: "lists", label: `Listes (${userData.custom_lists_total})` },
   ];
 
+  const userImage = userData.avatar_path
+    ? getCloudinarySrc(userData.avatar_path, "avatars")
+    : undefined;
+
   return (
+    <>
+      <Seo
+        title={`Profil de ${userData.username}`}
+        description={`Découvrez les films préférés de ${userData.username} et ses listes sur Silverlog.`}
+        image={userImage}
+        type="profile"
+        schemaMarkup={generateProfileSchema(userData.username, userImage)}
+      />
     <main className="user-profile">
       <figure className="profile-banner" aria-hidden="true">
         {userData.banner_path ? (
@@ -500,5 +514,6 @@ function RouteComponent() {
         />
       )}
     </main>
+    </>
   );
 }
