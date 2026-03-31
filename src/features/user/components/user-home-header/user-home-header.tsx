@@ -19,6 +19,7 @@ export default function UserHomeHeader() {
             title={`Bon retour, ${user?.username} !`}
             className="welcome-title font-sentient"
             size="lg"
+            variant="h1"
           />
           <p className="welcome-subtitle text-secondary">
             Voici ce qu'il s'est passé depuis votre dernière visite.

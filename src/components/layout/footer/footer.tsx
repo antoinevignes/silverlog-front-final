@@ -55,7 +55,7 @@ export default function Footer() {
             <h3 className="col-title font-sentient">Légal</h3>
             <ul className="footer-links">
               <li>
-                <Link to="/about/mentions-legales" className="link">
+                <Link to="/about" className="link">
                   Mentions Légales
                 </Link>
               </li>
