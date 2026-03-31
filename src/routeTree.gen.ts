@@ -15,10 +15,10 @@ import { Route as SearchIndexRouteImport } from './routes/search/index'
 import { Route as MoviesIndexRouteImport } from './routes/movies/index'
 import { Route as DiscoverIndexRouteImport } from './routes/discover/index'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as AboutIndexRouteImport } from './routes/about/index'
 import { Route as AuthVerifyEmailRouteImport } from './routes/auth/verify-email'
 import { Route as AuthSignUpRouteImport } from './routes/auth/sign-up'
 import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
-import { Route as AboutMentionsLegalesRouteImport } from './routes/about/mentions-legales'
 import { Route as UserUserIdIndexRouteImport } from './routes/user/$userId/index'
 import { Route as PersonPersonIdIndexRouteImport } from './routes/person/$personId/index'
 import { Route as MoviesMovieIdIndexRouteImport } from './routes/movies/$movieId/index'
@@ -55,6 +55,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutIndexRoute = AboutIndexRouteImport.update({
+  id: '/about/',
+  path: '/about/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthVerifyEmailRoute = AuthVerifyEmailRouteImport.update({
   id: '/auth/verify-email',
   path: '/auth/verify-email',
@@ -68,11 +73,6 @@ const AuthSignUpRoute = AuthSignUpRouteImport.update({
 const AuthSignInRoute = AuthSignInRouteImport.update({
   id: '/auth/sign-in',
   path: '/auth/sign-in',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutMentionsLegalesRoute = AboutMentionsLegalesRouteImport.update({
-  id: '/about/mentions-legales',
-  path: '/about/mentions-legales',
   getParentRoute: () => rootRouteImport,
 } as any)
 const UserUserIdIndexRoute = UserUserIdIndexRouteImport.update({
@@ -110,10 +110,10 @@ const AuthenticatedUserActivityIndexRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about/mentions-legales': typeof AboutMentionsLegalesRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/auth/verify-email': typeof AuthVerifyEmailRoute
+  '/about/': typeof AboutIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/discover/': typeof DiscoverIndexRoute
   '/movies/': typeof MoviesIndexRoute
@@ -127,10 +127,10 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about/mentions-legales': typeof AboutMentionsLegalesRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/auth/verify-email': typeof AuthVerifyEmailRoute
+  '/about': typeof AboutIndexRoute
   '/admin': typeof AdminIndexRoute
   '/discover': typeof DiscoverIndexRoute
   '/movies': typeof MoviesIndexRoute
@@ -146,10 +146,10 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
-  '/about/mentions-legales': typeof AboutMentionsLegalesRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/auth/verify-email': typeof AuthVerifyEmailRoute
+  '/about/': typeof AboutIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/discover/': typeof DiscoverIndexRoute
   '/movies/': typeof MoviesIndexRoute
@@ -165,10 +165,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/about/mentions-legales'
     | '/auth/sign-in'
     | '/auth/sign-up'
     | '/auth/verify-email'
+    | '/about/'
     | '/admin/'
     | '/discover/'
     | '/movies/'
@@ -182,10 +182,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/about/mentions-legales'
     | '/auth/sign-in'
     | '/auth/sign-up'
     | '/auth/verify-email'
+    | '/about'
     | '/admin'
     | '/discover'
     | '/movies'
@@ -200,10 +200,10 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
-    | '/about/mentions-legales'
     | '/auth/sign-in'
     | '/auth/sign-up'
     | '/auth/verify-email'
+    | '/about/'
     | '/admin/'
     | '/discover/'
     | '/movies/'
@@ -219,10 +219,10 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
-  AboutMentionsLegalesRoute: typeof AboutMentionsLegalesRoute
   AuthSignInRoute: typeof AuthSignInRoute
   AuthSignUpRoute: typeof AuthSignUpRoute
   AuthVerifyEmailRoute: typeof AuthVerifyEmailRoute
+  AboutIndexRoute: typeof AboutIndexRoute
   AdminIndexRoute: typeof AdminIndexRoute
   DiscoverIndexRoute: typeof DiscoverIndexRoute
   MoviesIndexRoute: typeof MoviesIndexRoute
@@ -277,6 +277,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about/': {
+      id: '/about/'
+      path: '/about'
+      fullPath: '/about/'
+      preLoaderRoute: typeof AboutIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth/verify-email': {
       id: '/auth/verify-email'
       path: '/auth/verify-email'
@@ -296,13 +303,6 @@ declare module '@tanstack/react-router' {
       path: '/auth/sign-in'
       fullPath: '/auth/sign-in'
       preLoaderRoute: typeof AuthSignInRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about/mentions-legales': {
-      id: '/about/mentions-legales'
-      path: '/about/mentions-legales'
-      fullPath: '/about/mentions-legales'
-      preLoaderRoute: typeof AboutMentionsLegalesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/user/$userId/': {
@@ -366,10 +366,10 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
-  AboutMentionsLegalesRoute: AboutMentionsLegalesRoute,
   AuthSignInRoute: AuthSignInRoute,
   AuthSignUpRoute: AuthSignUpRoute,
   AuthVerifyEmailRoute: AuthVerifyEmailRoute,
+  AboutIndexRoute: AboutIndexRoute,
   AdminIndexRoute: AdminIndexRoute,
   DiscoverIndexRoute: DiscoverIndexRoute,
   MoviesIndexRoute: MoviesIndexRoute,

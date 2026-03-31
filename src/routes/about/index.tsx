@@ -2,13 +2,20 @@ import "./mentions-legales.scss";
 import { createFileRoute } from "@tanstack/react-router";
 import { Separator } from "@/components/ui/separator/separator";
 import Title from "@/components/ui/title/title";
+import { Seo } from "@/components/seo/seo";
 
-export const Route = createFileRoute("/about/mentions-legales")({
+export const Route = createFileRoute("/about/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   return (
+    <>
+      <Seo
+        title="Mentions Légales"
+        description="Politique de confidentialité et mentions légales de Silverlog. Découvrez comment nous protégeons vos données conformément au RGPD."
+        type="website"
+      />
     <main className="container mention-legales">
       <div className="mention-legales__content">
         <Title title="Mentions Légales" variant="h1" size="xl" />
@@ -63,5 +70,6 @@ function RouteComponent() {
         </p>
       </div>
     </main>
+    </>
   );
 }
