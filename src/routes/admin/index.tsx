@@ -21,6 +21,7 @@ import AdminStats from "../../features/admin/components/admin-stats";
 import AdminUsers from "../../features/admin/components/admin-users";
 import AdminReviews from "../../features/admin/components/admin-reviews";
 import "./admin.scss";
+import { Seo } from "@/components/seo/seo";
 
 const adminSearchSchema = z.object({
   tab: z.enum(["general", "reviews"]).catch("general").default("general"),
@@ -49,39 +50,50 @@ function Page() {
   ];
 
   return (
-    <main className="admin-container container">
-      <header className="admin-header">
-        <Shield size={32} />
-        <Title title="Administration" variant="h1" size="xl" />
-      </header>
+    <>
+      <Seo
+        title="Administration"
+        description="Page d'administration de Silverlog"
+        noIndex
+      />
+      <main className="admin-container container">
+        <header className="admin-header">
+          <Shield size={32} />
+          <Title title="Administration" variant="h1" size="xl" />
+        </header>
 
-      <div className="admin-tabs-wrapper">
-        <Tabs
-          selected={tab}
-          setSelected={(id) =>
-            navigate({ search: { tab: id as any }, replace: true })
-          }
-          tabs={adminTabs}
-          variant="transparent"
-        />
-      </div>
-
-      {tab === "general" && (
-        <div className="admin-general-layout">
-          <AdminStats />
-          <CrewPicksEditor />
-          <AdminUsers />
+        <div className="admin-tabs-wrapper">
+          <Tabs
+            selected={tab}
+            setSelected={(id) =>
+              navigate({ search: { tab: id as any }, replace: true })
+            }
+            tabs={adminTabs}
+            variant="transparent"
+          />
         </div>
-      )}
-      {tab === "reviews" && <AdminReviews />}
-    </main>
+
+        {tab === "general" && (
+          <div className="admin-general-layout">
+            <AdminStats />
+            <CrewPicksEditor />
+            <AdminUsers />
+          </div>
+        )}
+        {tab === "reviews" && <AdminReviews />}
+      </main>
+    </>
   );
 }
 
 function CrewPicksEditor() {
   const { data: initialPicks } = useSuspenseQuery(crewPicksQuery());
   const [picks, setPicks] = useState(initialPicks || []);
-  const { value: isEditing, toggle: toggleEditing, setFalse: stopEditing } = useToggle();
+  const {
+    value: isEditing,
+    toggle: toggleEditing,
+    setFalse: stopEditing,
+  } = useToggle();
   const { mutate, isPending } = useUpdateCrewPicks();
 
   useEffect(() => {
@@ -120,11 +132,7 @@ function CrewPicksEditor() {
         <div className="actions">
           {isEditing ? (
             <>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={stopEditing}
-              >
+              <Button variant="outline" size="sm" onClick={stopEditing}>
                 Annuler
               </Button>
               <Button size="sm" onClick={handleSave} disabled={isPending}>
