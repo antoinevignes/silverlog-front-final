@@ -16,6 +16,8 @@ import Title from "@/components/ui/title/title";
 import "./index.scss";
 import FriendsActivity from "@/features/user/components/activity/friends-activity/friends-activity";
 import MovieSwiper from "@/components/ui/movie-swiper/movie-swiper";
+import { Seo } from "@/components/seo/seo";
+import { generateMovieSchema } from "@/components/seo/schema-markup";
 
 export const Route = createFileRoute("/movies/$movieId/")({
   loader: ({ context: { queryClient }, params: { movieId } }) => {
@@ -30,10 +32,23 @@ export const Route = createFileRoute("/movies/$movieId/")({
 
 function RouteComponent() {
   const { movieId } = Route.useParams();
+  const { data: movie } = useSuspenseQuery(movieDetailsQuery(movieId));
   const { data: similar } = useSuspenseQuery(similarMoviesQuery(movieId));
 
+  const movieImage = movie.poster_path
+    ? `https://image.tmdb.org/t/p/original${movie.poster_path}`
+    : undefined;
+
   return (
-    <main>
+    <>
+      <Seo
+        title={`${movie.title} (${new Date(movie.release_date).getFullYear()})`}
+        description={movie.overview?.slice(0, 160)}
+        image={movieImage}
+        type="movie"
+        schemaMarkup={generateMovieSchema(movie)}
+      />
+      <main>
       <Suspense fallback={<MovieHeaderSkeleton />}>
         <MovieHeader />
       </Suspense>
@@ -76,5 +91,6 @@ function RouteComponent() {
         </Suspense>
       </section>
     </main>
+    </>
   );
 }
