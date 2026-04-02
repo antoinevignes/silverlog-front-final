@@ -129,7 +129,7 @@ function CrewPicksEditor() {
     <section className="admin-section">
       <div className="section-title-row">
         <Title title="Sélection de la rédaction" variant="h2" />
-        <div className="actions">
+        <div className="section-title-row__actions">
           {isEditing ? (
             <>
               <Button variant="outline" size="sm" onClick={stopEditing}>
@@ -147,7 +147,7 @@ function CrewPicksEditor() {
         </div>
       </div>
 
-      <p className="text-secondary mb-lg">
+      <p className="section-title-row__description">
         Ces films apparaîtront directement sur la page d'accueil des visiteurs.
         Glissez pour réorganiser, cliquez sur la croix pour retirer.
       </p>
@@ -171,12 +171,12 @@ function CrewPicksEditor() {
                     <li
                       ref={provided.innerRef}
                       {...provided.draggableProps}
-                      className={`pick-item ${snapshot.isDragging ? "is-dragging" : ""}`}
+                      className={`pick-item ${snapshot.isDragging ? "pick-item--dragging" : ""}`}
                       style={provided.draggableProps.style}
                     >
                       <div className="draggable-card-wrapper">
                         {!isEditing && (
-                          <div className="rank-badge font-sentient">
+                          <div className="rank-badge">
                             {index + 1}
                           </div>
                         )}
@@ -189,7 +189,7 @@ function CrewPicksEditor() {
                           </div>
                         )}
                         <div
-                          className={`card-responsive ${isEditing ? "editing-mode" : ""}`}
+                          className={`card-responsive ${isEditing ? "card-responsive--editing" : ""}`}
                         >
                           <MovieCard
                             movie={movie}
@@ -238,8 +238,8 @@ function CrewPickSearch({ onAdd }: { onAdd: (movie: any) => void }) {
   const { data, isLoading } = useQuery(movieSearchQuery(debouncedSearch));
 
   return (
-    <div className="crew-pick-search-box mt-xl">
-      <Title title="Rechercher un film à ajouter" className="mb-sm" />
+    <div className="crew-pick-search-box">
+      <Title title="Rechercher un film à ajouter" className="crew-pick-search-box__title" />
       <div className="search-input-wrapper">
         <SearchIcon size={18} />
         <input
@@ -251,7 +251,7 @@ function CrewPickSearch({ onAdd }: { onAdd: (movie: any) => void }) {
       </div>
 
       {isLoading && search && (
-        <p className="text-secondary text-center py-md">
+        <p className="search-loading">
           Recherche en cours...
         </p>
       )}
@@ -268,16 +268,16 @@ function CrewPickSearch({ onAdd }: { onAdd: (movie: any) => void }) {
                   layout="constrained"
                   background="auto"
                   alt={`Affiche de ${movie.title}`}
-                  className="poster-small"
+                  className="search-result-poster"
                 />
               ) : (
-                <div className="poster-small bg-surface flex-center">
-                  <span className="text-muted text-xs">Sans image</span>
+                <div className="search-result-poster search-result-poster--placeholder">
+                  Sans image
                 </div>
               )}
-              <div className="movie-info">
-                <span className="title truncate-1-line">{movie.title}</span>
-                <span className="year">
+              <div className="search-result-info">
+                <span className="search-result-info__title">{movie.title}</span>
+                <span className="search-result-info__year">
                   {movie.release_date?.substring(0, 4)}
                 </span>
               </div>
@@ -296,7 +296,7 @@ function CrewPickSearch({ onAdd }: { onAdd: (movie: any) => void }) {
       )}
 
       {data?.results && data.results.length === 0 && search && (
-        <p className="text-secondary text-center py-md">
+        <p className="search-empty">
           Aucun film trouvé pour "{search}"
         </p>
       )}
