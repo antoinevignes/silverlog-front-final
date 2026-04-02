@@ -25,7 +25,7 @@ export default function PopularReviews({ limit = 8 }: PopularReviewsProps) {
           <div className="review-card-header">
             <Link
               to="/user/$userId"
-              params={{ userId: String(review.username) }}
+              params={{ userId: review.user_id }}
               className="review-user"
             >
               <Avatar
