@@ -4,9 +4,13 @@
 User-agent: *
 Allow: /
 
+# Routes privées - ne pas indexer
 Disallow: /auth/
 Disallow: /admin/
 Disallow: /user/settings/
 Disallow: /user/activity/
 
 Crawl-delay: 1
+
+# Sitemap
+Sitemap: https://silverlog-front.onrender.com/sitemap.xml
