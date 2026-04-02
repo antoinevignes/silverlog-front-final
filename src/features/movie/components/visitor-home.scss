@@ -22,6 +22,7 @@
       font-weight: 800;
       line-height: 1.1;
       margin-bottom: v.$space-md;
+      font-size: 2.25rem;
 
       @include m.responsive(v.$bp-md) {
         font-size: 4rem;

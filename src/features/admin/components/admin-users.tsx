@@ -37,7 +37,7 @@ export default function AdminUsers() {
           </thead>
           <tbody>
             {users?.map((u: any) => {
-              const isCurrentUser = u.id === currentUser?.id;
+              const isCurrentUser = Number(u.id) === Number(currentUser?.id);
 
               return (
                 <tr key={u.id}>
@@ -51,7 +51,9 @@ export default function AdminUsers() {
                     </span>
                   </td>
                   <td>
-                    <span className={`role-badge ${u.role === "admin" ? "role-badge--admin" : "role-badge--user"}`}>
+                    <span
+                      className={`role-badge ${u.role === "admin" ? "role-badge--admin" : "role-badge--user"}`}
+                    >
                       {u.role === "admin" ? (
                         <Shield size={14} />
                       ) : (
@@ -72,11 +74,6 @@ export default function AdminUsers() {
                           })
                         }
                         disabled={isUpdating || isDeleting || isCurrentUser}
-                        title={
-                          isCurrentUser
-                            ? "Vous ne pouvez pas modifier votre propre rôle"
-                            : undefined
-                        }
                       >
                         {u.role === "admin" ? "Rétrograder" : "Promouvoir"}
                       </Button>
@@ -86,17 +83,12 @@ export default function AdminUsers() {
                         onClick={() => {
                           if (
                             confirm(
-                              `Voulez-vous vraiment bannir/supprimer ${u.username} et toutes ses données ?`,
+                              `Voulez-vous vraiment supprimer ${u.username} et toutes ses données ?`,
                             )
                           ) {
                             deleteUser(u.id);
                           }
                         }}
-                        title={
-                          isCurrentUser
-                            ? "Vous ne pouvez pas supprimer votre propre compte"
-                            : "Supprimer l'utilisateur"
-                        }
                         disabled={isUpdating || isDeleting || isCurrentUser}
                       >
                         <Trash2 size={16} />

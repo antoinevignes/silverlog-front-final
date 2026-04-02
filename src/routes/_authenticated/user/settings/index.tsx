@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import {
   Camera,
   MapPin,
@@ -43,6 +43,7 @@ export const Route = createFileRoute("/_authenticated/user/settings/")({
 function RouteComponent() {
   const { user, logout } = useAuth();
   const [isDesktop, setIsDesktop] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsDesktop(window.innerWidth >= 768);
@@ -482,7 +483,10 @@ function RouteComponent() {
               <Button
                 size="sm"
                 variant="outline"
-                onClick={logout}
+                onClick={() => {
+                  logout();
+                  navigate({ to: "/" });
+                }}
                 className="logout-btn"
               >
                 Se déconnecter

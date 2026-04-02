@@ -132,7 +132,12 @@ export default function DesktopNav() {
                       Administration
                     </DropdownItem>
                   )}
-                  <DropdownItem onClick={logout}>
+                  <DropdownItem
+                    onClick={() => {
+                      logout();
+                      navigate({ to: "/" });
+                    }}
+                  >
                     <LogOut size={16} />
                     Se déconnecter
                   </DropdownItem>
