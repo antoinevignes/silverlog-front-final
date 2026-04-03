@@ -1,7 +1,8 @@
 import "./watchlist.scss";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
-import { ArrowDownUp, ChevronDown } from "lucide-react";
+import { ArrowDownUp, BookmarkPlus, ChevronDown } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import MovieCard from "@/features/movie/components/movie-card/movie-card";
 import { useAuth } from "@/auth";
 import { listDataQuery } from "@/features/list/api/list.queries";
@@ -163,7 +164,15 @@ export default function Watchlist() {
           </section>
         </>
       ) : (
-        <p className="empty-state">Votre watchlist est vide pour le moment.</p>
+        <div className="watchlist-empty-state">
+          <BookmarkPlus size={48} />
+          <p className="text-secondary">
+            Votre watchlist est vide pour le moment.
+          </p>
+          <Link to="/discover" className="discover-link">
+            Commencez à chercher des films
+          </Link>
+        </div>
       )}
     </section>
   );

@@ -2,6 +2,8 @@ import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
+import { CalendarX } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import DiaryMobile from "./diary-mobile/diary-mobile";
 import DiaryDesktop from "./diary-desktop/diary-desktop";
 import "./diary.scss";
@@ -51,7 +53,16 @@ export default function Diary() {
     <main className="container diary-page">
       <div className="diary-layout">
         <section className="diary-content">
-          {groups.map((group) => (
+          {groups.length === 0 ? (
+            <div className="diary-empty-state">
+              <CalendarX size={48} />
+              <p className="text-secondary">Votre journal est vide.</p>
+              <Link to="/discover" className="discover-link">
+                Ajoutez votre premier film
+              </Link>
+            </div>
+          ) : (
+            groups.map((group) => (
             <section
               key={group.id}
               id={group.id}
@@ -68,7 +79,8 @@ export default function Diary() {
               <DiaryMobile movies={group.movies} />
               <DiaryDesktop monthDate={group.date} movies={group.movies} />
             </section>
-          ))}
+          ))
+          )}
         </section>
 
         {groups.length > 0 && (
