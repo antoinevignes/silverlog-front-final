@@ -5,7 +5,7 @@ import { Link } from "@tanstack/react-router";
 import { Avatar } from "@/components/ui/avatar/avatar";
 import { Image } from "@unpic/react";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
-import { Heart } from "lucide-react";
+import { Heart, MessageSquareOff } from "lucide-react";
 
 type PopularReviewsProps = {
   limit?: number;
@@ -15,7 +15,12 @@ export default function PopularReviews({ limit = 8 }: PopularReviewsProps) {
   const { data: reviews } = useSuspenseQuery(popularReviewsQuery(limit));
 
   if (!reviews || reviews.length === 0) {
-    return null;
+    return (
+      <div className="popular-reviews-empty">
+        <MessageSquareOff size={48} />
+        <p className="text-secondary">Aucun commentaire pour le moment.</p>
+      </div>
+    );
   }
 
   return (
