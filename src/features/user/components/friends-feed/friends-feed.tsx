@@ -6,7 +6,7 @@ import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
 import { Image } from "@unpic/react";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
-import { BookmarkPlus, Star } from "lucide-react";
+import { BookmarkPlus, Star, UserX } from "lucide-react";
 import "./friends-feed.scss";
 
 export default function FriendsFeed() {
@@ -105,9 +105,12 @@ export default function FriendsFeed() {
           </article>
         ))
       ) : (
-        <p className="text-secondary text-center">
-          Aucune activité récente parmi vos abonnements.
-        </p>
+        <div className="friends-feed-empty">
+          <UserX size={48} />
+          <p className="text-secondary">
+            Aucune activité récente parmi vos abonnements.
+          </p>
+        </div>
       )}
     </div>
   );
