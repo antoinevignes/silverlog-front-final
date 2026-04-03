@@ -117,7 +117,7 @@ export default function MovieActions({
                 />
 
                 <div>
-                  <h2 className="font-sentient">{movie.title}</h2>
+                  <h2 className="font-fraunces">{movie.title}</h2>
                   <p className="text-secondary">
                     {!Number.isNaN(movieYear) ? movieYear : "NC"}
                   </p>

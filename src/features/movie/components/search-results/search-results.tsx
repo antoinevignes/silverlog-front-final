@@ -38,7 +38,7 @@ export default function SearchResults({ query }: SearchResultsProps) {
       {/* Section Utilisateurs */}
       {users.length > 0 && (
         <section className="search-section">
-          <Title title="Utilisateurs" className="section-title font-sentient" />
+          <Title title="Utilisateurs" className="section-title font-fraunces" />
 
           <ul className="users-grid">
             {users.map((user: any) => (
@@ -55,7 +55,7 @@ export default function SearchResults({ query }: SearchResultsProps) {
                     className="person-avatar-wrapper"
                   />
 
-                  <h3 className="person-name font-sentient">{user.username}</h3>
+                  <h3 className="person-name font-fraunces">{user.username}</h3>
                 </Link>
               </li>
             ))}
@@ -112,7 +112,7 @@ export default function SearchResults({ query }: SearchResultsProps) {
                     </div>
 
                     <div className="person-meta">
-                      <h3 className="person-name font-sentient">{item.name}</h3>
+                      <h3 className="person-name font-fraunces">{item.name}</h3>
                     </div>
                   </Link>
                 </li>

@@ -64,7 +64,7 @@ export default function FriendsFeed() {
               </Link>
 
               <div className="feed-content">
-                <h4 className="feed-movie-title font-sentient">
+                <h4 className="feed-movie-title font-fraunces">
                   {activity.title}
                 </h4>
 

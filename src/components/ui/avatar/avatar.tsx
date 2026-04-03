@@ -66,7 +66,7 @@ export function Avatar({
 
   return (
     <div
-      className={`avatar avatar-initial font-sentient ${sizeClass} ${className}`.trim()}
+      className={`avatar avatar-initial font-fraunces ${sizeClass} ${className}`.trim()}
       style={style}
       aria-label={`Initiale de ${username}`}
     >

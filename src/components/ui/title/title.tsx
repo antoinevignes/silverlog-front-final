@@ -19,7 +19,7 @@ export default function Title({
 
   return (
     <div className={`title-container ${className}`} id={id}>
-      <Tag className={`font-sentient truncate-2-lines title ${size}`}>
+      <Tag className={`font-fraunces truncate-2-lines title ${size}`}>
         {title}
       </Tag>
       {subtitle && <p className="text-secondary subtitle">{subtitle}</p>}

@@ -36,7 +36,7 @@ export default function AdminStats() {
                 <Icon size={24} />
               </div>
               <div className="stat-content">
-                <span className="stat-value font-sentient">{stat.value}</span>
+                <span className="stat-value font-fraunces">{stat.value}</span>
                 <span className="stat-label text-secondary">{stat.label}</span>
               </div>
             </div>

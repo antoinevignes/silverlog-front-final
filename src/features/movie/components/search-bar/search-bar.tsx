@@ -227,7 +227,7 @@ export default function SearchBar() {
                         />
                       )}
                       <div className="movie-info">
-                        <h2 className="font-sentient">
+                        <h2 className="font-fraunces">
                           {anyItem.title || anyItem.name || anyItem.username}
                         </h2>
                         {item.type === "movie" && (

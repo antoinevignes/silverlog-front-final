@@ -20,7 +20,7 @@ export default function Footer() {
               background="auto"
               priority
             />
-            <span className="font-sentient brand-name">Silverlog</span>
+            <span className="font-fraunces brand-name">Silverlog</span>
           </Link>
           <p className="footer-description text-secondary truncate-3-lines">
             Votre journal cinématographique personnel. Gardez une trace de tous
@@ -31,7 +31,7 @@ export default function Footer() {
 
         <div className="footer-links-grid">
           <div className="footer-col">
-            <h3 className="col-title font-sentient">Navigation</h3>
+            <h3 className="col-title font-fraunces">Navigation</h3>
             <ul className="footer-links">
               <li>
                 <Link to="/" className="link">
@@ -52,7 +52,7 @@ export default function Footer() {
           </div>
 
           <div className="footer-col">
-            <h3 className="col-title font-sentient">Légal</h3>
+            <h3 className="col-title font-fraunces">Légal</h3>
             <ul className="footer-links">
               <li>
                 <Link to="/about" className="link">

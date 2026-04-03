@@ -85,7 +85,7 @@ export default function FriendsActivity() {
                     className="modal-avatar"
                   />
                   <div className="modal-user-meta">
-                    <h3 className="modal-username font-sentient">
+                    <h3 className="modal-username font-fraunces">
                       {selectedActivity.username}
                     </h3>
                     <time className="text-secondary modal-time">
@@ -121,7 +121,7 @@ export default function FriendsActivity() {
                       />
                     ))}
                   </div>
-                  <span className="rating-value font-sentient">
+                  <span className="rating-value font-fraunces">
                     {selectedActivity.rating / 2}/10
                   </span>
                 </div>

@@ -17,7 +17,7 @@ export default function UserHomeHeader() {
         <div className="welcome-section">
           <Title
             title={`Bon retour, ${user?.username} !`}
-            className="welcome-title font-sentient"
+            className="welcome-title font-fraunces"
             size="lg"
             variant="h1"
           />

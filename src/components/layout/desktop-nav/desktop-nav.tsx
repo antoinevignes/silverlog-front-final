@@ -38,7 +38,7 @@ export default function DesktopNav() {
             background="auto"
             priority
           />
-          <span className="brand-name font-sentient">Silverlog</span>
+          <span className="brand-name font-fraunces">Silverlog</span>
         </Link>
 
         <nav className="main-nav">
