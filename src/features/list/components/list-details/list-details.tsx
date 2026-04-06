@@ -4,7 +4,7 @@ import { fr } from "date-fns/locale";
 import { Bookmark, ChevronDown, Film, Pencil, TrendingUp } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getRouteApi } from "@tanstack/react-router";
+import { getRouteApi, Link } from "@tanstack/react-router";
 import "./list-details.scss";
 import { useToggle } from "@/hooks/use-toggle";
 import MovieCard from "@/features/movie/components/movie-card/movie-card";
@@ -56,7 +56,7 @@ export default function ListDetails() {
   const movies = listData.movies;
 
   const watchedPercent = useMemo(() => {
-    if (!movies) return 0;
+    if (!movies || movies.length === 0) return 0;
     const watchedCount = movies.filter((m: MovieType) => m.seen_at).length;
     return Math.round((watchedCount / movies.length) * 100);
   }, [movies]);
@@ -121,14 +121,20 @@ export default function ListDetails() {
         className="list-title"
       />
 
-      <Image
-        src={getCloudinarySrc(movies[0].backdrop_path, "backdrops")}
-        alt={`Bannière de la liste ${listData.title}`}
-        layout="fullWidth"
-        aspectRatio={16 / 9}
-        background="auto"
-        className="list-backdrop"
-      />
+      {movies.length > 0 ? (
+        <Image
+          src={getCloudinarySrc(movies[0].backdrop_path, "backdrops")}
+          alt={`Bannière de la liste ${listData.title}`}
+          layout="fullWidth"
+          aspectRatio={16 / 9}
+          background="auto"
+          className="list-backdrop"
+        />
+      ) : (
+        <div className="list-backdrop-empty">
+          <Film size={48} />
+        </div>
+      )}
 
       <section className="author-section">
         <div className="author-info">
@@ -249,109 +255,121 @@ export default function ListDetails() {
         </span>
       </section>
 
-      <section>
-        <header className="list-filters">
-          <div className="left-filters">
-            {user && (
+      {movies.length === 0 ? (
+        <div className="list-movies-empty">
+          <Film size={48} />
+          <p className="text-secondary">Cette liste ne contient aucun film.</p>
+          {isOwner && (
+            <Link to="/discover" className="discover-link">
+              Ajouter des films
+            </Link>
+          )}
+        </div>
+      ) : (
+        <section>
+          <header className="list-filters">
+            <div className="left-filters">
+              {user && (
+                <DropdownMenu>
+                  <DropdownTrigger>
+                    <Badge variant="secondary" className="filter-badge" size="lg">
+                      <span className="truncate">
+                        {filterType === "all"
+                          ? "Statut"
+                          : filterType === "unwatched"
+                            ? "À voir"
+                            : "Vu"}
+                      </span>
+                      <ChevronDown size={14} className="icon-shrink" />
+                    </Badge>
+                  </DropdownTrigger>
+                  <DropdownContent align="left">
+                    <DropdownItem onClick={() => setFilterType("all")}>
+                      Tous
+                    </DropdownItem>
+                    <DropdownItem onClick={() => setFilterType("unwatched")}>
+                      À voir
+                    </DropdownItem>
+                    <DropdownItem onClick={() => setFilterType("watched")}>
+                      Vu
+                    </DropdownItem>
+                  </DropdownContent>
+                </DropdownMenu>
+              )}
+
               <DropdownMenu>
                 <DropdownTrigger>
                   <Badge variant="secondary" className="filter-badge" size="lg">
                     <span className="truncate">
-                      {filterType === "all"
-                        ? "Statut"
-                        : filterType === "unwatched"
-                          ? "À voir"
-                          : "Vu"}
+                      {selectedGenre === "all"
+                        ? "Genre"
+                        : availableGenres.find(
+                            ([id]) => id === selectedGenre,
+                          )?.[1]}
                     </span>
                     <ChevronDown size={14} className="icon-shrink" />
                   </Badge>
                 </DropdownTrigger>
-                <DropdownContent align="left">
-                  <DropdownItem onClick={() => setFilterType("all")}>
-                    Tous
+                <DropdownContent align="right">
+                  <DropdownItem onClick={() => setSelectedGenre("all")}>
+                    Tous les genres
                   </DropdownItem>
-                  <DropdownItem onClick={() => setFilterType("unwatched")}>
-                    À voir
-                  </DropdownItem>
-                  <DropdownItem onClick={() => setFilterType("watched")}>
-                    Vu
-                  </DropdownItem>
+                  {availableGenres.map(([id, name]) => (
+                    <DropdownItem key={id} onClick={() => setSelectedGenre(id)}>
+                      {name}
+                    </DropdownItem>
+                  ))}
                 </DropdownContent>
               </DropdownMenu>
-            )}
+            </div>
 
             <DropdownMenu>
               <DropdownTrigger>
                 <Badge variant="secondary" className="filter-badge" size="lg">
                   <span className="truncate">
-                    {selectedGenre === "all"
-                      ? "Genre"
-                      : availableGenres.find(
-                          ([id]) => id === selectedGenre,
-                        )?.[1]}
+                    {sortBy === "default" && "Tri par défaut"}
+                    {sortBy === "release_date" && "Plus récent"}
+                    {sortBy === "oldest" && "Plus ancien"}
+                    {sortBy === "title" && "Alphabétique"}
                   </span>
                   <ChevronDown size={14} className="icon-shrink" />
                 </Badge>
               </DropdownTrigger>
-              <DropdownContent align="right">
-                <DropdownItem onClick={() => setSelectedGenre("all")}>
-                  Tous les genres
+              <DropdownContent align="left">
+                <DropdownItem onClick={() => setSortBy("default")}>
+                  Par défaut
                 </DropdownItem>
-                {availableGenres.map(([id, name]) => (
-                  <DropdownItem key={id} onClick={() => setSelectedGenre(id)}>
-                    {name}
-                  </DropdownItem>
-                ))}
+                <DropdownItem onClick={() => setSortBy("release_date")}>
+                  Plus récent
+                </DropdownItem>
+                <DropdownItem onClick={() => setSortBy("oldest")}>
+                  Plus ancien
+                </DropdownItem>
+                <DropdownItem onClick={() => setSortBy("title")}>
+                  Alphabétique
+                </DropdownItem>
               </DropdownContent>
             </DropdownMenu>
-          </div>
+          </header>
 
-          <DropdownMenu>
-            <DropdownTrigger>
-              <Badge variant="secondary" className="filter-badge" size="lg">
-                <span className="truncate">
-                  {sortBy === "default" && "Tri par défaut"}
-                  {sortBy === "release_date" && "Plus récent"}
-                  {sortBy === "oldest" && "Plus ancien"}
-                  {sortBy === "title" && "Alphabétique"}
-                </span>
-                <ChevronDown size={14} className="icon-shrink" />
-              </Badge>
-            </DropdownTrigger>
-            <DropdownContent align="left">
-              <DropdownItem onClick={() => setSortBy("default")}>
-                Par défaut
-              </DropdownItem>
-              <DropdownItem onClick={() => setSortBy("release_date")}>
-                Plus récent
-              </DropdownItem>
-              <DropdownItem onClick={() => setSortBy("oldest")}>
-                Plus ancien
-              </DropdownItem>
-              <DropdownItem onClick={() => setSortBy("title")}>
-                Alphabétique
-              </DropdownItem>
-            </DropdownContent>
-          </DropdownMenu>
-        </header>
-
-        <section className="posters-grid">
-          {filteredMovies.length === 0 ? (
-            <p className="empty-state">
-              Aucun film ne correspond à vos filtres.
-            </p>
-          ) : (
-            filteredMovies.map((movie: MovieType) => (
-              <MovieCard
-                key={movie.id}
-                movie={movie}
-                size="sm"
-                onRemove={isOwner ? () => removeMovie(movie.id) : undefined}
-              />
-            ))
-          )}
+          <section className="posters-grid">
+            {filteredMovies.length === 0 ? (
+              <p className="empty-state">
+                Aucun film ne correspond à vos filtres.
+              </p>
+            ) : (
+              filteredMovies.map((movie: MovieType) => (
+                <MovieCard
+                  key={movie.id}
+                  movie={movie}
+                  size="sm"
+                  onRemove={isOwner ? () => removeMovie(movie.id) : undefined}
+                />
+              ))
+            )}
+          </section>
         </section>
-      </section>
+      )}
     </main>
   );
 }

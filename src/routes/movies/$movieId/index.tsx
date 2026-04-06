@@ -1,6 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
+import { Film } from "lucide-react";
 import MovieHeader from "@/features/movie/components/movie-header/movie-header";
 import {
   movieCreditsQuery,
@@ -87,7 +88,14 @@ function RouteComponent() {
             </li>
           ))}
         >
-          <MovieSwiper movies={similar.results} />
+          {similar.results.length > 0 ? (
+            <MovieSwiper movies={similar.results} />
+          ) : (
+            <div className="similar-movies-empty">
+              <Film size={48} />
+              <p className="text-secondary">Aucun film similaire trouvé.</p>
+            </div>
+          )}
         </Suspense>
       </section>
     </main>

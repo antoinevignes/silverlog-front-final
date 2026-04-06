@@ -127,6 +127,7 @@ export const useCreateList = () => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: listKeys.custom(user?.id ?? "") });
+      queryClient.invalidateQueries({ queryKey: listKeys.personal(user?.id?.toString() ?? "") });
       toast.success("Liste créée avec succès");
     },
 
