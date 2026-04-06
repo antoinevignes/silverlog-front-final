@@ -14,7 +14,6 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as SearchIndexRouteImport } from './routes/search/index'
 import { Route as MoviesIndexRouteImport } from './routes/movies/index'
 import { Route as DiscoverIndexRouteImport } from './routes/discover/index'
-import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AboutIndexRouteImport } from './routes/about/index'
 import { Route as AuthVerifyEmailRouteImport } from './routes/auth/verify-email'
 import { Route as AuthSignUpRouteImport } from './routes/auth/sign-up'
@@ -23,6 +22,7 @@ import { Route as UserUserIdIndexRouteImport } from './routes/user/$userId/index
 import { Route as PersonPersonIdIndexRouteImport } from './routes/person/$personId/index'
 import { Route as MoviesMovieIdIndexRouteImport } from './routes/movies/$movieId/index'
 import { Route as ListsListIdIndexRouteImport } from './routes/lists/$listId/index'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
 import { Route as AuthenticatedUserSettingsIndexRouteImport } from './routes/_authenticated/user/settings/index'
 import { Route as AuthenticatedUserActivityIndexRouteImport } from './routes/_authenticated/user/activity/index'
 
@@ -48,11 +48,6 @@ const MoviesIndexRoute = MoviesIndexRouteImport.update({
 const DiscoverIndexRoute = DiscoverIndexRouteImport.update({
   id: '/discover/',
   path: '/discover/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminIndexRoute = AdminIndexRouteImport.update({
-  id: '/admin/',
-  path: '/admin/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutIndexRoute = AboutIndexRouteImport.update({
@@ -95,6 +90,11 @@ const ListsListIdIndexRoute = ListsListIdIndexRouteImport.update({
   path: '/lists/$listId/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedUserSettingsIndexRoute =
   AuthenticatedUserSettingsIndexRouteImport.update({
     id: '/user/settings/',
@@ -114,10 +114,10 @@ export interface FileRoutesByFullPath {
   '/auth/sign-up': typeof AuthSignUpRoute
   '/auth/verify-email': typeof AuthVerifyEmailRoute
   '/about/': typeof AboutIndexRoute
-  '/admin/': typeof AdminIndexRoute
   '/discover/': typeof DiscoverIndexRoute
   '/movies/': typeof MoviesIndexRoute
   '/search/': typeof SearchIndexRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
   '/lists/$listId/': typeof ListsListIdIndexRoute
   '/movies/$movieId/': typeof MoviesMovieIdIndexRoute
   '/person/$personId/': typeof PersonPersonIdIndexRoute
@@ -131,10 +131,10 @@ export interface FileRoutesByTo {
   '/auth/sign-up': typeof AuthSignUpRoute
   '/auth/verify-email': typeof AuthVerifyEmailRoute
   '/about': typeof AboutIndexRoute
-  '/admin': typeof AdminIndexRoute
   '/discover': typeof DiscoverIndexRoute
   '/movies': typeof MoviesIndexRoute
   '/search': typeof SearchIndexRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
   '/lists/$listId': typeof ListsListIdIndexRoute
   '/movies/$movieId': typeof MoviesMovieIdIndexRoute
   '/person/$personId': typeof PersonPersonIdIndexRoute
@@ -150,10 +150,10 @@ export interface FileRoutesById {
   '/auth/sign-up': typeof AuthSignUpRoute
   '/auth/verify-email': typeof AuthVerifyEmailRoute
   '/about/': typeof AboutIndexRoute
-  '/admin/': typeof AdminIndexRoute
   '/discover/': typeof DiscoverIndexRoute
   '/movies/': typeof MoviesIndexRoute
   '/search/': typeof SearchIndexRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/lists/$listId/': typeof ListsListIdIndexRoute
   '/movies/$movieId/': typeof MoviesMovieIdIndexRoute
   '/person/$personId/': typeof PersonPersonIdIndexRoute
@@ -169,10 +169,10 @@ export interface FileRouteTypes {
     | '/auth/sign-up'
     | '/auth/verify-email'
     | '/about/'
-    | '/admin/'
     | '/discover/'
     | '/movies/'
     | '/search/'
+    | '/admin/'
     | '/lists/$listId/'
     | '/movies/$movieId/'
     | '/person/$personId/'
@@ -186,10 +186,10 @@ export interface FileRouteTypes {
     | '/auth/sign-up'
     | '/auth/verify-email'
     | '/about'
-    | '/admin'
     | '/discover'
     | '/movies'
     | '/search'
+    | '/admin'
     | '/lists/$listId'
     | '/movies/$movieId'
     | '/person/$personId'
@@ -204,10 +204,10 @@ export interface FileRouteTypes {
     | '/auth/sign-up'
     | '/auth/verify-email'
     | '/about/'
-    | '/admin/'
     | '/discover/'
     | '/movies/'
     | '/search/'
+    | '/_authenticated/admin/'
     | '/lists/$listId/'
     | '/movies/$movieId/'
     | '/person/$personId/'
@@ -223,7 +223,6 @@ export interface RootRouteChildren {
   AuthSignUpRoute: typeof AuthSignUpRoute
   AuthVerifyEmailRoute: typeof AuthVerifyEmailRoute
   AboutIndexRoute: typeof AboutIndexRoute
-  AdminIndexRoute: typeof AdminIndexRoute
   DiscoverIndexRoute: typeof DiscoverIndexRoute
   MoviesIndexRoute: typeof MoviesIndexRoute
   SearchIndexRoute: typeof SearchIndexRoute
@@ -268,13 +267,6 @@ declare module '@tanstack/react-router' {
       path: '/discover'
       fullPath: '/discover/'
       preLoaderRoute: typeof DiscoverIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/': {
-      id: '/admin/'
-      path: '/admin'
-      fullPath: '/admin/'
-      preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about/': {
@@ -333,6 +325,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ListsListIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/user/settings/': {
       id: '/_authenticated/user/settings/'
       path: '/user/settings'
@@ -351,11 +350,13 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
   AuthenticatedUserActivityIndexRoute: typeof AuthenticatedUserActivityIndexRoute
   AuthenticatedUserSettingsIndexRoute: typeof AuthenticatedUserSettingsIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
   AuthenticatedUserActivityIndexRoute: AuthenticatedUserActivityIndexRoute,
   AuthenticatedUserSettingsIndexRoute: AuthenticatedUserSettingsIndexRoute,
 }
@@ -370,7 +371,6 @@ const rootRouteChildren: RootRouteChildren = {
   AuthSignUpRoute: AuthSignUpRoute,
   AuthVerifyEmailRoute: AuthVerifyEmailRoute,
   AboutIndexRoute: AboutIndexRoute,
-  AdminIndexRoute: AdminIndexRoute,
   DiscoverIndexRoute: DiscoverIndexRoute,
   MoviesIndexRoute: MoviesIndexRoute,
   SearchIndexRoute: SearchIndexRoute,
