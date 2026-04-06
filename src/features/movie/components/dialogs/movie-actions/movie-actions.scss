@@ -28,12 +28,20 @@
     }
   }
 
+  .header-actions {
+    display: flex;
+    gap: v.$space-sm;
+    align-items: center;
+  }
+
+  .top-btn,
   .watchlist-btn {
     background-color: transparent;
     border: none;
     cursor: pointer;
     color: v.$c-muted;
     transition: color 0.2s ease, transform 0.2s ease;
+    padding: v.$space-xs;
 
     &:hover,
     &:focus-visible {
@@ -41,6 +49,16 @@
       transform: scale(1.1);
     }
   }
+
+  .top-btn--active {
+    color: v.$warning;
+
+    &:hover,
+    &:focus-visible {
+      color: v.$warning;
+    }
+  }
+
 }
 
 .dialog-buttons {

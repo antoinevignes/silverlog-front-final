@@ -124,23 +124,49 @@ export default function MovieActions({
                 </div>
               </section>
 
-              <button
-                className="watchlist-btn"
-                disabled={isPending}
-                onClick={() =>
-                  toggleList({
-                    type: "watchlist",
-                    movieId,
-                    title: movie.title,
-                    posterPath: movie.poster_path,
-                    backdropPath: movie.backdrop_path,
-                    releaseDate: movie.release_date,
-                    genres: movie.genres,
-                  })
-                }
-              >
-                <Bookmark fill={isInWatchlist ? "currentColor" : "none"} />
-              </button>
+              <div className="header-actions">
+                <button
+                  className={`top-btn ${isInTop ? "top-btn--active" : ""}`}
+                  disabled={isPending}
+                  onClick={() =>
+                    toggleList({
+                      type: "top",
+                      movieId,
+                      title: movie.title,
+                      posterPath: movie.poster_path,
+                      backdropPath: movie.backdrop_path,
+                      releaseDate: movie.release_date,
+                      genres: movie.genres,
+                    })
+                  }
+                  title={isInTop ? "Dans mon top" : "Ajouter à mon top"}
+                >
+                  {isInTop ? (
+                    <TrophySolid width={22} aria-hidden />
+                  ) : (
+                    <TrophyIcon width={22} aria-hidden strokeWidth={2} />
+                  )}
+                </button>
+
+                <button
+                  className="watchlist-btn"
+                  disabled={isPending}
+                  onClick={() =>
+                    toggleList({
+                      type: "watchlist",
+                      movieId,
+                      title: movie.title,
+                      posterPath: movie.poster_path,
+                      backdropPath: movie.backdrop_path,
+                      releaseDate: movie.release_date,
+                      genres: movie.genres,
+                    })
+                  }
+                  title={isInWatchlist ? "Dans ma watchlist" : "Ajouter à ma watchlist"}
+                >
+                  <Bookmark fill={isInWatchlist ? "currentColor" : "none"} />
+                </button>
+              </div>
             </header>
 
             <Rating
@@ -158,29 +184,6 @@ export default function MovieActions({
 
               <button className="action-card" onClick={goToReview}>
                 <PenLine size={18} /> Écrire un avis
-              </button>
-
-              <button
-                className="action-card"
-                onClick={() =>
-                  toggleList({
-                    type: "top",
-                    movieId,
-                    title: movie.title,
-                    posterPath: movie.poster_path,
-                    backdropPath: movie.backdrop_path,
-                    releaseDate: movie.release_date,
-                    genres: movie.genres,
-                  })
-                }
-                disabled={isPending}
-              >
-                {isInTop ? (
-                  <TrophySolid width={20} aria-hidden className="toggled-svg" />
-                ) : (
-                  <TrophyIcon width={20} aria-hidden strokeWidth={2} />
-                )}
-                {isInTop ? "Dans mon top" : "Ajouter à mon top"}
               </button>
 
               <button className="action-card" onClick={goToCustomLists}>
