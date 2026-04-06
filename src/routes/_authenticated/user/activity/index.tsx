@@ -12,6 +12,7 @@ import Skeleton from "@/components/ui/skeleton/skeleton";
 import Lists from "@/features/user/components/lists/lists";
 import { useAuth } from "@/auth";
 import { Seo } from "@/components/seo/seo";
+import z from "zod";
 
 const tabs = [
   { id: "watchlist", label: "Watchlist" },
@@ -19,7 +20,15 @@ const tabs = [
   { id: "lists", label: "Listes" },
 ];
 
+const activitySearchSchema = z.object({
+  tab: z
+    .enum(["watchlist", "diary", "lists"])
+    .catch("watchlist")
+    .default("watchlist"),
+});
+
 export const Route = createFileRoute("/_authenticated/user/activity/")({
+  validateSearch: activitySearchSchema,
   loader: ({ context }) => {
     context.queryClient.prefetchQuery(
       listDataQuery(context.auth.user!.watchlist_id),
@@ -31,8 +40,9 @@ export const Route = createFileRoute("/_authenticated/user/activity/")({
 
 function RouteComponent() {
   const { user } = useAuth();
+  const { tab } = Route.useSearch();
+  const navigate = Route.useNavigate();
 
-  const [selected, setSelected] = useState<string>("watchlist");
   const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
@@ -52,26 +62,28 @@ function RouteComponent() {
       <main className="container activity-page">
         <div className="activity-tabs-container">
           <Tabs
-            selected={selected}
-            setSelected={setSelected}
+            selected={tab}
+            setSelected={(id) =>
+              navigate({ search: { tab: id as any }, replace: true })
+            }
             tabs={tabs}
             variant={isDesktop ? "transparent" : "header"}
           />
         </div>
 
-        {selected === "watchlist" && (
+        {tab === "watchlist" && (
           <Suspense fallback={<WatchlistSkeleton />}>
             <Watchlist />
           </Suspense>
         )}
 
-        {selected === "diary" && (
+        {tab === "diary" && (
           <Suspense fallback={<DiarySkeleton />}>
             <Diary />
           </Suspense>
         )}
 
-        {selected === "lists" && (
+        {tab === "lists" && (
           <Suspense
             fallback={
               <div className="lists-skeleton-grid">

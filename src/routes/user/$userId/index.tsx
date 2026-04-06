@@ -2,7 +2,7 @@ import "./index.scss";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import type { DropResult } from "@hello-pangea/dnd";
-import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import {
   Edit,
   MapPin,
@@ -42,8 +42,17 @@ import "@/components/ui/movie-swiper/movie-swiper.scss";
 import { Avatar } from "@/components/ui/avatar/avatar";
 import { Seo } from "@/components/seo/seo";
 import { generateProfileSchema } from "@/components/seo/schema-markup";
+import z from "zod";
+
+const userProfileSearchSchema = z.object({
+  tab: z
+    .enum(["a-propos", "watchlist", "lists"])
+    .catch("a-propos")
+    .default("a-propos"),
+});
 
 export const Route = createFileRoute("/user/$userId/")({
+  validateSearch: userProfileSearchSchema,
   loader: async ({ context: { queryClient }, params: { userId } }) => {
     await queryClient.prefetchQuery(userQuery(userId));
   },
@@ -52,14 +61,13 @@ export const Route = createFileRoute("/user/$userId/")({
 
 function RouteComponent() {
   const { user } = useAuth();
-  const navigate = useNavigate();
+  const navigate = Route.useNavigate();
   const { userId } = Route.useParams();
   const { data: userData } = useSuspenseQuery(userQuery(userId));
+  const { tab } = Route.useSearch();
 
   const { mutate: followUser } = useFollowUser(userId);
   const { mutate: unfollowUser } = useUnfollowUser(userId);
-
-  const [selected, setSelected] = useState<string>("a-propos");
 
   const {
     value: isFollowModalOpen,
@@ -272,14 +280,16 @@ function RouteComponent() {
           </header>
 
           <Tabs
-            selected={selected}
-            setSelected={setSelected}
+            selected={tab}
+            setSelected={(id) =>
+              navigate({ search: { tab: id as any }, replace: true })
+            }
             tabs={tabs}
             variant="transparent"
           />
 
           <section className="profile-content" aria-label="Contenu du profil">
-            {selected === "a-propos" && (
+            {tab === "a-propos" && (
               <>
                 <section
                   className="content-section"
@@ -334,7 +344,10 @@ function RouteComponent() {
                     </div>
                   ) : (
                     <DragDropContext onDragEnd={onDragEnd}>
-                      <Droppable droppableId="top-movies" direction="horizontal">
+                      <Droppable
+                        droppableId="top-movies"
+                        direction="horizontal"
+                      >
                         {(provided) => (
                           <ul
                             className="top-movies-grid"
@@ -369,7 +382,10 @@ function RouteComponent() {
                                           {...provided.dragHandleProps}
                                           className="drag-handle"
                                         >
-                                          <GripVertical size={16} color="white" />
+                                          <GripVertical
+                                            size={16}
+                                            color="white"
+                                          />
                                         </div>
                                       )}
                                       <div
@@ -491,7 +507,7 @@ function RouteComponent() {
               </>
             )}
 
-            {selected === "watchlist" && (
+            {tab === "watchlist" && (
               <Suspense
                 fallback={
                   <ul className="watchlist-grid">
@@ -507,7 +523,7 @@ function RouteComponent() {
               </Suspense>
             )}
 
-            {selected === "lists" && (
+            {tab === "lists" && (
               <Suspense
                 fallback={
                   <div className="lists-skeleton-grid">

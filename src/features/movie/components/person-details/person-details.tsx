@@ -4,7 +4,7 @@ import { Image } from "@unpic/react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { Cake, CircleUser, Clapperboard, MapPin } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import BiographyContainer from "@/features/movie/components/biography-container/biography-container";
 import MovieCard from "@/features/movie/components/movie-card/movie-card";
 import Title from "@/components/ui/title/title";
@@ -22,7 +22,8 @@ import "./person-details.scss";
 export default function PersonDetails() {
   const routeApi = getRouteApi("/person/$personId/");
   const { personId } = routeApi.useParams();
-  const [selected, setSelected] = useState<string>("details");
+  const { tab } = routeApi.useSearch();
+  const navigate = routeApi.useNavigate();
 
   const [
     { data: personDetails },
@@ -185,13 +186,15 @@ export default function PersonDetails() {
             className="desktop-only-title"
           />
           <Tabs
-            selected={selected}
-            setSelected={setSelected}
+            selected={tab}
+            setSelected={(id) =>
+              navigate({ search: { tab: id as any }, replace: true })
+            }
             tabs={dynamicTabs}
             variant="transparent"
           />
 
-          {selected === "details" && (
+          {tab === "details" && (
             <>
               <BiographyContainer
                 personDetails={personDetails}
@@ -213,44 +216,44 @@ export default function PersonDetails() {
             </>
           )}
 
-          {selected === "actor" && renderMovieList(personCredits.cast)}
+          {tab === "actor" && renderMovieList(personCredits.cast)}
 
-          {selected === "director" &&
+          {tab === "director" &&
             renderMovieList(
               personCredits.crew.filter(
                 (m: { job: string }) => m.job === "Director",
               ),
             )}
 
-          {selected === "writer" &&
+          {tab === "writer" &&
             renderMovieList(
               personCredits.crew.filter((m: { job: string }) =>
                 ["Story", "Screenplay", "Writer"].includes(m.job),
               ),
             )}
 
-          {selected === "composer" &&
+          {tab === "composer" &&
             renderMovieList(
               personCredits.crew.filter(
                 (m: { job: string }) => m.job === "Original Music Composer",
               ),
             )}
 
-          {selected === "photography" &&
+          {tab === "photography" &&
             renderMovieList(
               personCredits.crew.filter(
                 (m: { job: string }) => m.job === "Director of Photography",
               ),
             )}
 
-          {selected === "editor" &&
+          {tab === "editor" &&
             renderMovieList(
               personCredits.crew.filter(
                 (m: { job: string }) => m.job === "Editor",
               ),
             )}
 
-          {selected === "producer" &&
+          {tab === "producer" &&
             renderMovieList(
               personCredits.crew.filter((m: { job: string }) =>
                 ["Producer", "Executive Producer"].includes(m.job),

@@ -1,7 +1,7 @@
 import "./movie-header.scss";
 import { Link, getRouteApi } from "@tanstack/react-router";
 import { Dot, Film } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Image } from "@unpic/react";
 import MovieActions from "@/features/movie/components/dialogs/movie-actions/movie-actions";
@@ -28,8 +28,8 @@ const tabs = [
 export default function MovieHeader() {
   const routeApi = getRouteApi("/movies/$movieId/");
   const { movieId } = routeApi.useParams();
-
-  const [selected, setSelected] = useState<string>("details");
+  const { tab } = routeApi.useSearch();
+  const navigate = routeApi.useNavigate();
 
   const { data: movie } = useSuspenseQuery(movieDetailsQuery(movieId));
   const { data: movieData } = useSuspenseQuery(movieDataQuery(movieId));
@@ -160,17 +160,19 @@ export default function MovieHeader() {
 
         <section className="details-section">
           <Tabs
-            selected={selected}
-            setSelected={setSelected}
+            selected={tab}
+            setSelected={(id) =>
+              navigate({ search: { tab: id as any }, replace: true })
+            }
             tabs={tabs}
             variant="transparent"
           />
 
-          {selected === "details" && <MovieDetails />}
+          {tab === "details" && <MovieDetails />}
 
-          {selected === "cast" && <MovieCast />}
+          {tab === "cast" && <MovieCast />}
 
-          {selected === "crew" && <MovieCrew />}
+          {tab === "crew" && <MovieCrew />}
         </section>
       </article>
     </>

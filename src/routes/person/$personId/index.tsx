@@ -10,8 +10,26 @@ import PersonDetails from "@/features/movie/components/person-details/person-det
 import PersonDetailsSkeleton from "@/features/movie/components/person-details/person-details-skeleton";
 import { Seo } from "@/components/seo/seo";
 import { generatePersonSchema } from "@/components/seo/schema-markup";
+import z from "zod";
+
+const personDetailsSearchSchema = z.object({
+  tab: z
+    .enum([
+      "details",
+      "actor",
+      "director",
+      "writer",
+      "producer",
+      "composer",
+      "photography",
+      "editor",
+    ])
+    .catch("details")
+    .default("details"),
+});
 
 export const Route = createFileRoute("/person/$personId/")({
+  validateSearch: personDetailsSearchSchema,
   loader: ({ context: { queryClient }, params: { personId } }) => {
     queryClient.prefetchQuery(personDetailsQuery(personId));
     queryClient.prefetchQuery(personDetailsQueryUS(personId));
