@@ -58,7 +58,9 @@ export default function ListDetails() {
 
   const watchedPercent = useMemo(() => {
     if (!movies || movies.length === 0) return 0;
-    const watchedCount = movies.filter((m: MovieType) => m.seen_at).length;
+    const watchedCount = movies.filter(
+      (m: MovieType) => m.seen_at || m.rated_at,
+    ).length;
     return Math.round((watchedCount / movies.length) * 100);
   }, [movies]);
 
@@ -82,9 +84,9 @@ export default function ListDetails() {
     let result = [...movies];
 
     if (filterType === "watched") {
-      result = result.filter((m) => m.seen_at);
+      result = result.filter((m) => m.seen_at || m.rated_at);
     } else if (filterType === "unwatched") {
-      result = result.filter((m) => !m.seen_at);
+      result = result.filter((m) => !m.seen_at && !m.rated_at);
     }
 
     if (selectedGenre !== "all") {
@@ -147,7 +149,13 @@ export default function ListDetails() {
           />
 
           <div className="author-details">
-            <span className="author-name">{listData.username}</span>
+            <Link
+              to="/user/$userId"
+              params={{ userId: listData.user_id }}
+              className="author-name"
+            >
+              {listData.username}
+            </Link>
 
             <span className="updated-date">
               Mis à jour il y a{" "}

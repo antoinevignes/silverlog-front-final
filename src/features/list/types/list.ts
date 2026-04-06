@@ -6,6 +6,7 @@ export type ListType = {
   description: string;
   list_type: string;
   username?: string;
+  user_id: string;
   saved_count: number;
   updated_at?: string;
   is_saved?: boolean;

@@ -20,6 +20,7 @@ export type TMDBMovieData = {
 // Données internes (liées au user ou à l'app)
 export type UserMovieData = {
   seen_at: string;
+  rated_at: string;
   personal_rating: number;
   rating_count?: number;
   movie_avg?: number;
