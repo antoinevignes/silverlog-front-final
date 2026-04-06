@@ -63,7 +63,8 @@ export default function MovieHeader() {
           src={backdropSrc}
           layout="fullWidth"
           aspectRatio={21 / 9}
-          alt={`Affiche du film ${movie.title}`}
+          sizes="100vw"
+          alt={`Bannière du film ${movie.title}`}
           background="auto"
           priority
           className="backdrop"
@@ -81,7 +82,8 @@ export default function MovieHeader() {
               {posterSrc ? (
                 <Image
                   src={posterSrc}
-                  layout="fullWidth"
+                  layout="constrained"
+                  width={300}
                   aspectRatio={2 / 3}
                   alt={`Affiche du film ${movie.title}`}
                   background="auto"

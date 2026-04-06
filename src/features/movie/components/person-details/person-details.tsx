@@ -133,7 +133,8 @@ export default function PersonDetails() {
             ) : (
               <Image
                 src={getCloudinarySrc(personDetails.profile_path, "persons")}
-                layout="fullWidth"
+                layout="constrained"
+                width={200}
                 aspectRatio={2 / 3}
                 alt={`Image de ${personDetails.name}`}
                 background="auto"

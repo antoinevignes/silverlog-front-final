@@ -31,10 +31,13 @@ export default function MovieCard({
       ) : (
         <Image
           src={posterSrc}
-          layout="fullWidth"
+          layout="constrained"
+          width={size === "sm" ? 104 : size === "md" ? 136 : 192}
           aspectRatio={2 / 3}
           alt={`Affiche du film ${movie.title}`}
           background="auto"
+          loading="lazy"
+          decoding="async"
           className="movie-card-poster"
         />
       )}

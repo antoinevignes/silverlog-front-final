@@ -55,10 +55,13 @@ export default function FriendsFeed() {
               >
                 <Image
                   src={getCloudinarySrc(activity.poster_path, "posters")}
-                  background="auto"
-                  layout="fullWidth"
+                  layout="constrained"
+                  width={80}
                   aspectRatio={2 / 3}
                   alt={`Affiche du film ${activity.title}`}
+                  background="auto"
+                  loading="lazy"
+                  decoding="async"
                   className="feed-movie-poster"
                 />
               </Link>

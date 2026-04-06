@@ -38,7 +38,8 @@ export default function ListDetails() {
   const { user } = useAuth();
 
   const { value: isExpanded, toggle: toggleExpanded } = useToggle();
-  const { value: isEditDialogOpen, setValue: setIsEditDialogOpen } = useToggle();
+  const { value: isEditDialogOpen, setValue: setIsEditDialogOpen } =
+    useToggle();
   const [filterType, setFilterType] = useState<"all" | "watched" | "unwatched">(
     "all",
   );
@@ -127,6 +128,7 @@ export default function ListDetails() {
           alt={`Bannière de la liste ${listData.title}`}
           layout="fullWidth"
           aspectRatio={16 / 9}
+          sizes="100vw"
           background="auto"
           className="list-backdrop"
         />
@@ -272,7 +274,11 @@ export default function ListDetails() {
               {user && (
                 <DropdownMenu>
                   <DropdownTrigger>
-                    <Badge variant="secondary" className="filter-badge" size="lg">
+                    <Badge
+                      variant="secondary"
+                      className="filter-badge"
+                      size="lg"
+                    >
                       <span className="truncate">
                         {filterType === "all"
                           ? "Statut"

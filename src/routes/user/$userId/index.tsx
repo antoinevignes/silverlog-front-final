@@ -138,6 +138,7 @@ function RouteComponent() {
               src={getCloudinarySrc(userData.banner_path, "banners")}
               layout="fullWidth"
               aspectRatio={21 / 9}
+              sizes="100vw"
               className="banner-image"
               background="auto"
               alt={`Bannière de ${userData.username}`}

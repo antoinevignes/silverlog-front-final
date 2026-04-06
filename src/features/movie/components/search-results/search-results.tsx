@@ -98,11 +98,14 @@ export default function SearchResults({ query }: SearchResultsProps) {
                       {item.profile_path ? (
                         <Image
                           src={profileSrc}
+                          layout="constrained"
                           width={120}
                           height={120}
                           alt={item.name}
                           className="person-avatar"
                           background="auto"
+                          loading="lazy"
+                          decoding="async"
                         />
                       ) : (
                         <div className="person-avatar-placeholder">

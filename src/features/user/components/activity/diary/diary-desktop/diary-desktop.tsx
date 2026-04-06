@@ -78,11 +78,13 @@ export default function DiaryDesktop({
                 >
                   <Image
                     src={getCloudinarySrc(movie.poster_path, "posters")}
-                    layout="fullWidth"
+                    layout="constrained"
+                    width={100}
                     aspectRatio={2 / 3}
                     alt={`Affiche du film ${movie.title}`}
                     background="auto"
-                    priority
+                    loading="lazy"
+                    decoding="async"
                     className="poster-img"
                   />
 

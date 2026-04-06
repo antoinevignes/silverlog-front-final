@@ -111,10 +111,13 @@ export default function MovieCrew() {
                   ) : (
                     <Image
                       src={posterSrc}
-                      layout="fullWidth"
+                      layout="constrained"
+                      width={120}
                       aspectRatio={2 / 3}
                       background="auto"
                       alt={`Image de ${member.name}`}
+                      loading="lazy"
+                      decoding="async"
                       className="person-image"
                     />
                   )}
