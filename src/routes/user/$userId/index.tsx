@@ -12,6 +12,8 @@ import {
   GripVertical,
   ChevronLeft,
   ChevronRight,
+  Trophy,
+  Clock,
 } from "lucide-react";
 import { Suspense, useEffect, useState } from "react";
 import { useToggle } from "@/hooks/use-toggle";
@@ -319,65 +321,77 @@ function RouteComponent() {
                     )}
                   </div>
 
-                  <DragDropContext onDragEnd={onDragEnd}>
-                    <Droppable droppableId="top-movies" direction="horizontal">
-                      {(provided) => (
-                        <ul
-                          className="top-movies-grid"
-                          role="list"
-                          {...provided.droppableProps}
-                          ref={provided.innerRef}
-                        >
-                          {topMovies.map((movie: any, index: number) => (
-                            <Draggable
-                              key={String(movie.id)}
-                              draggableId={String(movie.id)}
-                              index={index}
-                              isDragDisabled={!isEditingTop}
-                            >
-                              {(provided, snapshot) => (
-                                <li
-                                  ref={provided.innerRef}
-                                  {...provided.draggableProps}
-                                  className={`top-list-item ${snapshot.isDragging ? "is-dragging" : ""}`}
-                                  style={{
-                                    ...provided.draggableProps.style,
-                                  }}
-                                >
-                                  <div className="draggable-card-wrapper">
-                                    {!isEditingTop && (
-                                      <div className="rank-badge font-fraunces">
-                                        {index + 1}
-                                      </div>
-                                    )}
-                                    {isEditingTop && (
-                                      <div
-                                        {...provided.dragHandleProps}
-                                        className="drag-handle"
-                                      >
-                                        <GripVertical size={16} color="white" />
-                                      </div>
-                                    )}
-                                    <div
-                                      className={`card-mobile ${isEditingTop ? "editing-mode" : ""}`}
-                                    >
-                                      <MovieCard movie={movie} size="sm" />
-                                    </div>
-                                    <div
-                                      className={`card-desktop ${isEditingTop ? "editing-mode" : ""}`}
-                                    >
-                                      <MovieCard movie={movie} size="md" />
-                                    </div>
-                                  </div>
-                                </li>
-                              )}
-                            </Draggable>
-                          ))}
-                          {provided.placeholder}
-                        </ul>
+                  {topMovies.length === 0 ? (
+                    <div className="top-movies-empty">
+                      <Trophy size={48} />
+                      <p className="text-secondary">Aucun film dans le top.</p>
+                      {Number(user?.id) === Number(userId) && (
+                        <Link to="/discover" className="discover-link">
+                          Ajouter des films
+                        </Link>
                       )}
-                    </Droppable>
-                  </DragDropContext>
+                    </div>
+                  ) : (
+                    <DragDropContext onDragEnd={onDragEnd}>
+                      <Droppable droppableId="top-movies" direction="horizontal">
+                        {(provided) => (
+                          <ul
+                            className="top-movies-grid"
+                            role="list"
+                            {...provided.droppableProps}
+                            ref={provided.innerRef}
+                          >
+                            {topMovies.map((movie: any, index: number) => (
+                              <Draggable
+                                key={String(movie.id)}
+                                draggableId={String(movie.id)}
+                                index={index}
+                                isDragDisabled={!isEditingTop}
+                              >
+                                {(provided, snapshot) => (
+                                  <li
+                                    ref={provided.innerRef}
+                                    {...provided.draggableProps}
+                                    className={`top-list-item ${snapshot.isDragging ? "is-dragging" : ""}`}
+                                    style={{
+                                      ...provided.draggableProps.style,
+                                    }}
+                                  >
+                                    <div className="draggable-card-wrapper">
+                                      {!isEditingTop && (
+                                        <div className="rank-badge font-fraunces">
+                                          {index + 1}
+                                        </div>
+                                      )}
+                                      {isEditingTop && (
+                                        <div
+                                          {...provided.dragHandleProps}
+                                          className="drag-handle"
+                                        >
+                                          <GripVertical size={16} color="white" />
+                                        </div>
+                                      )}
+                                      <div
+                                        className={`card-mobile ${isEditingTop ? "editing-mode" : ""}`}
+                                      >
+                                        <MovieCard movie={movie} size="sm" />
+                                      </div>
+                                      <div
+                                        className={`card-desktop ${isEditingTop ? "editing-mode" : ""}`}
+                                      >
+                                        <MovieCard movie={movie} size="md" />
+                                      </div>
+                                    </div>
+                                  </li>
+                                )}
+                              </Draggable>
+                            ))}
+                            {provided.placeholder}
+                          </ul>
+                        )}
+                      </Droppable>
+                    </DragDropContext>
+                  )}
                 </section>
 
                 <section
@@ -386,83 +400,92 @@ function RouteComponent() {
                 >
                   <Title title="Activité récente" id="recent-activity-title" />
 
-                  <Swiper
-                    modules={[Navigation]}
-                    navigation={{
-                      prevEl: ".prev-btn",
-                      nextEl: ".next-btn",
-                    }}
-                    className="mySwiper"
-                    breakpoints={{
-                      0: {
-                        slidesPerView: 3.2,
-                        slidesPerGroup: 3,
-                        spaceBetween: 10,
-                      },
-                      768: {
-                        slidesPerView: 7.1,
-                        slidesPerGroup: 4,
-                        spaceBetween: 60,
-                        slidesOffsetAfter: 60,
-                      },
-                      1024: {
-                        slidesPerView: 8.4,
-                        slidesPerGroup: 4,
-                        spaceBetween: 20,
-                        slidesOffsetAfter: 10,
-                      },
-                    }}
-                  >
-                    {(userData.recent_activity ?? []).map((movie: any) => (
-                      <SwiperSlide key={movie.id} className="activity-item">
-                        <MovieCard movie={movie} size="sm" />
+                  {(userData.recent_activity ?? []).length === 0 ? (
+                    <div className="recent-activity-empty">
+                      <Clock size={48} />
+                      <p className="text-secondary">Aucune activité récente.</p>
+                    </div>
+                  ) : (
+                    <>
+                      <Swiper
+                        modules={[Navigation]}
+                        navigation={{
+                          prevEl: ".prev-btn",
+                          nextEl: ".next-btn",
+                        }}
+                        className="mySwiper"
+                        breakpoints={{
+                          0: {
+                            slidesPerView: 3.2,
+                            slidesPerGroup: 3,
+                            spaceBetween: 10,
+                          },
+                          768: {
+                            slidesPerView: 7.1,
+                            slidesPerGroup: 4,
+                            spaceBetween: 60,
+                            slidesOffsetAfter: 60,
+                          },
+                          1024: {
+                            slidesPerView: 8.4,
+                            slidesPerGroup: 4,
+                            spaceBetween: 20,
+                            slidesOffsetAfter: 10,
+                          },
+                        }}
+                      >
+                        {(userData.recent_activity ?? []).map((movie: any) => (
+                          <SwiperSlide key={movie.id} className="activity-item">
+                            <MovieCard movie={movie} size="sm" />
 
-                        <div className="activity-meta">
-                          <div
-                            className="rating-stars"
-                            aria-label={`Note : ${movie.rating / 2} sur 5`}
-                          >
-                            {Array.from({ length: movie.rating / 2 }).map(
-                              (_, index) => (
-                                <Star
-                                  key={index}
-                                  size={10}
-                                  fill="#F2C265"
-                                  stroke="#F2C265"
-                                  aria-hidden
-                                />
-                              ),
-                            )}
-                          </div>
+                            <div className="activity-meta">
+                              <div
+                                className="rating-stars"
+                                aria-label={`Note : ${movie.rating / 2} sur 5`}
+                              >
+                                {Array.from({ length: movie.rating / 2 }).map(
+                                  (_, index) => (
+                                    <Star
+                                      key={index}
+                                      size={10}
+                                      fill="#F2C265"
+                                      stroke="#F2C265"
+                                      aria-hidden
+                                    />
+                                  ),
+                                )}
+                              </div>
 
-                          {movie.review_content && (
-                            <span
-                              className="review-icon"
-                              aria-label="Critique rédigée"
-                            >
-                              <TextAlignStart size={10} aria-hidden />
-                            </span>
-                          )}
-                        </div>
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
+                              {movie.review_content && (
+                                <span
+                                  className="review-icon"
+                                  aria-label="Critique rédigée"
+                                >
+                                  <TextAlignStart size={10} aria-hidden />
+                                </span>
+                              )}
+                            </div>
+                          </SwiperSlide>
+                        ))}
+                      </Swiper>
 
-                  <Button
-                    className="nav-btn prev-btn"
-                    variant="ghost"
-                    size="icon"
-                  >
-                    <ChevronLeft size={32} />
-                  </Button>
+                      <Button
+                        className="nav-btn prev-btn"
+                        variant="ghost"
+                        size="icon"
+                      >
+                        <ChevronLeft size={32} />
+                      </Button>
 
-                  <Button
-                    className="nav-btn next-btn"
-                    variant="ghost"
-                    size="icon"
-                  >
-                    <ChevronRight size={32} />
-                  </Button>
+                      <Button
+                        className="nav-btn next-btn"
+                        variant="ghost"
+                        size="icon"
+                      >
+                        <ChevronRight size={32} />
+                      </Button>
+                    </>
+                  )}
                 </section>
               </>
             )}
