@@ -21,7 +21,7 @@ type SearchResultItem =
   | (PersonType & { type: "person" })
   | (UserType & { type: "user" });
 
-export default function SearchBar() {
+export default function SearchBar({ autoFocus = false }: { autoFocus?: boolean }) {
   const navigate = useNavigate();
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -147,6 +147,7 @@ export default function SearchBar() {
               placeholder="Rechercher un film..."
               aria-label="Barre de recherche"
               leftIcon={<Search />}
+              autoFocus={autoFocus}
               rightIcon={
                 searchQuery && (
                   <X

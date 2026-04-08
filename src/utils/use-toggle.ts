@@ -12,19 +12,9 @@ interface UseToggleReturn {
   setValue: (value: boolean) => void;
 }
 
-/**
- * Hook pour gérer un état boolean (on/off)
- * 
- * @example
- * ```tsx
- * const { value: isOpen, toggle, setFalse: close } = useToggle();
- * 
- * <button onClick={toggle}>
- *   {isOpen ? "Fermer" : "Ouvrir"}
- * </button>
- * ```
- */
-export function useToggle({ initialValue = false }: UseToggleOptions = {}): UseToggleReturn {
+export function useToggle({
+  initialValue = false,
+}: UseToggleOptions = {}): UseToggleReturn {
   const [value, setValue] = useState(initialValue);
 
   const toggle = useCallback(() => {

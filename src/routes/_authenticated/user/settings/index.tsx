@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/auth";
 import { useState, useEffect } from "react";
-import { useToggle } from "@/hooks/use-toggle";
+import { useToggle } from "@/utils/use-toggle";
 import {
   useUpdateLocation,
   useUpdateUsername,

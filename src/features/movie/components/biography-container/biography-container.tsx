@@ -1,5 +1,5 @@
 import "./biography-container.scss";
-import { useToggle } from "@/hooks/use-toggle";
+import { useToggle } from "@/utils/use-toggle";
 import type { PersonType } from "@/features/movie/types/person";
 
 export default function BiographyContainer({
@@ -9,7 +9,11 @@ export default function BiographyContainer({
   personDetails: PersonType;
   personDetailsUS: PersonType;
 }) {
-  const { value: isExpanded, setTrue: expand, setFalse: collapse } = useToggle();
+  const {
+    value: isExpanded,
+    setTrue: expand,
+    setFalse: collapse,
+  } = useToggle();
 
   const biography =
     personDetails.biography !== ""

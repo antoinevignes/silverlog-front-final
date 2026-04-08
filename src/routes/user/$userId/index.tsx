@@ -16,7 +16,7 @@ import {
   Clock,
 } from "lucide-react";
 import { Suspense, useEffect, useState } from "react";
-import { useToggle } from "@/hooks/use-toggle";
+import { useToggle } from "@/utils/use-toggle";
 import { userQuery } from "@/features/user/api/user.queries";
 import Button from "@/components/ui/button/button";
 import MovieCard from "@/features/movie/components/movie-card/movie-card";
@@ -438,13 +438,13 @@ function RouteComponent() {
                             spaceBetween: 10,
                           },
                           768: {
-                            slidesPerView: 7.1,
+                            slidesPerView: 6.7,
                             slidesPerGroup: 4,
                             spaceBetween: 60,
                             slidesOffsetAfter: 60,
                           },
                           1024: {
-                            slidesPerView: 8.4,
+                            slidesPerView: 7.8,
                             slidesPerGroup: 4,
                             spaceBetween: 20,
                             slidesOffsetAfter: 10,

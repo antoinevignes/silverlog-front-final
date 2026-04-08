@@ -70,7 +70,7 @@ export default function PersonDetails() {
       })} (Décès à ${age} ans)`;
     }
 
-    return `${age} ans`;
+    return `(${age} ans)`;
   }, [personDetails.birthday, personDetails.deathday]);
 
   // METIERS

@@ -6,7 +6,7 @@ import { useMemo, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getRouteApi, Link } from "@tanstack/react-router";
 import "./list-details.scss";
-import { useToggle } from "@/hooks/use-toggle";
+import { useToggle } from "@/utils/use-toggle";
 import MovieCard from "@/features/movie/components/movie-card/movie-card";
 import Title from "@/components/ui/title/title";
 import type { MovieType } from "@/features/movie/types/movie";

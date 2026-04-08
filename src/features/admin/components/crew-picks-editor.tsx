@@ -3,7 +3,7 @@ import Title from "@/components/ui/title/title";
 import { useUpdateCrewPicks } from "@/features/movie/api/movie.mutations";
 import { crewPicksQuery } from "@/features/movie/api/movie.queries";
 import MovieCard from "@/features/movie/components/movie-card/movie-card";
-import useToggle from "@/hooks/use-toggle";
+import useToggle from "@/utils/use-toggle";
 import {
   DragDropContext,
   Draggable,

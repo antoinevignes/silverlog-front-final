@@ -31,7 +31,7 @@ import Rating from "@/features/movie/components/rating/rating";
 import { useAuth } from "@/auth";
 import { getCloudinarySrc } from "@/utils/cloudinary-handler";
 import RecommendDialog from "../recommend-dialog/recommend-dialog";
-import { useToggle } from "@/hooks/use-toggle";
+import { useToggle } from "@/utils/use-toggle";
 
 type DialogView =
   | "main"
@@ -162,7 +162,11 @@ export default function MovieActions({
                       genres: movie.genres,
                     })
                   }
-                  title={isInWatchlist ? "Dans ma watchlist" : "Ajouter à ma watchlist"}
+                  title={
+                    isInWatchlist
+                      ? "Dans ma watchlist"
+                      : "Ajouter à ma watchlist"
+                  }
                 >
                   <Bookmark fill={isInWatchlist ? "currentColor" : "none"} />
                 </button>

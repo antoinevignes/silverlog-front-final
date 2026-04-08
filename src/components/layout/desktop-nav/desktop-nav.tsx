@@ -2,7 +2,7 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { BookOpen, LogOut, Search, Settings, Shield, X } from "lucide-react";
 import "./desktop-nav.scss";
 import { useAuth } from "@/auth";
-import { useToggle } from "@/hooks/use-toggle";
+import { useToggle } from "@/utils/use-toggle";
 import SearchBar from "@/features/movie/components/search-bar/search-bar";
 import NotificationBell from "@/features/notification/components/notification-bell";
 import {
@@ -61,7 +61,7 @@ export default function DesktopNav() {
         <section className="right-section">
           <div className={`search-container ${isSearchOpen ? "open" : ""}`}>
             <div className="search-wrapper">
-              <SearchBar />
+              <SearchBar autoFocus={isSearchOpen} />
             </div>
 
             {isSearchOpen ? (

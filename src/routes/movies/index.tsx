@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { useToggle } from "@/hooks/use-toggle";
+import { useToggle } from "@/utils/use-toggle";
 import {
   popularMoviesQuery,
   topRatedMoviesQuery,
@@ -47,64 +47,64 @@ function MoviesPage() {
         description="Explorez les films populaires et les mieux notés. Filtrez par genre, année et plus encore sur Silverlog."
         type="website"
       />
-    <main className="movies-page container">
-      <header className="movies-header">
-        <Title title="Films" variant="h1" size="lg" />
-        <p className="movies-tagline text-secondary">
-          Explorez, découvrez et suivez les films que vous voulez voir.
-        </p>
-      </header>
+      <main className="movies-page container">
+        <header className="movies-header">
+          <Title title="Films" variant="h1" size="lg" />
+          <p className="movies-tagline text-secondary">
+            Explorez, découvrez et suivez les films que vous voulez voir.
+          </p>
+        </header>
 
-      <div className="movies-layout">
-        <aside className="movies-sidebar">
-          <MoviesFilters
-            filters={filters}
-            onFiltersChange={setFilters}
-            isOpen={isFiltersOpen}
-            onOpen={openFilters}
-            onClose={closeFilters}
-          />
-        </aside>
+        <div className="movies-layout">
+          <aside className="movies-sidebar">
+            <MoviesFilters
+              filters={filters}
+              onFiltersChange={setFilters}
+              isOpen={isFiltersOpen}
+              onOpen={openFilters}
+              onClose={closeFilters}
+            />
+          </aside>
 
-        <div className="movies-content">
-          {/* RESULTATS RECHERCHE */}
-          {hasActiveFilters ? (
-            <SuspenseSection
-              title="Résultats de la recherche"
-              fallback={<FilteredResultsSkeletons />}
-            >
-              <FilteredResults filters={filters} />
-            </SuspenseSection>
-          ) : (
-            <div className="default-sections">
-              {/* FILMS POPULAIRES */}
+          <div className="movies-content">
+            {/* RESULTATS RECHERCHE */}
+            {hasActiveFilters ? (
               <SuspenseSection
-                title="Populaires cette semaine"
-                fallback={<FilmPageSkeleton />}
+                title="Résultats de la recherche"
+                fallback={<FilteredResultsSkeletons />}
               >
-                <PopularMovies />
+                <FilteredResults filters={filters} />
               </SuspenseSection>
+            ) : (
+              <div className="default-sections">
+                {/* FILMS POPULAIRES */}
+                <SuspenseSection
+                  title="Populaires cette semaine"
+                  fallback={<FilmPageSkeleton />}
+                >
+                  <PopularMovies />
+                </SuspenseSection>
 
-              {/* LES MIEUX NOTÉS */}
-              <SuspenseSection
-                title="Les mieux notés"
-                fallback={<FilmPageSkeleton />}
-              >
-                <TopRatedSection />
-              </SuspenseSection>
+                {/* LES MIEUX NOTÉS */}
+                <SuspenseSection
+                  title="Les mieux notés"
+                  fallback={<FilmPageSkeleton />}
+                >
+                  <TopRatedSection />
+                </SuspenseSection>
 
-              {/* COMMENTAIRES */}
-              <SuspenseSection
-                title="Commentaires populaires"
-                fallback={<PopularReviewsSkeleton />}
-              >
-                <PopularReviews />
-              </SuspenseSection>
-            </div>
-          )}
+                {/* COMMENTAIRES */}
+                <SuspenseSection
+                  title="Commentaires populaires"
+                  fallback={<PopularReviewsSkeleton />}
+                >
+                  <PopularReviews />
+                </SuspenseSection>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
     </>
   );
 }

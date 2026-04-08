@@ -1,4 +1,4 @@
-import { useToggle } from "@/hooks/use-toggle";
+import { useToggle } from "@/utils/use-toggle";
 import type { MovieType } from "@/features/movie/types/movie";
 import Badge from "@/components/ui/badge/badge";
 import "./synopsis-container.scss";
@@ -10,7 +10,11 @@ export default function SynopsisContainer({
   movie: MovieType;
   className: string;
 }) {
-  const { value: isExpanded, setTrue: expand, setFalse: collapse } = useToggle();
+  const {
+    value: isExpanded,
+    setTrue: expand,
+    setFalse: collapse,
+  } = useToggle();
 
   const overviewPreviewLength = className === "synopsis-desktop" ? 300 : 150;
   const shouldShowReadMore =
