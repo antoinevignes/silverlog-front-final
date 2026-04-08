@@ -206,6 +206,25 @@
   }
 }
 
+.description-form {
+  .description-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .char-count {
+      font-size: 0.8rem;
+      color: v.$c-muted;
+      text-align: right;
+      margin-top: v.$space-xs;
+
+      &.error {
+        color: v.$destructive;
+      }
+    }
+  }
+}
+
 .password-form {
   flex-direction: column;
   align-items: flex-start;

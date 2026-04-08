@@ -7,12 +7,14 @@ import {
   Image as ImageIcon,
   Lock,
   LogOut,
+  FileText,
 } from "lucide-react";
 import { useAuth } from "@/auth";
 import { useState, useEffect } from "react";
 import { useToggle } from "@/utils/use-toggle";
 import {
   useUpdateLocation,
+  useUpdateDescription,
   useUpdateUsername,
   useUploadAvatar,
   useDeleteAccount,
@@ -61,6 +63,8 @@ function RouteComponent() {
     useUpdateUsername();
   const { mutate: updateLocation, isPending: isUpdatingLocation } =
     useUpdateLocation();
+  const { mutate: updateDescription, isPending: isUpdatingDescription } =
+    useUpdateDescription();
 
   // MAJ AVATAR
   const { mutate: uploadAvatar, isPending: isUploadingAvatar } =
@@ -101,6 +105,21 @@ function RouteComponent() {
     },
     onSubmit: ({ value }) => {
       updateLocation(value.location);
+    },
+  });
+
+  // MAJ DESCRIPTION
+  const descriptionForm = useAppForm({
+    defaultValues: {
+      description: user?.description ?? "",
+    },
+    validators: {
+      onChange: z.object({
+        description: z.string().trim().max(140, "Maximum 140 caractères"),
+      }),
+    },
+    onSubmit: ({ value }) => {
+      updateDescription(value.description);
     },
   });
 
@@ -261,6 +280,65 @@ function RouteComponent() {
                   )}
                 />
               </locationForm.AppForm>
+            </form>
+          </SettingSection>
+
+          {/* DESCRIPTION */}
+          <SettingSection
+            icon={<FileText size={20} />}
+            title="Description"
+            description="Décrivez-vous en quelques mots. Maximum 140 caractères."
+          >
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                descriptionForm.handleSubmit();
+              }}
+              className="setting-form description-form"
+            >
+              <descriptionForm.AppField
+                name="description"
+                children={(field) => (
+                  <div className="description-wrapper">
+                    <field.Textarea
+                      id="description"
+                      placeholder="Votre description..."
+                      rows={3}
+                    />
+                    <span
+                      className={`char-count ${field.state.value.length > 140 ? "error" : ""}`}
+                    >
+                      {field.state.value.length}/140
+                    </span>
+                  </div>
+                )}
+              />
+
+              <descriptionForm.AppForm>
+                <descriptionForm.Subscribe
+                  selector={(state) => [
+                    state.canSubmit,
+                    state.isSubmitting,
+                    state.isPristine,
+                  ]}
+                  children={([canSubmit, isSubmitting, isPristine]) => (
+                    <descriptionForm.Button
+                      type="submit"
+                      size="sm"
+                      disabled={
+                        !canSubmit ||
+                        isSubmitting ||
+                        isUpdatingDescription ||
+                        isPristine
+                      }
+                    >
+                      {isUpdatingDescription
+                        ? "Mise à jour..."
+                        : "Mettre à jour"}
+                    </descriptionForm.Button>
+                  )}
+                />
+              </descriptionForm.AppForm>
             </form>
           </SettingSection>
 

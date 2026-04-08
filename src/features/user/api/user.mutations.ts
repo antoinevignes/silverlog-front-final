@@ -59,6 +59,32 @@ export function useUpdateLocation() {
   });
 }
 
+// MISE A JOUR DE LA DESCRIPTION UTILISATEUR
+export function useUpdateDescription() {
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  return useMutation({
+    mutationFn: (description: string) => {
+      if (!user) throw new Error("Unauthenticated");
+
+      return apiClient<UserType>("/user/description", {
+        method: "PATCH",
+        body: JSON.stringify({ description }),
+      });
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: userKeys.session() });
+      queryClient.invalidateQueries({ queryKey: userKeys.detail(String(user?.id)) });
+      toast.success("Description mise à jour !");
+    },
+
+    onError: (error) => handleMutationError(error, navigate),
+  });
+}
+
 // MISE A JOUR DE L'AVATAR UTILISATEUR (upload fichier)
 export function useUploadAvatar() {
   const { user } = useAuth();
