@@ -3,11 +3,16 @@ import { fr } from "react-day-picker/locale";
 import "@/components/ui/date-picker/date-picker.scss";
 import "./diary-dialog.scss";
 import z from "zod";
-import { ArrowLeft, Trash2 } from "lucide-react";
+import { ArrowLeft, Clock, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { format } from "date-fns";
+import { fr as frLocale } from "date-fns/locale";
 import type { MovieType } from "@/features/movie/types/movie";
 import { useAppForm } from "@/utils/useAppForm";
-import { useUpdateSeenDate, useRemoveFromDiary } from "@/features/user/api/user-movie.mutations";
+import {
+  useUpdateSeenDate,
+  useRemoveFromDiary,
+} from "@/features/user/api/user-movie.mutations";
 import Button from "@/components/ui/button/button";
 
 interface ReviewContentProps {
@@ -26,7 +31,8 @@ export default function DiaryDialog({
   initialDate,
 }: ReviewContentProps) {
   const { mutate: updateDate, isPending } = useUpdateSeenDate(movieId);
-  const { mutate: removeFromDiary, isPending: isRemoving } = useRemoveFromDiary(movieId);
+  const { mutate: removeFromDiary, isPending: isRemoving } =
+    useRemoveFromDiary(movieId);
 
   const [isConfirming, setIsConfirming] = useState(false);
 
@@ -80,13 +86,14 @@ export default function DiaryDialog({
   return (
     <section>
       <header className="diary-header">
-        <button
-          className="back-button link"
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={onBack}
           aria-label="Retour"
         >
           <ArrowLeft size={20} />
-        </button>
+        </Button>
 
         <h2 className="diary-title">Ajouter au journal</h2>
       </header>
@@ -98,32 +105,42 @@ export default function DiaryDialog({
         }}
         className="diary-dialog"
       >
-        <form.AppField
-          name="seen_at"
-          children={(field) => (
-            <DayPicker
-              mode="single"
-              selected={field.state.value}
-              onSelect={(date) => {
-                if (date) field.setValue(date);
-              }}
-              defaultMonth={field.state.value}
-              locale={fr}
-              captionLayout="dropdown"
-              animate
-              fixedWeeks
-              autoFocus
-              disabled={{ after: new Date() }}
-              endMonth={new Date()}
-              navLayout="around"
-            />
-          )}
-        />
+        {hasSeen && (
+          <p className="seen-date-display">
+            <Clock size={16} /> Vu le{" "}
+            {format(new Date(initialDate!), "d MMMM yyyy", {
+              locale: frLocale,
+            })}
+          </p>
+        )}
+
+        <div className="date-picker-card">
+          <form.AppField
+            name="seen_at"
+            children={(field) => (
+              <DayPicker
+                mode="single"
+                selected={field.state.value}
+                onSelect={(date) => {
+                  if (date) field.setValue(date);
+                }}
+                defaultMonth={field.state.value}
+                locale={fr}
+                captionLayout="dropdown"
+                animate
+                fixedWeeks
+                autoFocus
+                disabled={{ after: new Date() }}
+                endMonth={new Date()}
+                navLayout="around"
+              />
+            )}
+          />
+        </div>
 
         <div className="diary-footer">
           {hasSeen && (
             <Button
-              type="button"
               variant={isConfirming ? "destructive" : "ghost"}
               className={`delete-button ${isConfirming ? "confirm-mode" : ""}`}
               onClick={handleDelete}
@@ -140,7 +157,7 @@ export default function DiaryDialog({
           )}
 
           <div className="footer-actions">
-            <Button type="button" variant="secondary" onClick={onBack}>
+            <Button variant="secondary" onClick={onBack}>
               Annuler
             </Button>
 

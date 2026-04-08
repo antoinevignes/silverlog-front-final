@@ -6,17 +6,6 @@
   align-items: center;
   margin-bottom: v.$space-xl;
 
-  .back-button {
-    position: relative;
-    z-index: 2;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    padding: 0;
-    display: flex;
-    align-items: center;
-  }
-
   .diary-title {
     position: absolute;
     left: 0;
@@ -37,6 +26,26 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+
+  .seen-date-display {
+    font-size: 0.95rem;
+    color: v.$c-heading;
+    margin-bottom: v.$space-md;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: v.$space-sm;
+  }
+
+  .date-picker-card {
+    background-color: v.$c-surface;
+    border: 1px solid v.$c-border;
+    border-radius: v.$radius;
+    padding: v.$space-md;
+    margin: v.$space-sm 0;
+    display: flex;
+    justify-content: center;
+  }
 
   .rdp-root {
     &:focus-visible {

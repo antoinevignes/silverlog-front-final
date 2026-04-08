@@ -8,7 +8,10 @@ import { Label } from "@/components/ui/label/label";
 import Rating from "@/features/movie/components/rating/rating";
 import Button from "@/components/ui/button/button";
 import { useAppForm } from "@/utils/useAppForm";
-import { useDeleteReview, useUpsertReview } from "@/features/review/api/review.mutations";
+import {
+  useDeleteReview,
+  useUpsertReview,
+} from "@/features/review/api/review.mutations";
 import { movieStateQuery } from "@/features/user/api/user-movie.queries";
 import { movieReviewQuery } from "@/features/review/api/review.query";
 import { useAuth } from "@/auth";
@@ -96,13 +99,14 @@ export default function ReviewDialog({
   return (
     <>
       <header className="review-dialog-header">
-        <button
-          className="back-button link"
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={onBack}
           aria-label="Retour"
         >
           <ArrowLeft size={20} />
-        </button>
+        </Button>
 
         <h2 className="review-title">Écrire un avis</h2>
       </header>

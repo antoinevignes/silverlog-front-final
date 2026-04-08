@@ -6,6 +6,7 @@ import { useAuth } from "@/auth";
 import { movieStateQuery } from "@/features/user/api/user-movie.queries";
 import { customListsQuery } from "@/features/list/api/list.queries";
 import { useToggleCustomList } from "@/features/list/api/list.mutations";
+import Button from "@/components/ui/button/button";
 
 interface CustomListContentProps {
   onBack: () => void;
@@ -32,13 +33,14 @@ export default function CustomList({
   return (
     <>
       <header className="dialog-header">
-        <button
-          className="back-button text-secondary"
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={onBack}
           aria-label="Retour"
         >
           <ArrowLeft size={20} />
-        </button>
+        </Button>
 
         <h2 className="custom-list-title">Ajouter à une liste</h2>
       </header>
