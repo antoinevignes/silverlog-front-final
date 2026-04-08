@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes, ReactNode } from "react";
+import type { InputHTMLAttributes, ReactNode, RefObject } from "react";
 import { useFieldContext } from "@/utils/useAppForm";
 import "./input.scss";
 
@@ -6,6 +6,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
+  inputRef?: RefObject<HTMLInputElement | null>;
 }
 
 export default function Input({
@@ -15,6 +16,7 @@ export default function Input({
   rightIcon,
   disabled,
   className,
+  inputRef,
   ...props
 }: InputProps) {
   const field = useFieldContext<string>();
@@ -37,6 +39,7 @@ export default function Input({
       )}
 
       <input
+        ref={inputRef}
         id={id}
         disabled={disabled}
         className={fieldClasses}

@@ -21,11 +21,22 @@ type SearchResultItem =
   | (PersonType & { type: "person" })
   | (UserType & { type: "user" });
 
-export default function SearchBar({ autoFocus = false }: { autoFocus?: boolean }) {
+export default function SearchBar({
+  autoFocus = false,
+}: {
+  autoFocus?: boolean;
+}) {
   const navigate = useNavigate();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(-1);
+
+  useEffect(() => {
+    if (autoFocus && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [autoFocus]);
 
   const { data: movies, isLoading: isLoadingMovies } = useQuery(
     movieSearchQuery(searchQuery),
@@ -143,11 +154,11 @@ export default function SearchBar({ autoFocus = false }: { autoFocus?: boolean }
           name="query"
           children={(field) => (
             <field.Input
+              inputRef={inputRef}
               onKeyDown={handleKeyDown}
               placeholder="Rechercher un film..."
               aria-label="Barre de recherche"
               leftIcon={<Search />}
-              autoFocus={autoFocus}
               rightIcon={
                 searchQuery && (
                   <X
@@ -155,6 +166,7 @@ export default function SearchBar({ autoFocus = false }: { autoFocus?: boolean }
                     onClick={() => {
                       form.reset();
                       setSearchQuery("");
+                      setTimeout(() => inputRef.current?.focus(), 0);
                     }}
                   />
                 )
