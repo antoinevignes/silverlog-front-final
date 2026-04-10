@@ -103,8 +103,8 @@ export default function MovieActions({
       <DialogContent>
         {currentView === "main" && (
           <>
-            <header className="dialog-header">
-              <section className="dialog-movie-description">
+            <header className="dialog-header mb-lg">
+              <section className="dialog-movie-description gap-md">
                 <Image
                   src={getCloudinarySrc(movie.poster_path, "posters")}
                   layout="constrained"
@@ -117,16 +117,16 @@ export default function MovieActions({
                 />
 
                 <div>
-                  <h2 className="font-fraunces">{movie.title}</h2>
+                  <h2 className="font-fraunces mb-xs">{movie.title}</h2>
                   <p className="text-secondary">
                     {!Number.isNaN(movieYear) ? movieYear : "NC"}
                   </p>
                 </div>
               </section>
 
-              <div className="header-actions">
+              <div className="header-actions gap-sm">
                 <button
-                  className={`top-btn ${isInTop ? "top-btn--active" : ""}`}
+                  className={`top-btn p-xs ${isInTop ? "top-btn--active" : ""}`}
                   disabled={isPending}
                   onClick={() =>
                     toggleList({
@@ -149,7 +149,7 @@ export default function MovieActions({
                 </button>
 
                 <button
-                  className="watchlist-btn"
+                  className="watchlist-btn p-xs"
                   disabled={isPending}
                   onClick={() =>
                     toggleList({
@@ -181,20 +181,32 @@ export default function MovieActions({
               genres={movie.genres}
             />
 
-            <section className="dialog-buttons">
-              <button className="action-card" onClick={goToDiary}>
+            <section className="dialog-buttons gap-sm">
+              <button
+                className="action-card gap-sm py-sm px-md"
+                onClick={goToDiary}
+              >
                 <Calendar size={18} /> Ajouter au journal
               </button>
 
-              <button className="action-card" onClick={goToReview}>
+              <button
+                className="action-card gap-sm py-sm px-md"
+                onClick={goToReview}
+              >
                 <PenLine size={18} /> Écrire un avis
               </button>
 
-              <button className="action-card" onClick={goToCustomLists}>
+              <button
+                className="action-card gap-sm py-sm px-md"
+                onClick={goToCustomLists}
+              >
                 <ListPlus size={18} /> Ajouter à une liste
               </button>
 
-              <button className="action-card" onClick={goToRecommend}>
+              <button
+                className="action-card gap-sm py-sm px-md"
+                onClick={goToRecommend}
+              >
                 <Send size={18} /> Recommander à un ami
               </button>
             </section>

@@ -16,7 +16,7 @@ export default function PopularReviews({ limit = 8 }: PopularReviewsProps) {
 
   if (!reviews || reviews.length === 0) {
     return (
-      <div className="popular-reviews-empty">
+      <div className="popular-reviews-empty gap-md">
         <MessageSquareOff size={48} />
         <p className="text-secondary">Aucun commentaire pour le moment.</p>
       </div>
@@ -24,14 +24,14 @@ export default function PopularReviews({ limit = 8 }: PopularReviewsProps) {
   }
 
   return (
-    <div className="reviews-grid">
+    <div className="reviews-grid gap-md">
       {reviews.map((review) => (
-        <article className="review-card">
+        <article className="review-card p-md gap-sm">
           <div className="review-card-header">
             <Link
               to="/user/$userId"
               params={{ userId: review.user_id }}
-              className="review-user"
+              className="review-user gap-sm"
             >
               <Avatar
                 username={review.username}
@@ -42,7 +42,7 @@ export default function PopularReviews({ limit = 8 }: PopularReviewsProps) {
             </Link>
 
             {review.rating && (
-              <div className="review-rating">
+              <div className="review-rating gap-xs">
                 <span className="rating-value">{review.rating / 2}</span>
                 <span className="rating-max">/10</span>
               </div>
@@ -51,11 +51,11 @@ export default function PopularReviews({ limit = 8 }: PopularReviewsProps) {
 
           <p className="review-content">{review.content}</p>
 
-          <div className="review-card-footer">
+          <div className="review-card-footer pt-sm">
             <Link
               to="/movies/$movieId"
               params={{ movieId: String(review.movie_id) }}
-              className="review-movie"
+              className="review-movie gap-sm"
             >
               {review.movie_poster_path && (
                 <Image
@@ -70,7 +70,7 @@ export default function PopularReviews({ limit = 8 }: PopularReviewsProps) {
               <span className="review-movie-title">{review.movie_title}</span>
             </Link>
 
-            <div className="review-likes">
+            <div className="review-likes gap-xs">
               <Heart size={14} fill="currentColor" />
               <span>{review.like_count}</span>
             </div>

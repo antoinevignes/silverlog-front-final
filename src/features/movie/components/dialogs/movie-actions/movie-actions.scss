@@ -3,11 +3,9 @@
 
 .dialog-header {
   @include m.flex-between;
-  margin-bottom: v.$space-lg;
 
   .dialog-movie-description {
     display: flex;
-    gap: v.$space-md;
     align-items: center;
 
     h2 {
@@ -15,7 +13,6 @@
       font-size: 1.25rem;
       color: v.$c-heading;
       line-height: 1.2;
-      margin-bottom: v.$space-xs;
     }
 
     .dialog-image {
@@ -23,14 +20,12 @@
       border-radius: v.$radius;
       width: 45px;
       height: 68px;
-      margin: 0;
       box-shadow: v.$shadow-md;
     }
   }
 
   .header-actions {
     display: flex;
-    gap: v.$space-sm;
     align-items: center;
   }
 
@@ -41,7 +36,6 @@
     cursor: pointer;
     color: v.$c-muted;
     transition: color 0.2s ease, transform 0.2s ease;
-    padding: v.$space-xs;
 
     &:hover,
     &:focus-visible {
@@ -64,14 +58,11 @@
 .dialog-buttons {
   display: flex;
   flex-direction: column;
-  gap: v.$space-sm;
 
   .action-card {
     display: flex;
     align-items: center;
-    gap: v.$space-sm;
     width: 100%;
-    padding: v.$space-sm v.$space-md;
     background: v.$c-bg;
     border: 1px solid v.$c-border;
     border-radius: v.$radius;

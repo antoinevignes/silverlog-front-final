@@ -4,7 +4,6 @@
 .visitor-home {
   .hero-section {
     position: relative;
-    padding: v.$space-2xl 0;
     min-height: 50vh;
     display: flex;
     align-items: center;
@@ -14,14 +13,12 @@
       position: relative;
       z-index: 1;
       max-width: 800px;
-      margin: 0 auto;
       text-align: center;
     }
 
     .hero-title {
       font-weight: 800;
       line-height: 1.1;
-      margin-bottom: v.$space-md;
       font-size: 2.25rem;
 
       @include m.responsive(v.$bp-md) {
@@ -32,7 +29,6 @@
     .hero-subtitle {
       font-size: 1.125rem;
       color: v.$c-text;
-      margin-bottom: v.$space-xl;
       line-height: 1.6;
 
       @include m.responsive(v.$bp-md) {
@@ -43,7 +39,6 @@
     .hero-actions {
       display: flex;
       flex-direction: column;
-      gap: v.$space-md;
       justify-content: center;
       align-items: center;
 
@@ -56,7 +51,6 @@
   .section-title {
     font-size: 1.5rem;
     font-weight: 700;
-    margin-bottom: v.$space-lg;
 
     &.text-center {
       text-align: center;
@@ -66,9 +60,6 @@
   .selection-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: v.$space-md;
-    margin-top: v.$space-lg;
-    margin-bottom: v.$space-2xl;
 
     @include m.responsive(v.$bp-lg) {
       grid-template-columns: repeat(6, 1fr);
@@ -91,13 +82,11 @@
     }
   }
   .features-section {
-    padding: v.$space-2xl 0;
     background-color: v.$c-surface;
 
     .features-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: v.$space-xl;
 
       @include m.responsive(v.$bp-md) {
         grid-template-columns: repeat(3, 1fr);
@@ -106,7 +95,6 @@
 
     .feature-card {
       text-align: center;
-      padding: v.$space-lg;
 
       .feature-icon-wrapper {
         display: inline-flex;
@@ -117,13 +105,11 @@
         border-radius: 50%;
         background-color: v.$c-border;
         color: v.$c-heading;
-        margin-bottom: v.$space-md;
       }
 
       .feature-title {
         font-size: 1.25rem;
         font-weight: 700;
-        margin-bottom: v.$space-sm;
       }
 
       .feature-desc {

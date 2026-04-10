@@ -12,18 +12,18 @@ import CommunityReviewsSkeleton from "./community-reviews/community-reviews-skel
 export default function VisitorHome() {
   return (
     <main className="visitor-home">
-      <section className="hero-section">
+      <section className="hero-section py-2xl">
         <div className="container hero-content">
-          <h1 className="hero-title">
+          <h1 className="hero-title mb-lg">
             Suivez, notez et partagez votre passion du cinéma.
           </h1>
 
-          <p className="hero-subtitle">
+          <p className="hero-subtitle mb-xl">
             Silverlog est le réseau social de ceux qui aiment les films. Tenez
             votre journal, découvrez ce que vos amis regardent.
           </p>
 
-          <div className="hero-actions">
+          <div className="hero-actions gap-md">
             <Link to="/auth/sign-up">
               <Button size="lg" className="cta-btn">
                 Rejoindre la communauté
@@ -47,7 +47,7 @@ export default function VisitorHome() {
         <CrewPicks />
       </SuspenseSection>
 
-      <section className="features-section">
+      <section className="features-section py-2xl">
         <div className="container">
           <Title
             title=" Pourquoi utiliser Silverlog ?"
@@ -55,8 +55,8 @@ export default function VisitorHome() {
           />
 
           <div className="features-grid">
-            <article className="feature-card">
-              <div className="feature-icon-wrapper">
+            <article className="feature-card p-lg">
+              <div className="feature-icon-wrapper mb-md">
                 <BookText size={32} />
               </div>
 
@@ -64,7 +64,7 @@ export default function VisitorHome() {
                 variant="h3"
                 size="sm"
                 title="Tenez votre Journal"
-                className="feature-title"
+                className="feature-title mb-sm"
               />
 
               <p className="feature-desc">
@@ -73,8 +73,8 @@ export default function VisitorHome() {
               </p>
             </article>
 
-            <article className="feature-card">
-              <div className="feature-icon-wrapper">
+            <article className="feature-card p-lg">
+              <div className="feature-icon-wrapper mb-md">
                 <Star size={32} />
               </div>
 
@@ -82,7 +82,7 @@ export default function VisitorHome() {
                 variant="h3"
                 size="sm"
                 title="Notez & Critiquez"
-                className="feature-title"
+                className="feature-title mb-sm"
               />
 
               <p className="feature-desc">
@@ -91,21 +91,21 @@ export default function VisitorHome() {
               </p>
             </article>
 
-            <article className="feature-card">
-              <div className="feature-icon-wrapper">
+            <article className="feature-card p-lg">
+              <div className="feature-icon-wrapper mb-md">
                 <Users size={32} />
               </div>
 
               <Title
                 variant="h3"
                 size="sm"
-                title="Créez votre communauté"
-                className="feature-title"
+                title="Partagez & Suivez"
+                className="feature-title mb-sm"
               />
 
               <p className="feature-desc">
-                Suivez vos amis, découvrez leurs films coups de cœur et échangez
-                vos recommandations au quotidien.
+                Connectez-vous avec d'autres cinéphiles. Découvrez ce que vos
+                amis regardent et partagez vos recommandations.
               </p>
             </article>
           </div>
