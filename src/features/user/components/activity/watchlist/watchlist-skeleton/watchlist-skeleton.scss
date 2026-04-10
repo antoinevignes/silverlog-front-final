@@ -3,19 +3,15 @@
 .watchlist-skeleton-page {
   display: flex;
   flex-direction: column;
-  gap: v.$space-md;
-  margin: v.$space-2xl auto;
 
   .watchlist-skeleton-filters {
     display: flex;
-    gap: v.$space-sm;
     align-items: center;
   }
 
   .watchlist-skeleton-layout {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: v.$space-md;
 
     .watchlist-skeleton {
       height: 156px;

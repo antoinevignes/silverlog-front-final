@@ -1,0 +1,110 @@
+@use "sass:list";
+@use "@/styles/abstracts/variables" as v;
+
+// Spacing
+$spacings: (
+  0: 0,
+  xs: v.$space-xs,
+  sm: v.$space-sm,
+  md: v.$space-md,
+  lg: v.$space-lg,
+  xl: v.$space-xl,
+  2xl: v.$space-2xl,
+);
+
+// Directions
+$directions: (
+  "": "",
+  t: "-top",
+  r: "-right",
+  b: "-bottom",
+  l: "-left",
+  x: (
+    "-left",
+    "-right",
+  ),
+  y: (
+    "-top",
+    "-bottom",
+  ),
+);
+
+// Utilitaires margins
+@each $prop-short, $prop-long in (m: margin) {
+  @each $dir-short, $dir-long in $directions {
+    @each $size-name, $size-value in $spacings {
+      .#{$prop-short}#{$dir-short}-#{$size-name} {
+        @if type-of($dir-long) == "list" {
+          @each $d in $dir-long {
+            #{$prop-long}#{$d}: $size-value;
+          }
+        } @else {
+          #{$prop-long}#{$dir-long}: $size-value;
+        }
+      }
+    }
+  }
+}
+
+// Utilitaires padding
+@each $prop-short, $prop-long in (p: padding) {
+  @each $dir-short, $dir-long in $directions {
+    @each $size-name, $size-value in $spacings {
+      .#{$prop-short}#{$dir-short}-#{$size-name} {
+        @if type-of($dir-long) == "list" {
+          @each $d in $dir-long {
+            #{$prop-long}#{$d}: $size-value;
+          }
+        } @else {
+          #{$prop-long}#{$dir-long}: $size-value;
+        }
+      }
+    }
+  }
+}
+
+// Utilitaires gap
+@each $name, $value in $spacings {
+  .gap-#{$name} {
+    gap: $value;
+  }
+
+  .gap-x-#{$name} {
+    column-gap: $value;
+  }
+
+  .gap-y-#{$name} {
+    row-gap: $value;
+  }
+}
+
+// Utilitaires margin auto
+.m-auto {
+  margin: auto;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.my-auto {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.mt-auto {
+  margin-top: auto;
+}
+
+.mr-auto {
+  margin-right: auto;
+}
+
+.mb-auto {
+  margin-bottom: auto;
+}
+
+.ml-auto {
+  margin-left: auto;
+}

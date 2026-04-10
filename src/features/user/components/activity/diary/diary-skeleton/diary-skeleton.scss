@@ -5,9 +5,6 @@
   width: 100%;
 
   .skeleton-header {
-    margin-top: v.$space-2xl;
-    margin-bottom: v.$space-md;
-
     @include m.responsive(v.$bp-md) {
       margin-bottom: v.$space-lg;
     }
@@ -16,7 +13,6 @@
   .diary-mobile-skeleton {
     display: flex;
     flex-direction: column;
-    gap: v.$space-md;
 
     @include m.responsive(v.$bp-md) {
       display: none;
@@ -25,10 +21,8 @@
     .skeleton-item {
       display: flex;
       align-items: center;
-      gap: v.$space-md;
       background: v.$c-surface;
       border-radius: v.$radius * 1.5;
-      padding: v.$space-sm;
       box-shadow: v.$shadow-sm;
 
       .skeleton-poster {
@@ -38,7 +32,6 @@
       .skeleton-info {
         display: flex;
         flex-direction: column;
-        gap: v.$space-sm;
         flex: 1;
 
         .skeleton-title {
@@ -51,7 +44,6 @@
 
         .skeleton-rating {
           border-radius: v.$radius * 2;
-          margin-top: v.$space-xs;
         }
       }
     }
@@ -67,11 +59,9 @@
     .calendar-grid-skeleton {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      gap: v.$space-sm;
 
       .weekday-label-skeleton {
         height: 2rem;
-        margin: v.$space-sm 0;
         border-radius: v.$radius * 0.5;
       }
 
@@ -103,16 +93,11 @@
   @include m.responsive(v.$bp-lg) {
     display: flex;
     flex-direction: column;
-    gap: v.$space-lg;
     width: 300px;
   }
 
   .sidebar-card-skeleton {
-    padding: 0 v.$space-sm;
-    margin-bottom: v.$space-md;
-
     .card-title-skeleton {
-      margin-bottom: v.$space-lg;
       border-radius: v.$radius * 0.5;
       height: 1.5rem;
       width: 60%;
@@ -121,7 +106,6 @@
     .stat-row-skeleton {
       display: flex;
       justify-content: space-between;
-      margin-bottom: v.$space-md;
 
       .stat-label-skeleton {
         height: 1rem;
@@ -138,8 +122,6 @@
     .timeline-item-skeleton {
       height: 1rem;
       width: 50%;
-      margin-bottom: v.$space-sm;
-      margin-left: v.$space-lg;
       border-radius: v.$radius * 0.5;
     }
   }

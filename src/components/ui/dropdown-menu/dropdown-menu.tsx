@@ -84,7 +84,7 @@ export function DropdownContent({
     <div
       id="dropdown-content"
       role="menu"
-      className={`dropdown-content dropdown-align-${align}`}
+      className={`dropdown-content dropdown-align-${align} p-sm gap-xs`}
     >
       {children}
     </div>
@@ -99,7 +99,7 @@ export function DropdownItem({
   onClick?: () => void;
 }) {
   return (
-    <button className="dropdown-item" onClick={onClick} role="menuitem" type="button">
+    <button className="dropdown-item gap-sm" onClick={onClick} role="menuitem" type="button">
       {children}
     </button>
   );

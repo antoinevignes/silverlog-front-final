@@ -6,16 +6,13 @@
 
   button {
     border: none;
-
     cursor: pointer;
-
     flex: 1 1 0;
     min-width: 0;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     font-size: clamp(0.8rem, 2vw, 1rem);
-
     transition:
       background-color 0.2s ease,
       color 0.2s ease;
@@ -28,9 +25,7 @@
   // VARIANTES
   &.default {
     background-color: v.$c-border;
-    padding: v.$space-xs;
     border-radius: v.$radius;
-    gap: v.$space-sm;
 
     button {
       border-radius: v.$radius;
@@ -60,12 +55,8 @@
 
   &.header {
     background-color: v.$c-border;
-    padding: v.$space-xs;
     border-radius: 999px;
-    gap: v.$space-xs;
-    margin-top: v.$space-md;
     width: fit-content;
-    margin-inline: auto;
 
     button {
       flex: initial;

@@ -99,7 +99,7 @@ export function DialogContent({ children }: { children: ReactNode }) {
         onClick={() => onOpenChange(false)}
       />
       <section
-        className="dialog-content"
+        className="dialog-content p-md pb-lg"
         data-state={open ? "open" : "closed"}
         role="dialog"
         aria-modal="true"
@@ -112,5 +112,5 @@ export function DialogContent({ children }: { children: ReactNode }) {
 }
 
 export const DialogFooter = ({ children }: { children: ReactNode }) => (
-  <footer className="dialog-footer">{children}</footer>
+  <footer className="dialog-footer gap-sm mt-lg">{children}</footer>
 );
