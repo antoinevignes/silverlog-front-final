@@ -21,12 +21,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     queryKey: userKeys.session(),
     queryFn: async () => {
       try {
-        return await apiClient<{ user: UserType | null; isAuthenticated: boolean }>("/auth/session");
+        return await apiClient<{
+          user: UserType | null;
+          isAuthenticated: boolean;
+        }>("/auth/session");
       } catch (error) {
         return { user: null, isAuthenticated: false };
       }
     },
-    staleTime: Infinity,
     retry: false,
   });
 
@@ -56,7 +58,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     apiClient("/auth/sign-out", { method: "POST" });
   };
 
-  if (isPending) return <></>;
+  if (isPending) return null;
 
   return (
     <AuthContext.Provider

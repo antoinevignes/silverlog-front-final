@@ -3,19 +3,32 @@
 .tabs {
   display: flex;
   width: 100%;
+  display: flex;
+  width: 100%;
 
   button {
     border: none;
     cursor: pointer;
+
+    flex: 1 1 0;
+    min-width: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
     flex: 1 1 0;
     min-width: 0;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     font-size: clamp(0.8rem, 2vw, 1rem);
+    font-size: clamp(0.8rem, 2vw, 1rem);
+
     transition:
       background-color 0.2s ease,
       color 0.2s ease;
+
+    &.active {
+      font-weight: 600;
+    }
 
     &.active {
       font-weight: 600;

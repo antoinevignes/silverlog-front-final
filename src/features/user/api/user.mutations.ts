@@ -104,7 +104,11 @@ export function useUploadAvatar() {
       });
     },
 
-    onSuccess: () => {
+    onSuccess: (data) => {
+      queryClient.setQueryData(userKeys.session(), (old: any) => ({
+        ...old,
+        user: data,
+      }));
       queryClient.invalidateQueries({ queryKey: userKeys.session() });
       queryClient.invalidateQueries({ queryKey: userKeys.detail(String(user?.id)) });
       toast.success("Avatar mis à jour !");
@@ -188,7 +192,11 @@ export function useDeleteAvatar() {
       });
     },
 
-    onSuccess: () => {
+    onSuccess: (data) => {
+      queryClient.setQueryData(userKeys.session(), (old: any) => ({
+        ...old,
+        user: data,
+      }));
       queryClient.invalidateQueries({ queryKey: userKeys.session() });
       queryClient.invalidateQueries({ queryKey: userKeys.detail(String(user?.id)) });
       toast.success("Avatar supprimé avec succès !");

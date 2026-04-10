@@ -2,7 +2,7 @@
 @use "@/styles/abstracts/mixins" as m;
 
 .movies-page {
-  padding-top: v.$space-xl;
+  padding-top: v.$space-lg;
   padding-bottom: v.$space-2xl;
 
   .movies-header {
