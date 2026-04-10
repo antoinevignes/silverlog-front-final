@@ -183,9 +183,9 @@ function RouteComponent() {
         noIndex
       />
       <main className="settings-page container">
-        <header className="settings-header">
+        <header className="settings-header pb-lg">
           <Title title="Paramètres" variant="h1" size="lg" />
-          <p className="text-secondary">
+          <p className="text-secondary mt-xs">
             Gérez votre profil et vos préférences.
           </p>
         </header>
@@ -202,7 +202,7 @@ function RouteComponent() {
                 e.preventDefault();
                 usernameForm.handleSubmit();
               }}
-              className="setting-form"
+              className="setting-form gap-sm"
             >
               <usernameForm.AppField
                 name="username"
@@ -248,7 +248,7 @@ function RouteComponent() {
                 e.preventDefault();
                 locationForm.handleSubmit();
               }}
-              className="setting-form"
+              className="setting-form gap-sm"
             >
               <locationForm.AppField
                 name="location"
@@ -294,7 +294,7 @@ function RouteComponent() {
                 e.preventDefault();
                 descriptionForm.handleSubmit();
               }}
-              className="setting-form description-form"
+              className="setting-form description-form gap-sm"
             >
               <descriptionForm.AppField
                 name="description"
@@ -306,7 +306,7 @@ function RouteComponent() {
                       rows={3}
                     />
                     <span
-                      className={`char-count ${field.state.value.length > 140 ? "error" : ""}`}
+                      className={`char-count mt-xs ${field.state.value.length > 140 ? "error" : ""}`}
                     >
                       {field.state.value.length}/140
                     </span>
@@ -358,7 +358,7 @@ function RouteComponent() {
                 </span>
               }
               uploadZoneClassName="avatar-upload-zone"
-              formClassName="setting-form avatar-form"
+              formClassName="setting-form avatar-form gap-sm"
               previewClassName="avatar-preview-img"
               currentClassName="avatar"
               onUpload={uploadAvatar}
@@ -388,7 +388,7 @@ function RouteComponent() {
                 </span>
               }
               uploadZoneClassName="banner-upload-zone"
-              formClassName="setting-form banner-form"
+              formClassName="setting-form banner-form gap-sm"
               previewClassName="banner-preview-img"
               currentClassName="banner-img"
               onUpload={uploadBackdrop}
@@ -413,10 +413,10 @@ function RouteComponent() {
                 e.preventDefault();
                 passwordForm.handleSubmit();
               }}
-              className="setting-form password-form"
+              className="setting-form password-form gap-sm"
             >
-              <div className="password-fields">
-                <div className="password-field">
+              <div className="password-fields gap-md">
+                <div className="password-field gap-xs">
                   <Label htmlFor="currentPassword">Mot de passe actuel</Label>
                   <passwordForm.AppField
                     name="currentPassword"
@@ -434,7 +434,7 @@ function RouteComponent() {
                   />
                 </div>
 
-                <div className="password-field">
+                <div className="password-field gap-xs">
                   <Label htmlFor="newPassword">Nouveau mot de passe</Label>
                   <passwordForm.AppField
                     name="newPassword"
@@ -452,7 +452,7 @@ function RouteComponent() {
                   />
                 </div>
 
-                <div className="password-field">
+                <div className="password-field gap-xs">
                   <Label htmlFor="confirmPassword">
                     Confirmer le mot de passe
                   </Label>
@@ -519,33 +519,28 @@ function RouteComponent() {
               onOpenChange={setIsDeleteDialogOpen}
             >
               <DialogContent>
-                <h2 className="delete-dialog-title">
-                  Confirmer la suppression
-                </h2>
+                <h2 className="delete-dialog-title">Supprimer votre compte</h2>
                 <p className="text-secondary delete-dialog-desc">
                   Êtes-vous sûr de vouloir supprimer votre compte ? Cette action
                   est irréversible et toutes vos données seront perdues.
                 </p>
-
                 <DialogFooter>
-                  <div className="delete-dialog-footer">
-                    <Button
-                      variant="secondary"
-                      onClick={() => setIsDeleteDialogOpen(false)}
-                      disabled={isDeletingAccount}
-                    >
-                      Annuler
-                    </Button>
-                    <Button
-                      variant="destructive"
-                      onClick={() => deleteAccount()}
-                      disabled={isDeletingAccount}
-                    >
-                      {isDeletingAccount
-                        ? "Suppression..."
-                        : "Confirmer la suppression"}
-                    </Button>
-                  </div>
+                  <Button
+                    variant="secondary"
+                    onClick={() => setIsDeleteDialogOpen(false)}
+                    disabled={isDeletingAccount}
+                  >
+                    Annuler
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    onClick={() => deleteAccount()}
+                    disabled={isDeletingAccount}
+                  >
+                    {isDeletingAccount
+                      ? "Suppression..."
+                      : "Confirmer la suppression"}
+                  </Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>
@@ -589,17 +584,17 @@ function SettingSection({
   children: React.ReactNode;
 }) {
   return (
-    <section className="setting-section">
-      <div className="setting-label">
+    <section className="setting-section gap-lg py-xl">
+      <div className="setting-label gap-md">
         <span className="setting-icon" aria-hidden>
           {icon}
         </span>
         <div>
-          <h2 className="setting-title">{title}</h2>
+          <h2 className="setting-title mb-xs">{title}</h2>
           <p className="setting-description text-secondary">{description}</p>
         </div>
       </div>
-      <div className="setting-control">{children}</div>
+      <div className="setting-control gap-md">{children}</div>
     </section>
   );
 }

@@ -7,7 +7,6 @@
   .diary-layout {
     display: flex;
     flex-direction: column;
-    gap: v.$space-lg;
     position: relative;
 
     @include m.responsive(v.$bp-lg) {
@@ -21,7 +20,6 @@
       @include m.responsive(v.$bp-xl) {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: v.$space-2xl;
         align-items: start;
       }
     }
@@ -32,23 +30,16 @@
       @include m.responsive(v.$bp-lg) {
         display: flex;
         flex-direction: column;
-        gap: v.$space-lg;
         width: 200px;
         position: sticky;
         top: 6rem;
-        margin-top: v.$space-2xl;
       }
 
       .sidebar-card {
-        padding: 0 v.$space-sm;
-        margin-bottom: v.$space-lg;
-
         h3 {
           font-size: 1.1rem;
           color: v.$c-heading;
           font-weight: 700;
-          margin-bottom: v.$space-lg;
-          padding-bottom: v.$space-md;
           border-bottom: 1px solid v.$c-border;
         }
 
@@ -56,7 +47,6 @@
           ul {
             display: flex;
             flex-direction: column;
-            gap: v.$space-md;
 
             li {
               @include m.flex-between;
@@ -83,10 +73,7 @@
             ul {
               display: flex;
               flex-direction: column;
-              gap: 0.5rem;
               border-left: 2px solid v.$c-surface;
-              padding-left: 1rem;
-              margin-left: 0.5rem;
 
               li {
                 a {
@@ -110,15 +97,11 @@
   }
 
   .diary-month-wrapper {
-    margin-bottom: 1.5rem;
-
     .month-header {
       text-transform: capitalize;
       font-size: 1.25rem;
       color: v.$c-heading;
       font-weight: 700;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
       position: sticky;
       top: 0;
       background: v.$c-bg;
@@ -126,7 +109,6 @@
 
       @include m.responsive(v.$bp-md) {
         font-size: 1.5rem;
-        margin-bottom: 1.5rem;
         position: relative;
         top: auto;
         background: transparent;
@@ -153,7 +135,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: v.$space-md;
 
     .discover-link {
       color: v.$c-heading;

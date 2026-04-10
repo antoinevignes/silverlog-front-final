@@ -4,7 +4,6 @@
 .film-page-skeleton {
   &__mobile {
     display: flex;
-    gap: v.$space-md;
   }
 
   &__tablet {
@@ -22,7 +21,6 @@
 
     &__tablet {
       display: flex;
-      gap: v.$space-sm;
     }
 
     &__desktop {
@@ -41,7 +39,6 @@
 
     &__desktop {
       display: flex;
-      gap: v.$space-sm;
     }
   }
 }

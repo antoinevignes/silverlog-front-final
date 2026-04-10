@@ -18,8 +18,14 @@ export default function Tabs({
   tabs,
   variant = "default",
 }: TabsProps) {
+  const variantClasses: Record<string, string> = {
+    default: "p-xs gap-sm",
+    transparent: "",
+    header: "p-xs gap-xs mt-md mx-auto",
+  };
+
   return (
-    <div className={`tabs ${variant}`} role="tablist">
+    <div className={`tabs ${variant} ${variantClasses[variant] || ""}`} role="tablist">
       {tabs.map((tab) => {
         const isActive = selected === tab.id;
 

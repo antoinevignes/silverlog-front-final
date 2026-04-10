@@ -85,7 +85,7 @@ export default function DiaryDialog({
 
   return (
     <section>
-      <header className="diary-header">
+      <header className="diary-header mb-xl">
         <Button
           variant="ghost"
           size="icon"
@@ -106,7 +106,7 @@ export default function DiaryDialog({
         className="diary-dialog"
       >
         {hasSeen && (
-          <p className="seen-date-display">
+          <p className="seen-date-display mb-md gap-sm">
             <Clock size={16} /> Vu le{" "}
             {format(new Date(initialDate!), "d MMMM yyyy", {
               locale: frLocale,
@@ -114,7 +114,7 @@ export default function DiaryDialog({
           </p>
         )}
 
-        <div className="date-picker-card">
+        <div className="date-picker-card p-md my-sm">
           <form.AppField
             name="seen_at"
             children={(field) => (
@@ -138,7 +138,7 @@ export default function DiaryDialog({
           />
         </div>
 
-        <div className="diary-footer">
+        <div className="diary-footer gap-sm mt-md">
           {hasSeen && (
             <Button
               variant={isConfirming ? "destructive" : "ghost"}
@@ -156,7 +156,7 @@ export default function DiaryDialog({
             </Button>
           )}
 
-          <div className="footer-actions">
+          <div className="footer-actions gap-sm ml-auto">
             <Button variant="secondary" onClick={onBack}>
               Annuler
             </Button>

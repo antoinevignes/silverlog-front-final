@@ -10,7 +10,6 @@
     right: -2px;
     min-width: 18px;
     height: 18px;
-    padding: 0 5px;
     background: v.$destructive;
     color: white;
     font-size: 0.65rem;
@@ -33,7 +32,6 @@
 
 .notification-panel-header {
   @include m.flex-between;
-  padding: v.$space-md;
   border-bottom: 1px solid v.$c-border;
   flex-shrink: 0;
 
@@ -41,7 +39,6 @@
     font-size: 1rem;
     font-weight: 700;
     color: v.$c-heading;
-    margin: 0;
   }
 
   .mark-all-read {
@@ -60,8 +57,6 @@
 
 .notification-list {
   list-style: none;
-  margin: 0;
-  padding: 0;
   overflow-y: auto;
   flex: 1;
   overscroll-behavior: contain;
@@ -69,8 +64,6 @@
 
 .notification-item {
   display: flex;
-  gap: v.$space-sm;
-  padding: v.$space-md;
   border-bottom: 1px solid v.$c-border;
   cursor: pointer;
   transition: background-color 0.15s ease;
@@ -80,11 +73,26 @@
   }
 
   &.unread {
-    background-color: rgba(245, 197, 24, 0.04);
+    background-color: rgba(v.$c-heading, 0.03);
 
-    &:hover {
-      background-color: rgba(245, 197, 24, 0.07);
+    .notification-text strong {
+      color: v.$c-heading;
     }
+
+    .notification-time {
+      color: v.$c-heading;
+      font-weight: 500;
+    }
+  }
+
+  .notification-type-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: v.$c-surface;
+    @include m.flex-center;
+    color: v.$c-text;
+    flex-shrink: 0;
   }
 
   .notification-avatar {
@@ -93,24 +101,28 @@
     border-radius: 50%;
     object-fit: cover;
     flex-shrink: 0;
+    border: 1px solid v.$c-border;
   }
 
   .notification-avatar-placeholder {
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: v.$c-border;
+    background: v.$c-surface;
     @include m.flex-center;
-    flex-shrink: 0;
     color: v.$c-muted;
+    flex-shrink: 0;
+    border: 1px solid v.$c-border;
   }
 
   .notification-content {
     flex: 1;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
 
     .notification-text {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       color: v.$c-text;
       line-height: 1.4;
       margin: 0;
@@ -122,18 +134,16 @@
     }
 
     .notification-movie {
-      font-size: 0.8rem;
-      color: v.$c-muted;
-      margin: 0.15rem 0 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 0.85rem;
+      color: v.$c-heading;
+      font-weight: 500;
+      margin: 0;
     }
 
     .notification-time {
       font-size: 0.75rem;
       color: v.$c-muted;
-      margin: 0.25rem 0 0;
+      margin: 0;
     }
   }
 
@@ -144,51 +154,11 @@
     object-fit: cover;
     flex-shrink: 0;
   }
-
-  .notification-type-icon {
-    flex-shrink: 0;
-    margin-top: 2px;
-    color: v.$c-muted;
-
-    &.recommendation {
-      color: v.$warning;
-    }
-  }
 }
 
 .notification-empty {
   padding: v.$space-xl;
   text-align: center;
   color: v.$c-muted;
-  font-size: 0.875rem;
-}
-
-.notification-panel-footer {
-  padding: v.$space-sm v.$space-md;
-  border-top: 1px solid v.$c-border;
-  text-align: center;
-  flex-shrink: 0;
-
-  .view-all-link {
-    font-size: 0.85rem;
-    color: v.$c-muted;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease;
-
-    &:hover {
-      color: v.$c-heading;
-    }
-  }
-}
-
-@keyframes fadeInScale {
-  from {
-    opacity: 0;
-    transform: translateY(-4px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  font-size: 0.9rem;
 }

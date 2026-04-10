@@ -83,10 +83,10 @@ export default function Watchlist() {
   }, [movies, selectedYear, selectedGenre, sortOrder]);
 
   return (
-    <section className="watchlist-page">
+    <section className="watchlist-page mt-lg">
       {movies.length > 0 ? (
         <>
-          <header className="watchlist-filters">
+          <header className="watchlist-filters gap-sm mb-lg">
             <DropdownMenu>
               <DropdownTrigger>
                 <Badge variant="secondary" className="filter-badge" size="lg">
@@ -138,7 +138,7 @@ export default function Watchlist() {
 
             <Badge
               variant="secondary"
-              className="filter-badge sort-badge"
+              className="filter-badge sort-badge ml-auto"
               size="lg"
               onClick={() =>
                 setSortOrder((prev) => (prev === "desc" ? "asc" : "desc"))
@@ -151,7 +151,7 @@ export default function Watchlist() {
             </Badge>
           </header>
 
-          <section className="watchlist-layout">
+          <section className="watchlist-layout gap-md">
             {filteredMovies.length > 0 ? (
               filteredMovies.map((movie) => (
                 <MovieCard movie={movie} size="sm" key={movie.id} />
@@ -164,7 +164,7 @@ export default function Watchlist() {
           </section>
         </>
       ) : (
-        <div className="watchlist-empty-state">
+        <div className="watchlist-empty-state gap-md">
           <BookmarkPlus size={48} />
           <p className="text-secondary">
             Votre watchlist est vide pour le moment.

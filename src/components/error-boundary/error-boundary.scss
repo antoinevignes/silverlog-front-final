@@ -5,31 +5,31 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: v.$space-md;
 }
 
 .error-content {
   max-width: 600px;
   width: 100%;
   text-align: center;
-  padding: 3rem;
+  padding: v.$space-2xl;
 }
 
 .error-description {
   color: v.$c-muted;
-  margin-bottom: 2rem;
+  margin-bottom: v.$space-2xl;
   line-height: 1.6;
 }
 
 .error-actions {
   display: flex;
-  gap: 1rem;
+  gap: v.$space-md;
   justify-content: center;
 }
 
 @media (max-width: 480px) {
   .error-content {
-    padding: 2rem 1.5rem;
+    padding: v.$space-md v.$space-sm;
   }
 
   .error-title {

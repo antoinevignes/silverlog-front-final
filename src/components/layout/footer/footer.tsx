@@ -6,10 +6,10 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="global-footer">
-      <div className="container footer-content">
-        <div className="footer-brand">
-          <Link to="/" className="brand-logo">
+    <footer className="global-footer pt-2xl">
+      <div className="container footer-content gap-xl pb-xl">
+        <div className="footer-brand gap-sm">
+          <Link to="/" className="brand-logo gap-sm">
             <Image
               src="/logo.svg"
               alt="Logo de Silverlog"
@@ -29,10 +29,10 @@ export default function Footer() {
           </p>
         </div>
 
-        <div className="footer-links-grid">
+        <div className="footer-links-grid gap-xl">
           <div className="footer-col">
-            <h3 className="col-title font-fraunces">Navigation</h3>
-            <ul className="footer-links">
+            <h3 className="col-title font-fraunces mb-md">Navigation</h3>
+            <ul className="footer-links gap-sm">
               <li>
                 <Link to="/" className="link">
                   Accueil
@@ -52,8 +52,8 @@ export default function Footer() {
           </div>
 
           <div className="footer-col">
-            <h3 className="col-title font-fraunces">Légal</h3>
-            <ul className="footer-links">
+            <h3 className="col-title font-fraunces mb-md">Légal</h3>
+            <ul className="footer-links gap-sm">
               <li>
                 <Link to="/about" className="link">
                   Mentions Légales
@@ -74,8 +74,8 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="footer-bottom">
-        <div className="container footer-bottom-content">
+      <div className="footer-bottom py-md">
+        <div className="container footer-bottom-content gap-xs">
           <p className="copyright text-secondary">
             &copy; {currentYear} Silverlog. Tous droits réservés.
           </p>

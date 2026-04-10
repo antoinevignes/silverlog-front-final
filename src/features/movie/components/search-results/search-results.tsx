@@ -92,7 +92,7 @@ export default function SearchResults({ query }: SearchResultsProps) {
                     key={`person-${item.id}`}
                     to="/person/$personId"
                     params={{ personId: String(item.id) }}
-                    className="person-result-card"
+                    className="person-result-card link"
                   >
                     <div className="person-avatar-wrapper">
                       {item.profile_path ? (

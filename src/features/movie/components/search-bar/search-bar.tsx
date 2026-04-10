@@ -181,7 +181,7 @@ export default function SearchBar({
           {isLoadingMovies || isLoadingPersons || isLoadingUsers ? (
             <SearchCardSkeleton />
           ) : (
-            <ul className="movie-results" ref={scrollRef}>
+            <ul className="movie-results gap-lg py-sm" ref={scrollRef}>
               {allResults.map((item, index) => {
                 const anyItem = item as any;
                 const posterSrc = getCloudinarySrc(
@@ -239,12 +239,12 @@ export default function SearchBar({
                           className={`search-poster ${item.type === "person" || item.type === "user" ? "is-person" : ""}`}
                         />
                       )}
-                      <div className="movie-info">
+                      <div className="movie-info pl-lg">
                         <h2 className="font-fraunces">
                           {anyItem.title || anyItem.name || anyItem.username}
                         </h2>
                         {item.type === "movie" && (
-                          <p className="text-secondary">
+                          <p className="text-secondary mt-sm">
                             {item.release_date
                               ? new Date(item.release_date).getFullYear()
                               : "NC"}
@@ -267,7 +267,7 @@ function SearchCardSkeleton() {
   return (
     <ul className="movie-results">
       {Array.from({ length: 20 }).map((_, index) => (
-        <li className="movie-result">
+        <li className="movie-result gap-lg py-sm">
           <Skeleton className="search-poster-fallback" />
 
           <div className="movie-info">
@@ -281,7 +281,7 @@ function SearchCardSkeleton() {
               key={index}
               width="5rem"
               height={16}
-              className="movie-title"
+              className="movie-title mt-xs"
             />
           </div>
         </li>

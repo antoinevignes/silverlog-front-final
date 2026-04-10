@@ -1,6 +1,6 @@
 import "./reviews.scss";
-import { ArrowRight, Heart } from "lucide-react";
-import { Link, getRouteApi } from "@tanstack/react-router";
+import { Heart } from "lucide-react";
+import { getRouteApi } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import {
   Card,
@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/card/card";
 import { movieReviewsQuery } from "@/features/review/api/review.query";
 import { useLikeReview } from "@/features/review/api/review.mutations";
-
 
 export default function Reviews() {
   const routeApi = getRouteApi("/movies/$movieId/");
@@ -29,7 +28,7 @@ export default function Reviews() {
         </p>
       )}
 
-      <ul className="review-list">
+      <ul className="review-list gap-md">
         {reviews.map((review: any) => (
           <li key={review.id}>
             <Card className="review-card">
@@ -69,13 +68,6 @@ export default function Reviews() {
           </li>
         ))}
       </ul>
-
-      {reviews && reviews.length > 0 && (
-        <Link to="/" className="underline-link see-more">
-          Toutes les critiques
-          <ArrowRight size={16} />
-        </Link>
-      )}
     </>
   );
 }

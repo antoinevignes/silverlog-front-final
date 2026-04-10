@@ -4,27 +4,22 @@
 .reviews-grid {
   display: flex;
   flex-direction: column;
-  gap: v.$space-md;
 
   @include m.responsive(v.$bp-md) {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: v.$space-md;
   }
 
   @include m.responsive(v.$bp-lg) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: v.$space-md;
   }
 
   .review-card {
     background: v.$c-surface;
     border: 1px solid v.$c-border;
     border-radius: v.$radius;
-    padding: v.$space-md;
     display: flex;
     flex-direction: column;
-    gap: v.$space-sm;
     transition: border-color v.$transition;
 
     &:hover {
@@ -35,14 +30,12 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: v.$space-sm;
       flex-shrink: 0;
     }
 
     .review-user {
       display: flex;
       align-items: center;
-      gap: v.$space-sm;
       text-decoration: none;
       color: inherit;
       min-width: 0;
@@ -64,7 +57,6 @@
     .review-rating {
       display: flex;
       align-items: baseline;
-      gap: 2px;
       font-weight: 700;
       flex-shrink: 0;
 
@@ -96,8 +88,6 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: v.$space-sm;
-      padding-top: v.$space-sm;
       border-top: 1px solid v.$c-border;
       flex-shrink: 0;
     }
@@ -105,7 +95,6 @@
     .review-movie {
       display: flex;
       align-items: center;
-      gap: v.$space-sm;
       text-decoration: none;
       color: inherit;
       min-width: 0;
@@ -136,7 +125,6 @@
     .review-likes {
       display: flex;
       align-items: center;
-      gap: 4px;
       color: v.$c-muted;
       font-size: 0.85rem;
       flex-shrink: 0;
@@ -153,5 +141,4 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: v.$space-md;
 }

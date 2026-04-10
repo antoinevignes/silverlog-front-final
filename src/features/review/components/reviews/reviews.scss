@@ -3,7 +3,6 @@
 .review-list {
   display: flex;
   flex-direction: column;
-  gap: v.$space-md;
 
   .review-card {
     background-color: v.$c-surface;
@@ -15,7 +14,6 @@
 
   .button {
     display: flex;
-    gap: v.$space-sm;
     padding: 0;
     background-color: transparent;
   }
@@ -26,13 +24,10 @@
 
     .review-actions {
       display: flex;
-      gap: v.$space-sm;
     }
   }
 }
 
 .see-more {
   @include m.flex-center;
-  gap: v.$space-xs;
-  margin-top: v.$space-md;
 }

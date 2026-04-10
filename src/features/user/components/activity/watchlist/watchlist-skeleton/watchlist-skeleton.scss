@@ -1,19 +1,17 @@
+@use "@/styles/abstracts/variables" as v;
+
 .watchlist-skeleton-page {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  margin: 2rem auto;
 
   .watchlist-skeleton-filters {
     display: flex;
-    gap: 0.5rem;
     align-items: center;
   }
 
   .watchlist-skeleton-layout {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 1rem;
 
     .watchlist-skeleton {
       height: 156px;

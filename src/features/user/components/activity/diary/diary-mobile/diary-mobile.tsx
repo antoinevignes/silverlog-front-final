@@ -10,13 +10,13 @@ import Badge from "@/components/ui/badge/badge";
 export default function DiaryMobile({ movies }: { movies: Array<MovieType> }) {
   return (
     <section className="diary-mobile">
-      <ul className="diary-list">
+      <ul className="diary-list gap-md">
         {movies.map((movie) => (
-          <li key={movie.id} className="diary-item">
+          <li key={movie.id} className="diary-item gap-md p-sm">
             <Link
               to={`/movies/$movieId`}
               params={{ movieId: String(movie.id) }}
-              className="diary-link"
+              className="diary-link gap-md"
             >
               <figure className="poster-container">
                 <Image
@@ -37,10 +37,10 @@ export default function DiaryMobile({ movies }: { movies: Array<MovieType> }) {
                   {format(new Date(movie.seen_at), "d")}
                 </time>
               </figure>
-              <section className="movie-details">
+              <section className="movie-details gap-xs">
                 <h3 className="movie-title">{movie.title}</h3>
 
-                <div className="movie-meta">
+                <div className="movie-meta gap-sm">
                   {movie.release_date && (
                     <span className="release-year">
                       {format(new Date(movie.release_date), "yyyy")}

@@ -132,23 +132,23 @@ export default function ListDetails() {
           aspectRatio={16 / 9}
           sizes="100vw"
           background="auto"
-          className="list-backdrop"
+          className="list-backdrop mt-md mb-lg"
         />
       ) : (
-        <div className="list-backdrop-empty">
+        <div className="list-backdrop-empty mb-lg">
           <Film size={48} />
         </div>
       )}
 
-      <section className="author-section">
-        <div className="author-info">
+      <section className="author-section mb-md">
+        <div className="author-info gap-md">
           <Avatar
             username={user?.username || ""}
             src={user?.avatar_path}
             size="lg"
           />
 
-          <div className="author-details">
+          <div className="author-details gap-sm">
             <Link
               to="/user/$userId"
               params={{ userId: listData.user_id }}
@@ -203,14 +203,14 @@ export default function ListDetails() {
         )}
       </section>
 
-      <section className="description-section">
+      <section className="description-section mb-md">
         <p
           className={`description-text truncate-3-lines ${isExpanded ? "expanded" : ""}`}
         >
           {listData.description}
         </p>
         <button
-          className={`expand-button ${isExpanded ? "is-expanded" : ""}`}
+          className={`expand-button mt-sm ${isExpanded ? "is-expanded" : ""}`}
           aria-label={isExpanded ? "Réduire la description" : "Lire la suite"}
           onClick={toggleExpanded}
         >
@@ -218,14 +218,14 @@ export default function ListDetails() {
         </button>
       </section>
 
-      <section className="list-stats">
-        <p className="list-stat">
+      <section className="list-stats mb-md gap-sm">
+        <p className="list-stat gap-sm px-md py-sm">
           <Film size={18} />
           {movies.length} films
         </p>
 
         {user && (
-          <p className="list-stat">
+          <p className="list-stat gap-sm px-md py-sm">
             <div className="progress-icon" aria-hidden="true">
               <svg width="18" height="18" viewBox="0 0 24 24">
                 <circle
@@ -254,7 +254,7 @@ export default function ListDetails() {
         )}
       </section>
 
-      <section className="meta-stats-row">
+      <section className="meta-stats-row mb-md gap-sm">
         <TrendingUp size={14} />
         <span>
           Suivi par{" "}
@@ -266,7 +266,7 @@ export default function ListDetails() {
       </section>
 
       {movies.length === 0 ? (
-        <div className="list-movies-empty">
+        <div className="list-movies-empty gap-md">
           <Film size={48} />
           <p className="text-secondary">Cette liste ne contient aucun film.</p>
           {isOwner && (
@@ -277,8 +277,8 @@ export default function ListDetails() {
         </div>
       ) : (
         <section>
-          <header className="list-filters">
-            <div className="left-filters">
+          <header className="list-filters mb-lg">
+            <div className="left-filters gap-sm">
               {user && (
                 <DropdownMenu>
                   <DropdownTrigger>
@@ -366,7 +366,7 @@ export default function ListDetails() {
             </DropdownMenu>
           </header>
 
-          <section className="posters-grid">
+          <section className="posters-grid gap-md">
             {filteredMovies.length === 0 ? (
               <p className="empty-state">
                 Aucun film ne correspond à vos filtres.

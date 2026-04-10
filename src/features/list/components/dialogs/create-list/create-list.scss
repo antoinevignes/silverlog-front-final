@@ -5,7 +5,6 @@
   position: relative;
   display: flex;
   align-items: center;
-  margin-bottom: v.$space-xl;
 
   .back-button {
     position: relative;
@@ -13,7 +12,6 @@
     border: none;
     background-color: transparent;
     cursor: pointer;
-    padding: 0;
     display: flex;
     align-items: center;
   }
@@ -22,7 +20,6 @@
     position: absolute;
     left: 0;
     right: 0;
-    margin: 0;
     z-index: 1;
     font-size: 1.1rem;
     font-weight: 600;
@@ -34,32 +31,25 @@
 .dialog-footer {
   display: flex;
   justify-content: flex-end;
-  gap: v.$space-sm;
-  margin-top: v.$space-lg;
 }
 
 .create-list-form {
   display: flex;
   flex-direction: column;
-  gap: v.$space-lg;
 
   .form-group {
     display: flex;
     flex-direction: column;
-    gap: v.$space-sm;
   }
 
   .privacy-toggle-group {
     @include m.flex-between;
-    padding: v.$space-md;
     border-radius: v.$radius;
     background-color: v.$c-surface;
-    margin-top: v.$space-sm;
 
     .privacy-info {
       display: flex;
       flex-direction: column;
-      gap: v.$space-xs;
 
       .privacy-label {
         font-weight: 600;

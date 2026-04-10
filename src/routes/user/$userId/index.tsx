@@ -139,7 +139,7 @@ function RouteComponent() {
         type="profile"
         schemaMarkup={generateProfileSchema(userData.username, userImage)}
       />
-      <main className="user-profile">
+      <main className="user-profile mb-lg">
         <figure className="profile-banner" aria-hidden="true">
           {userData.banner_path ? (
             <Image
@@ -160,9 +160,9 @@ function RouteComponent() {
           <div className="banner-overlay"></div>
         </figure>
 
-        <article className="container profile-layout">
-          <header className="profile-header">
-            <div className="avatar-stats-row">
+        <article className="container profile-layout mx-auto">
+          <header className="profile-header gap-lg mb-xl">
+            <div className="avatar-stats-row gap-lg">
               <figure className="avatar-container">
                 <Avatar
                   username={userData.username}
@@ -171,9 +171,9 @@ function RouteComponent() {
                 />
               </figure>
 
-              <ul className="stats-container" role="list">
+              <ul className="stats-container gap-lg mb-sm" role="list">
                 <li className="stat-item">
-                  <strong className="stat-value">
+                  <strong className="stat-value gap-xs">
                     {userData.viewed_movies_count}
                   </strong>
                   <span className="stat-label">Films</span>
@@ -187,7 +187,7 @@ function RouteComponent() {
                 </li>
 
                 <li className="stat-item">
-                  <strong className="stat-value">
+                  <strong className="stat-value gap-xs">
                     <Star
                       size={14}
                       fill="currentColor"
@@ -202,11 +202,11 @@ function RouteComponent() {
             </div>
 
             <section
-              className="user-info-section"
+              className="user-info-section gap-md"
               aria-label="Informations de l'utilisateur"
             >
               <div className="name-action-row">
-                <h1 className="username">{userData.username}</h1>
+                <h1 className="username gap-sm">{userData.username}</h1>
 
                 {Number(user?.id) === Number(userId) ? (
                   <Link
@@ -224,7 +224,7 @@ function RouteComponent() {
                 ) : (
                   <Button
                     size="sm"
-                    className="follow-btn"
+                    className="follow-btn px-lg"
                     variant={userData.is_following ? "outline" : "default"}
                     onClick={() => {
                       if (!user) {
@@ -246,7 +246,7 @@ function RouteComponent() {
                 <p className="user-bio">{userData.description}</p>
               )}
 
-              <div className="user-social-stats">
+              <div className="user-social-stats gap-lg">
                 <span
                   className="clickable-stat"
                   role="button"
@@ -266,9 +266,9 @@ function RouteComponent() {
                 </span>
               </div>
 
-              <address className="user-meta">
+              <address className="user-meta gap-md">
                 {userData.location && (
-                  <span className="meta-item">
+                  <span className="meta-item gap-xs">
                     <MapPin size={14} aria-hidden />
                     {userData.location}
                   </span>
@@ -288,19 +288,22 @@ function RouteComponent() {
             variant="transparent"
           />
 
-          <section className="profile-content" aria-label="Contenu du profil">
+          <section
+            className="profile-content gap-md mt-md"
+            aria-label="Contenu du profil"
+          >
             {tab === "a-propos" && (
               <>
                 <section
                   className="content-section"
                   aria-labelledby="top-movies-title"
                 >
-                  <div className="top-movies-header">
+                  <div className="top-movies-header mb-md">
                     <div className="title-wrapper">
                       <Title title="Top 6" id="top-movies-title" />
                     </div>
                     {Number(user?.id) === Number(userId) && (
-                      <div className="top-movies-actions">
+                      <div className="top-movies-actions gap-xs">
                         {isEditingTop ? (
                           <>
                             <Button
@@ -333,7 +336,7 @@ function RouteComponent() {
                   </div>
 
                   {topMovies.length === 0 ? (
-                    <div className="top-movies-empty">
+                    <div className="top-movies-empty gap-md">
                       <Trophy size={48} />
                       <p className="text-secondary">Aucun film dans le top.</p>
                       {Number(user?.id) === Number(userId) && (
@@ -350,7 +353,7 @@ function RouteComponent() {
                       >
                         {(provided) => (
                           <ul
-                            className="top-movies-grid"
+                            className="top-movies-grid gap-md"
                             role="list"
                             {...provided.droppableProps}
                             ref={provided.innerRef}
@@ -373,14 +376,14 @@ function RouteComponent() {
                                   >
                                     <div className="draggable-card-wrapper">
                                       {!isEditingTop && (
-                                        <div className="rank-badge font-fraunces">
+                                        <div className="rank-badge font-fraunces top-xs right-xs">
                                           {index + 1}
                                         </div>
                                       )}
                                       {isEditingTop && (
                                         <div
                                           {...provided.dragHandleProps}
-                                          className="drag-handle"
+                                          className="drag-handle top-xs left-xs"
                                         >
                                           <GripVertical
                                             size={16}
@@ -389,12 +392,12 @@ function RouteComponent() {
                                         </div>
                                       )}
                                       <div
-                                        className={`card-mobile ${isEditingTop ? "editing-mode" : ""}`}
+                                        className={`card-mobile mx-auto ${isEditingTop ? "editing-mode" : ""}`}
                                       >
                                         <MovieCard movie={movie} size="sm" />
                                       </div>
                                       <div
-                                        className={`card-desktop ${isEditingTop ? "editing-mode" : ""}`}
+                                        className={`card-desktop mx-auto ${isEditingTop ? "editing-mode" : ""}`}
                                       >
                                         <MovieCard movie={movie} size="md" />
                                       </div>
@@ -415,10 +418,14 @@ function RouteComponent() {
                   className="content-section movie-swiper-container"
                   aria-labelledby="recent-activity-title"
                 >
-                  <Title title="Activité récente" id="recent-activity-title" />
+                  <Title
+                    title="Activité récente"
+                    id="recent-activity-title"
+                    className="mb-md"
+                  />
 
                   {(userData.recent_activity ?? []).length === 0 ? (
-                    <div className="recent-activity-empty">
+                    <div className="recent-activity-empty gap-md">
                       <Clock size={48} />
                       <p className="text-secondary">Aucune activité récente.</p>
                     </div>
@@ -510,7 +517,7 @@ function RouteComponent() {
             {tab === "watchlist" && (
               <Suspense
                 fallback={
-                  <ul className="watchlist-grid">
+                  <ul className="watchlist-grid gap-md mt-md">
                     {Array.from({ length: 12 }).map((_, index) => (
                       <li key={index}>
                         <Skeleton className="poster-skeleton" />
@@ -526,10 +533,10 @@ function RouteComponent() {
             {tab === "lists" && (
               <Suspense
                 fallback={
-                  <div className="lists-skeleton-grid">
+                  <div className="lists-skeleton-grid gap-md my-lg">
                     {Array.from({ length: 4 }).map((_, index) => (
                       <div key={index} className="list-card-skeleton">
-                        <div className="skeleton-info">
+                        <div className="skeleton-info p-md gap-md">
                           <Skeleton height={20} width="80%" />
                           <Skeleton height={24} width="30%" />
                           <Skeleton height={14} width="90%" />
@@ -537,8 +544,8 @@ function RouteComponent() {
                           <Skeleton height={14} width="40%" />
                         </div>
                         <div className="skeleton-posters">
-                          <Skeleton className="poster depth-2" />
-                          <Skeleton className="poster depth-1" />
+                          <Skeleton className="poster depth-2 right-lg" />
+                          <Skeleton className="poster depth-1 right-sm" />
                           <Skeleton className="poster depth-0" />
                         </div>
                       </div>

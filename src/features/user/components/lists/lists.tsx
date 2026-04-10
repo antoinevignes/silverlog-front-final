@@ -40,7 +40,7 @@ export default function Lists({ userId }: { userId: string }) {
   return (
     <section className="content-section" aria-label="Listes publiques">
       {!isPublic && lists.length > 0 && (
-        <header className="lists-header">
+        <header className="lists-header flex justify-end gap-sm my-md">
           <Button variant="outline" onClick={() => setIsCreateDialogOpen(true)}>
             <Plus size={16} />
             Créer une liste
@@ -49,7 +49,7 @@ export default function Lists({ userId }: { userId: string }) {
       )}
 
       {lists.length === 0 ? (
-        <div className="lists-empty-state">
+        <div className="lists-empty-state gap-md">
           <ListPlus size={48} />
           <p className="text-secondary">
             Vous n'avez pas encore créé de liste.
@@ -62,7 +62,7 @@ export default function Lists({ userId }: { userId: string }) {
           )}
         </div>
       ) : (
-        <div className="lists-grid">
+        <div className="lists-grid gap-md mt-md">
           {lists.map((list: ListType) => (
             <div key={list.id} className="list-wrapper">
               <ListCard list={list} />

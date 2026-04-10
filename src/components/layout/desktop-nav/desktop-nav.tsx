@@ -25,9 +25,9 @@ export default function DesktopNav() {
   } = useToggle();
 
   return (
-    <header className="desktop-top-nav">
+    <header className="desktop-top-nav py-md">
       <div className="nav-container container">
-        <Link to="/" className="brand">
+        <Link to="/" className="brand gap-sm">
           <Image
             src="/logo.svg"
             alt="Logo de Silverlog"
@@ -42,7 +42,7 @@ export default function DesktopNav() {
         </Link>
 
         <nav className="main-nav">
-          <ul>
+          <ul className="gap-xl">
             <li>
               <Link to="/movies">Films</Link>
             </li>
@@ -59,7 +59,7 @@ export default function DesktopNav() {
         </nav>
 
         <section className="right-section">
-          <div className={`search-container ${isSearchOpen ? "open" : ""}`}>
+          <div className={`search-container mr-md ${isSearchOpen ? "open" : ""}`}>
             <div className="search-wrapper">
               <SearchBar autoFocus={isSearchOpen} />
             </div>
@@ -103,11 +103,11 @@ export default function DesktopNav() {
                 </DropdownTrigger>
 
                 <DropdownContent align="right">
-                  <div className="dropdown-header">
+                  <div className="dropdown-header gap-xs py-sm px-md">
                     <span className="username">{user.username}</span>
                     <span className="email">{user.email}</span>
                   </div>
-                  <hr className="dropdown-divider" />
+                  <hr className="dropdown-divider my-xs" />
                   <DropdownItem
                     onClick={() =>
                       navigate({
@@ -125,7 +125,7 @@ export default function DesktopNav() {
                     <Settings size={16} />
                     Paramètres
                   </DropdownItem>
-                  <hr className="dropdown-divider" />
+                  <hr className="dropdown-divider my-xs" />
                   {user.role === "admin" && (
                     <DropdownItem onClick={() => navigate({ to: "/admin" })}>
                       <Shield size={16} />

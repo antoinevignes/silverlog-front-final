@@ -45,21 +45,25 @@ export default function CustomList({
         <h2 className="custom-list-title">Ajouter à une liste</h2>
       </header>
 
-      <section className="custom-lists-container">
-        <button className="new-list-link" onClick={onCreateNew} type="button">
+      <section className="custom-lists-container gap-md">
+        <button
+          className="new-list-link gap-sm p-md"
+          onClick={onCreateNew}
+          type="button"
+        >
           <Plus size={16} />
           Créer une liste
         </button>
 
-        <div className="custom-lists">
+        <div className="custom-lists gap-sm">
           {isLoading && (
-            <div className="loading-state">
+            <div className="loading-state p-xl">
               <Loader2 className="animate-spin" size={24} />
             </div>
           )}
 
           {!isLoading && customLists?.length === 0 && (
-            <div className="empty-state">
+            <div className="empty-state p-xl">
               <p>Vous n'avez pas encore de liste personnalisée.</p>
             </div>
           )}

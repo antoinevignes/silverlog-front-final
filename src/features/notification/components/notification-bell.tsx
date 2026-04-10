@@ -96,14 +96,10 @@ export default function NotificationBell() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button
-          aria-label="Notifications"
-          variant="ghost"
-          size="icon"
-        >
+        <Button aria-label="Notifications" variant="ghost" size="icon">
           <Bell size={20} />
           {unreadCount > 0 && (
-            <span className="unread-badge">
+            <span className="unread-badge px-xs">
               {unreadCount > 99 ? "99+" : unreadCount}
             </span>
           )}
@@ -112,7 +108,7 @@ export default function NotificationBell() {
 
       <DialogContent>
         <div className="notification-panel">
-          <header className="notification-panel-header">
+          <header className="notification-panel-header p-md">
             <h3>Notifications</h3>
             {unreadCount > 0 && (
               <Button variant="ghost" size="sm" onClick={handleMarkAllRead}>
@@ -130,7 +126,7 @@ export default function NotificationBell() {
               {dedupedNotifications.map((notif) => (
                 <li
                   key={`${notif.type}-${notif.id}`}
-                  className={`notification-item ${!notif.is_read ? "unread" : ""}`}
+                  className={`notification-item gap-sm p-md ${!notif.is_read ? "unread" : ""}`}
                   onClick={() => handleNotificationClick(notif)}
                   role="button"
                   tabIndex={0}
@@ -164,7 +160,7 @@ export default function NotificationBell() {
                     </div>
                   )}
 
-                  <div className="notification-content">
+                  <div className="notification-content gap-xs">
                     <p className="notification-text">
                       <strong>{notif.sender_username}</strong>{" "}
                       {notif.type === "recommendation"
