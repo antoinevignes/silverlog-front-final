@@ -96,7 +96,7 @@ function RouteComponent() {
   // MAJ LOCALISATION
   const locationForm = useAppForm({
     defaultValues: {
-      location: "",
+      location: user?.location ?? "",
     },
     validators: {
       onChange: z.object({
