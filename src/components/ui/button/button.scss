@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "@/styles/abstracts/variables" as v;
 
 .btn {
@@ -20,66 +21,80 @@
   }
 
   /* Variants */
-  &--default {
-    background: v.$c-heading;
-    color: v.$c-bg;
-    &:hover {
-      background: v.$c-heading;
-    }
-  }
+  $variants: (
+    default: (
+      bg: v.$c-heading,
+      color: v.$c-bg,
+      hover: v.$c-heading,
+    ),
+    secondary: (
+      bg: v.$c-surface,
+      color: v.$c-heading,
+      hover: v.$c-border,
+    ),
+    outline: (
+      bg: transparent,
+      color: v.$c-heading,
+      hover: v.$c-surface,
+      border: v.$c-border,
+    ),
+    ghost: (
+      bg: transparent,
+      color: v.$c-heading,
+      hover: v.$c-surface,
+    ),
+    destructive: (
+      bg: v.$destructive,
+      color: v.$c-bg,
+      hover: v.$destructive-hover,
+    ),
+  );
 
-  &--secondary {
-    background: v.$c-surface;
-    color: v.$c-heading;
-    &:hover {
-      background: v.$c-border;
-    }
-  }
+  @each $name, $props in $variants {
+    &--#{$name} {
+      background: map.get($props, bg);
+      color: map.get($props, color);
+      border-color: map.get($props, border) or transparent;
 
-  &--outline {
-    background: transparent;
-    border-color: v.$c-border;
-    color: v.$c-heading;
-    &:hover {
-      background: v.$c-surface;
-    }
-  }
-
-  &--ghost {
-    background: transparent;
-    color: v.$c-heading;
-    &:hover {
-      background: v.$c-surface;
-    }
-  }
-
-  &--destructive {
-    background: v.$destructive;
-    color: v.$c-bg;
-    &:hover {
-      background: v.$destructive-hover;
+      &:hover {
+        background: map.get($props, hover);
+      }
     }
   }
 
   /* Sizes */
-  &--sm {
-    height: v.$space-xl;
-    padding: 0 v.$space-sm;
-    font-size: 0.875rem;
-  }
-  &--md {
-    height: calc(v.$space-xl + v.$space-sm);
-    padding: 0 v.$space-md;
-    font-size: 0.875rem;
-  }
-  &--lg {
-    height: v.$space-2xl;
-    padding: 0 v.$space-lg;
-    font-size: 1rem;
-  }
-  &--icon {
-    height: calc(v.$space-xl + v.$space-sm);
-    width: calc(v.$space-xl + v.$space-sm);
-    padding: 0;
+  $sizes: (
+    sm: (
+      height: v.$space-xl,
+      padding: 0 v.$space-sm,
+      font-size: 0.875rem,
+    ),
+    md: (
+      height: calc(v.$space-xl + v.$space-sm),
+      padding: 0 v.$space-md,
+      font-size: 0.875rem,
+    ),
+    lg: (
+      height: v.$space-2xl,
+      padding: 0 v.$space-lg,
+      font-size: 1rem,
+    ),
+    icon: (
+      height: calc(v.$space-xl + v.$space-sm),
+      width: calc(v.$space-xl + v.$space-sm),
+      padding: 0,
+    ),
+  );
+
+  @each $name, $props in $sizes {
+    &--#{$name} {
+      height: map.get($props, height);
+      padding: map.get($props, padding);
+      font-size: map.get($props, font-size);
+
+      @if map.has-key($props, width) {
+        width: map.get($props, width);
+      }
+    }
   }
 }

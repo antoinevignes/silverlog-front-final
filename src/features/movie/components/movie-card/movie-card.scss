@@ -9,16 +9,16 @@
   border-radius: v.$radius;
   box-shadow: v.$shadow-md;
 
-  &--sm {
-    width: 6.5rem;
-  }
+  $sizes: (
+    sm: 6.5rem,
+    md: 8.5rem,
+    lg: 12rem,
+  );
 
-  &--md {
-    width: 8.5rem;
-  }
-
-  &--lg {
-    width: 12rem;
+  @each $name, $width in $sizes {
+    &--#{$name} {
+      width: $width;
+    }
   }
 
   .poster-fallback {
