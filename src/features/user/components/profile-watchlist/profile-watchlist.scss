@@ -7,3 +7,21 @@
   gap: v.$space-md;
   margin-top: v.$space-md;
 }
+
+.profile-watchlist-empty {
+  @include m.empty-state;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: v.$space-md;
+
+  .discover-link {
+    color: v.$c-heading;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
