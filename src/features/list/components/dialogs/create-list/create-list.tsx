@@ -54,9 +54,9 @@ export default function CreateList({ onBack }: CreateListProps) {
           e.preventDefault();
           form.handleSubmit();
         }}
-        className="create-list-form"
+        className="create-list-form gap-lg"
       >
-        <div className="form-group">
+        <div className="form-group gap-sm">
           <Label htmlFor="list-title">Nom de la liste</Label>
           <form.AppField
             name="title"
@@ -69,7 +69,7 @@ export default function CreateList({ onBack }: CreateListProps) {
           />
         </div>
 
-        <div className="form-group">
+        <div className="form-group gap-sm">
           <Label htmlFor="list-description">Description (optionnelle)</Label>
           <form.AppField
             name="description"
@@ -89,8 +89,8 @@ export default function CreateList({ onBack }: CreateListProps) {
             const isPublic = field.state.value;
 
             return (
-              <div className="privacy-toggle-group">
-                <div className="privacy-info">
+              <div className="privacy-toggle-group p-md mt-sm">
+                <div className="privacy-info gap-xs">
                   <span className="privacy-label">Visibilité</span>
                   <span className="privacy-desc">
                     {isPublic
@@ -115,7 +115,7 @@ export default function CreateList({ onBack }: CreateListProps) {
           }}
         />
 
-        <div className="dialog-footer">
+        <div className="dialog-footer gap-sm mt-md">
           <Button variant="secondary" onClick={onBack}>
             Annuler
           </Button>

@@ -9,27 +9,27 @@ export default function MobileNav() {
 
   return (
     <nav className="mobile-bottom-nav">
-      <ul className="nav-items">
+      <ul className="nav-items pt-sm pb-md">
         <li>
-          <Link to="/" className="nav-link">
+          <Link to="/" className="nav-link gap-xs">
             <Home size={24} />
             <span>Accueil</span>
           </Link>
         </li>
         <li>
-          <Link to="/movies" className="nav-link">
+          <Link to="/movies" className="nav-link gap-xs">
             <Film size={24} />
             <span>Films</span>
           </Link>
         </li>
         <li>
-          <Link to="/discover" className="nav-link">
+          <Link to="/discover" className="nav-link gap-xs">
             <Compass size={24} />
             <span>Découvrir</span>
           </Link>
         </li>
         <li>
-          <Link to="/user/activity" className="nav-link">
+          <Link to="/user/activity" className="nav-link gap-xs">
             <Bookmark size={24} />
             <span>Activité</span>
           </Link>
@@ -40,7 +40,7 @@ export default function MobileNav() {
             <Link
               to="/user/$userId"
               params={{ userId: user?.id?.toString() || "" }}
-              className="nav-link avatar-link"
+              className="nav-link avatar-link gap-xs"
               aria-label="Profil"
             >
               <div className="avatar-icon-wrapper">
@@ -60,7 +60,7 @@ export default function MobileNav() {
               search={{
                 redirect: location.pathname,
               }}
-              className="nav-link"
+              className="nav-link gap-xs"
               aria-label="Connexion"
             >
               <User size={24} />

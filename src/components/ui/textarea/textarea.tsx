@@ -11,7 +11,7 @@ export default function Textarea({
 
   return (
     <textarea
-      className="app-textarea"
+      className="app-textarea py-sm px-md"
       id={id}
       disabled={disabled}
       {...props}

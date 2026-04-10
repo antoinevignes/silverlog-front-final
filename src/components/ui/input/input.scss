@@ -32,7 +32,6 @@
 
   .input-field {
     width: 100%;
-    padding: 0.55rem 0.8rem;
     font-size: 0.95rem;
     font-family: inherit;
     border-radius: v.$radius;
@@ -41,14 +40,6 @@
     color: v.$c-heading;
     transition: all v.$transition;
     box-sizing: border-box;
-
-    &--has-left-icon {
-      padding-left: 2.2rem;
-    }
-
-    &--has-right-icon {
-      padding-right: 2.2rem;
-    }
 
     &::placeholder {
       color: v.$c-muted;

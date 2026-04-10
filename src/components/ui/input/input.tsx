@@ -42,7 +42,7 @@ export default function Input({
         ref={inputRef}
         id={id}
         disabled={disabled}
-        className={fieldClasses}
+        className={`${fieldClasses} py-sm ${leftIcon ? "pl-xl" : "pl-md"} ${rightIcon ? "pr-xl" : "pr-md"}`}
         {...props}
         value={field.state.value}
         onChange={(e) => field.handleChange(e.target.value)}

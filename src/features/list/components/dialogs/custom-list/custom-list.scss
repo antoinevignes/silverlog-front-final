@@ -25,12 +25,9 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: v.$space-md;
 
   .new-list-link {
     @include m.flex-center;
-    gap: v.$space-sm;
-    padding: v.$space-md;
     box-sizing: border-box;
     border: 2px dashed v.$c-border-h;
     border-radius: v.$radius;
@@ -51,7 +48,6 @@
     flex-direction: column;
     align-items: stretch;
     width: 100%;
-    gap: v.$space-sm;
 
     .custom-list-item {
       all: unset;
@@ -96,7 +92,6 @@
     .loading-state,
     .empty-state {
       @include m.flex-center;
-      padding: v.$space-xl;
       text-align: center;
       color: v.$c-muted;
       font-size: 0.875rem;
