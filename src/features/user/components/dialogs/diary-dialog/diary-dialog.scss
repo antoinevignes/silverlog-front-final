@@ -4,7 +4,6 @@
   position: relative;
   display: flex;
   align-items: center;
-  margin-bottom: v.$space-xl;
 
   .diary-title {
     position: absolute;
@@ -30,19 +29,15 @@
   .seen-date-display {
     font-size: 0.95rem;
     color: v.$c-heading;
-    margin-bottom: v.$space-md;
     font-weight: 500;
     display: flex;
     align-items: center;
-    gap: v.$space-sm;
   }
 
   .date-picker-card {
     background-color: v.$c-surface;
     border: 1px solid v.$c-border;
     border-radius: v.$radius;
-    padding: v.$space-md;
-    margin: v.$space-sm 0;
     display: flex;
     justify-content: center;
   }
@@ -57,8 +52,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: v.$space-sm;
-    margin-top: v.$space-md;
     width: 100%;
 
     .delete-button {
@@ -77,8 +70,6 @@
     .footer-actions {
       display: flex;
       align-items: center;
-      gap: v.$space-sm;
-      margin-left: auto;
     }
   }
 }

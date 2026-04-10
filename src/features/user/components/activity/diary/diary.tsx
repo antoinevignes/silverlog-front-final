@@ -51,10 +51,10 @@ export default function Diary() {
 
   return (
     <main className="container diary-page">
-      <div className="diary-layout">
+      <div className="diary-layout gap-lg">
         <section className="diary-content">
           {groups.length === 0 ? (
-            <div className="diary-empty-state">
+            <div className="diary-empty-state gap-md">
               <CalendarX size={48} />
               <p className="text-secondary">Votre journal est vide.</p>
               <Link to="/discover" className="discover-link">
@@ -63,32 +63,32 @@ export default function Diary() {
             </div>
           ) : (
             groups.map((group) => (
-            <section
-              key={group.id}
-              id={group.id}
-              className="diary-month-wrapper"
-            >
-              <header className="month-header">
-                <h2>
-                  <time dateTime={format(group.date, "yyyy-MM")}>
-                    {format(group.date, "MMMM yyyy", { locale: fr })}
-                  </time>
-                </h2>
-              </header>
+              <section
+                key={group.id}
+                id={group.id}
+                className="diary-month-wrapper mb-lg"
+              >
+                <header className="month-header mb-md pb-sm">
+                  <h2>
+                    <time dateTime={format(group.date, "yyyy-MM")}>
+                      {format(group.date, "MMMM yyyy", { locale: fr })}
+                    </time>
+                  </h2>
+                </header>
 
-              <DiaryMobile movies={group.movies} />
-              <DiaryDesktop monthDate={group.date} movies={group.movies} />
-            </section>
-          ))
+                <DiaryMobile movies={group.movies} />
+                <DiaryDesktop monthDate={group.date} movies={group.movies} />
+              </section>
+            ))
           )}
         </section>
 
         {groups.length > 0 && (
-          <aside className="diary-sidebar">
-            <section className="sidebar-card timeline-card">
-              <h3>Chronologie</h3>
+          <aside className="diary-sidebar gap-lg mt-2xl">
+            <section className="sidebar-card timeline-card px-sm mb-lg">
+              <h3 className="mb-lg pb-md">Chronologie</h3>
               <nav className="timeline-nav">
-                <ul>
+                <ul className="gap-sm pl-md ml-sm">
                   {groups.map((group) => (
                     <li key={`nav-${group.id}`}>
                       <a href={`#${group.id}`}>

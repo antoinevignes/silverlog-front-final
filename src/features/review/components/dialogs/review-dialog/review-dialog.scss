@@ -4,7 +4,6 @@
   position: relative;
   display: flex;
   align-items: center;
-  margin-bottom: v.$space-md;
 
   .review-title {
     position: absolute;
@@ -25,20 +24,16 @@
   flex-direction: column;
 
   .rating-section {
-    margin-top: v.$space-md;
-
     label {
       font-weight: 600;
       color: v.$c-text;
       display: block;
-      margin-bottom: v.$space-sm;
     }
   }
 
   .review-form {
     display: flex;
     flex-direction: column;
-    gap: v.$space-sm;
 
     label {
       font-weight: 600;
@@ -49,7 +44,6 @@
       min-height: 6rem;
       border-radius: v.$radius;
       border: 1px solid v.$c-border-h;
-      padding: v.$space-sm;
       font-size: 1rem;
       color: v.$c-text;
       resize: none;
@@ -68,7 +62,6 @@
       text-align: right;
       font-size: 0.875rem;
       color: v.$c-muted;
-      margin-top: -(v.$space-xs);
 
       &.error {
         color: v.$destructive;
@@ -83,12 +76,9 @@
 
       .footer-actions {
         display: flex;
-        gap: v.$space-sm;
-        margin-left: auto;
       }
 
       .delete-button {
-        padding: v.$space-sm;
         color: v.$destructive;
         &:hover {
           background-color: rgba(v.$destructive, 0.1);

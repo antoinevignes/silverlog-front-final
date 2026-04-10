@@ -98,7 +98,7 @@ export default function ReviewDialog({
 
   return (
     <>
-      <header className="review-dialog-header">
+      <header className="review-dialog-header mb-md">
         <Button
           variant="ghost"
           size="icon"
@@ -112,7 +112,7 @@ export default function ReviewDialog({
       </header>
 
       <section className="review-content">
-        <div className="rating-section">
+        <div className="rating-section mt-sm">
           <Rating
             title={title}
             posterPath={posterPath}
@@ -127,7 +127,7 @@ export default function ReviewDialog({
             e.preventDefault();
             form.handleSubmit();
           }}
-          className="review-form"
+          className="review-form gap-sm"
         >
           <Label htmlFor="content">Ma critique :</Label>
           <form.AppField
@@ -142,10 +142,11 @@ export default function ReviewDialog({
                       id="content"
                       placeholder="Limite de 140 caractères..."
                       rows={4}
+                      className="p-sm"
                     />
 
                     <span
-                      className={`content-count ${field.state.value.length > 140 ? "error" : ""}`}
+                      className={`content-count mt-xs ${field.state.value.length > 140 ? "error" : ""}`}
                     >
                       {field.state.value.length}/140
                     </span>
@@ -155,12 +156,12 @@ export default function ReviewDialog({
             )}
           />
 
-          <div className="dialog-footer">
+          <div className="dialog-footer mt-sm">
             {review && (
               <Button
                 type="button"
                 variant={isConfirming ? "destructive" : "ghost"}
-                className={`delete-button ${isConfirming ? "confirm-mode" : ""}`}
+                className={`delete-button p-sm ${isConfirming ? "confirm-mode" : ""}`}
                 onClick={handleDelete}
                 disabled={isDeleting}
               >
@@ -174,7 +175,7 @@ export default function ReviewDialog({
               </Button>
             )}
 
-            <div className="footer-actions">
+            <div className="footer-actions gap-sm">
               <Button type="button" variant="secondary" onClick={onBack}>
                 Annuler
               </Button>

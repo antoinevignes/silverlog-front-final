@@ -13,18 +13,18 @@ export default function FriendsFeed() {
   const { data: feedData } = useSuspenseQuery(userFeedQuery());
 
   return (
-    <div className="activity-feed">
+    <div className="activity-feed gap-lg">
       {feedData && feedData.length > 0 ? (
         feedData.map((activity: any, index: number) => (
           <article
             key={`${activity.movie_id}-${activity.user_id}-${index}`}
-            className="activity-card"
+            className="activity-card p-sm"
           >
-            <header className="activity-header">
+            <header className="activity-header mb-md pb-sm">
               <Link
                 to="/user/$userId"
                 params={{ userId: activity.user_id.toString() }}
-                className="user-link"
+                className="user-link gap-sm"
               >
                 <Avatar
                   username={activity.username}
@@ -47,7 +47,7 @@ export default function FriendsFeed() {
               </time>
             </header>
 
-            <div className="activity-body">
+            <div className="activity-body gap-md">
               <Link
                 to="/movies/$movieId"
                 params={{ movieId: activity.movie_id.toString() }}
@@ -67,38 +67,40 @@ export default function FriendsFeed() {
               </Link>
 
               <div className="feed-content">
-                <h4 className="feed-movie-title font-fraunces">
+                <h4 className="feed-movie-title font-fraunces mb-xs">
                   {activity.title}
                 </h4>
 
                 {activity.type === "rating" && (
-                  <div className="feed-review">
-                    <div className="feed-review-header text-secondary">
+                  <div className="feed-review mt-sm">
+                    <div className="feed-review-header text-secondary mb-sm">
                       {activity.review_content
                         ? "a noté et critiqué le film "
                         : "a noté ce film "}
 
                       {activity.rating && (
-                        <span className="feed-rating">
+                        <span className="feed-rating ml-xs">
                           {activity.rating / 2}/10{" "}
                           <Star
                             size={12}
                             fill="currentColor"
                             color="#f5c518"
-                            className="star-icon"
+                            className="star-icon ml-xs"
                           />
                         </span>
                       )}
                     </div>
 
                     {activity.review_content && (
-                      <p className="feed-text">"{activity.review_content}"</p>
+                      <p className="feed-text pl-sm">
+                        "{activity.review_content}"
+                      </p>
                     )}
                   </div>
                 )}
 
                 {activity.type === "watchlist" && (
-                  <div className="feed-list-action text-secondary">
+                  <div className="feed-list-action text-secondary mt-xs gap-xs">
                     <BookmarkPlus size={14} />
                     Ajouté à sa Watchlist
                   </div>
@@ -108,7 +110,7 @@ export default function FriendsFeed() {
           </article>
         ))
       ) : (
-        <div className="friends-feed-empty">
+        <div className="friends-feed-empty gap-md">
           <UserX size={48} />
           <p className="text-secondary">
             Aucune activité récente parmi vos abonnements.
