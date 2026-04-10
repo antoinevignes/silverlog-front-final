@@ -77,7 +77,6 @@ export default function FriendsFeed() {
                       {activity.review_content
                         ? "a noté et critiqué le film "
                         : "a noté ce film "}
-
                       {activity.rating && (
                         <span className="feed-rating">
                           {activity.rating / 2}/10{" "}
