@@ -1,0 +1,44 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.cast-scroller {
+  margin-top: v.$space-md;
+
+  .actor-crew-card {
+    width: 6.5rem;
+
+    .actor-crew-image {
+      aspect-ratio: 2 / 3;
+      overflow: hidden;
+      border-radius: v.$radius;
+      box-shadow: v.$shadow-md;
+
+      .actor-poster-fallback {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: v.$radius;
+        height: 100%;
+        border: 1px solid v.$c-border;
+        box-sizing: border-box;
+      }
+
+      .person-image {
+        color: transparent;
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .actor-crew-details {
+      max-width: 6.5rem;
+      margin-top: v.$space-sm;
+      font-size: 0.875rem;
+    }
+  }
+}

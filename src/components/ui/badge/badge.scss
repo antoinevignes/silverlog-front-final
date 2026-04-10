@@ -1,0 +1,55 @@
+@use "@/styles/abstracts/variables" as v;
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: v.$space-xs;
+  box-shadow: v.$shadow-sm;
+
+  white-space: nowrap;
+
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1;
+
+  border-radius: v.$radius * 2;
+  padding: 4px v.$space-sm;
+  border: 1px solid transparent;
+
+  background: v.$c-heading;
+  color: v.$c-bg;
+
+  &.badge-secondary {
+    background: v.$c-surface;
+    color: v.$c-heading;
+    box-shadow: v.$shadow-xs;
+  }
+
+  &.badge-outline {
+    background: transparent;
+    border-color: v.$c-border;
+    color: v.$c-heading;
+    box-shadow: v.$shadow-xs;
+  }
+
+  &.badge-destructive {
+    background: v.$destructive;
+    color: v.$c-bg;
+  }
+
+  &.badge-sm {
+    font-size: 0.625rem;
+    padding: 2px v.$space-xs;
+  }
+
+  &.badge-md {
+    font-size: 0.75rem;
+    padding: 4px v.$space-sm;
+  }
+
+  &.badge-lg {
+    font-size: 0.875rem;
+    padding: v.$space-xs v.$space-md;
+  }
+}

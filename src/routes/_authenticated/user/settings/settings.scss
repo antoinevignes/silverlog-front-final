@@ -1,0 +1,248 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.settings-page {
+  margin-top: v.$space-2xl;
+
+  .settings-header {
+    border-bottom: 1px solid v.$c-border;
+    padding-bottom: v.$space-lg;
+
+    p {
+      margin-top: v.$space-xs;
+    }
+  }
+
+  .settings-body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .setting-section {
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-lg;
+    padding: v.$space-xl 0;
+    border-bottom: 1px solid v.$c-border;
+
+    @include m.responsive(v.$bp-md) {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: v.$space-2xl;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .setting-label {
+    display: flex;
+    align-items: flex-start;
+    gap: v.$space-md;
+    flex-shrink: 0;
+
+    @include m.responsive(v.$bp-md) {
+      width: 16rem;
+    }
+  }
+
+  .setting-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: v.$c-surface;
+    border: 1px solid v.$c-border;
+    border-radius: v.$radius;
+    flex-shrink: 0;
+    color: v.$c-text;
+  }
+
+  .setting-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: v.$c-heading;
+    margin-bottom: v.$space-xs;
+  }
+
+  .setting-description {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .setting-control {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-md;
+    min-width: 0;
+
+    .setting-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: v.$space-sm;
+
+      @include m.responsive(v.$bp-md) {
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+  }
+}
+
+.avatar-form {
+  align-items: center;
+
+  .avatar-upload-zone {
+    display: flex;
+    align-items: center;
+    gap: v.$space-sm;
+
+    @include m.responsive(v.$bp-md) {
+      gap: v.$space-md;
+    }
+
+    .avatar,
+    .avatar-preview-img,
+    .avatar-placeholder {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      border: 2px solid v.$c-border;
+      overflow: hidden;
+      object-fit: cover;
+    }
+
+    .avatar-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: v.$c-surface;
+      color: v.$c-muted;
+    }
+
+    .avatar-pick-btn {
+      font-size: 0.85rem;
+      font-family: inherit;
+      font-weight: 600;
+      color: v.$c-text;
+      background: none;
+      border: 1.5px solid v.$c-border-h;
+      border-radius: v.$radius;
+      padding: v.$space-xs v.$space-md;
+      cursor: pointer;
+      transition: all v.$transition;
+
+      &:hover {
+        border-color: v.$c-text;
+      }
+    }
+  }
+}
+
+.banner-form {
+  align-items: center;
+
+  .banner-upload-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: v.$space-sm;
+
+    @include m.responsive(v.$bp-md) {
+      flex-direction: row;
+      align-items: center;
+      gap: v.$space-md;
+    }
+
+    .banner-img,
+    .banner-preview-img,
+    .banner-placeholder {
+      width: 160px;
+      height: 90px;
+      border-radius: v.$radius;
+      flex-shrink: 0;
+      border: 2px solid v.$c-border;
+      overflow: hidden;
+      object-fit: cover;
+    }
+
+    .banner-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: v.$c-surface;
+      color: v.$c-muted;
+    }
+  }
+}
+
+.delete-dialog-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: v.$c-heading;
+  margin-bottom: v.$space-sm;
+}
+
+.delete-dialog-desc {
+  margin-bottom: v.$space-xl;
+}
+
+.delete-dialog-footer {
+  display: flex;
+  gap: v.$space-sm;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.delete-btn {
+  @include m.responsive(v.$bp-md) {
+    width: fit-content;
+    margin-left: auto;
+  }
+}
+
+.description-form {
+  .description-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .char-count {
+      font-size: 0.8rem;
+      color: v.$c-muted;
+      text-align: right;
+      margin-top: v.$space-xs;
+
+      &.error {
+        color: v.$destructive;
+      }
+    }
+  }
+}
+
+.password-form {
+  flex-direction: column;
+  align-items: flex-start;
+
+  .password-fields {
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-md;
+    width: 100%;
+
+    @include m.responsive(v.$bp-md) {
+      max-width: 400px;
+    }
+  }
+
+  .password-field {
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-xs;
+  }
+}

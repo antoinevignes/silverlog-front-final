@@ -1,0 +1,138 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.person-page {
+  padding-top: v.$space-xl;
+  padding-bottom: v.$space-xl;
+
+  @include m.responsive(v.$bp-md) {
+    padding-top: v.$space-2xl;
+  }
+}
+
+.person {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-xl;
+
+  @include m.responsive(v.$bp-md) {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: v.$space-2xl;
+    align-items: start;
+  }
+
+  .person-sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center; // Center on mobile
+    gap: v.$space-lg;
+
+    @include m.responsive(v.$bp-md) {
+      align-items: flex-start; // Align left on desktop
+      position: sticky;
+      top: 100px;
+    }
+
+    .person-avatar {
+      width: 140px;
+      height: 140px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: v.$c-bg;
+      padding: v.$space-xs; // Ring overlap effect
+      box-shadow:
+        0 10px 15px -3px rgba(0, 0, 0, 0.5),
+        0 4px 6px -2px rgba(0, 0, 0, 0.4);
+
+      img,
+      .header-poster-fallback {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        display: block;
+        background-color: v.$c-surface;
+      }
+
+      .header-poster-fallback {
+        border: 1px solid v.$c-border;
+        @include m.flex-center;
+      }
+
+      @include m.responsive(v.$bp-md) {
+        width: 200px;
+        height: 200px;
+        padding: v.$space-sm;
+      }
+    }
+
+    .person-meta {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      @include m.responsive(v.$bp-md) {
+        align-items: flex-start;
+      }
+
+      .mobile-only-title {
+        text-align: center;
+        margin-bottom: v.$space-md;
+
+        @include m.responsive(v.$bp-md) {
+          display: none;
+        }
+      }
+
+      .meta-details {
+        display: flex;
+        flex-direction: column;
+        gap: v.$space-sm;
+        width: 100%;
+        align-items: center;
+
+        @include m.responsive(v.$bp-md) {
+          align-items: flex-start;
+        }
+
+        .meta-item {
+          display: flex;
+          align-items: center;
+          gap: v.$space-xs;
+          font-size: 0.875rem;
+          color: v.$c-text;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  .person-main-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .desktop-only-title {
+      display: none;
+      margin-bottom: v.$space-xl;
+
+      @include m.responsive(v.$bp-md) {
+        display: block;
+      }
+    }
+
+    .person-movie-list {
+      margin-top: v.$space-lg;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: v.$space-md;
+
+      .movie-card-skeleton {
+        aspect-ratio: 2/3;
+        border-radius: v.$radius;
+      }
+    }
+  }
+}

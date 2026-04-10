@@ -4,11 +4,11 @@ import {
   useContext,
   useEffect,
   useState,
-  type ReactElement,
-  type ReactNode,
 } from "react";
-import "./dialog.scss";
+import { createPortal } from "react-dom";
 import Button from "../button/button";
+import type { ReactElement, ReactNode } from "react";
+import "./dialog.scss";
 
 type DialogContextType = {
   open: boolean;
@@ -89,9 +89,9 @@ export function DialogContent({ children }: { children: ReactNode }) {
     }
   }, [open]);
 
-  if (!shouldRender) return null;
+  if (!shouldRender || typeof document === "undefined") return null;
 
-  return (
+  return createPortal(
     <>
       <div
         className="dialog-overlay"
@@ -106,7 +106,8 @@ export function DialogContent({ children }: { children: ReactNode }) {
       >
         {children}
       </section>
-    </>
+    </>,
+    document.body,
   );
 }
 

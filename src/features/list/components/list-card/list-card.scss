@@ -1,0 +1,107 @@
+@use "@/styles/abstracts/variables" as v;
+
+.public-list-card {
+  display: flex;
+  flex-direction: row;
+  background: v.$c-bg;
+  border: 1px solid v.$c-border;
+  border-radius: v.$radius;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.2, 1, 0.3, 1);
+  box-shadow: v.$shadow-sm;
+  min-height: 140px;
+  position: relative;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: v.$shadow-card-hover;
+    border-color: v.$c-border-h;
+  }
+
+  .list-info-block {
+    flex: 1;
+    padding: v.$space-md;
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-sm;
+    z-index: 2;
+    min-width: 50%;
+
+    .list-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: v.$c-heading;
+      line-height: 1.25;
+      margin: 0;
+    }
+
+    .movie-count-badge {
+      gap: 0.35rem;
+      align-self: flex-start;
+    }
+
+    .list-description {
+      font-size: 0.85rem;
+      color: v.$c-text;
+      line-height: 1.4;
+      margin: v.$space-xs 0;
+      flex-grow: 1;
+    }
+
+    .stat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: v.$space-xs;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: v.$c-muted;
+
+      &.likes {
+        color: v.$c-text;
+        .text-red-500 {
+          color: v.$destructive;
+        }
+      }
+    }
+
+    .list-author {
+      display: flex;
+      align-items: center;
+      gap: v.$space-sm;
+      font-size: 0.75rem;
+      color: v.$c-muted;
+      font-weight: 500;
+
+      span {
+        color: v.$c-heading;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .posters-overlap-container {
+    position: relative;
+    width: 200px;
+
+    .preview-poster {
+      position: absolute;
+      bottom: 0;
+      box-shadow: v.$shadow-md;
+      border-radius: v.$radius;
+
+      &.depth-0 {
+      right: v.$space-xl;
+        z-index: 3;
+      }
+      &.depth-1 {
+        right: v.$space-md;
+        z-index: 2;
+      }
+      &.depth-2 {
+        right: 0;
+        z-index: 1;
+      }
+    }
+  }
+}

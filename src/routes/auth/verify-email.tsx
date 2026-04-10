@@ -1,4 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { apiClient } from "@/utils/api-client";
+import { Seo } from "@/components/seo/seo";
 
 export const Route = createFileRoute("/auth/verify-email")({
   validateSearch: (search) =>
@@ -12,17 +14,17 @@ export const Route = createFileRoute("/auth/verify-email")({
     }
 
     try {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/user/verify-email?token=${token}`,
+      return await apiClient<{ success: boolean; message: string }>(
+        "/auth/verify-email",
+        {
+          params: { token },
+        },
       );
-
-      const data = await res.json();
-
-      return data;
-    } catch (error) {
+    } catch (error: unknown) {
       return {
         success: false,
-        message: error || "Erreur de vérification",
+        message:
+          error instanceof Error ? error.message : "Erreur de vérification",
       };
     }
   },
@@ -33,8 +35,15 @@ function RouteComponent() {
   const data = Route.useLoaderData();
 
   return (
-    <main>
-      <h1>{data.message}</h1>
-    </main>
+    <>
+      <Seo
+        title="Vérification email"
+        description="Verifier son email pour valider son compte Silverlog"
+        noIndex
+      />
+      <main>
+        <h1>{data.message}</h1>
+      </main>
+    </>
   );
 }

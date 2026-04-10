@@ -11,12 +11,20 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SearchIndexRouteImport } from './routes/search/index'
+import { Route as MoviesIndexRouteImport } from './routes/movies/index'
+import { Route as DiscoverIndexRouteImport } from './routes/discover/index'
+import { Route as AboutIndexRouteImport } from './routes/about/index'
 import { Route as AuthVerifyEmailRouteImport } from './routes/auth/verify-email'
 import { Route as AuthSignUpRouteImport } from './routes/auth/sign-up'
 import { Route as AuthSignInRouteImport } from './routes/auth/sign-in'
-import { Route as AboutMentionsLegalesRouteImport } from './routes/about/mentions-legales'
+import { Route as UserUserIdIndexRouteImport } from './routes/user/$userId/index'
 import { Route as PersonPersonIdIndexRouteImport } from './routes/person/$personId/index'
 import { Route as MoviesMovieIdIndexRouteImport } from './routes/movies/$movieId/index'
+import { Route as ListsListIdIndexRouteImport } from './routes/lists/$listId/index'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
+import { Route as AuthenticatedUserSettingsIndexRouteImport } from './routes/_authenticated/user/settings/index'
+import { Route as AuthenticatedUserActivityIndexRouteImport } from './routes/_authenticated/user/activity/index'
 import { Route as AuthenticatedUserUserIdWatchlistIndexRouteImport } from './routes/_authenticated/user/$userId/watchlist/index'
 import { Route as AuthenticatedUserUserIdDiaryIndexRouteImport } from './routes/_authenticated/user/$userId/diary/index'
 
@@ -27,6 +35,26 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchIndexRoute = SearchIndexRouteImport.update({
+  id: '/search/',
+  path: '/search/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MoviesIndexRoute = MoviesIndexRouteImport.update({
+  id: '/movies/',
+  path: '/movies/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DiscoverIndexRoute = DiscoverIndexRouteImport.update({
+  id: '/discover/',
+  path: '/discover/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutIndexRoute = AboutIndexRouteImport.update({
+  id: '/about/',
+  path: '/about/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthVerifyEmailRoute = AuthVerifyEmailRouteImport.update({
@@ -44,9 +72,9 @@ const AuthSignInRoute = AuthSignInRouteImport.update({
   path: '/auth/sign-in',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AboutMentionsLegalesRoute = AboutMentionsLegalesRouteImport.update({
-  id: '/about/mentions-legales',
-  path: '/about/mentions-legales',
+const UserUserIdIndexRoute = UserUserIdIndexRouteImport.update({
+  id: '/user/$userId/',
+  path: '/user/$userId/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PersonPersonIdIndexRoute = PersonPersonIdIndexRouteImport.update({
@@ -59,6 +87,28 @@ const MoviesMovieIdIndexRoute = MoviesMovieIdIndexRouteImport.update({
   path: '/movies/$movieId/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ListsListIdIndexRoute = ListsListIdIndexRouteImport.update({
+  id: '/lists/$listId/',
+  path: '/lists/$listId/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedUserSettingsIndexRoute =
+  AuthenticatedUserSettingsIndexRouteImport.update({
+    id: '/user/settings/',
+    path: '/user/settings/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedUserActivityIndexRoute =
+  AuthenticatedUserActivityIndexRouteImport.update({
+    id: '/user/activity/',
+    path: '/user/activity/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedUserUserIdWatchlistIndexRoute =
   AuthenticatedUserUserIdWatchlistIndexRouteImport.update({
     id: '/user/$userId/watchlist/',
@@ -74,23 +124,39 @@ const AuthenticatedUserUserIdDiaryIndexRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about/mentions-legales': typeof AboutMentionsLegalesRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/auth/verify-email': typeof AuthVerifyEmailRoute
+  '/about/': typeof AboutIndexRoute
+  '/discover/': typeof DiscoverIndexRoute
+  '/movies/': typeof MoviesIndexRoute
+  '/search/': typeof SearchIndexRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/lists/$listId/': typeof ListsListIdIndexRoute
   '/movies/$movieId/': typeof MoviesMovieIdIndexRoute
   '/person/$personId/': typeof PersonPersonIdIndexRoute
+  '/user/$userId/': typeof UserUserIdIndexRoute
+  '/user/activity/': typeof AuthenticatedUserActivityIndexRoute
+  '/user/settings/': typeof AuthenticatedUserSettingsIndexRoute
   '/user/$userId/diary/': typeof AuthenticatedUserUserIdDiaryIndexRoute
   '/user/$userId/watchlist/': typeof AuthenticatedUserUserIdWatchlistIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about/mentions-legales': typeof AboutMentionsLegalesRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/auth/verify-email': typeof AuthVerifyEmailRoute
+  '/about': typeof AboutIndexRoute
+  '/discover': typeof DiscoverIndexRoute
+  '/movies': typeof MoviesIndexRoute
+  '/search': typeof SearchIndexRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
+  '/lists/$listId': typeof ListsListIdIndexRoute
   '/movies/$movieId': typeof MoviesMovieIdIndexRoute
   '/person/$personId': typeof PersonPersonIdIndexRoute
+  '/user/$userId': typeof UserUserIdIndexRoute
+  '/user/activity': typeof AuthenticatedUserActivityIndexRoute
+  '/user/settings': typeof AuthenticatedUserSettingsIndexRoute
   '/user/$userId/diary': typeof AuthenticatedUserUserIdDiaryIndexRoute
   '/user/$userId/watchlist': typeof AuthenticatedUserUserIdWatchlistIndexRoute
 }
@@ -98,12 +164,20 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
-  '/about/mentions-legales': typeof AboutMentionsLegalesRoute
   '/auth/sign-in': typeof AuthSignInRoute
   '/auth/sign-up': typeof AuthSignUpRoute
   '/auth/verify-email': typeof AuthVerifyEmailRoute
+  '/about/': typeof AboutIndexRoute
+  '/discover/': typeof DiscoverIndexRoute
+  '/movies/': typeof MoviesIndexRoute
+  '/search/': typeof SearchIndexRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/lists/$listId/': typeof ListsListIdIndexRoute
   '/movies/$movieId/': typeof MoviesMovieIdIndexRoute
   '/person/$personId/': typeof PersonPersonIdIndexRoute
+  '/user/$userId/': typeof UserUserIdIndexRoute
+  '/_authenticated/user/activity/': typeof AuthenticatedUserActivityIndexRoute
+  '/_authenticated/user/settings/': typeof AuthenticatedUserSettingsIndexRoute
   '/_authenticated/user/$userId/diary/': typeof AuthenticatedUserUserIdDiaryIndexRoute
   '/_authenticated/user/$userId/watchlist/': typeof AuthenticatedUserUserIdWatchlistIndexRoute
 }
@@ -111,35 +185,59 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/about/mentions-legales'
     | '/auth/sign-in'
     | '/auth/sign-up'
     | '/auth/verify-email'
+    | '/about/'
+    | '/discover/'
+    | '/movies/'
+    | '/search/'
+    | '/admin/'
+    | '/lists/$listId/'
     | '/movies/$movieId/'
     | '/person/$personId/'
+    | '/user/$userId/'
+    | '/user/activity/'
+    | '/user/settings/'
     | '/user/$userId/diary/'
     | '/user/$userId/watchlist/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/about/mentions-legales'
     | '/auth/sign-in'
     | '/auth/sign-up'
     | '/auth/verify-email'
+    | '/about'
+    | '/discover'
+    | '/movies'
+    | '/search'
+    | '/admin'
+    | '/lists/$listId'
     | '/movies/$movieId'
     | '/person/$personId'
+    | '/user/$userId'
+    | '/user/activity'
+    | '/user/settings'
     | '/user/$userId/diary'
     | '/user/$userId/watchlist'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
-    | '/about/mentions-legales'
     | '/auth/sign-in'
     | '/auth/sign-up'
     | '/auth/verify-email'
+    | '/about/'
+    | '/discover/'
+    | '/movies/'
+    | '/search/'
+    | '/_authenticated/admin/'
+    | '/lists/$listId/'
     | '/movies/$movieId/'
     | '/person/$personId/'
+    | '/user/$userId/'
+    | '/_authenticated/user/activity/'
+    | '/_authenticated/user/settings/'
     | '/_authenticated/user/$userId/diary/'
     | '/_authenticated/user/$userId/watchlist/'
   fileRoutesById: FileRoutesById
@@ -147,12 +245,17 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
-  AboutMentionsLegalesRoute: typeof AboutMentionsLegalesRoute
   AuthSignInRoute: typeof AuthSignInRoute
   AuthSignUpRoute: typeof AuthSignUpRoute
   AuthVerifyEmailRoute: typeof AuthVerifyEmailRoute
+  AboutIndexRoute: typeof AboutIndexRoute
+  DiscoverIndexRoute: typeof DiscoverIndexRoute
+  MoviesIndexRoute: typeof MoviesIndexRoute
+  SearchIndexRoute: typeof SearchIndexRoute
+  ListsListIdIndexRoute: typeof ListsListIdIndexRoute
   MoviesMovieIdIndexRoute: typeof MoviesMovieIdIndexRoute
   PersonPersonIdIndexRoute: typeof PersonPersonIdIndexRoute
+  UserUserIdIndexRoute: typeof UserUserIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -169,6 +272,34 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search/': {
+      id: '/search/'
+      path: '/search'
+      fullPath: '/search/'
+      preLoaderRoute: typeof SearchIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/movies/': {
+      id: '/movies/'
+      path: '/movies'
+      fullPath: '/movies/'
+      preLoaderRoute: typeof MoviesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/discover/': {
+      id: '/discover/'
+      path: '/discover'
+      fullPath: '/discover/'
+      preLoaderRoute: typeof DiscoverIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about/': {
+      id: '/about/'
+      path: '/about'
+      fullPath: '/about/'
+      preLoaderRoute: typeof AboutIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/verify-email': {
@@ -192,11 +323,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignInRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/about/mentions-legales': {
-      id: '/about/mentions-legales'
-      path: '/about/mentions-legales'
-      fullPath: '/about/mentions-legales'
-      preLoaderRoute: typeof AboutMentionsLegalesRouteImport
+    '/user/$userId/': {
+      id: '/user/$userId/'
+      path: '/user/$userId'
+      fullPath: '/user/$userId/'
+      preLoaderRoute: typeof UserUserIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/person/$personId/': {
@@ -212,6 +343,34 @@ declare module '@tanstack/react-router' {
       fullPath: '/movies/$movieId/'
       preLoaderRoute: typeof MoviesMovieIdIndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/lists/$listId/': {
+      id: '/lists/$listId/'
+      path: '/lists/$listId'
+      fullPath: '/lists/$listId/'
+      preLoaderRoute: typeof ListsListIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/user/settings/': {
+      id: '/_authenticated/user/settings/'
+      path: '/user/settings'
+      fullPath: '/user/settings/'
+      preLoaderRoute: typeof AuthenticatedUserSettingsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/user/activity/': {
+      id: '/_authenticated/user/activity/'
+      path: '/user/activity'
+      fullPath: '/user/activity/'
+      preLoaderRoute: typeof AuthenticatedUserActivityIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/user/$userId/watchlist/': {
       id: '/_authenticated/user/$userId/watchlist/'
@@ -231,11 +390,17 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedUserActivityIndexRoute: typeof AuthenticatedUserActivityIndexRoute
+  AuthenticatedUserSettingsIndexRoute: typeof AuthenticatedUserSettingsIndexRoute
   AuthenticatedUserUserIdDiaryIndexRoute: typeof AuthenticatedUserUserIdDiaryIndexRoute
   AuthenticatedUserUserIdWatchlistIndexRoute: typeof AuthenticatedUserUserIdWatchlistIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedUserActivityIndexRoute: AuthenticatedUserActivityIndexRoute,
+  AuthenticatedUserSettingsIndexRoute: AuthenticatedUserSettingsIndexRoute,
   AuthenticatedUserUserIdDiaryIndexRoute:
     AuthenticatedUserUserIdDiaryIndexRoute,
   AuthenticatedUserUserIdWatchlistIndexRoute:
@@ -248,12 +413,17 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
-  AboutMentionsLegalesRoute: AboutMentionsLegalesRoute,
   AuthSignInRoute: AuthSignInRoute,
   AuthSignUpRoute: AuthSignUpRoute,
   AuthVerifyEmailRoute: AuthVerifyEmailRoute,
+  AboutIndexRoute: AboutIndexRoute,
+  DiscoverIndexRoute: DiscoverIndexRoute,
+  MoviesIndexRoute: MoviesIndexRoute,
+  SearchIndexRoute: SearchIndexRoute,
+  ListsListIdIndexRoute: ListsListIdIndexRoute,
   MoviesMovieIdIndexRoute: MoviesMovieIdIndexRoute,
   PersonPersonIdIndexRoute: PersonPersonIdIndexRoute,
+  UserUserIdIndexRoute: UserUserIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

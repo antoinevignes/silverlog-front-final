@@ -1,0 +1,9 @@
+@use "@/styles/abstracts/variables" as v;
+
+.label {
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: left;
+  margin-bottom: v.$space-sm;
+}

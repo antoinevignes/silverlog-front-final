@@ -1,0 +1,84 @@
+@use "@/styles/abstracts/variables" as v;
+
+.diary-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: v.$space-xl;
+
+  .diary-title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0;
+    z-index: 1;
+
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    pointer-events: none;
+  }
+}
+
+.diary-dialog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  .seen-date-display {
+    font-size: 0.95rem;
+    color: v.$c-heading;
+    margin-bottom: v.$space-md;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: v.$space-sm;
+  }
+
+  .date-picker-card {
+    background-color: v.$c-surface;
+    border: 1px solid v.$c-border;
+    border-radius: v.$radius;
+    padding: v.$space-md;
+    margin: v.$space-sm 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .rdp-root {
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  .diary-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: v.$space-sm;
+    margin-top: v.$space-md;
+    width: 100%;
+
+    .delete-button {
+      color: v.$destructive;
+
+      &:hover {
+        background-color: v.$destructive;
+      }
+
+      &.confirm-mode {
+        min-width: 100px;
+        color: v.$c-white;
+      }
+    }
+
+    .footer-actions {
+      display: flex;
+      align-items: center;
+      gap: v.$space-sm;
+      margin-left: auto;
+    }
+  }
+}

@@ -1,0 +1,42 @@
+@use "@/styles/abstracts/variables" as v;
+
+.card {
+  background-color: v.$c-surface;
+  box-shadow: v.$shadow-md;
+  padding: 1.5rem;
+  border-radius: v.$radius;
+}
+
+.card-header {
+  padding-bottom: 1rem;
+}
+
+.card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.card-rating {
+  margin: 0;
+  font-size: 0.875rem;
+  font-style: italic;
+}
+
+.card-subtitle {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: v.$c-muted;
+}
+
+.card-footer {
+  padding-top: 1rem;
+  font-size: 0.875rem;
+  color: v.$c-muted;
+}

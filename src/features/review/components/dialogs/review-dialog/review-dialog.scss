@@ -1,0 +1,107 @@
+@use "@/styles/abstracts/variables" as v;
+
+.review-dialog-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: v.$space-md;
+
+  .review-title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0;
+    z-index: 1;
+
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    pointer-events: none;
+  }
+}
+
+.review-content {
+  display: flex;
+  flex-direction: column;
+
+  .rating-section {
+    margin-top: v.$space-md;
+
+    label {
+      font-weight: 600;
+      color: v.$c-text;
+      display: block;
+      margin-bottom: v.$space-sm;
+    }
+  }
+
+  .review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    label {
+      font-weight: 600;
+      color: v.$c-text;
+    }
+
+    textarea {
+      min-height: 6rem;
+      border-radius: v.$radius;
+      border: 1px solid v.$c-border-h;
+      padding: v.$space-sm;
+      font-size: 1rem;
+      color: v.$c-text;
+      resize: none;
+      background: v.$c-bg;
+      transition: all 0.2s ease;
+
+      &:focus {
+        border-color: v.$c-muted;
+        background: v.$c-surface;
+        box-shadow: 0 0 0 2px rgba(v.$c-muted, 0.1);
+        outline: none;
+      }
+    }
+
+    .content-count {
+      text-align: right;
+      font-size: 0.875rem;
+      color: v.$c-muted;
+      margin-top: -(v.$space-xs);
+
+      &.error {
+        color: v.$destructive;
+        font-weight: 600;
+      }
+    }
+
+    .dialog-footer {
+      display: flex;
+      align-items: center;
+      width: 100%;
+
+      .footer-actions {
+        display: flex;
+        gap: v.$space-sm;
+        margin-left: auto;
+      }
+
+      .delete-button {
+        padding: v.$space-sm;
+        color: v.$destructive;
+        &:hover {
+          background-color: rgba(v.$destructive, 0.1);
+        }
+
+        &.confirm-mode {
+          color: v.$c-white;
+
+          &:hover {
+            background-color: v.$destructive-hover;
+          }
+        }
+      }
+    }
+  }
+}

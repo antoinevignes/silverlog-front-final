@@ -3,8 +3,8 @@
 .skeleton {
   position: relative;
   overflow: hidden;
-  background-color: v.$neutral-200;
-  border-radius: 0.5rem;
+  background-color: v.$c-border;
+  border-radius: v.$radius;
 
   &::after {
     content: "";

@@ -1,0 +1,139 @@
+@use "@/styles/abstracts/variables" as v;
+
+.recommend-dialog {
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: v.$space-md;
+    padding-bottom: v.$space-md;
+    border-bottom: 1px solid v.$c-border;
+    flex-shrink: 0;
+  }
+
+  &__subtitle {
+    font-size: 0.875rem;
+    color: v.$c-muted;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__search {
+    position: relative;
+    padding: v.$space-md;
+    border-bottom: 1px solid v.$c-border;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  &__search-icon {
+    position: absolute;
+    left: calc(v.$space-md + v.$space-sm);
+    top: 50%;
+    transform: translateY(-50%);
+    color: v.$c-muted;
+    pointer-events: none;
+  }
+
+  &__search-input {
+    padding: v.$space-sm v.$space-sm v.$space-sm calc(v.$space-md + v.$space-lg);
+    background: v.$c-surface;
+    border: 1px solid v.$c-border;
+    border-radius: v.$radius;
+    color: v.$c-heading;
+    font-size: 0.875rem;
+    outline: none;
+    transition: border-color 150ms ease;
+    width: 100%;
+    box-sizing: border-box;
+
+    &::placeholder {
+      color: v.$c-muted;
+    }
+
+    &:focus {
+      border-color: v.$c-border-h;
+    }
+  }
+
+  &__list {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 350px;
+  }
+
+  &__loading,
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: v.$space-xl;
+    color: v.$c-muted;
+    text-align: center;
+    gap: v.$space-sm;
+
+    p {
+      margin: 0;
+      font-size: 0.875rem;
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: v.$space-sm v.$space-md;
+    border-bottom: 1px solid v.$c-border;
+    transition: background-color 150ms ease;
+
+    &:hover {
+      background: v.$c-surface;
+    }
+
+    &--sent {
+      opacity: 0.6;
+
+      &:hover {
+        background: transparent;
+      }
+    }
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: v.$space-sm;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  &__avatar-placeholder {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: v.$c-border;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: v.$c-muted;
+    flex-shrink: 0;
+  }
+
+  &__username {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

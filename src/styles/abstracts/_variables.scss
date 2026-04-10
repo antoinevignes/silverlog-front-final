@@ -1,21 +1,52 @@
 // COULEURS
 
-$neutral-50: #fafafa;
-$neutral-100: #f5f5f5;
-$neutral-200: #e5e5e5;
-$neutral-300: #d4d4d4;
-$neutral-400: #a3a3a3;
-$neutral-500: #737373;
-$neutral-600: #525252;
-$neutral-700: #404040;
-$neutral-800: #262626;
-$neutral-900: #171717;
-$neutral-950: #0a0a0a;
+// ====== THEME SOMBRE ORIGINAL : "Silverlog Vintage Noir" ======
+// Un thème sombre chaleureux, élégant (façon vieille pellicule), et conçu spécifiquement
+// pour respecter parfaitement les règles d'accessibilité (Contrastes WCAG AA et AAA).
+
+$c-bg: #11100ffd; // Fond principal (très profond, chaleureux)
+$c-surface: #1a1918; // Cartes, header, navbar
+$c-border: #2c2a28; // Bordures et séparateurs
+$c-border-h: #3e3b38; // Bordures fortes et hover
+$c-muted: #b5afaa; // Texte secondaire (Contraste > 7:1, WCAG AAA OK)
+$c-text: #c8c1b8; // Texte de lecture régulier (Contraste 10:1 OK)
+$c-heading: #f0ebe4; // Titres (Blanc cassé très lumineux)
+$c-white: #ffffff; // Blanc pur (ancien $neutral-950)
 
 $destructive: #ef4444;
 $destructive-hover: #dc2626;
 
-$disabled: #cbd5e1;
+$success: #4ade80;
+$success-bg: rgba(34, 197, 94, 0.15);
+
+$warning: #f5c518;
+
+// BREAKPOINTS
+$bp-sm: 480px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+$bp-xl: 1280px;
+
+// ESPACEMENTS (Spacing)
+$space-xs: 0.25rem;
+$space-sm: 0.5rem;
+$space-md: 1rem;
+$space-lg: 1.5rem;
+$space-xl: 2rem;
+$space-2xl: 3rem;
+
+// Z-INDEX
+$z-dropdown: 50;
+$z-nav: 999;
+$z-modal: 2000;
+
+// SHADOWS
+$shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+$shadow-md: 0 2px 10px rgba(0, 0, 0, 0.5);
+$shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+$shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.4);
+$shadow-card-hover: 0 8px 16px rgba(0, 0, 0, 0.6);
 
 // AUTRES
 

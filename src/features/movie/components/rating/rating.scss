@@ -1,0 +1,56 @@
+@use "@/styles/abstracts/variables" as v;
+
+.star-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  margin-right: v.$space-xs;
+  transition: transform 0.2s cubic-bezier(0.2, 1, 0.3, 1);
+
+  &:hover {
+    transform: scale(1.15);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+  &.rating-pending {
+    opacity: 0.7;
+  }
+}
+
+.rating-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: v.$space-lg;
+
+  .star-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: v.$space-sm;
+
+    .star-background {
+      position: absolute;
+      inset: 0;
+    }
+
+    .star-foreground {
+      position: absolute;
+      inset: 0;
+
+      &.star-half {
+        clip-path: inset(0 50% 0 0);
+      }
+    }
+  }
+
+  .rating-status {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: v.$c-text;
+    min-height: 1.25rem;
+  }
+}

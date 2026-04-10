@@ -1,0 +1,71 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.grade {
+  display: flex;
+  align-items: center;
+  gap: v.$space-xs;
+  background: v.$c-bg;
+  padding: v.$space-xs v.$space-sm;
+  border-radius: v.$radius * 4;
+  width: fit-content;
+  white-space: nowrap;
+
+  &.grade-desktop {
+    display: none;
+
+    @include m.responsive(v.$bp-md) {
+      display: flex;
+    }
+  }
+
+  &.grade-mobile {
+    position: absolute;
+    bottom: -(v.$space-sm + v.$space-xs);
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    z-index: 10;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+    border: 1px solid v.$c-border;
+
+    @include m.responsive(v.$bp-md) {
+      display: none;
+    }
+  }
+
+  @include m.responsive(v.$bp-md) {
+    padding: v.$space-xs v.$space-sm;
+    gap: v.$space-sm;
+    margin-bottom: v.$space-sm;
+  }
+
+  .star-icon {
+    width: 16px;
+    height: 16px;
+
+    @include m.responsive(v.$bp-md) {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .rating {
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: v.$c-heading;
+
+    @include m.responsive(v.$bp-md) {
+      font-size: 1.5rem;
+    }
+  }
+
+  .rating-count {
+    font-size: 0.75rem;
+    color: v.$c-muted;
+
+    @include m.responsive(v.$bp-md) {
+      font-size: 1rem;
+    }
+  }
+}

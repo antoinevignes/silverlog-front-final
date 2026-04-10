@@ -1,0 +1,135 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.visitor-home {
+  .hero-section {
+    position: relative;
+    padding: v.$space-2xl 0;
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    color: v.$c-heading;
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-title {
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: v.$space-md;
+      font-size: 2.25rem;
+
+      @include m.responsive(v.$bp-md) {
+        font-size: 4rem;
+      }
+    }
+
+    .hero-subtitle {
+      font-size: 1.125rem;
+      color: v.$c-text;
+      margin-bottom: v.$space-xl;
+      line-height: 1.6;
+
+      @include m.responsive(v.$bp-md) {
+        font-size: 1.25rem;
+      }
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      gap: v.$space-md;
+      justify-content: center;
+      align-items: center;
+
+      @include m.responsive(v.$bp-sm) {
+        flex-direction: row;
+      }
+    }
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: v.$space-lg;
+
+    &.text-center {
+      text-align: center;
+    }
+  }
+
+  .selection-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: v.$space-md;
+    margin-top: v.$space-lg;
+    margin-bottom: v.$space-2xl;
+
+    @include m.responsive(v.$bp-lg) {
+      grid-template-columns: repeat(6, 1fr);
+    }
+
+    .card-desktop {
+      display: none;
+      margin: auto;
+
+      @include m.responsive(v.$bp-lg) {
+        display: block;
+      }
+    }
+
+    .card-mobile {
+      margin: auto;
+      @include m.responsive(v.$bp-lg) {
+        display: none;
+      }
+    }
+  }
+  .features-section {
+    padding: v.$space-2xl 0;
+    background-color: v.$c-surface;
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: v.$space-xl;
+
+      @include m.responsive(v.$bp-md) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .feature-card {
+      text-align: center;
+      padding: v.$space-lg;
+
+      .feature-icon-wrapper {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background-color: v.$c-border;
+        color: v.$c-heading;
+        margin-bottom: v.$space-md;
+      }
+
+      .feature-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: v.$space-sm;
+      }
+
+      .feature-desc {
+        color: v.$c-text;
+        line-height: 1.6;
+      }
+    }
+  }
+}

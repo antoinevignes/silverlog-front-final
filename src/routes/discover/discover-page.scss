@@ -1,0 +1,45 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.discover-page {
+  padding-top: v.$space-xl;
+  padding-bottom: v.$space-lg;
+
+  .discover-header {
+    margin-bottom: v.$space-xl;
+    border-bottom: 1px solid v.$c-border;
+    padding-bottom: v.$space-lg;
+
+    .discover-tagline {
+      margin-top: v.$space-sm;
+      font-size: 1rem;
+    }
+  }
+
+  .users-reviews-container {
+    @include m.responsive(v.$bp-lg) {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: v.$space-xl;
+    }
+  }
+
+  .reviews-column {
+    flex: 1;
+    min-width: 0;
+
+    .reviews-grid {
+      display: flex;
+      flex-direction: column;
+      gap: v.$space-md;
+    }
+  }
+
+  .users-sidebar {
+    @include m.responsive(v.$bp-lg) {
+      width: 300px;
+      flex-shrink: 0;
+    }
+  }
+}

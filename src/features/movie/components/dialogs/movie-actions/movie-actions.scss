@@ -1,0 +1,105 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.dialog-header {
+  @include m.flex-between;
+  margin-bottom: v.$space-lg;
+
+  .dialog-movie-description {
+    display: flex;
+    gap: v.$space-md;
+    align-items: center;
+
+    h2 {
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: v.$c-heading;
+      line-height: 1.2;
+      margin-bottom: v.$space-xs;
+    }
+
+    .dialog-image {
+      object-fit: cover;
+      border-radius: v.$radius;
+      width: 45px;
+      height: 68px;
+      margin: 0;
+      box-shadow: v.$shadow-md;
+    }
+  }
+
+  .header-actions {
+    display: flex;
+    gap: v.$space-sm;
+    align-items: center;
+  }
+
+  .top-btn,
+  .watchlist-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: v.$c-muted;
+    transition: color 0.2s ease, transform 0.2s ease;
+    padding: v.$space-xs;
+
+    &:hover,
+    &:focus-visible {
+      color: v.$c-heading;
+      transform: scale(1.1);
+    }
+  }
+
+  .top-btn--active {
+    color: v.$warning;
+
+    &:hover,
+    &:focus-visible {
+      color: v.$warning;
+    }
+  }
+
+}
+
+.dialog-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-sm;
+
+  .action-card {
+    display: flex;
+    align-items: center;
+    gap: v.$space-sm;
+    width: 100%;
+    padding: v.$space-sm v.$space-md;
+    background: v.$c-bg;
+    border: 1px solid v.$c-border;
+    border-radius: v.$radius;
+    color: v.$c-heading;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.2, 1, 0.3, 1);
+    box-shadow: v.$shadow-xs;
+
+    svg:not(.toggled-svg) {
+      color: v.$c-text;
+      transition: color 0.2s ease;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background: v.$c-surface;
+      border-color: v.$c-border-h;
+      svg {
+        color: v.$c-heading;
+      }
+    }
+
+    &:active {
+      transform: scale(0.98);
+      box-shadow: none;
+    }
+  }
+}

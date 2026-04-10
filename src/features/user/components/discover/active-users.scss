@@ -1,0 +1,63 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.active-users-list {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-sm;
+}
+
+.active-user-card {
+  display: flex;
+  align-items: center;
+  gap: v.$space-md;
+  padding: v.$space-md;
+  background: v.$c-surface;
+  border: 1px solid v.$c-border;
+  border-radius: v.$radius;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color v.$transition;
+
+  &:hover {
+    border-color: v.$c-border-h;
+
+    .active-user-username {
+      color: v.$c-heading;
+    }
+  }
+}
+
+.active-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-xs;
+  min-width: 0;
+}
+
+.active-user-username {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: v.$c-text;
+  transition: color v.$transition;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.active-user-stats {
+  display: flex;
+  gap: v.$space-md;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: v.$c-muted;
+
+  svg {
+    opacity: 0.7;
+  }
+}

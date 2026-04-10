@@ -1,0 +1,31 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.filtered-results {
+  .results-header {
+    margin-bottom: v.$space-lg;
+  }
+
+  .results-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: v.$c-heading;
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: v.$space-md;
+  }
+
+  .load-next-btn {
+    display: block;
+    margin-top: v.$space-lg;
+    margin-inline: auto;
+  }
+}
+
+.results-empty {
+  text-align: center;
+  padding: v.$space-2xl;
+}

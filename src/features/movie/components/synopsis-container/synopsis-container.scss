@@ -1,0 +1,55 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+.synopsis-desktop {
+  display: none;
+}
+
+.synopsis-mobile {
+  display: block;
+}
+
+.synopsis {
+  position: relative;
+  margin: v.$space-sm 0;
+
+  .tagline {
+    font-style: italic;
+    margin-bottom: v.$space-sm;
+  }
+
+  .overview-preview {
+    text-overflow: ellipsis;
+    line-height: 1.2;
+    margin-bottom: v.$space-xs;
+  }
+
+  .overview-expanded {
+    line-height: 1.2;
+    margin-bottom: v.$space-xs;
+  }
+
+  .read-more-btn {
+    background: none;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    padding: v.$space-xs 0;
+  }
+
+  .genre-badges {
+    display: flex;
+    gap: v.$space-xs;
+    margin-top: v.$space-md;
+  }
+}
+
+@include m.responsive(v.$bp-md) {
+  .synopsis-mobile {
+    display: none;
+  }
+
+  .synopsis-desktop {
+    display: block;
+    grid-area: synopsis-area;
+  }
+}

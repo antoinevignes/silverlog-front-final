@@ -1,0 +1,168 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.diary-page {
+  margin-top: v.$space-lg;
+
+  .diary-layout {
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-lg;
+    position: relative;
+
+    @include m.responsive(v.$bp-lg) {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+
+    .diary-content {
+      flex: 1;
+
+      @include m.responsive(v.$bp-xl) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: v.$space-2xl;
+        align-items: start;
+      }
+    }
+
+    .diary-sidebar {
+      display: none;
+
+      @include m.responsive(v.$bp-lg) {
+        display: flex;
+        flex-direction: column;
+        gap: v.$space-lg;
+        width: 200px;
+        position: sticky;
+        top: 6rem;
+        margin-top: v.$space-2xl;
+      }
+
+      .sidebar-card {
+        padding: 0 v.$space-sm;
+        margin-bottom: v.$space-lg;
+
+        h3 {
+          font-size: 1.1rem;
+          color: v.$c-heading;
+          font-weight: 700;
+          margin-bottom: v.$space-lg;
+          padding-bottom: v.$space-md;
+          border-bottom: 1px solid v.$c-border;
+        }
+
+        &.stats-card {
+          ul {
+            display: flex;
+            flex-direction: column;
+            gap: v.$space-md;
+
+            li {
+              @include m.flex-between;
+
+              .stat-label {
+                color: v.$c-text;
+                font-size: 0.875rem;
+              }
+
+              .stat-value {
+                font-weight: 600;
+                color: v.$c-text;
+                background: v.$c-bg;
+                padding: 0.2rem 0.6rem;
+                border-radius: 1rem;
+                font-size: 0.875rem;
+              }
+            }
+          }
+        }
+
+        &.timeline-card {
+          .timeline-nav {
+            ul {
+              display: flex;
+              flex-direction: column;
+              gap: 0.5rem;
+              border-left: 2px solid v.$c-surface;
+              padding-left: 1rem;
+              margin-left: 0.5rem;
+
+              li {
+                a {
+                  color: v.$c-muted;
+                  text-decoration: none;
+                  font-size: 0.875rem;
+                  transition: color 0.2s ease;
+                  text-transform: capitalize;
+
+                  &:hover {
+                    color: v.$c-heading;
+                    font-weight: 500;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .diary-month-wrapper {
+    margin-bottom: 1.5rem;
+
+    .month-header {
+      text-transform: capitalize;
+      font-size: 1.25rem;
+      color: v.$c-heading;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      position: sticky;
+      top: 0;
+      background: v.$c-bg;
+      z-index: 20;
+
+      @include m.responsive(v.$bp-md) {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+        top: auto;
+        background: transparent;
+      }
+    }
+
+    .diary-mobile {
+      display: block;
+      @include m.responsive(v.$bp-md) {
+        display: none;
+      }
+    }
+
+    .month-grid-section {
+      display: none;
+      @include m.responsive(v.$bp-md) {
+        display: block;
+      }
+    }
+  }
+
+  .diary-empty-state {
+    @include m.empty-state;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: v.$space-md;
+
+    .discover-link {
+      color: v.$c-heading;
+      text-decoration: none;
+      font-weight: 500;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

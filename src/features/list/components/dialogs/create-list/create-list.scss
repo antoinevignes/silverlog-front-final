@@ -1,0 +1,115 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.dialog-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: v.$space-xl;
+
+  .back-button {
+    position: relative;
+    z-index: 2;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .custom-list-title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0;
+    z-index: 1;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    pointer-events: none;
+  }
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: v.$space-sm;
+  margin-top: v.$space-lg;
+}
+
+.create-list-form {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-lg;
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: v.$space-sm;
+  }
+
+  .privacy-toggle-group {
+    @include m.flex-between;
+    padding: v.$space-md;
+    border-radius: v.$radius;
+    background-color: v.$c-surface;
+    margin-top: v.$space-sm;
+
+    .privacy-info {
+      display: flex;
+      flex-direction: column;
+      gap: v.$space-xs;
+
+      .privacy-label {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: v.$c-heading;
+      }
+
+      .privacy-desc {
+        font-size: 0.8rem;
+        color: v.$c-muted;
+      }
+    }
+
+    .custom-switch {
+      all: unset;
+      box-sizing: border-box;
+      position: relative;
+      width: 56px;
+      height: 32px;
+      border-radius: 999px;
+      background-color: v.$c-border-h;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: background-color 0.3s ease;
+      flex-shrink: 0;
+
+      &.is-public {
+        background-color: v.$c-heading;
+      }
+
+      .switch-knob {
+        position: absolute;
+        left: 3px;
+        width: 26px;
+        height: 26px;
+        background-color: v.$c-white;
+        border-radius: 50%;
+        @include m.flex-center;
+        color: v.$c-text;
+        transition:
+          transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+          color 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      &.is-public .switch-knob {
+        transform: translateX(24px);
+        color: v.$c-heading;
+      }
+    }
+  }
+}

@@ -1,9 +1,0 @@
-import styled from "styled-components";
-
-export const Label = styled.label`
-  display: inline-block;
-  font-size: 0.875rem;
-  font-weight: 500;
-  text-align: left;
-  margin-bottom: 0.25rem;
-`;

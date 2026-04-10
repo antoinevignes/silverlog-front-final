@@ -1,0 +1,75 @@
+@use "@/styles/abstracts/variables" as v;
+
+.dropdown-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-trigger {
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+
+  &:focus-visible {
+    outline: 1px solid v.$c-muted;
+    outline-offset: 2px;
+    border-radius: v.$radius * 0.5;
+  }
+}
+
+.dropdown-content {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  min-width: 180px;
+  padding: 0.5rem;
+  background: v.$c-surface;
+  color: v.$c-text;
+  border-radius: v.$radius;
+  border: 1px solid v.$c-border;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  z-index: 50;
+  animation: fadeInScale 150ms ease-in-out;
+
+  &.dropdown-align-left {
+    left: 0;
+    transform-origin: top left;
+  }
+
+  &.dropdown-align-right {
+    right: 0;
+    transform-origin: top right;
+  }
+}
+
+.dropdown-item {
+  all: unset;
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  border-radius: v.$radius;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &:hover,
+  &:focus-visible {
+    background-color: v.$c-border;
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

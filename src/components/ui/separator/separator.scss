@@ -1,0 +1,8 @@
+@use "@/styles/abstracts/variables" as v;
+
+.separator {
+  border: none;
+  height: 1px;
+  background-color: v.$c-border;
+  margin: 0;
+}

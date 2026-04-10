@@ -1,0 +1,66 @@
+import { useToggle } from "@/utils/use-toggle";
+import type { MovieType } from "@/features/movie/types/movie";
+import Badge from "@/components/ui/badge/badge";
+import "./synopsis-container.scss";
+
+export default function SynopsisContainer({
+  movie,
+  className,
+}: {
+  movie: MovieType;
+  className: string;
+}) {
+  const {
+    value: isExpanded,
+    setTrue: expand,
+    setFalse: collapse,
+  } = useToggle();
+
+  const overviewPreviewLength = className === "synopsis-desktop" ? 300 : 150;
+  const shouldShowReadMore =
+    movie.overview.length > overviewPreviewLength && !isExpanded;
+
+  return (
+    <section className={`synopsis ${className}`}>
+      {movie.tagline && (
+        <p className="tagline text-secondary">"{movie.tagline}"</p>
+      )}
+
+      <p className={isExpanded ? "overview-expanded" : "overview-preview"}>
+        {isExpanded
+          ? movie.overview
+          : shouldShowReadMore
+            ? `${movie.overview.substring(0, overviewPreviewLength)}...`
+            : movie.overview}
+      </p>
+
+      {shouldShowReadMore && (
+        <button
+          className="read-more-btn underline-link"
+          onClick={expand}
+          aria-expanded={isExpanded}
+        >
+          Voir plus
+        </button>
+      )}
+
+      {isExpanded && movie.overview.length > overviewPreviewLength && (
+        <button
+          className="read-more-btn underline-link"
+          onClick={collapse}
+          aria-expanded={isExpanded}
+        >
+          Voir moins
+        </button>
+      )}
+
+      <ul className="genre-badges">
+        {movie.genres.map((genre: { name: string }) => (
+          <li key={genre.name}>
+            <Badge variant="outline">{genre.name}</Badge>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}

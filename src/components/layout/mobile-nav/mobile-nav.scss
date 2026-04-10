@@ -1,0 +1,73 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.mobile-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: v.$c-bg;
+  border-top: 1px solid v.$c-border;
+  padding-bottom: env(safe-area-inset-bottom);
+  z-index: v.$z-nav;
+  transform: translate3d(0, 0, 0);
+
+  @include m.responsive(v.$bp-md) {
+    display: none;
+  }
+
+  .nav-items {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding-top: v.$space-sm;
+    padding-bottom: v.$space-md;
+
+    li {
+      flex: 1;
+
+      .nav-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: v.$space-xs;
+        color: v.$c-muted;
+        text-decoration: none;
+        font-size: 0.75rem;
+        font-weight: 500;
+        transition:
+          color 0.2s,
+          transform 0.2s;
+
+        span {
+          margin-top: 0.125rem;
+        }
+
+        &.active,
+        &:hover {
+          color: v.$c-heading;
+        }
+
+        &:active {
+          transform: scale(0.95);
+        }
+
+        .avatar-icon-wrapper {
+          margin: 0 auto;
+          border-radius: 50%;
+          overflow: hidden;
+        }
+      }
+    }
+  }
+}
+
+.mobile-nav-padded-layout {
+  padding-bottom: calc(v.$space-2xl + v.$space-md + env(safe-area-inset-bottom));
+
+  @include m.responsive(v.$bp-md) {
+    padding-bottom: 0;
+  }
+}

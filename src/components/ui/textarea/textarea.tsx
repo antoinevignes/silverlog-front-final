@@ -1,13 +1,13 @@
+import type { TextareaHTMLAttributes } from "react";
 import { useFieldContext } from "@/utils/useAppForm";
 import "./textarea.scss";
-import type { TextareaHTMLAttributes } from "react";
 
 export default function Textarea({
   id,
   disabled,
   ...props
 }: TextareaHTMLAttributes<HTMLTextAreaElement>) {
-  const field = useFieldContext<any>();
+  const field = useFieldContext<string>();
 
   return (
     <textarea

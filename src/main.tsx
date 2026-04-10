@@ -2,13 +2,15 @@ import "./styles/main.scss";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
+import { HelmetProvider } from "react-helmet-async";
 
 // Import the generated route tree
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { routeTree } from "./routeTree.gen";
 
 import reportWebVitals from "./reportWebVitals.ts";
 import { AuthProvider, useAuth } from "./auth.tsx";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { SocketProvider } from "./utils/socket-provider.tsx";
 
 // Create a new router instance
 
@@ -34,7 +36,11 @@ declare module "@tanstack/react-router" {
 
 function InnerApp() {
   const auth = useAuth();
-  return <RouterProvider router={router} context={{ auth, queryClient }} />;
+  return (
+    <HelmetProvider>
+      <RouterProvider router={router} context={{ auth, queryClient }} />
+    </HelmetProvider>
+  );
 }
 
 // Render the app
@@ -45,7 +51,9 @@ if (rootElement && !rootElement.innerHTML) {
     <StrictMode>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <InnerApp />
+          <SocketProvider>
+            <InnerApp />
+          </SocketProvider>
         </AuthProvider>
       </QueryClientProvider>
     </StrictMode>,

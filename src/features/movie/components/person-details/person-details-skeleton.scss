@@ -1,0 +1,36 @@
+@use "@/styles/abstracts/variables" as v;
+
+.person-meta-skeleton {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-md;
+}
+
+.meta-details-skeleton {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-sm;
+}
+
+.person-main-content-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-lg;
+}
+
+.biography-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-sm;
+  margin-top: v.$space-md;
+}
+
+.known-for-section-skeleton {
+  margin-top: v.$space-xl;
+}
+
+.known-for-list-skeleton {
+  margin-top: v.$space-md;
+}

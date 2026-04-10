@@ -3,6 +3,8 @@
 .tabs {
   display: flex;
   width: 100%;
+  display: flex;
+  width: 100%;
 
   button {
     border: none;
@@ -13,7 +15,12 @@
     min-width: 0;
     text-overflow: ellipsis;
     overflow: hidden;
+    flex: 1 1 0;
+    min-width: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
     white-space: nowrap;
+    font-size: clamp(0.8rem, 2vw, 1rem);
     font-size: clamp(0.8rem, 2vw, 1rem);
 
     transition:
@@ -23,35 +30,71 @@
     &.active {
       font-weight: 600;
     }
+
+    &.active {
+      font-weight: 600;
+    }
   }
 
   // VARIANTES
   &.default {
-    background-color: v.$neutral-200;
+    background-color: v.$c-border;
     padding: 0.3rem;
-    border-radius: 0.5rem;
+    border-radius: v.$radius;
     gap: 0.5rem;
 
     button {
-      border-radius: 0.5rem;
+      border-radius: v.$radius;
+      background-color: v.$c-border;
 
       &.active {
-        background-color: v.$neutral-50;
-        box-shadow: 0px 2px 5px 0px rgba(115, 115, 115, 0.3);
+        background-color: v.$c-bg;
+        box-shadow: v.$shadow-md;
       }
     }
   }
 
   &.transparent {
-    border-bottom: 1px solid v.$neutral-200;
+    border-bottom: 1px solid v.$c-border;
 
     button {
-      color: v.$neutral-600;
+      color: v.$c-text;
       background-color: transparent;
+      padding-bottom: v.$space-xs;
 
       &.active {
-        color: v.$neutral-900;
-        border-bottom: 2px solid black;
+        color: v.$c-heading;
+        border-bottom: 2px solid v.$c-heading;
+      }
+    }
+  }
+
+  &.header {
+    background-color: v.$c-border;
+    padding: 0.3rem;
+    border-radius: 999px;
+    gap: 0.25rem;
+    margin-top: 1rem;
+    width: fit-content;
+    margin-inline: auto;
+
+    button {
+      flex: initial;
+      border-radius: 999px;
+      font-size: 0.9375rem;
+      padding: 0.375rem 1rem;
+      color: v.$c-text;
+      background-color: v.$c-border;
+      font-weight: 600;
+
+      &:hover {
+        color: v.$c-heading;
+      }
+
+      &.active {
+        background-color: v.$c-bg;
+        color: v.$c-heading;
+        box-shadow: v.$shadow-md;
       }
     }
   }

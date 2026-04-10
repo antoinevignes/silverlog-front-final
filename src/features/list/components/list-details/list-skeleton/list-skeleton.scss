@@ -1,0 +1,86 @@
+@use "@/styles/abstracts/variables" as v;
+@use "@/styles/abstracts/mixins" as m;
+
+.list-skeleton-page {
+  margin: v.$space-2xl auto;
+
+  .skeleton-title {
+    margin-bottom: 1rem;
+  }
+
+  .skeleton-backdrop {
+    aspect-ratio: 16 / 9;
+    border-radius: v.$radius;
+    margin-bottom: v.$space-lg;
+  }
+
+  .skeleton-author-section {
+    @include m.flex-between;
+    margin-bottom: v.$space-lg;
+
+    .author-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+
+      .author-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+    }
+  }
+
+  .skeleton-description {
+    margin-bottom: v.$space-lg;
+
+    .skeleton-desc-line {
+      margin-bottom: 0.25rem;
+    }
+
+    .skeleton-desc-button {
+      display: flex;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+  }
+
+  .skeleton-stats {
+    margin-bottom: v.$space-lg;
+
+    .skeleton-stats-row {
+      display: flex;
+      gap: 1rem;
+    }
+  }
+
+  .skeleton-meta-row {
+    margin-bottom: v.$space-lg;
+  }
+
+  .skeleton-filters {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: v.$space-lg;
+
+    .left-filters {
+      display: flex;
+      gap: v.$space-md;
+    }
+
+    .skeleton-badge {
+      border-radius: v.$radius * 2;
+    }
+  }
+
+  .skeleton-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: v.$space-lg;
+
+    .skeleton-poster {
+      aspect-ratio: 2 / 3;
+      border-radius: v.$radius;
+    }
+  }
+}

@@ -26,7 +26,10 @@ export default function Button({
 
   if (asChild) {
     return (
-      <span className={classNames} {...(props as any)}>
+      <span
+        className={classNames}
+        {...(props as React.HTMLAttributes<HTMLSpanElement>)}
+      >
         {children}
       </span>
     );

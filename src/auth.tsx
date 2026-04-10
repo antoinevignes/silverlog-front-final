@@ -1,18 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { createContext, useContext } from "react";
 import { toast } from "sonner";
-
-interface User {
-  id: string;
-  username: string;
-  email: string;
-  top_list_id: string;
-  watchlist_id: string;
-}
+import { apiClient } from "@/utils/api-client";
+import { userKeys } from "@/utils/query-keys";
+import type { UserType } from "@/features/user/types/user";
 
 export interface AuthState {
   isAuthenticated: boolean;
-  user: User | null;
+  user: UserType | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
@@ -23,43 +18,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const queryClient = useQueryClient();
 
   const { data: authData, isPending } = useQuery({
-    queryKey: ["session"],
+    queryKey: userKeys.session(),
     queryFn: async () => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/user/session`, {
-        credentials: "include",
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) return { user: null, isAuthenticated: false };
-
-      return data;
+      try {
+        return await apiClient<{
+          user: UserType | null;
+          isAuthenticated: boolean;
+        }>("/auth/session");
+      } catch (error) {
+        return { user: null, isAuthenticated: false };
+      }
     },
-    staleTime: Infinity,
     retry: false,
   });
 
   const loginMutation = useMutation({
-    mutationFn: async (values: { email: string; password: string }) => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/user/sign-in`, {
+    mutationFn: (values: { email: string; password: string }) =>
+      apiClient<UserType>("/auth/sign-in", {
         method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify(values),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Une erreur est survenue");
-      }
-
-      return data;
-    },
+      }),
     onSuccess: (data) => {
-      queryClient.setQueryData(["session"], {
+      queryClient.setQueryData(userKeys.session(), {
         user: data,
         isAuthenticated: true,
       });
@@ -71,25 +51,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   });
 
   const logout = () => {
-    queryClient.setQueryData(["session"], {
+    queryClient.setQueryData(userKeys.session(), {
       user: null,
       isAuthenticated: false,
     });
-    fetch(`${import.meta.env.VITE_API_URL}/user/sign-out`, {
-      method: "POST",
-      credentials: "include",
-    });
+    apiClient("/auth/sign-out", { method: "POST" });
   };
 
-  if (isPending) return <></>;
+  if (isPending) return null;
 
   return (
     <AuthContext.Provider
       value={{
-        user: authData?.user,
-        isAuthenticated: authData?.isAuthenticated,
-        login: (email, password) =>
-          loginMutation.mutateAsync({ email, password }),
+        user: authData?.user ?? null,
+        isAuthenticated: authData?.isAuthenticated ?? false,
+        login: async (email, password) => {
+          await loginMutation.mutateAsync({ email, password });
+        },
         logout,
       }}
     >
