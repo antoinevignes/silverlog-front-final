@@ -82,7 +82,7 @@
   background-color: v.$c-bg;
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding: 1rem 1rem 1.5rem;
+  padding: v.$space-md v.$space-md v.$space-lg;
 
   left: 0;
   bottom: 0;
@@ -104,7 +104,7 @@
     width: 90vw;
     max-width: 480px;
     border-radius: 12px;
-    padding: 1.5rem;
+    padding: v.$space-lg;
     transform: translate(-50%, -50%);
 
     &[data-state="open"] {
@@ -119,6 +119,6 @@
 .dialog-footer {
   display: flex;
   justify-content: flex-end;
-  gap: 0.75rem;
-  margin-top: 1.5rem;
+  gap: v.$space-sm;
+  margin-top: v.$space-lg;
 }

@@ -234,7 +234,7 @@
 
       .top-movies-actions {
         display: flex;
-        gap: 8px;
+        gap: v.$space-xs;
       }
     }
 
@@ -266,8 +266,8 @@
 
           .rank-badge {
             position: absolute;
-            top: 8px;
-            right: 8px;
+            top: v.$space-xs;
+            right: v.$space-xs;
             z-index: 5;
             background: rgba(v.$c-bg, 0.85);
             backdrop-filter: blur(4px);
@@ -287,8 +287,8 @@
 
           .drag-handle {
             position: absolute;
-            top: 8px;
-            left: 8px;
+            top: v.$space-xs;
+            left: v.$space-xs;
             z-index: 20;
             background: rgba(0, 0, 0, 0.6);
             border-radius: 50%;

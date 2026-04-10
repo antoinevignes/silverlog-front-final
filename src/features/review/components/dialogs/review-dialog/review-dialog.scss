@@ -38,7 +38,7 @@
   .review-form {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: v.$space-sm;
 
     label {
       font-weight: 600;

@@ -51,7 +51,7 @@
     flex-direction: column;
     align-items: stretch;
     width: 100%;
-    gap: 0.5rem;
+    gap: v.$space-sm;
 
     .custom-list-item {
       all: unset;
@@ -63,7 +63,7 @@
       background: v.$c-bg;
       border: 1px solid v.$c-border;
       @include m.flex-between;
-      gap: 0.5rem;
+      gap: v.$space-sm;
       color: v.$c-heading;
       font-weight: 600;
       font-size: 0.9375rem;

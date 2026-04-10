@@ -3,18 +3,18 @@
 .card {
   background-color: v.$c-surface;
   box-shadow: v.$shadow-md;
-  padding: 1.5rem;
+  padding: v.$space-lg;
   border-radius: v.$radius;
 }
 
 .card-header {
-  padding-bottom: 1rem;
+  padding-bottom: v.$space-md;
 }
 
 .card-title-row {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: v.$space-sm;
 }
 
 .card-title {
@@ -30,13 +30,13 @@
 }
 
 .card-subtitle {
-  margin-top: 0.25rem;
+  margin-top: v.$space-xs;
   font-size: 0.875rem;
   color: v.$c-muted;
 }
 
 .card-footer {
-  padding-top: 1rem;
+  padding-top: v.$space-md;
   font-size: 0.875rem;
   color: v.$c-muted;
 }

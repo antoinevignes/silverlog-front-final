@@ -5,18 +5,18 @@
   width: 100%;
 
   .skeleton-header {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+    margin-top: v.$space-2xl;
+    margin-bottom: v.$space-md;
 
     @include m.responsive(v.$bp-md) {
-      margin-bottom: 1.5rem;
+      margin-bottom: v.$space-lg;
     }
   }
 
   .diary-mobile-skeleton {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: v.$space-md;
 
     @include m.responsive(v.$bp-md) {
       display: none;
@@ -25,10 +25,10 @@
     .skeleton-item {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: v.$space-md;
       background: v.$c-surface;
       border-radius: v.$radius * 1.5;
-      padding: 0.75rem;
+      padding: v.$space-sm;
       box-shadow: v.$shadow-sm;
 
       .skeleton-poster {
@@ -51,7 +51,7 @@
 
         .skeleton-rating {
           border-radius: v.$radius * 2;
-          margin-top: 0.25rem;
+          margin-top: v.$space-xs;
         }
       }
     }
@@ -71,7 +71,7 @@
 
       .weekday-label-skeleton {
         height: 2rem;
-        margin: 0.5rem 0;
+        margin: v.$space-sm 0;
         border-radius: v.$radius * 0.5;
       }
 
@@ -103,16 +103,16 @@
   @include m.responsive(v.$bp-lg) {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: v.$space-lg;
     width: 300px;
   }
 
   .sidebar-card-skeleton {
-    padding: 0 0.5rem;
-    margin-bottom: 1rem;
+    padding: 0 v.$space-sm;
+    margin-bottom: v.$space-md;
 
     .card-title-skeleton {
-      margin-bottom: 1.5rem;
+      margin-bottom: v.$space-lg;
       border-radius: v.$radius * 0.5;
       height: 1.5rem;
       width: 60%;
@@ -121,7 +121,7 @@
     .stat-row-skeleton {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 1rem;
+      margin-bottom: v.$space-md;
 
       .stat-label-skeleton {
         height: 1rem;
@@ -138,8 +138,8 @@
     .timeline-item-skeleton {
       height: 1rem;
       width: 50%;
-      margin-bottom: 0.75rem;
-      margin-left: 1.5rem;
+      margin-bottom: v.$space-sm;
+      margin-left: v.$space-lg;
       border-radius: v.$radius * 0.5;
     }
   }

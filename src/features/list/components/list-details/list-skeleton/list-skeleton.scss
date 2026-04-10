@@ -5,7 +5,7 @@
   margin: v.$space-2xl auto;
 
   .skeleton-title {
-    margin-bottom: 1rem;
+    margin-bottom: v.$space-md;
   }
 
   .skeleton-backdrop {
@@ -21,12 +21,12 @@
     .author-info {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: v.$space-sm;
 
       .author-details {
         display: flex;
         flex-direction: column;
-        gap: 0.25rem;
+        gap: v.$space-xs;
       }
     }
   }
@@ -35,13 +35,13 @@
     margin-bottom: v.$space-lg;
 
     .skeleton-desc-line {
-      margin-bottom: 0.25rem;
+      margin-bottom: v.$space-xs;
     }
 
     .skeleton-desc-button {
       display: flex;
       justify-content: center;
-      margin-top: 0.5rem;
+      margin-top: v.$space-sm;
     }
   }
 
@@ -50,7 +50,7 @@
 
     .skeleton-stats-row {
       display: flex;
-      gap: 1rem;
+      gap: v.$space-md;
     }
   }
 

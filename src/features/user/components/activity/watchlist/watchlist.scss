@@ -6,8 +6,8 @@
 
   .watchlist-filters {
     display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1.25rem;
+    gap: v.$space-sm;
+    margin-bottom: v.$space-lg;
     align-items: center;
 
     > div {
@@ -55,7 +55,7 @@
   .watchlist-layout {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 1rem;
+    gap: v.$space-md;
 
     .empty-filter-state {
       grid-column: 1 / -1;

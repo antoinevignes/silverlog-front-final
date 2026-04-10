@@ -83,10 +83,10 @@
             ul {
               display: flex;
               flex-direction: column;
-              gap: 0.5rem;
+              gap: v.$space-sm;
               border-left: 2px solid v.$c-surface;
-              padding-left: 1rem;
-              margin-left: 0.5rem;
+              padding-left: v.$space-md;
+              margin-left: v.$space-sm;
 
               li {
                 a {
@@ -110,15 +110,15 @@
   }
 
   .diary-month-wrapper {
-    margin-bottom: 1.5rem;
+    margin-bottom: v.$space-lg;
 
     .month-header {
       text-transform: capitalize;
       font-size: 1.25rem;
       color: v.$c-heading;
       font-weight: 700;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
+      margin-bottom: v.$space-md;
+      padding-bottom: v.$space-sm;
       position: sticky;
       top: 0;
       background: v.$c-bg;
@@ -126,7 +126,7 @@
 
       @include m.responsive(v.$bp-md) {
         font-size: 1.5rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: v.$space-lg;
         position: relative;
         top: auto;
         background: transparent;

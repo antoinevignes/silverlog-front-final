@@ -75,7 +75,7 @@
   .description-section {
     color: v.$c-text;
     line-height: 1.6;
-    margin-bottom: 1rem;
+    margin-bottom: v.$space-md;
     position: relative;
 
     .description-text {
@@ -92,7 +92,7 @@
       border: none;
       color: v.$c-muted;
       width: 100%;
-      padding: 0.5rem 0;
+      padding: v.$space-sm 0;
       cursor: pointer;
       display: flex;
       justify-content: center;
@@ -109,8 +109,8 @@
   .list-stats {
     display: flex;
     justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+    gap: v.$space-md;
+    margin-bottom: v.$space-lg;
     align-items: center;
 
     @include m.responsive(v.$bp-md) {
@@ -120,11 +120,11 @@
     .list-stat {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 0.75rem;
+      gap: v.$space-sm;
+      padding: v.$space-sm v.$space-sm;
       background: transparent;
       border: 1px solid v.$c-border;
-      border-radius: 0.5rem;
+      border-radius: v.$radius;
       color: v.$c-heading;
       font-weight: 500;
       font-size: 0.9rem;
@@ -146,14 +146,14 @@
   }
 
   .meta-stats-row {
-    padding-bottom: 1.5rem;
+    padding-bottom: v.$space-lg;
     border-bottom: 1px solid v.$c-surface;
-    margin-bottom: 1.5rem;
+    margin-bottom: v.$space-lg;
     font-size: 0.85rem;
     color: v.$c-muted;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: v.$space-sm;
 
     .highlight {
       font-weight: 700;
@@ -164,13 +164,13 @@
   .list-filters {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1.25rem;
+    margin-bottom: v.$space-lg;
     align-items: center;
 
     .left-filters {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: v.$space-sm;
     }
 
     .filter-badge {
@@ -185,7 +185,7 @@
   .posters-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 1rem;
+    gap: v.$space-md;
 
     .empty-state {
       grid-column: 1 / -1;
