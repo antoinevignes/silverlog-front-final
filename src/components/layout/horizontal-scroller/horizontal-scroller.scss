@@ -1,0 +1,62 @@
+@use "@/styles/abstracts/variables" as v;
+
+.horizontal-wrapper {
+  position: relative;
+
+  h3 {
+    padding: 0.25rem 0;
+  }
+}
+
+.horizontal-scroll {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 0.5rem;
+
+  // masquer scrollbar
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  > * {
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+  }
+}
+
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  border-radius: 100%;
+
+  width: 2rem;
+  height: 2rem;
+  background: rgba(0, 0, 0, 0.6);
+  color: v.$neutral-50;
+  border: none;
+  cursor: pointer;
+  font-size: 2rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+
+  &.left {
+    left: -0.5rem;
+  }
+
+  &.right {
+    right: -0.5rem;
+  }
+}
+
+// RESPONSIVE
+@media (min-width: 768px) {
+  .horizontal-wrapper:hover .scroll-btn {
+    opacity: 1;
+  }
+}

@@ -25,6 +25,8 @@ import { Route as ListsListIdIndexRouteImport } from './routes/lists/$listId/ind
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
 import { Route as AuthenticatedUserSettingsIndexRouteImport } from './routes/_authenticated/user/settings/index'
 import { Route as AuthenticatedUserActivityIndexRouteImport } from './routes/_authenticated/user/activity/index'
+import { Route as AuthenticatedUserUserIdWatchlistIndexRouteImport } from './routes/_authenticated/user/$userId/watchlist/index'
+import { Route as AuthenticatedUserUserIdDiaryIndexRouteImport } from './routes/_authenticated/user/$userId/diary/index'
 
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
@@ -107,6 +109,18 @@ const AuthenticatedUserActivityIndexRoute =
     path: '/user/activity/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedUserUserIdWatchlistIndexRoute =
+  AuthenticatedUserUserIdWatchlistIndexRouteImport.update({
+    id: '/user/$userId/watchlist/',
+    path: '/user/$userId/watchlist/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedUserUserIdDiaryIndexRoute =
+  AuthenticatedUserUserIdDiaryIndexRouteImport.update({
+    id: '/user/$userId/diary/',
+    path: '/user/$userId/diary/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -124,6 +138,8 @@ export interface FileRoutesByFullPath {
   '/user/$userId/': typeof UserUserIdIndexRoute
   '/user/activity/': typeof AuthenticatedUserActivityIndexRoute
   '/user/settings/': typeof AuthenticatedUserSettingsIndexRoute
+  '/user/$userId/diary/': typeof AuthenticatedUserUserIdDiaryIndexRoute
+  '/user/$userId/watchlist/': typeof AuthenticatedUserUserIdWatchlistIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -141,6 +157,8 @@ export interface FileRoutesByTo {
   '/user/$userId': typeof UserUserIdIndexRoute
   '/user/activity': typeof AuthenticatedUserActivityIndexRoute
   '/user/settings': typeof AuthenticatedUserSettingsIndexRoute
+  '/user/$userId/diary': typeof AuthenticatedUserUserIdDiaryIndexRoute
+  '/user/$userId/watchlist': typeof AuthenticatedUserUserIdWatchlistIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -160,6 +178,8 @@ export interface FileRoutesById {
   '/user/$userId/': typeof UserUserIdIndexRoute
   '/_authenticated/user/activity/': typeof AuthenticatedUserActivityIndexRoute
   '/_authenticated/user/settings/': typeof AuthenticatedUserSettingsIndexRoute
+  '/_authenticated/user/$userId/diary/': typeof AuthenticatedUserUserIdDiaryIndexRoute
+  '/_authenticated/user/$userId/watchlist/': typeof AuthenticatedUserUserIdWatchlistIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -179,6 +199,8 @@ export interface FileRouteTypes {
     | '/user/$userId/'
     | '/user/activity/'
     | '/user/settings/'
+    | '/user/$userId/diary/'
+    | '/user/$userId/watchlist/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -196,6 +218,8 @@ export interface FileRouteTypes {
     | '/user/$userId'
     | '/user/activity'
     | '/user/settings'
+    | '/user/$userId/diary'
+    | '/user/$userId/watchlist'
   id:
     | '__root__'
     | '/'
@@ -214,6 +238,8 @@ export interface FileRouteTypes {
     | '/user/$userId/'
     | '/_authenticated/user/activity/'
     | '/_authenticated/user/settings/'
+    | '/_authenticated/user/$userId/diary/'
+    | '/_authenticated/user/$userId/watchlist/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -346,6 +372,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedUserActivityIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/user/$userId/watchlist/': {
+      id: '/_authenticated/user/$userId/watchlist/'
+      path: '/user/$userId/watchlist'
+      fullPath: '/user/$userId/watchlist/'
+      preLoaderRoute: typeof AuthenticatedUserUserIdWatchlistIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/user/$userId/diary/': {
+      id: '/_authenticated/user/$userId/diary/'
+      path: '/user/$userId/diary'
+      fullPath: '/user/$userId/diary/'
+      preLoaderRoute: typeof AuthenticatedUserUserIdDiaryIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -353,12 +393,18 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
   AuthenticatedUserActivityIndexRoute: typeof AuthenticatedUserActivityIndexRoute
   AuthenticatedUserSettingsIndexRoute: typeof AuthenticatedUserSettingsIndexRoute
+  AuthenticatedUserUserIdDiaryIndexRoute: typeof AuthenticatedUserUserIdDiaryIndexRoute
+  AuthenticatedUserUserIdWatchlistIndexRoute: typeof AuthenticatedUserUserIdWatchlistIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
   AuthenticatedUserActivityIndexRoute: AuthenticatedUserActivityIndexRoute,
   AuthenticatedUserSettingsIndexRoute: AuthenticatedUserSettingsIndexRoute,
+  AuthenticatedUserUserIdDiaryIndexRoute:
+    AuthenticatedUserUserIdDiaryIndexRoute,
+  AuthenticatedUserUserIdWatchlistIndexRoute:
+    AuthenticatedUserUserIdWatchlistIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

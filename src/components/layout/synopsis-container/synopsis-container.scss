@@ -1,0 +1,53 @@
+.synopsis-desktop {
+  display: none;
+}
+
+.synopsis-mobile {
+  display: block;
+}
+
+.synopsis {
+  position: relative;
+  margin: 0.5rem 0;
+
+  .tagline {
+    font-style: italic;
+    margin-bottom: 0.5rem;
+  }
+
+  .overview-preview {
+    text-overflow: ellipsis;
+    line-height: 1.2;
+    margin-bottom: 0.25rem;
+  }
+
+  .overview-expanded {
+    line-height: 1.2;
+    margin-bottom: 0.25rem;
+  }
+
+  .read-more-btn {
+    background: none;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0.25rem 0;
+  }
+
+  .genre-badges {
+    display: flex;
+    gap: 0.25rem;
+    margin-top: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .synopsis-mobile {
+    display: none;
+  }
+
+  .synopsis-desktop {
+    display: block;
+    grid-area: synopsis-area;
+  }
+}
