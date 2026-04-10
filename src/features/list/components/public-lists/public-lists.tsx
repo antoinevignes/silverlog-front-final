@@ -20,7 +20,7 @@ export default function PublicLists() {
 
   return (
     <div className="public-lists-grid">
-      {lists.slice(0, 10).map((list) => (
+      {lists.map((list) => (
         <ListCard key={list.id} list={list} />
       ))}
     </div>
