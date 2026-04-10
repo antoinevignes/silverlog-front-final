@@ -2,7 +2,7 @@
 @use "@/styles/abstracts/mixins" as m;
 
 .settings-page {
-  margin-top: v.$space-2xl;
+  margin-top: v.$space-lg;
 
   .settings-header {
     border-bottom: 1px solid v.$c-border;
