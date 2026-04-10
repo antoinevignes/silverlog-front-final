@@ -4,7 +4,6 @@
 .user-profile {
   position: relative;
   min-height: 100vh;
-  margin-bottom: v.$space-lg;
 }
 
 .profile-banner {
@@ -54,15 +53,12 @@
   @include m.responsive(v.$bp-md) {
     padding-top: 250px;
     max-width: 900px;
-    margin: 0 auto;
   }
 }
 
 .profile-header {
   display: flex;
   flex-direction: column;
-  gap: v.$space-lg;
-  margin-bottom: v.$space-xl;
 
   @include m.responsive(v.$bp-md) {
     gap: v.$space-xl;
@@ -72,7 +68,6 @@
 .avatar-stats-row {
   display: flex;
   align-items: flex-end;
-  gap: v.$space-lg;
 
   @include m.responsive(v.$bp-md) {
     gap: v.$space-2xl;
@@ -84,13 +79,10 @@
 
   .stats-container {
     display: flex;
-    gap: v.$space-lg;
     flex-grow: 1;
-    margin-bottom: v.$space-sm;
 
     @include m.responsive(v.$bp-md) {
       gap: v.$space-2xl;
-      margin-bottom: v.$space-md;
     }
 
     .stat-item {
@@ -104,7 +96,6 @@
         color: v.$c-heading;
         display: flex;
         align-items: center;
-        gap: v.$space-xs;
 
         @include m.responsive(v.$bp-md) {
           font-size: 1.5rem;
@@ -132,7 +123,6 @@
 .user-info-section {
   display: flex;
   flex-direction: column;
-  gap: v.$space-md;
 
   .name-action-row {
     display: flex;
@@ -141,17 +131,14 @@
 
     @include m.responsive(v.$bp-md) {
       justify-content: flex-start;
-      gap: v.$space-xl;
     }
 
     .username {
       font-size: 1.5rem;
       font-weight: 800;
       color: v.$c-heading;
-      margin: 0;
       display: flex;
       align-items: center;
-      gap: v.$space-sm;
 
       @include m.responsive(v.$bp-md) {
         font-size: 2rem;
@@ -160,14 +147,11 @@
 
     .follow-btn {
       border-radius: 9999px;
-      padding-left: v.$space-lg;
-      padding-right: v.$space-lg;
       font-weight: 600;
     }
   }
 
   .user-bio {
-    margin: 0;
     font-size: 0.95rem;
     line-height: 1.5;
     color: v.$c-heading;
@@ -179,7 +163,6 @@
 
   .user-social-stats {
     display: flex;
-    gap: v.$space-lg;
     font-size: 0.875rem;
     color: v.$c-text;
 
@@ -203,7 +186,6 @@
   .user-meta {
     display: flex;
     align-items: center;
-    gap: v.$space-md;
     font-size: 0.875rem;
     color: v.$c-muted;
     font-style: normal;
@@ -211,7 +193,6 @@
     .meta-item {
       display: flex;
       align-items: center;
-      gap: v.$space-xs;
     }
   }
 }
@@ -219,8 +200,6 @@
 .profile-content {
   display: flex;
   flex-direction: column;
-  gap: v.$space-md;
-  margin-top: v.$space-md;
 
   .content-section {
     display: flex;
@@ -230,23 +209,15 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: v.$space-md;
 
       .top-movies-actions {
         display: flex;
-        gap: v.$space-xs;
       }
-    }
-
-    #top-movies-title,
-    #recent-activity-title {
-      margin-bottom: v.$space-md;
     }
 
     .top-movies-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-      gap: v.$space-md;
 
       @include m.responsive(v.$bp-lg) {
         grid-template-columns: repeat(6, 1fr);
@@ -266,8 +237,6 @@
 
           .rank-badge {
             position: absolute;
-            top: v.$space-xs;
-            right: v.$space-xs;
             z-index: 5;
             background: rgba(v.$c-bg, 0.85);
             backdrop-filter: blur(4px);
@@ -287,8 +256,6 @@
 
           .drag-handle {
             position: absolute;
-            top: v.$space-xs;
-            left: v.$space-xs;
             z-index: 20;
             background: rgba(0, 0, 0, 0.6);
             border-radius: 50%;
@@ -303,14 +270,12 @@
 
           @include m.responsive(v.$bp-lg) {
             display: block;
-            margin: auto;
           }
         }
 
         .card-mobile {
           @include m.responsive(v.$bp-lg) {
             display: none;
-            margin: auto;
           }
         }
 
@@ -335,7 +300,6 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: v.$space-md;
 
       .discover-link {
         color: v.$c-heading;
@@ -361,8 +325,6 @@
 .lists-skeleton-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: v.$space-md;
-  margin: v.$space-lg 0;
 
   @include m.responsive(v.$bp-md) {
     grid-template-columns: repeat(2, 1fr);
@@ -379,10 +341,8 @@
 
     .skeleton-info {
       flex: 1;
-      padding: v.$space-md;
       display: flex;
       flex-direction: column;
-      gap: v.$space-md;
       min-width: 0;
     }
 
@@ -409,18 +369,10 @@
         }
 
         &.depth-0 {
-          right: v.$space-lg;
           z-index: 3;
-          @include m.responsive(v.$bp-md) {
-            right: v.$space-xl;
-          }
         }
         &.depth-1 {
-          right: v.$space-sm;
           z-index: 2;
-          @include m.responsive(v.$bp-md) {
-            right: v.$space-md;
-          }
         }
         &.depth-2 {
           right: 0;

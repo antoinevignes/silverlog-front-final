@@ -2,14 +2,13 @@
 @use "@/styles/abstracts/mixins" as m;
 
 .settings-page {
-  margin-top: v.$space-2xl;
+  margin-top: v.$space-lg;
 
   .settings-header {
     border-bottom: 1px solid v.$c-border;
-    padding-bottom: v.$space-lg;
 
     p {
-      margin-top: v.$space-xs;
+      margin: 0;
     }
   }
 
@@ -21,14 +20,11 @@
   .setting-section {
     display: flex;
     flex-direction: column;
-    gap: v.$space-lg;
-    padding: v.$space-xl 0;
     border-bottom: 1px solid v.$c-border;
 
     @include m.responsive(v.$bp-md) {
       flex-direction: row;
       align-items: flex-start;
-      gap: v.$space-2xl;
     }
 
     &:last-child {
@@ -39,7 +35,6 @@
   .setting-label {
     display: flex;
     align-items: flex-start;
-    gap: v.$space-md;
     flex-shrink: 0;
 
     @include m.responsive(v.$bp-md) {
@@ -64,7 +59,6 @@
     font-size: 0.95rem;
     font-weight: 700;
     color: v.$c-heading;
-    margin-bottom: v.$space-xs;
   }
 
   .setting-description {
@@ -77,13 +71,11 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: v.$space-md;
     min-width: 0;
 
     .setting-form {
       display: flex;
       flex-wrap: wrap;
-      gap: v.$space-sm;
 
       @include m.responsive(v.$bp-md) {
         flex-direction: row;
@@ -99,10 +91,10 @@
   .avatar-upload-zone {
     display: flex;
     align-items: center;
-    gap: v.$space-sm;
 
     @include m.responsive(v.$bp-md) {
-      gap: v.$space-md;
+      flex-direction: row;
+      align-items: center;
     }
 
     .avatar,
@@ -133,7 +125,6 @@
       background: none;
       border: 1.5px solid v.$c-border-h;
       border-radius: v.$radius;
-      padding: v.$space-xs v.$space-md;
       cursor: pointer;
       transition: all v.$transition;
 
@@ -151,12 +142,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: v.$space-sm;
 
     @include m.responsive(v.$bp-md) {
       flex-direction: row;
       align-items: center;
-      gap: v.$space-md;
     }
 
     .banner-img,
@@ -189,13 +178,14 @@
 }
 
 .delete-dialog-desc {
+  margin: 0;
   margin-bottom: v.$space-xl;
 }
 
 .delete-dialog-footer {
   display: flex;
-  gap: v.$space-sm;
   justify-content: flex-end;
+  gap: v.$space-sm;
   width: 100%;
 }
 
@@ -216,7 +206,6 @@
       font-size: 0.8rem;
       color: v.$c-muted;
       text-align: right;
-      margin-top: v.$space-xs;
 
       &.error {
         color: v.$destructive;
@@ -232,7 +221,6 @@
   .password-fields {
     display: flex;
     flex-direction: column;
-    gap: v.$space-md;
     width: 100%;
 
     @include m.responsive(v.$bp-md) {
@@ -243,6 +231,5 @@
   .password-field {
     display: flex;
     flex-direction: column;
-    gap: v.$space-xs;
   }
 }

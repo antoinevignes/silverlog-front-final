@@ -9,9 +9,9 @@ import { userQuery } from "@/features/user/api/user.queries";
 export default function Watchlist() {
   const routeApi = getRouteApi("/user/$userId/");
   const { userId } = routeApi.useParams();
-  
+
   const { data: userData } = useSuspenseQuery(userQuery(userId));
-  
+
   const { data: listData } = useSuspenseQuery(
     listDataQuery(userData.watchlist_id),
   );
@@ -20,7 +20,7 @@ export default function Watchlist() {
 
   return (
     <section className="content-section" aria-label="Watchlist">
-      <div className="watchlist-grid">
+      <div className="watchlist-grid gap-md mt-md">
         {movies.map((movie: MovieType) => (
           <MovieCard key={movie.id} movie={movie} size="sm" />
         ))}
