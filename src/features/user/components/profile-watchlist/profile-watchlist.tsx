@@ -39,7 +39,7 @@ export default function Watchlist() {
           )}
         </div>
       ) : (
-        <div className="watchlist-grid">
+        <div className="watchlist-grid gap-md mt-md">
           {movies.map((movie: MovieType) => (
             <MovieCard key={movie.id} movie={movie} size="sm" />
           ))}

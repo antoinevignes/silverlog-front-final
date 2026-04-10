@@ -12,7 +12,7 @@ export async function apiClient<T>(
   { params, ...customConfig }: ApiOptions = {},
 ): Promise<T> {
   const baseUrl = import.meta.env.VITE_API_URL;
-  
+
   // Construction de l'URL avec les query params si présents
   let url = `${baseUrl}${endpoint}`;
   if (params) {
@@ -45,11 +45,16 @@ export async function apiClient<T>(
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       throw new Error(
-        errorData.message || `Erreur API (${response.status}) : ${response.statusText}`
+        errorData.message ||
+          `Erreur API (${response.status}) : ${response.statusText}`,
       );
     }
 
-    return (await response.json()) as T;
+    const text = await response.text();
+    if (!text) {
+      return {} as T;
+    }
+    return JSON.parse(text) as T;
   } catch (error) {
     if (error instanceof Error) {
       throw error;

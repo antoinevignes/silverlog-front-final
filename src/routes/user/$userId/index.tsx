@@ -275,8 +275,6 @@ function RouteComponent() {
                 )}
               </address>
             </section>
-
-            {/* STATS AFFICHER ICI */}
           </header>
 
           <Tabs
